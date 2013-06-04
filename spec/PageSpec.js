@@ -2,11 +2,12 @@ describe("Page", function() {
   var page;
 
   beforeEach(function() {
-    page = new Page();
+    page = new Page(new FakeContext());
   });
 
   it("should return an Item after drawing a line", function() {
-    var item = page.drawLine(new Point(0, 0), new Point(10, 10));
+    var item = page.drawLine();
+	expect(page.context.getItems().length).toEqual(1);
     expect(item instanceof Item).toBe(true);
   });
 

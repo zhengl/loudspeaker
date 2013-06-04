@@ -1,6 +1,10 @@
-function Page() {
+function Page(context) {
+	this.context = context;
 }
 
-Page.prototype.drawLine = function(Point, Point) {
-	return new Item();
+Page.prototype.drawLine = function() {
+	var line = new Line();
+	this.context.addItem(line);
+	return line;
 };
+
