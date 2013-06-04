@@ -1,0 +1,10 @@
+function Event(){
+}
+
+Event.START_DRAWING = "START_DRAWING";
+Event.STOP_DRAWING = "STOP_DRAWING";
+
+Event.MOVE_TO = "MOVE_TO";
+
+Event.MOUSE_UP = "MOUSE_UP";
+Event.MOUSE_DOWN = "MOUSE_DOWN";
