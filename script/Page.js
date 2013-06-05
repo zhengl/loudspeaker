@@ -2,10 +2,9 @@ function Page(context) {
 	this.context = context;
 }
 
-Page.prototype.drawLine = function() {
-	var line = new Line();
-	this.context.addItem(line);
-	return line;
+Page.prototype.drawLine = function(points) {
+	var line = new Line(points);
+	return this.context.draw(line);
 };
 
 Page.prototype.selectLine = function(){

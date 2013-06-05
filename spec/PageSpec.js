@@ -2,13 +2,13 @@ describe("Page", function() {
   var page;
 
   beforeEach(function() {
-    page = new Page(new FakeContext());
+    page = new Page(new Context());
   });
 
-  it("should return an Item after drawing a line", function() {
-    var item = page.drawLine();
+  it("should return an Line after drawing a line", function() {
+    var item = page.drawLine(new Point(0, 0), new Point(10, 10));
 	expect(page.context.getItems().length).toEqual(1);
-    expect(item instanceof Item).toBe(true);
+    expect(item instanceof Line).toBe(true);
   });
   
   it("should be able to register event listeners", function() {
@@ -32,6 +32,18 @@ describe("Page", function() {
 	
 	var line = page.context.items[0];
 	expect(line instanceof Line).toBe(true);
+  });
+  
+  describe("with KineticJS implementation", function(){
+	  beforeEach(function() {
+		page = new Page(new KineticContext("board"));
+	  });
+  
+	  it("should return an Item after drawing a line", function() {
+		var item = page.drawLine(new Point(0, 0), new Point(10, 10));
+		expect(page.context.getItems().length).toEqual(1);
+		expect(item instanceof Item).toBe(true);
+	  });
   });
 
 });
