@@ -47,20 +47,36 @@ describe("Page", function() {
 			expect(line instanceof Line).toBe(true);
 		});
 		
-		it("should move a line with events", function() {
+		it("should move a line with events, START_MOVING, MOVE_TO, STOP_MOVING after being selected", function() {
 			var item = page.drawLine([new Point(10, 10), new Point(20, 20)]);
+
 			var eventTrigger = new EventTrigger();
 			item.registerEventTrigger(createEventTriggerAdapter(eventTrigger));			
 			
+			eventTrigger.trigger(new Event(Item.Event.SELECT));	
 			eventTrigger.trigger(new Event(Item.Event.START_MOVING));
 			var newPosition = new Point(20, 20);
 			eventTrigger.trigger(new Event(Item.Event.MOVE_TO, [newPosition]));
 			eventTrigger.trigger(new Event(Item.Event.STOP_MOVING));
 			
 			var line = page.context.items[0];
-			expect(line instanceof Line).toBe(true);
 			expect(line.position).toBe(newPosition);
-		});		
+		});	
+
+		it("should be selected and unselected with event SELECT and UNSELECT", function() {
+			var item = page.drawLine([new Point(10, 10), new Point(20, 20)]);
+			var line = page.context.items[0];
+			expect(line.isSelected).toBe(false);
+			
+			var eventTrigger = new EventTrigger();
+			item.registerEventTrigger(createEventTriggerAdapter(eventTrigger));			
+			
+			eventTrigger.trigger(new Event(Item.Event.SELECT));			
+			expect(line.isSelected).toBe(true);
+			
+			eventTrigger.trigger(new Event(Item.Event.UNSELECT));			
+			expect(line.isSelected).toBe(false);
+		});			
 	});
   
 	describe("with KineticJS implementation", function(){
