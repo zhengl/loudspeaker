@@ -11,24 +11,26 @@ describe("Page", function() {
     expect(item instanceof Line).toBe(true);
   });
   
-  it("should be able to register event listeners", function() {
-	var eventTrigger = new EventTrigger()
-	eventTrigger.addListener(page);
-	eventTrigger.triggerEvent(Event.START_DRAWING);
+  it("should be able to register event triggers", function() {
+	var eventTrigger = new EventTrigger();
+	page.registerEventTrigger(eventTrigger);
+	eventTrigger.trigger(new Event(Page.Event.START_DRAWING));
+	console.log(page);
 	expect(page.isPainting).toBe(true);
   });
   
-  it("should listen to an event trigger adapter and draw a line with mouse", function() {
-	var mouseEventTrigger = new EventTrigger();
-	var eventTriggerAdapter = new MouseEventTriggerAdapter(mouseEventTrigger);
-	eventTriggerAdapter.addListener(page);
-	
+  it("should listen to events by adapter and draw a line with mouse", function() {
 	page.selectLine();
 	
-	mouseEventTrigger.triggerEvent(Event.MOVE_TO, new Point(10, 10));
-	mouseEventTrigger.triggerEvent(Event.MOUSE_DOWN);
-	mouseEventTrigger.triggerEvent(Event.MOVE_TO, new Point(20, 20));
-	mouseEventTrigger.triggerEvent(Event.MOUSE_UP);
+	var eventTrigger = new EventTrigger();
+	var eventTriggerAdapter = new EventTriggerAdapter(new DummyEventInterpreter());
+	eventTrigger.addListener(eventTriggerAdapter);
+	page.registerEventTrigger(eventTriggerAdapter);
+	
+	eventTrigger.trigger(new Event(Page.Event.MOVE_TO, [new Point(10, 10)]));
+	eventTrigger.trigger(new Event(Page.Event.START_DRAWING));
+	eventTrigger.trigger(new Event(Page.Event.MOVE_TO, [new Point(20, 20)]));
+	eventTrigger.trigger(new Event(Page.Event.STOP_DRAWING));
 	
 	var line = page.context.items[0];
 	expect(line instanceof Line).toBe(true);

@@ -1,10 +1,4 @@
-function Event(){
+function Event(name, data){
+	this.name = name;
+	this.data = data;
 }
-
-Event.START_DRAWING = "START_DRAWING";
-Event.STOP_DRAWING = "STOP_DRAWING";
-
-Event.MOVE_TO = "MOVE_TO";
-
-Event.MOUSE_UP = "MOUSE_UP";
-Event.MOUSE_DOWN = "MOUSE_DOWN";

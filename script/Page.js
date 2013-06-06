@@ -10,22 +10,32 @@ Page.prototype.drawLine = function(points) {
 Page.prototype.selectLine = function(){
 };
 
-Page.prototype.notify = function(event, data){
-	switch(event) {
-		case Event.START_DRAWING:
+Page.prototype.registerEventTrigger = function(eventTrigger){
+	eventTrigger.addListener(this);
+};
+
+Page.prototype.notify = function(event){
+	switch(event.name) {
+		case Page.Event.START_DRAWING:
 			this.isPainting = true;
 			break;
-		case Event.STOP_DRAWING:
+		case Page.Event.STOP_DRAWING:
 			this.isPainting = false;
 			break;
-		case Event.MOVE_TO:
-			this.moveTo(data);
+		case Page.Event.MOVE_TO:
+			this.moveTo(event.data);
 			break;
 	}
 };
 
 Page.prototype.moveTo = function(data){
 	if(this.isPainting){
-		this.drawLine();
+		this.drawLine(data);
 	}
+};
+
+Page.Event = {
+	START_DRAWING: "START_DRAWING",
+	STOP_DRAWING: "STOP_DRAWING",
+	MOVE_TO: "MOVE_TO"
 };
