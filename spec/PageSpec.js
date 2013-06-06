@@ -5,8 +5,8 @@ describe("Page", function() {
     page = new Page(new Context());
   });
 
-  it("should return an Line after drawing a line", function() {
-    var item = page.drawLine(new Point(0, 0), new Point(10, 10));
+  it("should return a Line after drawing a line", function() {
+    var item = page.drawLine([new Point(0, 0), new Point(10, 10)]);
 	expect(page.context.getItems().length).toEqual(1);
     expect(item instanceof Line).toBe(true);
   });
@@ -41,10 +41,10 @@ describe("Page", function() {
 		page = new Page(new KineticContext("board"));
 	  });
   
-	  it("should return an Item after drawing a line", function() {
-		var item = page.drawLine(new Point(0, 0), new Point(10, 10));
+	  it("should return a Line after drawing a line", function() {
+		var item = page.drawLine([new Point(0, 0), new Point(10, 10)]);
 		expect(page.context.getItems().length).toEqual(1);
-		expect(item instanceof Item).toBe(true);
+		expect(item instanceof Line).toBe(true);
 	  });
   });
 
