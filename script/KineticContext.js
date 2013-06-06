@@ -8,26 +8,35 @@ function KineticContext(container){
 
 KineticContext.prototype = new Context();
 
-KineticContext.prototype.draw = function(item){
-	this.addItem(item);
+KineticContext.prototype.setEventTrigger = function(eventTrigger){
+	this.eventTrigger = eventTrigger;
+	this.addEventListeners([
+		KineticEvent.MOVE_TO,
+		KineticEvent.MOUSE_DOWN,
+		KineticEvent.MOUSE_UP,
+		KineticEvent.MOUSE_ENTER,
+		KineticEvent.MOUSE_LEAVE,
+		KineticEvent.MOUSE_OVER,
+		KineticEvent.MOUSE_OUT
+	]);
+}
 
-	var shape = this.getShape(item);
-	this.layer.add(shape);
+KineticContext.prototype.draw = function(item){
+	var kineticItem = new KineticItem(item);
+	this.addItem(kineticItem);
+	this.layer.add(kineticItem.kineticShape);
+	this.layer.draw();
 	
-	return item;
+	return kineticItem;
 };
 
-KineticContext.prototype.getShape = function(item){
-	if(item instanceof Line){
-		var line = item;
-		var points = new Array();
-		for(var index in line.points){
-			points.push(line.points[index].x);
-			points.push(line.points[index].y);
-		}
-		return new Kinetic.Line({
-			points: points
-		});
-	} else {
+KineticContext.prototype.addEventListeners = function(events){
+	for(var index in events){
+		var self = this;
+		console.log(this.stage.getContainer());
+		this.stage.getContainer().addEventListener(events[index], function(event) {
+			self.eventTrigger.trigger(event);
+		});		
 	}
 };
+

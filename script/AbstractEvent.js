@@ -1,4 +1,4 @@
-function Event(name, data){
+function AbstractEvent(name, data){
 	this.name = name;
 	this.data = data;
 }

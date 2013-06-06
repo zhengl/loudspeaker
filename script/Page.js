@@ -1,5 +1,6 @@
 function Page(context) {
 	this.context = context;
+	this.data = new Array();
 }
 
 Page.prototype.drawLine = function(points) {
@@ -21,6 +22,7 @@ Page.prototype.notify = function(event){
 			break;
 		case Page.Event.STOP_DRAWING:
 			this.isPainting = false;
+			this.data = [];
 			break;
 		case Page.Event.MOVE_TO:
 			this.moveTo(event.data);
@@ -30,7 +32,8 @@ Page.prototype.notify = function(event){
 
 Page.prototype.moveTo = function(data){
 	if(this.isPainting){
-		this.drawLine(data);
+		this.data.push(data[0]);
+		this.drawLine(this.data);
 	}
 };
 

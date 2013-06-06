@@ -3,11 +3,36 @@
 <head>
   <meta charset="utf-8">
   <title>Loudspeaker - Social Creativity</title>
-  <script src="script/whiteboard.js"></script>
+    <script type="text/javascript" src="script/lib/kinetic-v4.5.3.min.js"></script>
+
+  <!-- include source files here... -->
+  <script type="text/javascript" src="script/Board.js"></script>
+  <script type="text/javascript" src="script/Page.js"></script>
+  <script type="text/javascript" src="script/Context.js"></script>
+  <script type="text/javascript" src="script/KineticContext.js"></script>
+  <script type="text/javascript" src="script/Point.js"></script>
+  <script type="text/javascript" src="script/Item.js"></script>
+  <script type="text/javascript" src="script/KineticItem.js"></script>
+  <script type="text/javascript" src="script/Line.js"></script>
+  <script type="text/javascript" src="script/AbstractEvent.js"></script>
+  <script type="text/javascript" src="script/KineticEvent.js"></script>
+  <script type="text/javascript" src="script/EventTrigger.js"></script>
+  <script type="text/javascript" src="script/EventTriggerAdapter.js"></script>
+  <script type="text/javascript" src="script/KineticEventOnPageInterpreter.js"></script>
 </head>
 <body>
-  <canvas id="whiteboard">
-	Browser unsupported
-  </canvas>
+  <div id="board" />
+  <script defer>
+	function createEventTriggerAdapter(eventTrigger){
+		var eventTriggerAdapter = new EventTriggerAdapter(new KineticEventOnPageInterpreter());
+		eventTrigger.addListener(eventTriggerAdapter);
+		return eventTriggerAdapter;
+	}
+  
+	var page = new Page(new KineticContext("board"));
+	var eventTrigger = new EventTrigger();
+	page.registerEventTrigger(createEventTriggerAdapter(eventTrigger));
+	page.context.setEventTrigger(eventTrigger);
+  </script>
 </body>
 </html>
