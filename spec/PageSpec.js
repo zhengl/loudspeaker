@@ -187,7 +187,7 @@ describe("Page", function() {
 			expect(item instanceof Item).toBe(true);
 		}
 		
-		it("should return a Line after DRAWING a line", function() {
+		it("should return a Line after DRAWING a line with direct call", function() {
 			var line = createLine(10, 10, 20, 20);
 			var item = page.draw(line);
 			expectOneItem(page);
@@ -199,6 +199,18 @@ describe("Page", function() {
 			var item = page.draft(line);
 			expectOneDraftItem(page);
 			expectIsAnKineticItem(item);
+		});
+		
+		it("should return a Line after DRAWING a line with steps", function(){
+			page.selectLine();
+			page.startDraft(new Point(10, 10));
+			page.draftTo(new Point(20, 20));
+			page.endDraft(new Point(30, 30));
+			
+			var line = page.context.getItems()[0];
+			expectIsAnItem(line);
+			expectNoDraftItem(page);
+			expectOneItem(page);			
 		});
 	});
 });

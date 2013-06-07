@@ -28,6 +28,10 @@ Line.prototype.undraftize = function(){
 	return this;
 }
 
+Line.prototype.undraftize = function(){
+	return this;
+}
+
 Line.prototype.update = function(point){
 	this.points.push(point);
 }

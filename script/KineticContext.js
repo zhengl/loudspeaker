@@ -1,6 +1,8 @@
 function KineticContext(container){
 	this.stage = new Kinetic.Stage({
-		container: container
+		container: container,
+		width: 800,
+		height: 500,
 	});
 	this.layer = new Kinetic.Layer();
 	this.draftLayer = new Kinetic.Layer();
@@ -24,16 +26,16 @@ KineticContext.prototype.setEventTrigger = function(eventTrigger){
 }
 
 KineticContext.prototype.draw = function(item){
-	var kineticItem = new KineticItem(item);
+	var kineticItem = new KineticItemFactory.create(item);
 	this.addItem(kineticItem);
-	this.layer.add(kineticItem.kineticShape);
+	this.layer.add(kineticItem.getKineticShape());
 	this.layer.draw();
 	
 	return kineticItem;
 };
 
 KineticContext.prototype.draft = function(item){
-	var kineticItem = new KineticItem(item);
+	var kineticItem = new KineticItemFactory.create(item);
 	kineticItem.draftize();
 	this.addDraftItem(kineticItem);
 	this.draftLayer.add(kineticItem.kineticShape);
@@ -45,7 +47,6 @@ KineticContext.prototype.draft = function(item){
 KineticContext.prototype.addEventListeners = function(events){
 	for(var index in events){
 		var self = this;
-		console.log(this.stage.getContainer());
 		this.stage.getContainer().addEventListener(events[index], function(event) {
 			self.eventTrigger.trigger(event);
 		});		
