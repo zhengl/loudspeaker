@@ -17,3 +17,7 @@ function KineticItem(item){
 }
 
 KineticItem.prototype = new Item();
+
+KineticItem.prototype.draftize = function(){
+	
+};

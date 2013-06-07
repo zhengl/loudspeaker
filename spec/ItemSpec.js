@@ -5,7 +5,7 @@ describe("Item", function(){
 		item = new Item();
 	});
 	
-	it("should have have position", function(){
+	it("should have position", function(){
 		expect(item.position instanceof Point).toBe(true);
 	});
 	

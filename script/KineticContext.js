@@ -3,7 +3,9 @@ function KineticContext(container){
 		container: container
 	});
 	this.layer = new Kinetic.Layer();
+	this.draftLayer = new Kinetic.Layer();
 	this.stage.add(this.layer);
+	this.stage.add(this.draftLayer);
 }
 
 KineticContext.prototype = new Context();
@@ -26,6 +28,16 @@ KineticContext.prototype.draw = function(item){
 	this.addItem(kineticItem);
 	this.layer.add(kineticItem.kineticShape);
 	this.layer.draw();
+	
+	return kineticItem;
+};
+
+KineticContext.prototype.draft = function(item){
+	var kineticItem = new KineticItem(item);
+	kineticItem.draftize();
+	this.addDraftItem(kineticItem);
+	this.draftLayer.add(kineticItem.kineticShape);
+	this.draftLayer.draw();
 	
 	return kineticItem;
 };

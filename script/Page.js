@@ -1,12 +1,14 @@
 function Page(context) {
 	this.context = context;
-	this.data = new Array();
 }
 
-Page.prototype.drawLine = function(points) {
-	var line = new Line(points);
-	return this.context.draw(line);
+Page.prototype.draw = function(item) {
+	return this.context.draw(item);
 };
+
+Page.prototype.draft = function(item) {
+	return this.context.draft(item);
+}
 
 Page.prototype.selectLine = function(){
 };
@@ -20,9 +22,12 @@ Page.prototype.notify = function(event){
 		case Page.Event.START_DRAWING:
 			this.isPainting = true;
 			break;
+		case Page.Event.FINISH_DRAWING:
+			this.draw(new Line(event.data));
+			this.context.clearDraftItems();
+			break;
 		case Page.Event.STOP_DRAWING:
 			this.isPainting = false;
-			this.data = [];
 			break;
 		case Page.Event.MOVE_TO:
 			this.moveTo(event.data);
@@ -32,13 +37,12 @@ Page.prototype.notify = function(event){
 
 Page.prototype.moveTo = function(data){
 	if(this.isPainting){
-		this.data.push(data[0]);
-		this.drawLine(this.data);
+		this.draft(new Line(this.data));
 	}
 };
 
 Page.Event = {
 	START_DRAWING: "START_DRAWING",
-	STOP_DRAWING: "STOP_DRAWING",
+	FINISH_DRAWING: "FINISH_DRAWING",
 	MOVE_TO: "MOVE_TO"
 };
