@@ -7,10 +7,10 @@ KineticEventOnPageInterpreter.prototype.interpret = function(event){
 			return new AbstractEvent(Page.Event.MOVE_TO, [new Point(event.x, event. y)]);
 		break;
 		case KineticEvent.MOUSE_DOWN:
-			return new AbstractEvent(Page.Event.START_DRAWING);
+			return new AbstractEvent(Page.Event.START_DRAWING, [new Point(event.x, event. y)]);
 		break;
 		case KineticEvent.MOUSE_UP:
-			return new AbstractEvent(Page.Event.FINISH_DRAWING);
+			return new AbstractEvent(Page.Event.FINISH_DRAWING, [new Point(event.x, event. y)]);
 		break;
 		case KineticEvent.MOUSE_ENTER:
 		break;

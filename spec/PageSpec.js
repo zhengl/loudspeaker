@@ -56,7 +56,8 @@ describe("Page", function() {
 	it("should be able to register event triggers", function() {
 		var eventTrigger = new EventTrigger();
 		page.registerEventTrigger(eventTrigger);
-		eventTrigger.trigger(new AbstractEvent(Page.Event.START_DRAWING));
+		page.selectLine();
+		eventTrigger.trigger(new AbstractEvent(Page.Event.START_DRAWING, [new Point(0, 0)]));
 		expect(page.isPainting).toBe(true);
 	});
   
@@ -84,12 +85,12 @@ describe("Page", function() {
 			eventTrigger.trigger(new AbstractEvent(Page.Event.MOVE_TO, [new Point(x, y)]));
 		}
 		
-		function triggerStartDrawingEvent(){
-			eventTrigger.trigger(new AbstractEvent(Page.Event.START_DRAWING));		
+		function triggerStartDrawingEvent(x, y){
+			eventTrigger.trigger(new AbstractEvent(Page.Event.START_DRAWING, [new Point(x, y)]));		
 		}
 
-		function triggerFinishDrawingEvent(){
-			eventTrigger.trigger(new AbstractEvent(Page.Event.FINISH_DRAWING));		
+		function triggerFinishDrawingEvent(x, y){
+			eventTrigger.trigger(new AbstractEvent(Page.Event.FINISH_DRAWING, [new Point(x, y)]));		
 		}
 		
 		function triggerSelectEvent(){
@@ -112,21 +113,22 @@ describe("Page", function() {
 			page.selectLine();
 			registerEventListenerAdapter(page);
 			
-			triggerMoveToEvent(10, 10);
-			triggerStartDrawingEvent();
+			triggerStartDrawingEvent(10, 10);
 			triggerMoveToEvent(20, 20);
-			triggerFinishDrawingEvent();
+			triggerFinishDrawingEvent(20, 20);
 
 			var line = page.context.getItems()[0];
 			expectIsAnItem(line);
+			expect(line.getPosition().x).toBe(10);
+			expect(line.getPosition().y).toBe(10);
+			expect(line.points.length).toBe(2);
 		});
 		
 		it("should DRAFT a line with events", function() {
 			page.selectLine();
 			registerEventListenerAdapter(page);
 			
-			triggerMoveToEvent(10, 10);
-			triggerStartDrawingEvent();
+			triggerStartDrawingEvent(10, 10);
 			
 			triggerMoveToEvent(20, 20);
 			expectOneDraftItem(page);
@@ -136,7 +138,7 @@ describe("Page", function() {
 			expectOneDraftItem(page);
 			expectNoItem(page);
 			
-			triggerFinishDrawingEvent();
+			triggerFinishDrawingEvent(30, 30);
 			expectNoDraftItem(page);
 			expectOneItem(page);
 
@@ -166,7 +168,7 @@ describe("Page", function() {
 			var line = page.context.getItems()[0];
 			expect(line.isSelected).toBe(false);
 			
-			registerEventListenerAdapter(page);		
+			registerEventListenerAdapter(item);		
 			
 			triggerSelectEvent();		
 			expect(line.isSelected).toBe(true);

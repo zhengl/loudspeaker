@@ -3,6 +3,10 @@ function Context(){
 	this.draftItems = new Array();
 }
 
+Context.prototype.getLastDraftItem = function(){
+	return this.draftItems[this.draftItems.length - 1];
+};
+
 Context.prototype.getItems = function(){
 	return this.items;
 };
@@ -24,10 +28,31 @@ Context.prototype.draw = function(item){
 	return item;
 };
 
+Context.prototype.startDraft = function(type, point){
+	var draftItem = new window[type];
+	draftItem.update(point);
+	this.addDraftItem(draftItem);
+}
+
+Context.prototype.draftTo = function(point) {
+	var draftItem = this.getLastDraftItem();
+	draftItem.update(point);
+	this.clearDraftItems();
+	this.addDraftItem(draftItem);
+	return draftItem;
+}
+
 Context.prototype.draft = function(draftItem){
 	this.clearDraftItems();
 	this.addDraftItem(draftItem);
 	return draftItem;
+};
+
+Context.prototype.undraftize = function(){
+	var draftItem = this.getLastDraftItem();
+	var item = draftItem.undraftize();
+	this.draw(item);
+	this.clearDraftItems();
 };
 
 Context.prototype.clearDraftItems = function(){

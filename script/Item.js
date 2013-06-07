@@ -1,6 +1,9 @@
 function Item(){
-	this.position = new Point();
 	this.isSelected = false;
+}
+
+Item.prototype.getPosition = function(){
+	return this.position;
 }
 
 Item.prototype.moveTo = function(newPosition){
