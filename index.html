@@ -30,7 +30,7 @@
 		return eventTriggerAdapter;
 	}
   
-	var page = new Page(new KineticContext("board"));
+	var page = new Page(new KineticContext("board", 800, 500));
 	var eventTrigger = new EventTrigger();
 	page.registerEventTrigger(createEventTriggerAdapter(eventTrigger));
 	page.context.setEventTrigger(eventTrigger);

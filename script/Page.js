@@ -28,6 +28,7 @@ Page.prototype.notify = function(event){
 			break;
 		case Page.Event.STOP_DRAWING:
 			this.isPainting = false;
+			this.context.clearDraftItems();
 			break;
 		case Page.Event.MOVE_TO:
 			this.moveTo(event.data[0]);

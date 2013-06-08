@@ -93,6 +93,10 @@ describe("Page", function() {
 			eventTrigger.trigger(new AbstractEvent(Page.Event.FINISH_DRAWING, [new Point(x, y)]));		
 		}
 		
+		function triggerStopDrawingEvent(){
+			eventTrigger.trigger(new AbstractEvent(Page.Event.STOP_DRAWING));		
+		}
+		
 		function triggerSelectEvent(){
 			eventTrigger.trigger(new AbstractEvent(Item.Event.SELECT));	
 		}
@@ -161,6 +165,21 @@ describe("Page", function() {
 			var line = page.context.getItems()[0];
 			expect(line.position).toBe(newPosition);
 		});	
+		
+		it("should stop drawing with event STOP_DRAWING", function(){
+			page.selectLine();
+			registerEventListenerAdapter(page);
+			
+			triggerStartDrawingEvent(10, 10);
+			
+			triggerMoveToEvent(20, 20);
+			expectOneDraftItem(page);
+			expectNoItem(page);
+			
+			triggerStopDrawingEvent();
+			expectNoDraftItem(page);
+			expectNoItem(page);
+		});
 
 		it("should be selected and unselected with event SELECT and UNSELECT", function() {
 			var line = createLine(10, 10, 20, 20);
@@ -180,7 +199,8 @@ describe("Page", function() {
   
 	describe("with KineticJS context", function(){
 		beforeEach(function() {
-			page = new Page(new KineticContext("board"));
+			var kineticContext = new KineticContext("board", 50, 50);
+			page = new Page(kineticContext);
 		});
 		
 		function expectIsAnKineticItem(item){

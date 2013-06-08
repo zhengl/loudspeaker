@@ -1,31 +1,48 @@
-function KineticLine(points){
+function KineticLine(points, stroke){
 	Line.call(this, points);
 	
+	this.setStroke(stroke || KineticLine.defaultStroke);
+		
 	this.kineticShape = new Kinetic.Line({
 		points: KineticLine.flatternPoints(points),
-		stroke: 'red',
-		strokeWidth: 5,
+		strokeWidth: KineticLine.defaultStrokeWidth,
+		stroke: this.getStroke(),
 		lineCap: 'round',
-		lineJoin: 'round'
+		lineJoin: 'bevel'
 	});
 }
 
+KineticLine.defaultStroke = 'black';
+KineticLine.defaultStrokeWidth = 10;
+
+KineticLine.draftStroke = 'gray';
+KineticLine.draftStrokeWidth = 10;
+KineticLine.draftDashArray = [10, 15];
+
 KineticLine.prototype = new Line();
 KineticLine.prototype.constructor = KineticLine;
+
+KineticLine.prototype.setStroke = function(stroke){
+	this.stroke = stroke;
+};
+
+KineticLine.prototype.getStroke = function(){
+	return this.stroke;
+};
 
 KineticLine.prototype.getKineticShape = function(){
 	return this.kineticShape;
 };
 
 KineticLine.prototype.draftize = function(){
-	this.getKineticShape().setStroke('gray');
-	this.getKineticShape().setDashArray([10, 15]);
+	this.getKineticShape().setStroke(KineticLine.draftStroke);
+	this.getKineticShape().setDashArray(KineticLine.draftDashArray);
 	this.getKineticShape().enableDashArray();
 	return this;
 };
 
 KineticLine.prototype.undraftize = function(){
-	this.getKineticShape().setStroke('red');
+	this.getKineticShape().setStroke(this.getStroke());
 	this.getKineticShape().disableDashArray();
 	return this;
 };
