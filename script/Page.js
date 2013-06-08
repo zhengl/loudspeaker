@@ -45,6 +45,7 @@ Page.prototype.draftTo = function(point){
 };
 
 Page.prototype.endDraft = function(point){
+	this.isPainting = false;
 	this.draftTo(point);
 	this.context.undraftize();
 };

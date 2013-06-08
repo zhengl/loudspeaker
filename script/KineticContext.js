@@ -1,4 +1,7 @@
 function KineticContext(container){
+	this.items = new Array();
+	this.draftItems = new Array();
+	
 	this.stage = new Kinetic.Stage({
 		container: container,
 		width: 800,
@@ -10,7 +13,21 @@ function KineticContext(container){
 	this.stage.add(this.draftLayer);
 }
 
-KineticContext.prototype = new Context();
+KineticContext.prototype.getLastDraftItem = function(){
+	return this.draftItems[this.draftItems.length - 1];
+};
+
+KineticContext.prototype.clearDraftItems = function(){
+	this.draftItems = [];
+	this.draftLayer.clear();
+}
+
+KineticContext.prototype.undraftize = function(){
+	var draftItem = this.getLastDraftItem();
+	var item = draftItem.undraftize();
+	this.addItem(item);
+	this.clearDraftItems();
+};
 
 KineticContext.prototype.setEventTrigger = function(eventTrigger){
 	this.eventTrigger = eventTrigger;
@@ -25,23 +42,53 @@ KineticContext.prototype.setEventTrigger = function(eventTrigger){
 	]);
 }
 
-KineticContext.prototype.draw = function(item){
-	var kineticItem = new KineticItemFactory.create(item);
-	this.addItem(kineticItem);
+KineticContext.prototype.getItems = function(){
+	return this.items;
+};
+
+KineticContext.prototype.getDraftItems = function(){
+	return this.draftItems;
+};
+
+KineticContext.prototype.addItem = function(kineticItem){
+	this.items.push(kineticItem)
 	this.layer.add(kineticItem.getKineticShape());
 	this.layer.draw();
-	
+};
+
+KineticContext.prototype.addDraftItem = function(kineticItem){
+	this.draftItems.push(kineticItem)
+	this.draftLayer.add(kineticItem.getKineticShape());
+	this.draftLayer.draw();
+};
+
+KineticContext.prototype.draw = function(item){
+	var kineticItem = KineticItemFactory.create(item);
+	this.addItem(kineticItem);
 	return kineticItem;
 };
 
 KineticContext.prototype.draft = function(item){
-	var kineticItem = new KineticItemFactory.create(item);
+	var kineticItem = KineticItemFactory.create(item);
 	kineticItem.draftize();
 	this.addDraftItem(kineticItem);
-	this.draftLayer.add(kineticItem.kineticShape);
-	this.draftLayer.draw();
-	
 	return kineticItem;
+};
+
+KineticContext.prototype.startDraft = function(type, point){
+	var draftItem = new window[type];
+	draftItem.update(point);
+	var kineticItem = KineticItemFactory.create(draftItem);
+	kineticItem.draftize();
+	this.addDraftItem(kineticItem);
+};
+
+KineticContext.prototype.draftTo = function(point) {
+	var draftItem = this.getLastDraftItem();
+	draftItem.update(point);
+	this.clearDraftItems();
+	this.addDraftItem(draftItem);
+	return draftItem;
 };
 
 KineticContext.prototype.addEventListeners = function(events){

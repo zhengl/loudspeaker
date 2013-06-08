@@ -2,8 +2,12 @@ function KineticItemFactory(){
 }
 
 KineticItemFactory.create = function(item){
+	var kineticItem;
 	if (item instanceof Line) {
-		return new KineticLine(item.points);
+		var kineticItem = new KineticLine(item.points);
 	} else {
+		console.log(item);
 	}
+	
+	return kineticItem;
 };
