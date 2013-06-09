@@ -2,9 +2,13 @@ function Item(){
 	this.isSelected = false;
 }
 
+Item.prototype.setPage = function(page){
+	this.page = page;
+};
+
 Item.prototype.getPosition = function(){
 	return this.position;
-}
+};
 
 Item.prototype.moveTo = function(newPosition){
 	this.position = newPosition;
@@ -17,9 +21,14 @@ Item.prototype.registerEventTrigger = function(eventTrigger){
 Item.prototype.notify = function(event){
 	switch(event.name) {
 		case Item.Event.START_MOVING:
-			this.tryToStartMoving();
+			this.tryToStartMoving(event.data[0]);
+			this.page.startMoving(this);
 			break;
-		case Item.Event.STOP_DRAWING:
+		case Item.Event.STOP_MOVING:
+			this.isMoving = false;
+			this.page.finishMoving(this);
+			break;
+		case Item.Event.FINISH_DRAWING:
 			this.isMoving = false;
 			break;
 		case Item.Event.MOVE_TO:
@@ -34,17 +43,30 @@ Item.prototype.notify = function(event){
 	}
 };
 
-Item.prototype.tryToStartMoving = function(){
+Item.prototype.tryToStartMoving = function(relativePosition){
 	if (this.isSelected) {
 		this.isMoving = true;
+		this.relativePosition = relativePosition;
 	}
 };
 
 Item.prototype.tryToMoveTo = function(newPosition){
 	if (this.isMoving) {
-		this.moveTo(newPosition);
+		var newX = newPosition.x - (this.getPosition().x - this.relativePosition.x);
+		var newY = newPosition.y - (this.getPosition().y - this.relativePosition.y);
+		this.moveTo(new Point(newX, newY));
 	}
 }
+
+Item.prototype.clone = function(){
+	var item = new Item();
+	item.setPage(this.page);
+	if(undefined != this.position) {
+		item.setPosition(this.position);
+	}
+	
+	return item;
+};
 
 Item.Event = {
 	START_MOVING: "START_MOVING",

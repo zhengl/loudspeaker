@@ -3,10 +3,12 @@ function Page(context) {
 }
 
 Page.prototype.draw = function(item) {
+	item.setPage(this);
 	return this.context.draw(item);
 };
 
 Page.prototype.draft = function(item) {
+	item.setPage(this);
 	return this.context.draft(item);
 }
 
@@ -55,6 +57,14 @@ Page.prototype.moveTo = function(point){
 	if(this.isPainting){
 		this.draftTo(point);
 	}
+};
+
+Page.prototype.startMoving = function(item) {
+	this.context.startMoving(item);
+};
+
+Page.prototype.finishMoving = function(item) {
+	this.context.finishMoving(item);
 };
 
 Page.Event = {

@@ -105,8 +105,8 @@ describe("Page", function() {
 			eventTrigger.trigger(new AbstractEvent(Item.Event.UNSELECT));	
 		}
 		
-		function triggerStartMovingEvent(){
-			eventTrigger.trigger(new AbstractEvent(Item.Event.START_MOVING));
+		function triggerStartMovingEvent(x, y){
+			eventTrigger.trigger(new AbstractEvent(Item.Event.START_MOVING, [new Point(x, y)]));
 		}
 		
 		function triggerFinishMovingEvent(){
@@ -153,17 +153,23 @@ describe("Page", function() {
 		it("should move a line with events, START_MOVING, MOVE_TO, STOP_MOVING after being selected", function() {
 			var line = createLine(10, 10, 20, 20);
 			var item = page.draw(line);
-
-			registerEventListenerAdapter(item);		
+			
+			registerEventListenerAdapter(item);	
 			
 			triggerSelectEvent();
-			triggerStartMovingEvent();
-			var newPosition = new Point(20, 20);
-			eventTrigger.trigger(new AbstractEvent(Item.Event.MOVE_TO, [newPosition]));
-			triggerStopMovingEvent();
+			triggerStartMovingEvent(5, 5);
 			
-			var line = page.context.getItems()[0];
-			expect(line.position).toBe(newPosition);
+			triggerMoveToEvent(20, 20);
+			expectOneItem(page);
+			expectOneDraftItem(page);
+			
+			triggerFinishMovingEvent();
+			expectOneItem(page);
+			expectNoDraftItem(page);
+
+			line = page.context.getItems()[0];
+			expect(line.getPosition().x).toBe(15);
+			expect(line.getPosition().y).toBe(15);
 		});	
 		
 		it("should stop drawing with event STOP_DRAWING", function(){
@@ -194,27 +200,6 @@ describe("Page", function() {
 			
 			triggerUnselectEvent();			
 			expect(line.isSelected).toBe(false);
-		});
-		
-		it("should be moved with event START_MOVING, MOVE_TO and FINISH_MOVING", function(){
-			var line = createLine(10, 10, 20, 20);
-			var item = page.draw(line);
-			
-			registerEventListenerAdapter(item);	
-			
-			triggerStartMovingEvent(15, 15);
-			
-			triggerMoveToEvent(20, 20);
-			expectOneItem(page);
-			expectOneDraftItem(page);
-			
-			triggerFinishMovingEvent();
-			expectOneItem(page);
-			expectNoDraftItem(page);
-
-			line = page.context.getItems()[0];
-			expect(line.getPosition().x).toBe(15);
-			expect(line.getPosition().y).toBe(15);
 		});
 	});
   

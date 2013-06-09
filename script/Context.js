@@ -55,6 +55,15 @@ Context.prototype.undraftize = function(){
 	this.clearDraftItems();
 };
 
+Context.prototype.startMoving = function(item){
+	var draftItem = item.clone().draftize();
+	this.addDraftItem(draftItem);
+};
+
+Context.prototype.finishMoving = function(item){
+	this.clearDraftItems();
+};
+
 Context.prototype.clearDraftItems = function(){
 	this.draftItems = [];
 }
