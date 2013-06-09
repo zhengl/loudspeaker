@@ -109,8 +109,8 @@ describe("Page", function() {
 			eventTrigger.trigger(new AbstractEvent(Item.Event.START_MOVING));
 		}
 		
-		function triggerStopMovingEvent(){
-			eventTrigger.trigger(new AbstractEvent(Item.Event.STOP_MOVING));
+		function triggerFinishMovingEvent(){
+			eventTrigger.trigger(new AbstractEvent(Item.Event.FINISH_MOVING));
 		}
   
 		it("should DRAW a line with events", function() {
@@ -194,7 +194,28 @@ describe("Page", function() {
 			
 			triggerUnselectEvent();			
 			expect(line.isSelected).toBe(false);
-		});			
+		});
+		
+		it("should be moved with event START_MOVING, MOVE_TO and FINISH_MOVING", function(){
+			var line = createLine(10, 10, 20, 20);
+			var item = page.draw(line);
+			
+			registerEventListenerAdapter(item);	
+			
+			triggerStartMovingEvent(15, 15);
+			
+			triggerMoveToEvent(20, 20);
+			expectOneItem(page);
+			expectOneDraftItem(page);
+			
+			triggerFinishMovingEvent();
+			expectOneItem(page);
+			expectNoDraftItem(page);
+
+			line = page.context.getItems()[0];
+			expect(line.getPosition().x).toBe(15);
+			expect(line.getPosition().y).toBe(15);
+		});
 	});
   
 	describe("with KineticJS context", function(){

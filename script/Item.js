@@ -48,7 +48,7 @@ Item.prototype.tryToMoveTo = function(newPosition){
 
 Item.Event = {
 	START_MOVING: "START_MOVING",
-	STOP_MOVING: "STOP_MOVING",
+	FINISH_MOVING: "FINISH_MOVING",
 	MOVE_TO: "MOVE_TO",
 	SELECT: "SELECT",
 	UNSELECT: "UNSELECT"

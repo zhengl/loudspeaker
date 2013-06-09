@@ -18,12 +18,11 @@ KineticContext.prototype.getLastDraftItem = function(){
 };
 
 KineticContext.prototype.clearDraftItems = function(){
-	for(var index in this.getDraftItems()) {
-		console.log(this.draftItems[index].getKineticShape());
-		this.draftItems[index].getKineticShape().destroy();
-	}
-	// this.draftLayer.draw();
+	this.draftLayer.getChildren().each(function(shape){
+		shape.remove();
+	});
 	this.draftItems = [];
+	this.draftLayer.draw();
 }
 
 KineticContext.prototype.undraftize = function(){
