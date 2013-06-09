@@ -9,8 +9,8 @@ function KineticContext(container, width, height){
 	});
 	this.layer = new Kinetic.Layer();
 	this.draftLayer = new Kinetic.Layer();
-	this.stage.add(this.layer);
 	this.stage.add(this.draftLayer);
+	this.stage.add(this.layer);
 }
 
 KineticContext.prototype.getLastDraftItem = function(){
@@ -18,15 +18,12 @@ KineticContext.prototype.getLastDraftItem = function(){
 };
 
 KineticContext.prototype.clearDraftItems = function(){
-	this.draftLayer.getChildren().each(function(shape){
-		shape.remove();
-	});
 	this.draftItems = [];
+	this.draftLayer.removeChildren();
 	this.draftLayer.draw();
 }
 
 KineticContext.prototype.undraftize = function(){
-console.log("undraftize");
 	var draftItem = this.getLastDraftItem();
 	var item = draftItem.undraftize();
 	this.addItem(item);
@@ -56,7 +53,8 @@ KineticContext.prototype.getDraftItems = function(){
 
 KineticContext.prototype.addItem = function(kineticItem){
 	this.items.push(kineticItem)
-	this.layer.add(kineticItem.getKineticShape());
+	// this.layer.add(kineticItem.getKineticShape());
+	kineticItem.getKineticShape().moveTo(this.layer);
 	this.layer.draw();
 };
 
@@ -88,7 +86,6 @@ KineticContext.prototype.startDraft = function(type, point){
 };
 
 KineticContext.prototype.draftTo = function(point) {
-console.log("draftTo");
 	var draftItem = this.getLastDraftItem();
 	draftItem.update(point);
 	this.clearDraftItems();
