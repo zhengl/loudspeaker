@@ -50,13 +50,13 @@ Item.prototype.startMoving = function(relativePosition){
 	if (this.isSelected) {
 		this.isMoving = true;
 		this.relativePosition = relativePosition;
-		this.page.startMoving(this);
+		this.page.getMover().startMoving(this);
 	}
 };
 
 Item.prototype.finishMoving = function(){
 	this.isMoving = false;
-	this.page.finishMoving(this);
+	this.page.getMover().finishMoving(this);
 };
 
 Item.prototype.tryToMoveTo = function(newPosition){

@@ -2,11 +2,17 @@ function Page(context) {
 	this.context = context;
 	
 	this.painter = new Painter(context);
-	this.painter.setPage(this);
+	this.painter.setPage(this);	
+	
+	this.mover = new Mover(context);
 }
 
 Page.prototype.getPainter = function() {
 	return this.painter;
+};
+
+Page.prototype.getMover = function(){
+	return this.mover;
 };
 
 Page.prototype.registerEventTrigger = function(eventTrigger){
@@ -34,14 +40,6 @@ Page.prototype.moveTo = function(point){
 	if(this.painter.isPainting){
 		this.painter.draftTo(point);
 	}
-};
-
-Page.prototype.startMoving = function(item) {
-	this.context.startMoving(item);
-};
-
-Page.prototype.finishMoving = function(item) {
-	this.context.finishMoving(item);
 };
 
 Page.Event = {
