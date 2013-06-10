@@ -24,7 +24,7 @@ Item.prototype.notify = function(event){
 			this.tryToStartMoving(event.data[0]);
 			this.page.startMoving(this);
 			break;
-		case Item.Event.STOP_MOVING:
+		case Item.Event.FINISH_MOVING:
 			this.isMoving = false;
 			this.page.finishMoving(this);
 			break;
@@ -56,16 +56,6 @@ Item.prototype.tryToMoveTo = function(newPosition){
 		var newY = newPosition.y - (this.getPosition().y - this.relativePosition.y);
 		this.moveTo(new Point(newX, newY));
 	}
-}
-
-Item.prototype.clone = function(){
-	var item = new Item();
-	item.setPage(this.page);
-	if(undefined != this.position) {
-		item.setPosition(this.position);
-	}
-	
-	return item;
 };
 
 Item.Event = {

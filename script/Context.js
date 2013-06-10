@@ -11,6 +11,16 @@ Context.prototype.getItems = function(){
 	return this.items;
 };
 
+Context.prototype.removeItem = function(item){
+	var resultItems = new Array();
+	for(var index in this.items){
+		if(item != this.items[index]) {
+			resultItems.push(this.items[index]);
+		}
+	}
+	this.items = resultItems;
+};
+
 Context.prototype.getDraftItems = function(){
 	return this.draftItems;
 };
@@ -56,12 +66,13 @@ Context.prototype.undraftize = function(){
 };
 
 Context.prototype.startMoving = function(item){
-	var draftItem = item.clone().draftize();
-	this.addDraftItem(draftItem);
+	this.removeItem(item);
+	this.addDraftItem(item.draftize());
 };
 
 Context.prototype.finishMoving = function(item){
 	this.clearDraftItems();
+	this.addItem(item.undraftize());
 };
 
 Context.prototype.clearDraftItems = function(){

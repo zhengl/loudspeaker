@@ -15,7 +15,7 @@ KineticEventOnPageInterpreter.prototype.interpret = function(event){
 		case KineticEvent.MOUSE_ENTER:
 		break;
 		case KineticEvent.MOUSE_LEAVE:
-			// return new AbstractEvent(Page.Event.STOP_DRAWING);
+			return new AbstractEvent(Page.Event.STOP_DRAWING);
 		break;
 		case KineticEvent.MOUSE_OVER:
 		break;

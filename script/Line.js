@@ -26,19 +26,12 @@ Line.prototype.getPosition = function(){
 
 Line.prototype.draftize = function(){
 	return this;
-}
+};
 
 Line.prototype.undraftize = function(){
 	return this;
-}
+};
 
 Line.prototype.update = function(point){
 	this.points.push(point);
-}
-
-Line.prototype.clone = function(){
-	var line = new Line(this.getPosition());
-	line.setPage(this.page);
-	
-	return line;
 };

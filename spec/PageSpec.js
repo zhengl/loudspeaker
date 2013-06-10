@@ -158,9 +158,11 @@ describe("Page", function() {
 			
 			triggerSelectEvent();
 			triggerStartMovingEvent(5, 5);
+			expectNoItem(page);
+			expectOneDraftItem(page);			
 			
 			triggerMoveToEvent(20, 20);
-			expectOneItem(page);
+			expectNoItem(page);
 			expectOneDraftItem(page);
 			
 			triggerFinishMovingEvent();
