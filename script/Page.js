@@ -1,19 +1,12 @@
 function Page(context) {
 	this.context = context;
+	
+	this.painter = new Painter(context);
+	this.painter.setPage(this);
 }
 
-Page.prototype.draw = function(item) {
-	item.setPage(this);
-	return this.context.draw(item);
-};
-
-Page.prototype.draft = function(item) {
-	item.setPage(this);
-	return this.context.draft(item);
-}
-
-Page.prototype.selectLine = function(){
-	this.type = "Line";
+Page.prototype.getPainter = function() {
+	return this.painter;
 };
 
 Page.prototype.registerEventTrigger = function(eventTrigger){
@@ -23,14 +16,13 @@ Page.prototype.registerEventTrigger = function(eventTrigger){
 Page.prototype.notify = function(event){
 	switch(event.name) {
 		case Page.Event.START_DRAWING:
-			this.startDraft(event.data[0]);
+			this.painter.startDraft(event.data[0]);
 			break;
 		case Page.Event.FINISH_DRAWING:
-			this.endDraft(event.data[0]);
+			this.painter.endDraft(event.data[0]);
 			break;
 		case Page.Event.STOP_DRAWING:
-			this.isPainting = false;
-			this.context.clearDraftItems();
+			this.painter.stopDrawing();
 			break;
 		case Page.Event.MOVE_TO:
 			this.moveTo(event.data[0]);
@@ -38,24 +30,9 @@ Page.prototype.notify = function(event){
 	}
 };
 
-Page.prototype.startDraft = function(point){
-	this.isPainting = true;
-	this.context.startDraft(this.type, point);
-};
-
-Page.prototype.draftTo = function(point){
-	this.context.draftTo(point);
-};
-
-Page.prototype.endDraft = function(point){
-	this.isPainting = false;
-	this.draftTo(point);
-	this.context.undraftize();
-};
-
 Page.prototype.moveTo = function(point){
-	if(this.isPainting){
-		this.draftTo(point);
+	if(this.painter.isPainting){
+		this.painter.draftTo(point);
 	}
 };
 

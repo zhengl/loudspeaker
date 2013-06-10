@@ -21,33 +21,42 @@ Item.prototype.registerEventTrigger = function(eventTrigger){
 Item.prototype.notify = function(event){
 	switch(event.name) {
 		case Item.Event.START_MOVING:
-			this.tryToStartMoving(event.data[0]);
-			this.page.startMoving(this);
+			this.startMoving(event.data[0]);
 			break;
 		case Item.Event.FINISH_MOVING:
-			this.isMoving = false;
-			this.page.finishMoving(this);
-			break;
-		case Item.Event.FINISH_DRAWING:
-			this.isMoving = false;
+			this.finishMoving();
 			break;
 		case Item.Event.MOVE_TO:
 			this.tryToMoveTo(event.data[0]);
 			break;
 		case Item.Event.SELECT:
-			this.isSelected = true;
+			this.select();
 			break;
 		case Item.Event.UNSELECT:
-			this.isSelected = false;
+			this.unselect();
 			break;
 	}
 };
 
-Item.prototype.tryToStartMoving = function(relativePosition){
+Item.prototype.select = function(){
+	this.isSelected = true;
+};
+
+Item.prototype.unselect = function(){
+	this.isSelected = false;
+};
+
+Item.prototype.startMoving = function(relativePosition){
 	if (this.isSelected) {
 		this.isMoving = true;
 		this.relativePosition = relativePosition;
+		this.page.startMoving(this);
 	}
+};
+
+Item.prototype.finishMoving = function(){
+	this.isMoving = false;
+	this.page.finishMoving(this);
 };
 
 Item.prototype.tryToMoveTo = function(newPosition){

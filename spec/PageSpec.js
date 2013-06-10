@@ -28,39 +28,15 @@ describe("Page", function() {
 	beforeEach(function() {
 		page = new Page(new Context());
 	});
-
-	it("should return a Line after drawing a line", function() {
-		var line = createLine(0, 0, 10, 10);
-		var item = page.draw(line);
-		expectOneItem(page);
-		expectIsAnItem(item);
-	});
-
-	it("should return nothing after drafting a line", function(){
-		var line = createLine(0, 0, 10, 10);
-		var item = page.draft(line);
-		expectOneDraftItem(page);
-		expectNoItem(page);
-		expectIsAnItem(item);
-	});
 	
-	it("should have only one draft item when repeat drafting", function(){
-		var line = createLine(10, 10, 20, 20);
-		page.draft(line);
-		expectOneDraftItem(page);
-		line = createLine(20, 20, 30, 30);
-		page.draft(line);
-		expectOneDraftItem(page);
-	});
 	
 	it("should be able to register event triggers", function() {
 		var eventTrigger = new EventTrigger();
 		page.registerEventTrigger(eventTrigger);
-		page.selectLine();
+		page.getPainter().selectShape(Palette.Shape.Line);
 		eventTrigger.trigger(new AbstractEvent(Page.Event.START_DRAWING, [new Point(0, 0)]));
-		expect(page.isPainting).toBe(true);
+		expect(page.getPainter().isPainting).toBe(true);
 	});
-  
   
 	describe("with Event Handling", function(){
 		var page;
@@ -68,6 +44,7 @@ describe("Page", function() {
 		
 		beforeEach(function() {
 			page = new Page(new Context());
+			page.getPainter().selectShape(Palette.Shape.Line);
 			eventTrigger = new EventTrigger();
 		});
 		
@@ -114,7 +91,6 @@ describe("Page", function() {
 		}
   
 		it("should DRAW a line with events", function() {
-			page.selectLine();
 			registerEventListenerAdapter(page);
 			
 			triggerStartDrawingEvent(10, 10);
@@ -129,7 +105,6 @@ describe("Page", function() {
 		});
 		
 		it("should DRAFT a line with events", function() {
-			page.selectLine();
 			registerEventListenerAdapter(page);
 			
 			triggerStartDrawingEvent(10, 10);
@@ -152,7 +127,7 @@ describe("Page", function() {
 		
 		it("should move a line with events, START_MOVING, MOVE_TO, STOP_MOVING after being selected", function() {
 			var line = createLine(10, 10, 20, 20);
-			var item = page.draw(line);
+			var item = page.getPainter().draw(line);
 			
 			registerEventListenerAdapter(item);	
 			
@@ -175,7 +150,6 @@ describe("Page", function() {
 		});	
 		
 		it("should stop drawing with event STOP_DRAWING", function(){
-			page.selectLine();
 			registerEventListenerAdapter(page);
 			
 			triggerStartDrawingEvent(10, 10);
@@ -191,7 +165,7 @@ describe("Page", function() {
 
 		it("should be selected and unselected with event SELECT and UNSELECT", function() {
 			var line = createLine(10, 10, 20, 20);
-			var item = page.draw(line);
+			var item = page.getPainter().draw(line);
 			var line = page.context.getItems()[0];
 			expect(line.isSelected).toBe(false);
 			
@@ -217,38 +191,38 @@ describe("Page", function() {
 		
 		it("should return a Line after DRAWING a line with direct call", function() {
 			var line = createLine(10, 10, 20, 20);
-			var item = page.draw(line);
+			var item = page.getPainter().draw(line);
 			expectOneItem(page);
 			expectIsAnKineticItem(item);
 		});
 
 		it("should return a Line after DRAFTING a line with direct call", function() {
 			var line = createLine(10, 10, 20, 20);
-			var item = page.draft(line);
+			var item = page.getPainter().draft(line);
 			expectOneDraftItem(page);
 			expectIsAnKineticItem(item);
 		});
 		
-		it("should return a Line after DRAWING a line with steps", function(){
-			page.selectLine();
-
-			page.startDraft(new Point(10, 10));
+		
+		it("should MOVE a line with steps", function(){
+			var line = createLine(10, 10, 20, 20);
+			var item = page.getPainter().draw(line);
+			
+			item.select();
+			item.startMoving(new Point(5, 5));
 			expectNoItem(page);
 			expectOneDraftItem(page);
 			
-			page.draftTo(new Point(10, 20));
+			item.tryToMoveTo(new Point(10, 10));
 			expectNoItem(page);
 			expectOneDraftItem(page);
 			
-			page.draftTo(new Point(20, 20));
-			page.draftTo(new Point(20, 30));
-			page.endDraft(new Point(30, 30));
-			
-			var line = page.context.getItems()[0];
-			expectIsAnItem(line);
+			item.finishMoving();
 			expectOneItem(page);
 			expectNoDraftItem(page);
-			expectOneItem(page);			
+			
+			expect(item.getPosition().x).toBe(5);
+			expect(item.getPosition().y).toBe(5);
 		});
 	});
 });

@@ -9,5 +9,6 @@ KineticItemFactory.create = function(item){
 		console.log(item);
 	}
 	
+	kineticItem.setPage(item.page);
 	return kineticItem;
 };
