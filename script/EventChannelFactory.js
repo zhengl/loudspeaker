@@ -6,10 +6,10 @@ EventChannelFactory.create = function(){
 	var eventTriggerAdapter;
 
 	switch(Environment.name){
-		case Environment.Dummy:
+		case Environment.Dummy.name:
 			eventTriggerAdapter = new EventTriggerAdapter(new DummyEventInterpreter());
 		break;
-		case Environment.Mouse:
+		case Environment.Mouse.name:
 			eventTriggerAdapter = new EventTriggerAdapter(new KineticEventOnPageInterpreter());
 		break;
 	}

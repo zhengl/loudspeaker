@@ -7,12 +7,14 @@
 
   <!-- include source files here... -->
   <script type="text/javascript" src="script/Board.js"></script>
+  <script type="text/javascript" src="script/Environment.js"></script>
   <script type="text/javascript" src="script/Page.js"></script>
   <script type="text/javascript" src="script/Painter.js"></script>
   <script type="text/javascript" src="script/Palette.js"></script>
   <script type="text/javascript" src="script/Mover.js"></script>
   <script type="text/javascript" src="script/Context.js"></script>
   <script type="text/javascript" src="script/KineticContext.js"></script>
+  <script type="text/javascript" src="script/ContextFactory.js"></script>
   <script type="text/javascript" src="script/Point.js"></script>
   <script type="text/javascript" src="script/Item.js"></script>
   <script type="text/javascript" src="script/KineticItemFactory.js"></script>
@@ -21,23 +23,18 @@
   <script type="text/javascript" src="script/AbstractEvent.js"></script>
   <script type="text/javascript" src="script/KineticEvent.js"></script>
   <script type="text/javascript" src="script/EventTrigger.js"></script>
+  <script type="text/javascript" src="script/EventChannel.js"></script>
+  <script type="text/javascript" src="script/EventChannelFactory.js"></script>
   <script type="text/javascript" src="script/EventTriggerAdapter.js"></script>
   <script type="text/javascript" src="script/KineticEventOnPageInterpreter.js"></script>
 </head>
 <body>
   <div id="board" />
   <script defer>
-	function createEventTriggerAdapter(eventTrigger){
-		var eventTriggerAdapter = new EventTriggerAdapter(new KineticEventOnPageInterpreter());
-		eventTrigger.addListener(eventTriggerAdapter);
-		return eventTriggerAdapter;
-	}
+	Environment.setMouse();
   
-	var page = new Page(new KineticContext("board", 800, 500));
-	var eventTrigger = new EventTrigger();
-	page.registerEventTrigger(createEventTriggerAdapter(eventTrigger));
-	page.context.setEventTrigger(eventTrigger);
-	
+	var page = new Page();
+  page.enableEventHandling();
 	page.getPainter().selectShape(Palette.Shape.Line);
   </script>
 </body>
