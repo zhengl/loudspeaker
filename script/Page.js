@@ -49,13 +49,17 @@ Page.prototype.draw = function(item){
 };
 
 Page.prototype.notify = function(event){
-	console.log(event.name);
+	// console.log(event.name);
 	switch(event.name) {
 		case Page.Event.START_DRAWING:
 			this.painter.startDraft(event.data[0]);
 			break;
 		case Page.Event.FINISH_DRAWING:
-			this.painter.endDraft(event.data[0]);
+			var drawnItem = this.painter.endDraft(event.data[0]);
+			console.log(drawnItem);
+			drawnItem.enableEventHandling();
+			drawnItem.registerEventTrigger()
+			// item.getOutputEventTrigger().addListener(this);
 			break;
 		case Page.Event.STOP_DRAWING:
 			this.painter.stopDrawing();

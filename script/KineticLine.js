@@ -50,7 +50,7 @@ KineticLine.prototype.undraftize = function(){
 KineticLine.prototype.update = function(point){
 	this.points.push(point);
 	this.getKineticShape().setPoints(KineticLine.flatternPoints(this.points));
-}
+};
 
 KineticLine.flatternPoints = function(points){
 	var linePoints = new Array();
@@ -59,4 +59,11 @@ KineticLine.flatternPoints = function(points){
 		linePoints.push(points[index].y);
 	}
 	return linePoints;
-}
+};
+
+KineticLine.prototype.registerEventTrigger = function(){
+	this.getKineticShape().on('mousemove', function(event){
+		console.log(event);
+		// this.getInputEventTrigger().trigger();
+	});
+};

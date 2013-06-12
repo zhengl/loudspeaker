@@ -28,20 +28,8 @@ KineticContext.prototype.undraftize = function(){
 	var item = draftItem.undraftize();
 	this.addItem(item);
 	this.clearDraftItems();
+	return item;
 };
-
-KineticContext.prototype.setEventTrigger = function(eventTrigger){
-	this.eventTrigger = eventTrigger;
-	this.addEventListeners([
-		KineticEvent.MOVE_TO,
-		KineticEvent.MOUSE_DOWN,
-		KineticEvent.MOUSE_UP,
-		KineticEvent.MOUSE_ENTER,
-		KineticEvent.MOUSE_LEAVE,
-		KineticEvent.MOUSE_OVER,
-		KineticEvent.MOUSE_OUT
-	]);
-}
 
 KineticContext.prototype.getItems = function(){
 	return this.items;
@@ -82,6 +70,7 @@ KineticContext.prototype.startDraft = function(type, point){
 	var kineticItem = KineticItemFactory.create(draftItem);
 	kineticItem.draftize();
 	this.addDraftItem(kineticItem);
+	return kineticItem;
 };
 
 KineticContext.prototype.draftTo = function(point) {
@@ -114,11 +103,22 @@ KineticContext.prototype.removeItem = function(item){
 	this.items = resultItems;
 };
 
-KineticContext.prototype.registerEventTrigger = function(events){
+KineticContext.prototype.registerEventTrigger = function(inputEventTrigger){
+	this.addEventListeners(inputEventTrigger, [
+		KineticEvent.MOVE_TO,
+		KineticEvent.MOUSE_DOWN,
+		KineticEvent.MOUSE_UP,
+		KineticEvent.MOUSE_ENTER,
+		KineticEvent.MOUSE_LEAVE,
+		KineticEvent.MOUSE_OVER,
+		KineticEvent.MOUSE_OUT
+	]);
+}
+
+KineticContext.prototype.addEventListeners = function(inputEventTrigger, events){
 	for(var index in events){
-		var self = this;
 		this.stage.getContainer().addEventListener(events[index], function(event) {
-			self.eventTrigger.trigger(event);
+			inputEventTrigger.trigger(event);
 		});		
 	}
 };
