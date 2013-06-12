@@ -19,7 +19,7 @@ Painter.prototype.draft = function(item){
 
 Painter.prototype.startDraft = function(point){
 	this.isPainting = true;
-	this.context.startDraft(this.palette.getShape(), point);
+	return this.context.startDraft(this.palette.getShape(), point);
 };
 
 Painter.prototype.selectShape = function(shape){
@@ -27,13 +27,13 @@ Painter.prototype.selectShape = function(shape){
 };
 
 Painter.prototype.draftTo = function(point){
-	this.context.draftTo(point);
+	return this.context.draftTo(point);
 };
 
 Painter.prototype.endDraft = function(point){
 	this.isPainting = false;
 	this.draftTo(point);
-	this.context.undraftize();
+	return this.context.undraftize();
 };
 
 Painter.prototype.stopDrawing = function(){

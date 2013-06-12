@@ -3,6 +3,9 @@ function Context(){
 	this.draftItems = new Array();
 }
 
+Context.prototype.registerEventTrigger = function(inputEventTrigger){
+}
+
 Context.prototype.getLastDraftItem = function(){
 	return this.draftItems[this.draftItems.length - 1];
 };
@@ -19,6 +22,14 @@ Context.prototype.removeItem = function(item){
 		}
 	}
 	this.items = resultItems;
+};
+
+Context.prototype.setEventTrigger = function(eventTrigger){
+	this.eventTrigger = eventTrigger;
+};
+
+Context.prototype.getEventTrigger = function(){
+	return this.eventTrigger;
 };
 
 Context.prototype.getDraftItems = function(){
@@ -42,6 +53,7 @@ Context.prototype.startDraft = function(type, point){
 	var draftItem = new window[type];
 	draftItem.update(point);
 	this.addDraftItem(draftItem);
+	return draftItem;
 }
 
 Context.prototype.draftTo = function(point) {
@@ -63,16 +75,19 @@ Context.prototype.undraftize = function(){
 	var item = draftItem.undraftize();
 	this.draw(item);
 	this.clearDraftItems();
+	return item;
 };
 
 Context.prototype.startMoving = function(item){
 	this.removeItem(item);
 	this.addDraftItem(item.draftize());
+	return item;
 };
 
 Context.prototype.finishMoving = function(item){
 	this.clearDraftItems();
 	this.addItem(item.undraftize());
+	return item;
 };
 
 Context.prototype.clearDraftItems = function(){

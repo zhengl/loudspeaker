@@ -25,38 +25,17 @@ describe("Page", function() {
 		expect(item instanceof Item).toBe(true);
 	}
 	
-	beforeEach(function() {
-		page = new Page(new Context());
-	});
-	
-	
-	it("should be able to register event triggers", function() {
-		var eventTrigger = new EventTrigger();
-		page.registerEventTrigger(eventTrigger);
-		page.getPainter().selectShape(Palette.Shape.Line);
-		eventTrigger.trigger(new AbstractEvent(Page.Event.START_DRAWING, [new Point(0, 0)]));
-		expect(page.getPainter().isPainting).toBe(true);
-	});
-  
 	describe("with Event Handling", function(){
 		var page;
 		var eventTrigger;
 		
 		beforeEach(function() {
-			page = new Page(new Context());
+			Environment.setDummy();
+			page = new Page();
+			page.enableEventHandling();
+			eventTrigger = page.getInputEventTrigger();
 			page.getPainter().selectShape(Palette.Shape.Line);
-			eventTrigger = new EventTrigger();
 		});
-		
-		function createEventTriggerAdapter(){
-			var eventTriggerAdapter = new EventTriggerAdapter(new DummyEventInterpreter());
-			eventTrigger.addListener(eventTriggerAdapter);
-			return eventTriggerAdapter;
-		}
-		
-		function registerEventListenerAdapter(listener){
-			listener.registerEventTrigger(createEventTriggerAdapter(eventTrigger));
-		}
 		
 		function triggerMoveToEvent(x, y){
 			eventTrigger.trigger(new AbstractEvent(Page.Event.MOVE_TO, [new Point(x, y)]));
@@ -90,9 +69,12 @@ describe("Page", function() {
 			eventTrigger.trigger(new AbstractEvent(Item.Event.FINISH_MOVING));
 		}
   
-		it("should DRAW a line with events", function() {
-			registerEventListenerAdapter(page);
-			
+		it("should have registered a event trigger", function() {
+			expect(page.getOutputEventTrigger()).toBeDefined();
+			expect(page.getInputEventTrigger()).toBeDefined();
+		});
+
+		it("should DRAW a line with events", function() {			
 			triggerStartDrawingEvent(10, 10);
 			triggerMoveToEvent(20, 20);
 			triggerFinishDrawingEvent(20, 20);
@@ -105,8 +87,6 @@ describe("Page", function() {
 		});
 		
 		it("should DRAFT a line with events", function() {
-			registerEventListenerAdapter(page);
-			
 			triggerStartDrawingEvent(10, 10);
 			
 			triggerMoveToEvent(20, 20);
@@ -127,9 +107,9 @@ describe("Page", function() {
 		
 		it("should move a line with events, START_MOVING, MOVE_TO, STOP_MOVING after being selected", function() {
 			var line = createLine(10, 10, 20, 20);
-			var item = page.getPainter().draw(line);
+			var item = page.draw(line);
 			
-			registerEventListenerAdapter(item);	
+			eventTrigger = item.getInputEventTrigger();
 			
 			triggerSelectEvent();
 			triggerStartMovingEvent(5, 5);
@@ -149,9 +129,7 @@ describe("Page", function() {
 			expect(line.getPosition().y).toBe(15);
 		});	
 		
-		it("should stop drawing with event STOP_DRAWING", function(){
-			registerEventListenerAdapter(page);
-			
+		it("should stop drawing with event STOP_DRAWING", function(){			
 			triggerStartDrawingEvent(10, 10);
 			
 			triggerMoveToEvent(20, 20);
@@ -165,24 +143,24 @@ describe("Page", function() {
 
 		it("should be selected and unselected with event SELECT and UNSELECT", function() {
 			var line = createLine(10, 10, 20, 20);
-			var item = page.getPainter().draw(line);
-			var line = page.context.getItems()[0];
-			expect(line.isSelected).toBe(false);
+			var item = page.draw(line);
+			expect(item.isSelected).toBe(false);
 			
-			registerEventListenerAdapter(item);		
+			eventTrigger = item.getInputEventTrigger();	
 			
 			triggerSelectEvent();		
-			expect(line.isSelected).toBe(true);
+			expect(item.isSelected).toBe(true);
 			
 			triggerUnselectEvent();			
-			expect(line.isSelected).toBe(false);
+			expect(item.isSelected).toBe(false);
 		});
 	});
   
 	describe("with KineticJS context", function(){
 		beforeEach(function() {
-			var kineticContext = new KineticContext("board", 50, 50);
-			page = new Page(kineticContext);
+			Environment.setMouse();
+			page = new Page();
+			page.enableEventHandling();
 		});
 		
 		function expectIsAnKineticItem(item){

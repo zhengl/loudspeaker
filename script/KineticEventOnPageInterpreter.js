@@ -23,7 +23,5 @@ KineticEventOnPageInterpreter.prototype.interpret = function(event){
 		break;
 		default:
 		break;
-	}
-	
-	this.previouseEvent = event;
-}
+	}	
+};

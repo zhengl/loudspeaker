@@ -14,8 +14,41 @@ Item.prototype.moveTo = function(newPosition){
 	this.position = newPosition;
 };
 
-Item.prototype.registerEventTrigger = function(eventTrigger){
-	eventTrigger.addListener(this);
+Item.prototype.enableEventHandling = function(){
+	var eventChannel = EventChannelFactory.create();
+
+	this.setOutputEventTrigger(eventChannel.getOutputEventTrigger());
+	this.getOutputEventTrigger().addListener(this);
+
+	this.setInputEventTrigger(eventChannel.getInputEventTrigger());
+	this.registerEventTrigger(this.getInputEventTrigger());
+};
+
+Item.prototype.setOutputEventTrigger = function(outputEventTrigger){
+	this.outputEventTrigger = outputEventTrigger;
+};
+
+Item.prototype.getOutputEventTrigger = function(){
+	return this.outputEventTrigger;
+};
+
+Item.prototype.setInputEventTrigger = function(inputEventTrigger){
+	this.inputEventTrigger = inputEventTrigger;
+};
+
+Item.prototype.getInputEventTrigger = function(){
+	return this.inputEventTrigger;
+};
+
+Item.prototype.registerEventTrigger = function(){
+};
+
+Item.prototype.setEventTrigger = function(eventTrigger){
+	this.eventTrigger = eventTrigger;
+};
+
+Item.prototype.getEventTrigger = function(){
+	return this.eventTrigger;
 };
 
 Item.prototype.notify = function(event){

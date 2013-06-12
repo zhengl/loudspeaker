@@ -114,7 +114,7 @@ KineticContext.prototype.removeItem = function(item){
 	this.items = resultItems;
 };
 
-KineticContext.prototype.addEventListeners = function(events){
+KineticContext.prototype.registerEventTrigger = function(events){
 	for(var index in events){
 		var self = this;
 		this.stage.getContainer().addEventListener(events[index], function(event) {

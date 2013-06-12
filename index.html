@@ -8,6 +8,9 @@
   <!-- include source files here... -->
   <script type="text/javascript" src="script/Board.js"></script>
   <script type="text/javascript" src="script/Page.js"></script>
+  <script type="text/javascript" src="script/Painter.js"></script>
+  <script type="text/javascript" src="script/Palette.js"></script>
+  <script type="text/javascript" src="script/Mover.js"></script>
   <script type="text/javascript" src="script/Context.js"></script>
   <script type="text/javascript" src="script/KineticContext.js"></script>
   <script type="text/javascript" src="script/Point.js"></script>
@@ -35,7 +38,7 @@
 	page.registerEventTrigger(createEventTriggerAdapter(eventTrigger));
 	page.context.setEventTrigger(eventTrigger);
 	
-	page.selectLine();
+	page.getPainter().selectShape(Palette.Shape.Line);
   </script>
 </body>
 </html>
