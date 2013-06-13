@@ -1,20 +1,24 @@
 function Page() {
 	this.context = ContextFactory.create();
-	
+
 	this.painter = new Painter(this.context);
 	this.painter.setPage(this);	
 	
 	this.mover = new Mover(this.context);
+	
+	this.eventHandlingEnabled = false;
 }
 
 Page.prototype.enableEventHandling = function(){
-	var eventChannel = EventChannelFactory.create();
+	var eventChannel = EventChannelFactory.create(this);
 
 	this.setOutputEventTrigger(eventChannel.getOutputEventTrigger());
 	this.getOutputEventTrigger().addListener(this);
 
 	this.setInputEventTrigger(eventChannel.getInputEventTrigger());
 	this.context.registerEventTrigger(this.getInputEventTrigger());
+	
+	this.eventHandlingEnabled = true;
 };
 
 Page.prototype.setOutputEventTrigger = function(outputEventTrigger){
@@ -43,23 +47,20 @@ Page.prototype.getMover = function(){
 
 Page.prototype.draw = function(item){
 	var drawnItem = this.getPainter().draw(item);
-	item.enableEventHandling();
-	item.getOutputEventTrigger().addListener(this);
-	return item;
+	this.tryToEnableItemEventHandling(drawnItem);
+	return drawnItem;
 };
 
 Page.prototype.notify = function(event){
-	// console.log(event.name);
+	// console.log(event);
 	switch(event.name) {
 		case Page.Event.START_DRAWING:
+			console.log(event);
 			this.painter.startDraft(event.data[0]);
 			break;
 		case Page.Event.FINISH_DRAWING:
 			var drawnItem = this.painter.endDraft(event.data[0]);
-			console.log(drawnItem);
-			drawnItem.enableEventHandling();
-			drawnItem.registerEventTrigger()
-			// item.getOutputEventTrigger().addListener(this);
+			this.tryToEnableItemEventHandling(drawnItem);
 			break;
 		case Page.Event.STOP_DRAWING:
 			this.painter.stopDrawing();
@@ -67,6 +68,20 @@ Page.prototype.notify = function(event){
 		case Page.Event.MOVE_TO:
 			this.moveTo(event.data[0]);
 			break;
+		case Page.Event.START_MOVING:
+			this.getMover().startMoving(event.data[0]);
+			break;
+		case Page.Event.FINISH_MOVING:
+			this.getMover().finishMoving(event.data[0]);
+			break;
+	}
+};
+
+Page.prototype.tryToEnableItemEventHandling = function(item){
+	if (this.eventHandlingEnabled) {
+		item.enableEventHandling();
+		item.registerEventTrigger();
+		item.getOutputEventTrigger().addListener(this);
 	}
 };
 
@@ -77,8 +92,10 @@ Page.prototype.moveTo = function(point){
 };
 
 Page.Event = {
-	START_DRAWING: "START_DRAWING",
-	STOP_DRAWING: "STOP_DRAWING",
-	FINISH_DRAWING: "FINISH_DRAWING",
-	MOVE_TO: "MOVE_TO"
+	START_DRAWING: "PAGE.START_DRAWING",
+	STOP_DRAWING: "PAGE.STOP_DRAWING",
+	FINISH_DRAWING: "PAGE.FINISH_DRAWING",
+	MOVE_TO: "PAGE.MOVE_TO",
+	START_MOVING: "PAGE.START_MOVING",
+	FINISH_MOVING: "PAGE.FINISH_MOVING",
 };

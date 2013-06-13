@@ -103,7 +103,6 @@ describe("Page", function() {
 		beforeEach(function() {
 			Environment.setMouse();
 			page = new Page();
-			page.enableEventHandling();
 		});
 		
 		it("should return a Line after DRAWING a line with direct call", function() {
@@ -142,6 +141,43 @@ describe("Page", function() {
 			expect(item.getPosition().y).toBe(5);
 		});
 	});
+	
+	// describe("with KineticJS context and Event Handling", function(){
+		// beforeEach(function() {
+			// Environment.setMouse();
+			// page = new Page();
+			// page.enableEventHandling();
+		// });
+
+		// it("should move a line with events, START_MOVING, MOVE_TO, FINISH_MOVING after being selected", function() {
+			// var line = createLine(10, 10, 20, 20);
+			// var item = page.draw(line);
+			
+			// eventTrigger = item.getInputEventTrigger();
+			
+			// var event = document.createEvent("MouseEvents");
+			// event.initMouseEvent("mouseenter", true, true, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
+			// eventTrigger.trigger(event);
+			// event.initMouseEvent("mousedown", true, true, window, 0, 0, 0, 15, 15, false, false, false, false, 0, null);
+			// eventTrigger.trigger(event);
+			// expectNoItem(page);
+			// expectOneDraftItem(page);			
+			
+			// event.initMouseEvent("mousemove", true, true, window, 0, 0, 0, 20, 20, false, false, false, false, 0, null);
+			// eventTrigger.trigger(event);
+			// expectNoItem(page);
+			// expectOneDraftItem(page);
+			
+			// event.initMouseEvent("mouseup", true, true, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
+			// eventTrigger.trigger(event);
+			// expectOneItem(page);
+			// expectNoDraftItem(page);
+
+			// line = page.context.getItems()[0];
+			// expect(line.getPosition().x).toBe(15);
+			// expect(line.getPosition().y).toBe(15);
+		// });		
+	// });
 
 	function createLine(x1, y1, x2, y2) {
 		return new Line([new Point(x1, y1), new Point(x2, y2)]);

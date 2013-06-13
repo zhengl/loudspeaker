@@ -1,7 +1,7 @@
-function KineticEventOnPageInterpreter(){
+function KineticMouseEventOnPageInterpreter(){
 }
 
-KineticEventOnPageInterpreter.prototype.interpret = function(event){
+KineticMouseEventOnPageInterpreter.prototype.interpret = function(event){
 	switch(event.type){
 		case KineticEvent.MOVE_TO:
 			return new AbstractEvent(Page.Event.MOVE_TO, [new Point(event.x, event. y)]);

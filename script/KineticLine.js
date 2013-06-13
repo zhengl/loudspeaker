@@ -8,7 +8,7 @@ function KineticLine(points, stroke){
 		strokeWidth: KineticLine.defaultStrokeWidth,
 		stroke: this.getStroke(),
 		lineCap: 'round',
-		lineJoin: 'bevel'
+		lineJoin: 'bevel',
 	});
 }
 
@@ -62,8 +62,23 @@ KineticLine.flatternPoints = function(points){
 };
 
 KineticLine.prototype.registerEventTrigger = function(){
-	this.getKineticShape().on('mousemove', function(event){
-		console.log(event);
-		// this.getInputEventTrigger().trigger();
-	});
+	this.addEventListeners([
+		KineticEvent.MOVE_TO,
+		KineticEvent.MOUSE_DOWN,
+		KineticEvent.MOUSE_UP,
+		KineticEvent.MOUSE_ENTER,
+		KineticEvent.MOUSE_LEAVE,
+		KineticEvent.MOUSE_OVER,
+		KineticEvent.MOUSE_OUT
+	]);
+}
+
+KineticLine.prototype.addEventListeners = function(events){
+	for(var index in events){
+		var self = this;
+		this.getKineticShape().on(events[index], function(event) {
+			self.getInputEventTrigger().trigger(event);
+			event.cancelBubble = true;
+		});		
+	}
 };

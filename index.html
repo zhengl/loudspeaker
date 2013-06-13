@@ -26,7 +26,8 @@
   <script type="text/javascript" src="script/EventChannel.js"></script>
   <script type="text/javascript" src="script/EventChannelFactory.js"></script>
   <script type="text/javascript" src="script/EventTriggerAdapter.js"></script>
-  <script type="text/javascript" src="script/KineticEventOnPageInterpreter.js"></script>
+  <script type="text/javascript" src="script/KineticMouseEventOnPageInterpreter.js"></script>
+  <script type="text/javascript" src="script/KineticMouseEventOnItemInterpreter.js"></script>
 </head>
 <body>
   <div id="board" />
@@ -34,7 +35,7 @@
 	Environment.setMouse();
   
 	var page = new Page();
-  page.enableEventHandling();
+	page.enableEventHandling();
 	page.getPainter().selectShape(Palette.Shape.Line);
   </script>
 </body>

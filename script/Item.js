@@ -15,7 +15,7 @@ Item.prototype.moveTo = function(newPosition){
 };
 
 Item.prototype.enableEventHandling = function(){
-	var eventChannel = EventChannelFactory.create();
+	var eventChannel = EventChannelFactory.create(this);
 
 	this.setOutputEventTrigger(eventChannel.getOutputEventTrigger());
 	this.getOutputEventTrigger().addListener(this);
@@ -52,6 +52,7 @@ Item.prototype.getEventTrigger = function(){
 };
 
 Item.prototype.notify = function(event){
+	// console.log(event.name);
 	switch(event.name) {
 		case Item.Event.START_MOVING:
 			this.startMoving(event.data[0]);
@@ -83,13 +84,14 @@ Item.prototype.startMoving = function(relativePosition){
 	if (this.isSelected) {
 		this.isMoving = true;
 		this.relativePosition = relativePosition;
-		this.page.getMover().startMoving(this);
+		console.log(this);
+		this.getOutputEventTrigger().trigger(Page.Event.START_MOVING, [this]);
 	}
 };
 
 Item.prototype.finishMoving = function(){
 	this.isMoving = false;
-	this.page.getMover().finishMoving(this);
+	this.getOutputEventTrigger().trigger(Page.Event.FINISH_MOVING, [this]);
 };
 
 Item.prototype.tryToMoveTo = function(newPosition){
@@ -101,9 +103,9 @@ Item.prototype.tryToMoveTo = function(newPosition){
 };
 
 Item.Event = {
-	START_MOVING: "START_MOVING",
-	FINISH_MOVING: "FINISH_MOVING",
-	MOVE_TO: "MOVE_TO",
-	SELECT: "SELECT",
-	UNSELECT: "UNSELECT"
+	START_MOVING: "ITEM.START_MOVING",
+	FINISH_MOVING: "ITEM.FINISH_MOVING",
+	MOVE_TO: "ITEM.MOVE_TO",
+	SELECT: "ITEM.SELECT",
+	UNSELECT: "ITEM.UNSELECT"
 };

@@ -1,7 +1,7 @@
 function EventChannelFactory(){
 }
 
-EventChannelFactory.create = function(){
+EventChannelFactory.create = function(target){
 	var eventTrigger = new EventTrigger();
 	var eventTriggerAdapter;
 
@@ -10,7 +10,11 @@ EventChannelFactory.create = function(){
 			eventTriggerAdapter = new EventTriggerAdapter(new DummyEventInterpreter());
 		break;
 		case Environment.Mouse.name:
-			eventTriggerAdapter = new EventTriggerAdapter(new KineticEventOnPageInterpreter());
+			if (target instanceof Page) {
+				eventTriggerAdapter = new EventTriggerAdapter(new KineticMouseEventOnPageInterpreter());
+			} else if (target instanceof Item) {
+				eventTriggerAdapter = new EventTriggerAdapter(new KineticMouseEventOnItemInterpreter());
+			}
 		break;
 	}
 
