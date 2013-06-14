@@ -52,7 +52,6 @@ Page.prototype.draw = function(item){
 };
 
 Page.prototype.notify = function(event){
-	// console.log(event);
 	switch(event.name) {
 		case Page.Event.START_DRAWING:
 			this.painter.startDraft(event.data[0]);
@@ -79,8 +78,7 @@ Page.prototype.notify = function(event){
 Page.prototype.tryToEnableItemEventHandling = function(item){
 	if (this.eventHandlingEnabled) {
 		item.enableEventHandling();
-		item.registerEventTrigger();
-		// this.getOutputEventTrigger().addListener
+		item.getPageEventTrigger().addListener(this);
 	}
 };
 

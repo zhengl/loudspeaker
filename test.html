@@ -28,6 +28,14 @@
         strokeWidth: 4
       });
       
+	  var redLine = new Kinetic.Line({
+        points: [73, 70, 340, 23, 450, 60, 500, 20],
+        stroke: 'red',
+        strokeWidth: 15,
+        lineCap: 'round',
+        lineJoin: 'round'
+      });
+	  
       var text = new Kinetic.Text({
         text: '',
         fontFamily: 'Calibri',
@@ -35,13 +43,11 @@
         fill: 'black' 
       });
 
-      layer.on('click', function(evt) {
+      redLine.on('mouseenter', function(evt) {
 		console.log(evt);
-        text.setText('you clicked on the circle!');
-        layer.draw();
       });
 
-      layer.add(circle).add(text);
+      layer.add(redLine);
       stage.add(layer);
 
       // simulate click on circle
