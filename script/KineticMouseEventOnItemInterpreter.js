@@ -7,8 +7,6 @@ KineticMouseEventOnItemInterpreter.prototype.interpret = function(event){
 			return new AbstractEvent(Item.Event.MOVE_TO, [new Point(event.x, event. y)]);
 		break;
 		case KineticEvent.MOUSE_DOWN:
-			console.log(event);
-			event.preventDefault();
 			return new AbstractEvent(Item.Event.START_MOVING, [new Point(event.x, event. y)]);
 		break;
 		case KineticEvent.MOUSE_UP:

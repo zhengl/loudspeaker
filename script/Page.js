@@ -55,7 +55,6 @@ Page.prototype.notify = function(event){
 	// console.log(event);
 	switch(event.name) {
 		case Page.Event.START_DRAWING:
-			console.log(event);
 			this.painter.startDraft(event.data[0]);
 			break;
 		case Page.Event.FINISH_DRAWING:
@@ -81,13 +80,15 @@ Page.prototype.tryToEnableItemEventHandling = function(item){
 	if (this.eventHandlingEnabled) {
 		item.enableEventHandling();
 		item.registerEventTrigger();
-		item.getOutputEventTrigger().addListener(this);
+		// this.getOutputEventTrigger().addListener
 	}
 };
 
 Page.prototype.moveTo = function(point){
-	if(this.painter.isPainting){
+	if(this.painter.isPainting) {
 		this.painter.draftTo(point);
+	} else if (this.mover.isMoving) {
+		this.mover.moveTo(point);
 	}
 };
 

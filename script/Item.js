@@ -19,9 +19,8 @@ Item.prototype.enableEventHandling = function(){
 
 	this.setOutputEventTrigger(eventChannel.getOutputEventTrigger());
 	this.getOutputEventTrigger().addListener(this);
-
 	this.setInputEventTrigger(eventChannel.getInputEventTrigger());
-	this.registerEventTrigger(this.getInputEventTrigger());
+	this.registerEventTrigger();
 };
 
 Item.prototype.setOutputEventTrigger = function(outputEventTrigger){
@@ -52,10 +51,10 @@ Item.prototype.getEventTrigger = function(){
 };
 
 Item.prototype.notify = function(event){
-	// console.log(event.name);
+	console.log(event);
 	switch(event.name) {
 		case Item.Event.START_MOVING:
-			this.startMoving(event.data[0]);
+			this.startMoving();
 			break;
 		case Item.Event.FINISH_MOVING:
 			this.finishMoving();
@@ -83,22 +82,26 @@ Item.prototype.unselect = function(){
 Item.prototype.startMoving = function(relativePosition){
 	if (this.isSelected) {
 		this.isMoving = true;
-		this.relativePosition = relativePosition;
-		console.log(this);
-		this.getOutputEventTrigger().trigger(Page.Event.START_MOVING, [this]);
+		this.getOutputEventTrigger().trigger(
+			new AbstractEvent(Page.Event.START_MOVING, [this, relativePosition])
+			);
 	}
 };
 
 Item.prototype.finishMoving = function(){
-	this.isMoving = false;
-	this.getOutputEventTrigger().trigger(Page.Event.FINISH_MOVING, [this]);
+	this.isMoving = false
+	this.getOutputEventTrigger().trigger(
+			new AbstractEvent(Page.Event.FINISH_MOVING, [this.relativePosition])
+			);
 };
 
 Item.prototype.tryToMoveTo = function(newPosition){
 	if (this.isMoving) {
 		var newX = newPosition.x - (this.getPosition().x - this.relativePosition.x);
 		var newY = newPosition.y - (this.getPosition().y - this.relativePosition.y);
-		this.moveTo(new Point(newX, newY));
+		this.getOutputEventTrigger().trigger(
+			new AbstractEvent(Page.Event.MOVE_TO, [this, newPosition])
+			);
 	}
 };
 

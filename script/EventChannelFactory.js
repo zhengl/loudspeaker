@@ -20,5 +20,6 @@ EventChannelFactory.create = function(target){
 
 	eventTrigger.addListener(eventTriggerAdapter);
 
-	return new EventChannel(eventTrigger, eventTriggerAdapter);
+	var eventChannel = new EventChannel(eventTrigger, eventTriggerAdapter);
+	return eventChannel;
 };
