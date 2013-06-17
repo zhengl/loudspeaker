@@ -19,8 +19,10 @@ KineticMouseEventOnItemInterpreter.prototype.interpret = function(event){
 			return new AbstractEvent(Item.Event.UNSELECT);
 		break;
 		case KineticEvent.MOUSE_OVER:
+			return new AbstractEvent(Item.Event.SELECT);
 		break;
 		case KineticEvent.MOUSE_OUT:
+			return new AbstractEvent(Item.Event.UNSELECT);
 		break;
 		default:
 		break;

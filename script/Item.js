@@ -21,7 +21,6 @@ Item.prototype.enableEventHandling = function(){
 	this.getOutputEventTrigger().addListener(this);
 	this.setInputEventTrigger(eventChannel.getInputEventTrigger());
 	this.registerEventTrigger();
-
 	this.pageEventTrigger = new EventTrigger();
 };
 
@@ -88,9 +87,10 @@ Item.prototype.unselect = function(){
 
 Item.prototype.startMoving = function(relativePosition){
 	if (this.isSelected) {
+		this.relativePosition;
 		this.isMoving = true;
-		this.relativePosition = relativePosition;
 		this.getPageEventTrigger().trigger(
+		this.pageEventTrigger.trigger(
 			new AbstractEvent(Page.Event.START_MOVING, [this, relativePosition])
 			);
 	}

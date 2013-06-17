@@ -52,7 +52,6 @@ Page.prototype.draw = function(item){
 };
 
 Page.prototype.notify = function(event){
-	console.log(event.name);
 	switch(event.name) {
 		case Page.Event.START_DRAWING:
 			this.painter.startDraft(event.data[0]);
@@ -68,9 +67,11 @@ Page.prototype.notify = function(event){
 			this.moveTo(event.data[0]);
 			break;
 		case Page.Event.START_MOVING:
+			console.log(event);
 			this.getMover().startMoving(event.data[0]);
 			break;
 		case Page.Event.FINISH_MOVING:
+			console.log(event);
 			this.getMover().finishMoving(event.data[0]);
 			break;
 	}
@@ -79,7 +80,6 @@ Page.prototype.notify = function(event){
 Page.prototype.tryToEnableItemEventHandling = function(item){
 	if (this.eventHandlingEnabled) {
 		item.enableEventHandling();
-		item.registerEventTrigger();
 		item.getPageEventTrigger().addListener(this);
 	}
 };
