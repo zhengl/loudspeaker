@@ -1,16 +1,28 @@
 function KineticMouseEventOnPageInterpreter(){
+	this.status = null;
 }
 
 KineticMouseEventOnPageInterpreter.prototype.interpret = function(event){
 	switch(event.type){
 		case KineticEvent.MOVE_TO:
-			return new AbstractEvent(Page.Event.MOVE_TO, [new Point(event.x, event. y)]);
+			switch (this.status) {
+				case KineticMouseEventOnPageInterpreter.Status.DRAWING:
+				return new AbstractEvent(Page.Event.MOVE_TO, [new Point(event.x, event. y)]);					
+				default:
+				return null;
+			}
 		break;
 		case KineticEvent.MOUSE_DOWN:
+			this.status = KineticMouseEventOnPageInterpreter.Status.DRAWING;
 			return new AbstractEvent(Page.Event.START_DRAWING, [new Point(event.x, event. y)]);
 		break;
 		case KineticEvent.MOUSE_UP:
-			return new AbstractEvent(Page.Event.FINISH_DRAWING, [new Point(event.x, event. y)]);
+			switch (this.status) {
+				case KineticMouseEventOnPageInterpreter.Status:
+					return new AbstractEvent(Page.Event.FINISH_DRAWING, [new Point(event.x, event. y)]);
+				default:
+				return null;
+			}
 		break;
 		case KineticEvent.MOUSE_ENTER:
 		break;
@@ -24,4 +36,9 @@ KineticMouseEventOnPageInterpreter.prototype.interpret = function(event){
 		default:
 		break;
 	}	
+};
+
+KineticMouseEventOnPageInterpreter.Status = {
+	DRAWING: "DRAWING",
+	MOVING: "MOVING",
 };

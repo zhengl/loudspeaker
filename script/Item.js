@@ -21,6 +21,12 @@ Item.prototype.enableEventHandling = function(){
 	this.getOutputEventTrigger().addListener(this);
 	this.setInputEventTrigger(eventChannel.getInputEventTrigger());
 	this.registerEventTrigger();
+
+	this.pageEventTrigger = new EventTrigger();
+};
+
+Item.prototype.getPageEventTrigger = function(){
+	return this.pageEventTrigger;
 };
 
 Item.prototype.setOutputEventTrigger = function(outputEventTrigger){
@@ -51,10 +57,11 @@ Item.prototype.getEventTrigger = function(){
 };
 
 Item.prototype.notify = function(event){
-	console.log(event);
+	console.log(event.name);
 	switch(event.name) {
 		case Item.Event.START_MOVING:
-			this.startMoving();
+			var relativePosition = new Point(this.getPosition().x - event.data[0].x, this.getPosition().y - event.data[0].y);
+			this.startMoving(relativePosition);
 			break;
 		case Item.Event.FINISH_MOVING:
 			this.finishMoving();
@@ -82,7 +89,8 @@ Item.prototype.unselect = function(){
 Item.prototype.startMoving = function(relativePosition){
 	if (this.isSelected) {
 		this.isMoving = true;
-		this.getOutputEventTrigger().trigger(
+		this.relativePosition = relativePosition;
+		this.getPageEventTrigger().trigger(
 			new AbstractEvent(Page.Event.START_MOVING, [this, relativePosition])
 			);
 	}
@@ -90,8 +98,8 @@ Item.prototype.startMoving = function(relativePosition){
 
 Item.prototype.finishMoving = function(){
 	this.isMoving = false
-	this.getOutputEventTrigger().trigger(
-			new AbstractEvent(Page.Event.FINISH_MOVING, [this.relativePosition])
+	this.getPageEventTrigger().trigger(
+			new AbstractEvent(Page.Event.FINISH_MOVING, [this])
 			);
 };
 
@@ -99,8 +107,8 @@ Item.prototype.tryToMoveTo = function(newPosition){
 	if (this.isMoving) {
 		var newX = newPosition.x - (this.getPosition().x - this.relativePosition.x);
 		var newY = newPosition.y - (this.getPosition().y - this.relativePosition.y);
-		this.getOutputEventTrigger().trigger(
-			new AbstractEvent(Page.Event.MOVE_TO, [this, newPosition])
+		this.getPageEventTrigger().trigger(
+			new AbstractEvent(Page.Event.MOVE_TO, [newPosition])
 			);
 	}
 };

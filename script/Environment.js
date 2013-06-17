@@ -5,8 +5,8 @@ var Environment = {
 	Mouse: {
 		name: "Mouse",
 		containerId: "board",
-		containerWidth: 500,
-		containerHeight: 500
+		containerWidth: 50,
+		containerHeight: 50
 	},
 	Touch: {
 		name: "Touch"

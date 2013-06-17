@@ -1,30 +1,10 @@
 describe("Painter", function(){
-	var painter = new Painter(new Context());
+	var painter;
 	
-	function createLine(x1, y1, x2, y2) {
-		return new Line([new Point(x1, y1), new Point(x2, y2)]);
-	}
-	
-	function expectOneItem(painter){
-		expect(painter.context.getItems().length).toEqual(1);
-	}
+	beforeEach(function(){
+		painter = new Painter(new Context());	
+	});
 
-	function expectOneDraftItem(painter){
-		expect(painter.context.getDraftItems().length).toEqual(1);
-	}
-	
-	function expectNoItem(painter){
-		expect(painter.context.getItems().length).toEqual(0);
-	}
-	
-	function expectNoDraftItem(painter){
-		expect(painter.context.getDraftItems().length).toEqual(0);
-	}
-	
-	function expectIsAnItem(item){
-		expect(item instanceof Item).toBe(true);
-	}
-	
 	it("should return a Line after drawing a line", function() {
 		var line = createLine(0, 0, 10, 10);
 		var item = painter.draw(line);
@@ -70,4 +50,28 @@ describe("Painter", function(){
 		expectNoDraftItem(painter);
 		expectOneItem(painter);			
 	});
+	
+	function createLine(x1, y1, x2, y2) {
+		return new Line([new Point(x1, y1), new Point(x2, y2)]);
+	}
+	
+	function expectOneItem(painter){
+		expect(painter.context.getItems().length).toEqual(1);
+	}
+
+	function expectOneDraftItem(painter){
+		expect(painter.context.getDraftItems().length).toEqual(1);
+	}
+	
+	function expectNoItem(painter){
+		expect(painter.context.getItems().length).toEqual(0);
+	}
+	
+	function expectNoDraftItem(painter){
+		expect(painter.context.getDraftItems().length).toEqual(0);
+	}
+	
+	function expectIsAnItem(item){
+		expect(item instanceof Item).toBe(true);
+	}	
 });

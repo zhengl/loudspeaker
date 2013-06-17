@@ -7,7 +7,7 @@ EventTrigger.prototype.addListener = function(listener){
 };
 
 EventTrigger.prototype.trigger = function(event, data){
-	if (undefined == event){
+	if (!event){
 		return;
 	}
 	for (var index in this.listeners) {

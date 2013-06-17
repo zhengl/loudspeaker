@@ -4,7 +4,7 @@ function Context(){
 }
 
 Context.prototype.registerEventTrigger = function(inputEventTrigger){
-}
+};
 
 Context.prototype.getLastDraftItem = function(){
 	return this.draftItems[this.draftItems.length - 1];
@@ -92,4 +92,8 @@ Context.prototype.finishMoving = function(item){
 
 Context.prototype.clearDraftItems = function(){
 	this.draftItems = [];
-}
+};
+
+Context.prototype.moveTo = function(item, point){
+	item.moveTo(point);
+};

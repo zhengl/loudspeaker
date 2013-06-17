@@ -8,12 +8,10 @@ Painter.prototype.setPage = function(page){
 };
 
 Painter.prototype.draw = function(item){
-	item.setPage(this.page);
 	return this.context.draw(item);
 };
 
 Painter.prototype.draft = function(item){
-	item.setPage(this.page);
 	return this.context.draft(item);
 };
 
