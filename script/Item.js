@@ -56,7 +56,7 @@ Item.prototype.getEventTrigger = function(){
 };
 
 Item.prototype.notify = function(event){
-	console.log(event.name);
+	console.log(event);
 	switch(event.name) {
 		case Item.Event.START_MOVING:
 			var relativePosition = new Point(this.getPosition().x - event.data[0].x, this.getPosition().y - event.data[0].y);
@@ -87,11 +87,10 @@ Item.prototype.unselect = function(){
 
 Item.prototype.startMoving = function(relativePosition){
 	if (this.isSelected) {
-		this.relativePosition;
+		this.relativePosition = relativePosition;
 		this.isMoving = true;
 		this.getPageEventTrigger().trigger(
-		this.pageEventTrigger.trigger(
-			new AbstractEvent(Page.Event.START_MOVING, [this, relativePosition])
+			new AbstractEvent(Page.Event.START_MOVING, [this])
 			);
 	}
 };
@@ -105,8 +104,6 @@ Item.prototype.finishMoving = function(){
 
 Item.prototype.tryToMoveTo = function(newPosition){
 	if (this.isMoving) {
-		var newX = newPosition.x - (this.getPosition().x - this.relativePosition.x);
-		var newY = newPosition.y - (this.getPosition().y - this.relativePosition.y);
 		this.getPageEventTrigger().trigger(
 			new AbstractEvent(Page.Event.MOVE_TO, [newPosition])
 			);
