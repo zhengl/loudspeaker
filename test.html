@@ -27,6 +27,15 @@
         stroke: 'black',
         strokeWidth: 4
       });
+	  
+	  var bluecircle = new Kinetic.Circle({
+        x: stage.getWidth() / 2 + 10,
+        y: stage.getHeight() / 2 + 10 + 10,
+        radius: 70,
+        fill: 'blue',
+        stroke: 'black',
+        strokeWidth: 4
+      });
       
 	  var redLine = new Kinetic.Line({
         points: [73, 70, 340, 23, 450, 60, 500, 20],
@@ -43,11 +52,19 @@
         fill: 'black' 
       });
 
-      redLine.on('mouseenter', function(evt) {
-		console.log(evt);
+	  this.stage.getContainer().addEventListener("mousemove", function(event) {
+			console.log("container");
+	  });	
+	  
+      circle.on('mousemove', function(evt) {
+		console.log("red");
+      });
+	  
+	  bluecircle.on('mousemove', function(evt) {
+		console.log("blue");
       });
 
-      layer.add(redLine);
+      layer.add(circle).add(bluecircle);
       stage.add(layer);
 
       // simulate click on circle

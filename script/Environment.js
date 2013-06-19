@@ -5,8 +5,8 @@ var Environment = {
 	Mouse: {
 		name: "Mouse",
 		containerId: "board",
-		containerWidth: 50,
-		containerHeight: 50
+		containerWidth: 500,
+		containerHeight: 500,
 	},
 	Touch: {
 		name: "Touch"
@@ -15,6 +15,8 @@ var Environment = {
 
 Environment.setDummy = function(){
 	this.name = this.Dummy.name;
+	this.Mouse.containerWidth = 50;
+	this.Mouse.containerHeight = 50;
 };
 
 Environment.setMouse = function(){

@@ -116,10 +116,18 @@ KineticContext.prototype.registerEventTrigger = function(inputEventTrigger){
 }
 
 KineticContext.prototype.addEventListeners = function(inputEventTrigger, events){
-	for(var index in events){
-		this.stage.getContainer().addEventListener(events[index], function(event) {
-			inputEventTrigger.trigger(event);
-		});		
-	}
+	var eventCatcher = new Kinetic.Rect({
+            x: 0,
+            y: 0,
+            width: this.stage.getWidth(),
+            height: this.stage.getHeight(),
+          });
+	this.layer.add(eventCatcher);
+	eventCatcher.moveToBottom();
+
+	eventCatcher.on(events.join(" "), function(event){
+		inputEventTrigger.trigger(event);
+	});
+	this.layer.draw();
 };
 

@@ -2,6 +2,7 @@ function KineticMouseEventOnItemInterpreter(){
 }
 
 KineticMouseEventOnItemInterpreter.prototype.interpret = function(event){
+	console.log("Item: " + event.type);
 	switch(event.type){
 		case KineticEvent.MOVE_TO:
 			return new AbstractEvent(Item.Event.MOVE_TO, [new Point(event.x, event. y)]);

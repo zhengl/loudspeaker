@@ -85,6 +85,7 @@ KineticLine.prototype.addEventListeners = function(events){
                      event.detail, event.screenX, event.screenY, event.clientX, event.clientY, 
                      event.ctrlKey, event.altKey, event.shiftKey, event.metaKey, 
                      event.button, event.relatedTarget);
+				translatedEvent.cancelBubble = true;
 				self.getInputEventTrigger().trigger(translatedEvent);
 			});					
 		})(eventType);
