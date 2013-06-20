@@ -62,11 +62,7 @@ KineticMouseEventOnItemInterpreter.prototype.interpretMouseEnter = function(even
 };
 
 KineticMouseEventOnItemInterpreter.prototype.interpretMouseLeave = function(event){
-	if (this.target.isMoving) {
-		return new AbstractEvent(Item.Event.UNSELECT);
-	} else {
-		return null;
-	}
+	return new AbstractEvent(Item.Event.UNSELECT);
 };
 
 KineticMouseEventOnItemInterpreter.prototype.interpretMouseOver = function(event){
@@ -74,9 +70,5 @@ KineticMouseEventOnItemInterpreter.prototype.interpretMouseOver = function(event
 };
 
 KineticMouseEventOnItemInterpreter.prototype.interpretMouseOut = function(event){
-	if (!this.target.isMoving) {
-		return new AbstractEvent(Item.Event.UNSELECT);
-	} else {
-		return null;
-	}
+	return new AbstractEvent(Item.Event.UNSELECT);
 };

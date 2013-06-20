@@ -5,12 +5,13 @@ function Mover(context){
 Mover.prototype.startMoving = function(item) {
 	this.isMoving = true;
 	this.movingItem = this.context.startMoving(item);
+	this.movingItem.isMoving = true;
 };
 
 Mover.prototype.finishMoving = function(item) {
 	this.isMoving = false;
-	this.context.finishMoving(this.movingItem);
-	this.movingItem = null;
+	this.movingItem = this.context.finishMoving(this.movingItem);
+	this.movingItem.isMoving = false;
 };
 
 Mover.prototype.moveTo = function(point){

@@ -7,7 +7,6 @@ Item.prototype.notify = function(event){
 	switch(event.name) {
 		case Item.Event.START_MOVING:
 			this.relativePosition = event.data[0];
-			this.isMoving = true;
 			this.getPageEventTrigger().trigger(
 				new AbstractEvent(Page.Event.START_MOVING, [this])
 				);

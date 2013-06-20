@@ -93,6 +93,7 @@ KineticContext.prototype.finishMoving = function(item){
 	item.undraftize();
 	this.addItem(item);
 	this.clearDraftItems();
+	return item;
 };
 
 KineticContext.prototype.moveTo = function(item, point){
