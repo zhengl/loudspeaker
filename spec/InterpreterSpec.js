@@ -2,7 +2,8 @@ describe("KineticMouseEventOnPageInterpreter", function(){
 	var interpreter;
 
 	beforeEach(function(){
-		interpreter = new KineticMouseEventOnPageInterpreter();		
+		Environment.setDummy();
+		interpreter = new KineticMouseEventOnPageInterpreter(new Page());		
 	});
 
 	it("should return Page.START_DRAWING event when receiving MOUSEDOWN event", function(){

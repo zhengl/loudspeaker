@@ -9,6 +9,34 @@ function Page() {
 	this.eventHandlingEnabled = false;
 }
 
+Page.prototype.notify = function(event){
+	console.log(event);
+	switch(event.name) {
+		case Page.Event.START_DRAWING:
+			this.painter.startDraft(event.data[0]);
+			break;
+		case Page.Event.FINISH_DRAWING:
+			var drawnItem = this.painter.endDraft(event.data[0]);
+			this.tryToEnableItemEventHandling(drawnItem);
+			break;
+		case Page.Event.DRAW_TO:
+			this.getPainter().draftTo(event.data[0]);
+			break;
+		case Page.Event.STOP_DRAWING:
+			this.painter.stopDrawing();
+			break;
+		case Page.Event.START_MOVING:
+			this.getMover().startMoving(event.data[0]);
+			break;
+		case Page.Event.MOVE_TO:
+			this.getMover().moveTo(event.data[0]);
+			break;
+		case Page.Event.FINISH_MOVING:
+			this.getMover().finishMoving(event.data[0]);
+			break;
+	}
+};
+
 Page.prototype.enableEventHandling = function(){
 	var eventChannel = EventChannelFactory.create(this);
 
@@ -51,31 +79,6 @@ Page.prototype.draw = function(item){
 	return drawnItem;
 };
 
-Page.prototype.notify = function(event){
-	console.log(event);
-	switch(event.name) {
-		case Page.Event.START_DRAWING:
-			this.painter.startDraft(event.data[0]);
-			break;
-		case Page.Event.FINISH_DRAWING:
-			var drawnItem = this.painter.endDraft(event.data[0]);
-			this.tryToEnableItemEventHandling(drawnItem);
-			break;
-		case Page.Event.STOP_DRAWING:
-			this.painter.stopDrawing();
-			break;
-		case Page.Event.MOVE_TO:
-			this.moveTo(event.data[0]);
-			break;
-		case Page.Event.START_MOVING:
-			this.getMover().startMoving(event.data[0]);
-			break;
-		case Page.Event.FINISH_MOVING:
-			this.getMover().finishMoving(event.data[0]);
-			break;
-	}
-};
-
 Page.prototype.tryToEnableItemEventHandling = function(item){
 	if (this.eventHandlingEnabled) {
 		item.enableEventHandling();
@@ -83,19 +86,12 @@ Page.prototype.tryToEnableItemEventHandling = function(item){
 	}
 };
 
-Page.prototype.moveTo = function(point){
-	if(this.painter.isPainting) {
-		this.painter.draftTo(point);
-	} else if (this.mover.isMoving) {
-		this.mover.moveTo(point);
-	}
-};
-
 Page.Event = {
 	START_DRAWING: "PAGE.START_DRAWING",
 	STOP_DRAWING: "PAGE.STOP_DRAWING",
 	FINISH_DRAWING: "PAGE.FINISH_DRAWING",
-	MOVE_TO: "PAGE.MOVE_TO",
+	DRAW_TO: "DRAW_TO",
 	START_MOVING: "PAGE.START_MOVING",
+	MOVE_TO: "PAGE.MOVE_TO",
 	FINISH_MOVING: "PAGE.FINISH_MOVING",
 };

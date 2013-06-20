@@ -6,6 +6,7 @@ function Line(points){
 }
 
 Line.prototype = new Item();
+Line.prototype.constructor = Line;
 
 Line.prototype.getPosition = function(){
 	if (undefined == this.position) {
@@ -21,7 +22,6 @@ Line.prototype.getPosition = function(){
 	}
 	
 	return this.position;
-
 };
 
 Line.prototype.draftize = function(){

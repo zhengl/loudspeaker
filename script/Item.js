@@ -2,16 +2,33 @@ function Item(){
 	this.isSelected = false;
 }
 
-Item.prototype.setPage = function(page){
-	this.page = page;
-};
-
-Item.prototype.getPosition = function(){
-	return this.position;
-};
-
-Item.prototype.moveTo = function(newPosition){
-	this.position = newPosition;
+Item.prototype.notify = function(event){
+	console.log(event);
+	switch(event.name) {
+		case Item.Event.START_MOVING:
+			this.relativePosition = event.data[0];
+			this.isMoving = true;
+			this.getPageEventTrigger().trigger(
+				new AbstractEvent(Page.Event.START_MOVING, [this])
+				);
+			break;
+		case Item.Event.FINISH_MOVING:
+			this.getPageEventTrigger().trigger(
+				new AbstractEvent(Page.Event.FINISH_MOVING, [this])
+				);
+			break;
+		case Item.Event.MOVE_TO:
+			this.getPageEventTrigger().trigger(
+				new AbstractEvent(Page.Event.MOVE_TO, [event.data[0]])
+				);
+			break;
+		case Item.Event.SELECT:
+			this.select();
+			break;
+		case Item.Event.UNSELECT:
+			this.unselect();
+			break;
+	}
 };
 
 Item.prototype.enableEventHandling = function(){
@@ -23,6 +40,15 @@ Item.prototype.enableEventHandling = function(){
 	this.registerEventTrigger();
 	this.pageEventTrigger = new EventTrigger();
 };
+
+Item.prototype.getPosition = function(){
+	return this.position;
+};
+
+Item.prototype.moveTo = function(newPosition){
+	this.position = newPosition;
+};
+
 
 Item.prototype.getPageEventTrigger = function(){
 	return this.pageEventTrigger;
@@ -55,27 +81,6 @@ Item.prototype.getEventTrigger = function(){
 	return this.eventTrigger;
 };
 
-Item.prototype.notify = function(event){
-	console.log(event);
-	switch(event.name) {
-		case Item.Event.START_MOVING:
-			var relativePosition = new Point(this.getPosition().x - event.data[0].x, this.getPosition().y - event.data[0].y);
-			this.startMoving(relativePosition);
-			break;
-		case Item.Event.FINISH_MOVING:
-			this.finishMoving();
-			break;
-		case Item.Event.MOVE_TO:
-			this.tryToMoveTo(event.data[0]);
-			break;
-		case Item.Event.SELECT:
-			this.select();
-			break;
-		case Item.Event.UNSELECT:
-			this.unselect();
-			break;
-	}
-};
 
 Item.prototype.select = function(){
 	this.isSelected = true;
@@ -83,31 +88,6 @@ Item.prototype.select = function(){
 
 Item.prototype.unselect = function(){
 	this.isSelected = false;
-};
-
-Item.prototype.startMoving = function(relativePosition){
-	if (this.isSelected) {
-		this.relativePosition = relativePosition;
-		this.isMoving = true;
-		this.getPageEventTrigger().trigger(
-			new AbstractEvent(Page.Event.START_MOVING, [this])
-			);
-	}
-};
-
-Item.prototype.finishMoving = function(){
-	this.isMoving = false
-	this.getPageEventTrigger().trigger(
-			new AbstractEvent(Page.Event.FINISH_MOVING, [this])
-			);
-};
-
-Item.prototype.tryToMoveTo = function(newPosition){
-	if (this.isMoving) {
-		this.getPageEventTrigger().trigger(
-			new AbstractEvent(Page.Event.MOVE_TO, [newPosition])
-			);
-	}
 };
 
 Item.Event = {

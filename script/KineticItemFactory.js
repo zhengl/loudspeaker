@@ -8,6 +8,5 @@ KineticItemFactory.create = function(item){
 	} else {
 		console.log(item);
 	}
-	kineticItem.setPage(item.page);
 	return kineticItem;
 };

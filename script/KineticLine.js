@@ -22,6 +22,30 @@ KineticLine.draftDashArray = [10, 15];
 KineticLine.prototype = new Line();
 KineticLine.prototype.constructor = KineticLine;
 
+KineticLine.prototype.getPosition = function(){
+	var minX = this.points[0].x;
+	var minY = this.points[0].y;
+	
+	for(var index in this.points) {
+		minX = this.points[index].x < minX ? this.points[index].x : minX;
+		minY = this.points[index].y < minY ? this.points[index].y : minY;
+	}
+	
+	var relativePosition = this.getKineticShape().getPosition();
+	var position = new Point(minX + relativePosition.x, minY + relativePosition.y);
+	
+	return position;
+};
+
+KineticLine.prototype.moveTo = function(newPosition){
+	this.position = newPosition;
+	var currentPosition = this.getPosition();
+	var currentKineticPosition = this.getKineticShape().getPosition();
+	var newX = currentKineticPosition.x + newPosition.x - currentPosition.x;
+	var newY = currentKineticPosition.y + newPosition.y - currentPosition.y;
+	this.getKineticShape().setPosition(newX, newY);
+};
+
 KineticLine.prototype.setStroke = function(stroke){
 	this.stroke = stroke;
 };

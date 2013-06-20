@@ -19,7 +19,7 @@ describe("Page", function() {
 
 		it("should DRAW a line with events", function() {			
 			triggerStartDrawingEvent(10, 10);
-			triggerPageMoveToEvent(20, 20);
+			triggerPageDrawToEvent(20, 20);
 			triggerFinishDrawingEvent(20, 20);
 
 			var line = page.context.getItems()[0];
@@ -32,11 +32,11 @@ describe("Page", function() {
 		it("should DRAFT a line with events", function() {
 			triggerStartDrawingEvent(10, 10);
 			
-			triggerPageMoveToEvent(20, 20);
+			triggerPageDrawToEvent(20, 20);
 			expectOneDraftItem(page);
 			expectNoItem(page);
 			
-			triggerPageMoveToEvent(30, 30);
+			triggerPageDrawToEvent(30, 30);
 			expectOneDraftItem(page);
 			expectNoItem(page);
 			
@@ -104,7 +104,7 @@ describe("Page", function() {
 		it("should stop drawing with event STOP_DRAWING", function(){			
 			triggerStartDrawingEvent(10, 10);
 			
-			triggerPageMoveToEvent(20, 20);
+			triggerPageDrawToEvent(20, 20);
 			expectOneDraftItem(page);
 			expectNoItem(page);
 			
@@ -181,6 +181,10 @@ describe("Page", function() {
 
 	function triggerPageMoveToEvent(x, y){
 		eventTrigger.trigger(new AbstractEvent(Page.Event.MOVE_TO, [new Point(x, y)]));
+	}
+
+	function triggerPageDrawToEvent(x, y){
+		eventTrigger.trigger(new AbstractEvent(Page.Event.DRAW_TO, [new Point(x, y)]));
 	}
 
 	function triggerItemMoveToEvent(x, y){

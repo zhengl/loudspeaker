@@ -85,12 +85,19 @@ KineticContext.prototype.startMoving = function(item){
 	item.draftize();
 	this.addDraftItem(item);
 	this.removeItem(item);
+	this.layer.draw();
+	return item;
 };
 
 KineticContext.prototype.finishMoving = function(item){
 	item.undraftize();
 	this.addItem(item);
 	this.clearDraftItems();
+};
+
+KineticContext.prototype.moveTo = function(item, point){
+	item.moveTo(point);
+	this.draftLayer.draw();
 };
 
 KineticContext.prototype.removeItem = function(item){

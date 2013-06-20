@@ -1,45 +1,53 @@
-function KineticMouseEventOnPageInterpreter(){
-	this.status = null;
+function KineticMouseEventOnPageInterpreter(target){
+	this.target = target;
 }
 
 KineticMouseEventOnPageInterpreter.prototype.interpret = function(event){
-	console.log("Page: " + event.type);
 	switch(event.type){
 		case KineticEvent.MOVE_TO:
-			switch (this.status) {
-				case KineticMouseEventOnPageInterpreter.Status.DRAWING:
-					return new AbstractEvent(Page.Event.MOVE_TO, [new Point(event.x, event. y)]);					
-				default:
-					return null;
-			}
-		break;
+			return this.interpretMoveTo(event);
+
 		case KineticEvent.MOUSE_DOWN:
-			this.status = KineticMouseEventOnPageInterpreter.Status.DRAWING;
-			return new AbstractEvent(Page.Event.START_DRAWING, [new Point(event.x, event. y)]);
-		break;
+			return this.interpretMouseDown(event);
+
 		case KineticEvent.MOUSE_UP:
-			switch (this.status) {
-				case KineticMouseEventOnPageInterpreter.Status.DRAWING:
-					return new AbstractEvent(Page.Event.FINISH_DRAWING, [new Point(event.x, event. y)]);
-				default:
-					return null;
-			}
-		break;
+			return this.interpretMouseUp(event);
+
 		case KineticEvent.MOUSE_ENTER:
 		break;
+
 		case KineticEvent.MOUSE_LEAVE:
 			return new AbstractEvent(Page.Event.STOP_DRAWING);
-		break;
+
 		case KineticEvent.MOUSE_OVER:
 		break;
+
 		case KineticEvent.MOUSE_OUT:
 		break;
+
 		default:
 		break;
 	}	
 };
 
-KineticMouseEventOnPageInterpreter.Status = {
-	DRAWING: "DRAWING",
-	MOVING: "MOVING",
+KineticMouseEventOnPageInterpreter.prototype.interpretMoveTo = function(event){
+	if (this.target.getPainter().isPainting) {
+		return new AbstractEvent(Page.Event.DRAW_TO, [new Point(event.x, event. y)]);
+	} else if (this.target.getMover().isMoving) {
+		return new AbstractEvent(Page.Event.MOVE_TO, [new Point(event.x, event. y)]);;
+	} else {
+		return null;
+	}
+};
+
+KineticMouseEventOnPageInterpreter.prototype.interpretMouseDown = function(event){
+	return new AbstractEvent(Page.Event.START_DRAWING, [new Point(event.x, event. y)]);
+};
+
+KineticMouseEventOnPageInterpreter.prototype.interpretMouseUp = function(event){
+	if (this.target.getPainter().isPainting) {
+		return new AbstractEvent(Page.Event.FINISH_DRAWING, [new Point(event.x, event. y)]);
+	} else {
+		return null;
+	}
 };
