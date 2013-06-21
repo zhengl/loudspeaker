@@ -34,6 +34,8 @@ Page.prototype.notify = function(event){
 		case Page.Event.FINISH_MOVING:
 			this.getMover().finishMoving();
 			break;
+		case Page.Event.START_TEXTING:
+			this.getPainter().startTexting(event.data[0]);
 	}
 };
 
@@ -91,7 +93,10 @@ Page.Event = {
 	STOP_DRAWING: "PAGE.STOP_DRAWING",
 	FINISH_DRAWING: "PAGE.FINISH_DRAWING",
 	DRAW_TO: "DRAW_TO",
+
 	START_MOVING: "PAGE.START_MOVING",
 	MOVE_TO: "PAGE.MOVE_TO",
 	FINISH_MOVING: "PAGE.FINISH_MOVING",
+
+	START_TEXTING: "PAGE.START_TEXTING",
 };

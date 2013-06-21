@@ -24,6 +24,19 @@ Painter.prototype.selectShape = function(shape){
 	this.palette.selectShape(shape);
 };
 
+Painter.prototype.selectText = function(){
+
+};
+
+Painter.prototype.startTexting = function(point) {
+	this.textInput = new TextInput();
+	this.textInput.setPosition(point);
+};
+
+Painter.prototype.getTextInput = function(){
+	return this.textInput;
+};
+
 Painter.prototype.draftTo = function(point){
 	var draftItem = this.context.getLastDraftItem();
 	draftItem.update(point);

@@ -126,6 +126,17 @@ describe("Page", function() {
 			triggerUnselectEvent();			
 			expect(item.isSelected).toBe(false);
 		});
+
+		it("should create a input widget with event START_TEXTING", function(){
+			page.getPainter().selectText();
+
+			triggerStartTextingEvent(10, 20);
+
+			var textInput = page.getPainter().getTextInput();
+			expect(textInput).toBeDefined();
+			expect(textInput.getPosition().x).toBe(10);
+			expect(textInput.getPosition().y).toBe(20);
+		});
 	});
   
 	describe("with KineticJS context", function(){
@@ -217,5 +228,9 @@ describe("Page", function() {
 	
 	function triggerFinishMovingEvent(){
 		eventTrigger.trigger(new AbstractEvent(Item.Event.FINISH_MOVING));
-	}	
+	}
+
+	function triggerStartTextingEvent(x, y){
+		eventTrigger.trigger(new AbstractEvent(Page.Event.START_TEXTING, [new Point(x, y)]));
+	}
 });

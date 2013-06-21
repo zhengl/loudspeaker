@@ -44,6 +44,10 @@ Item.prototype.getPosition = function(){
 	return this.position;
 };
 
+Item.prototype.setPosition = function(point){
+	this.position = point;
+};
+
 Item.prototype.moveTo = function(newPosition){
 	this.position = newPosition;
 };
