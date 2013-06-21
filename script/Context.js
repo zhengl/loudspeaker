@@ -62,14 +62,6 @@ Context.prototype.draft = function(draftItem){
 	return draftItem;
 };
 
-Context.prototype.undraftize = function(){
-	var draftItem = this.getLastDraftItem();
-	var item = draftItem.undraftize();
-	this.draw(item);
-	this.clearDraftItems();
-	return item;
-};
-
 Context.prototype.clearDraftItems = function(){
 	this.draftItems = [];
 };

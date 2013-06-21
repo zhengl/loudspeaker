@@ -34,8 +34,13 @@ Painter.prototype.draftTo = function(point){
 
 Painter.prototype.endDraft = function(point){
 	this.isPainting = false;
-	this.draftTo(point);
-	return this.context.undraftize();
+	
+	this.draftTo(point);	
+	var draftItem = this.context.getLastDraftItem();
+	var item = draftItem.undraftize();
+	this.context.addItem(item);
+	this.context.clearDraftItems();
+	return item;
 };
 
 Painter.prototype.stopDrawing = function(){

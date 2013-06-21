@@ -21,14 +21,6 @@ KineticContext.prototype.clearDraftItems = function(){
 	this.draftItems = [];
 	this.draftLayer.removeChildren();
 	this.draftLayer.draw();
-}
-
-KineticContext.prototype.undraftize = function(){
-	var draftItem = this.getLastDraftItem();
-	var item = draftItem.undraftize();
-	this.addItem(item);
-	this.clearDraftItems();
-	return item;
 };
 
 KineticContext.prototype.getItems = function(){
