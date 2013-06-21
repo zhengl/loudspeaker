@@ -29,7 +29,7 @@ Painter.prototype.selectText = function(){
 };
 
 Painter.prototype.startTexting = function(point) {
-	this.textInput = new TextInput();
+	this.textInput = TextInputFactory.create();
 	this.textInput.setPosition(point);
 };
 

@@ -7,6 +7,8 @@ var Environment = {
 		containerId: "board",
 		containerWidth: 500,
 		containerHeight: 500,
+		layerId: "layer",
+		draftLayerId: "draftLayerId",
 	},
 	Touch: {
 		name: "Touch"

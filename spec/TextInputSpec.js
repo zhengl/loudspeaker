@@ -9,4 +9,18 @@ describe("TextInput", function(){
 		textInput.write("Hello World!");
 		expect(textInput.getText()).toBe("Hello World!");
 	});
+
+	describe("with CanvasInput implementation", function(){
+		var page;
+		var textInput;
+
+		beforeEach(function(){
+			textInput = new CanvasTextInput();
+		});
+
+		it("writes and records text", function(){
+			textInput.write("Hello World!");
+			expect(textInput.getText()).toBe("Hello World!");
+		});
+	});
 });
