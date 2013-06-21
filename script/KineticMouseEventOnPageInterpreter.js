@@ -48,7 +48,7 @@ KineticMouseEventOnPageInterpreter.prototype.interpretMouseUp = function(event){
 	if (this.target.getPainter().isPainting) {
 		return new AbstractEvent(Page.Event.FINISH_DRAWING, [new Point(event.x, event. y)]);
 	} else if (this.target.getMover().isMoving){
-		return new AbstractEvent(Page.Event.FINISH_MOVING, [new Point(event.x, event. y)]);
+		return new AbstractEvent(Page.Event.FINISH_MOVING);
 	} else {
 		return null;
 	}

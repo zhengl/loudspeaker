@@ -54,15 +54,7 @@ Context.prototype.startDraft = function(type, point){
 	draftItem.update(point);
 	this.addDraftItem(draftItem);
 	return draftItem;
-}
-
-Context.prototype.draftTo = function(point) {
-	var draftItem = this.getLastDraftItem();
-	draftItem.update(point);
-	this.clearDraftItems();
-	this.addDraftItem(draftItem);
-	return draftItem;
-}
+};
 
 Context.prototype.draft = function(draftItem){
 	this.clearDraftItems();
@@ -78,22 +70,10 @@ Context.prototype.undraftize = function(){
 	return item;
 };
 
-Context.prototype.startMoving = function(item){
-	this.removeItem(item);
-	this.addDraftItem(item.draftize());
-	return item;
-};
-
-Context.prototype.finishMoving = function(item){
-	this.clearDraftItems();
-	this.addItem(item.undraftize());
-	return item;
-};
-
 Context.prototype.clearDraftItems = function(){
 	this.draftItems = [];
 };
 
-Context.prototype.moveTo = function(item, point){
-	item.moveTo(point);
-};
+Context.prototype.refreshItems = function(){};
+
+Context.prototype.refreshDraftItems = function(){};

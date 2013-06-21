@@ -32,7 +32,7 @@ Page.prototype.notify = function(event){
 			this.getMover().moveTo(event.data[0]);
 			break;
 		case Page.Event.FINISH_MOVING:
-			this.getMover().finishMoving(event.data[0]);
+			this.getMover().finishMoving();
 			break;
 	}
 };

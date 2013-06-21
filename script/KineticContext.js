@@ -48,6 +48,7 @@ KineticContext.prototype.addItem = function(kineticItem){
 KineticContext.prototype.addDraftItem = function(kineticItem){
 	this.draftItems.push(kineticItem)
 	kineticItem.getKineticShape().moveTo(this.draftLayer);
+	this.layer.draw();
 	this.draftLayer.draw();
 };
 
@@ -71,34 +72,6 @@ KineticContext.prototype.startDraft = function(type, point){
 	kineticItem.draftize();
 	this.addDraftItem(kineticItem);
 	return kineticItem;
-};
-
-KineticContext.prototype.draftTo = function(point) {
-	var draftItem = this.getLastDraftItem();
-	draftItem.update(point);
-	this.clearDraftItems();
-	this.addDraftItem(draftItem);
-	return draftItem;
-};
-
-KineticContext.prototype.startMoving = function(item){
-	item.draftize();
-	this.addDraftItem(item);
-	this.removeItem(item);
-	this.layer.draw();
-	return item;
-};
-
-KineticContext.prototype.finishMoving = function(item){
-	item.undraftize();
-	this.addItem(item);
-	this.clearDraftItems();
-	return item;
-};
-
-KineticContext.prototype.moveTo = function(item, point){
-	item.moveTo(point);
-	this.draftLayer.draw();
 };
 
 KineticContext.prototype.removeItem = function(item){
@@ -137,5 +110,13 @@ KineticContext.prototype.addEventListeners = function(inputEventTrigger, events)
 		inputEventTrigger.trigger(event);
 	});
 	this.layer.draw();
+};
+
+KineticContext.prototype.refreshItems = function(){
+	this.layer.draw();
+};
+
+KineticContext.prototype.refreshDraftItems = function(){
+	this.draftLayer.draw();
 };
 

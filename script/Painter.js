@@ -25,7 +25,11 @@ Painter.prototype.selectShape = function(shape){
 };
 
 Painter.prototype.draftTo = function(point){
-	return this.context.draftTo(point);
+	var draftItem = this.context.getLastDraftItem();
+	draftItem.update(point);
+	this.context.clearDraftItems();
+	this.context.addDraftItem(draftItem);
+	return draftItem;
 };
 
 Painter.prototype.endDraft = function(point){
