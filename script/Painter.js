@@ -20,31 +20,6 @@ Painter.prototype.selectShape = function(shape){
 	this.palette.selectShape(shape);
 };
 
-// Painter.prototype.selectText = function(){
-// 	this.isTextingSelected = true;
-// };
-
-// Painter.prototype.selectDrawing = function(){
-// 	this.isPaintingSelected = true;
-// };
-
-// Painter.prototype.paintingSelected = function() {
-// 	return this.isPaintingSelected;
-// };
-
-// Painter.prototype.textingSelected = function() {
-// 	return this.isTextingSelected;
-// };
-
-// Painter.prototype.startTexting = function(point) {
-// 	this.textInput = TextInputFactory.create(this.context);
-// 	this.textInput.setPosition(point);
-// };
-
-// Painter.prototype.getTextInput = function(){
-// 	return this.textInput;
-// };
-
 Painter.prototype.draftTo = function(point){
 	var draftItem = this.context.getLastDraftItem();
 	draftItem.update(point);

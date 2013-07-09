@@ -9,6 +9,9 @@ TextInput.prototype.write = function(text) {
 	this.text = text;
 };
 
+TextInput.prototype.flush = function(text) {
+};
+
 TextInput.prototype.getText = function() {
 	return this.text;
 };

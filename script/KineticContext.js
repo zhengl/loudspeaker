@@ -33,6 +33,7 @@ KineticContext.prototype.getDraftItems = function(){
 
 KineticContext.prototype.addItem = function(kineticItem){
 	this.items.push(kineticItem)
+	console.log(kineticItem);
 	kineticItem.getKineticShape().moveTo(this.layer);
 	this.layer.draw();
 };
@@ -42,6 +43,12 @@ KineticContext.prototype.addDraftItem = function(kineticItem){
 	kineticItem.getKineticShape().moveTo(this.draftLayer);
 	this.layer.draw();
 	this.draftLayer.draw();
+};
+
+KineticContext.prototype.write = function(item){
+	var kineticItem = KineticItemFactory.create(item);
+	this.addItem(kineticItem);
+	return kineticItem;
 };
 
 KineticContext.prototype.draw = function(item){

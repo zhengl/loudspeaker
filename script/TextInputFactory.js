@@ -10,7 +10,8 @@ TextInputFactory.create = function(context){
 			textInput = new TextInput();
 		break;
 		case Environment.Mouse.name:
-			textInput = new CanvasTextInput();
+			textInput = new CanvasTextInput(context);
+			textInput.enableEventHandling();
 		break;
 	}
 

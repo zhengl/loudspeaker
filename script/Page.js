@@ -2,7 +2,7 @@ function Page() {
 	this.context = ContextFactory.create();
 
 	this.painter = new Painter(this.context);
-	this.texter = new Texter();
+	this.texter = new Texter(this.context);
 	this.mover = new Mover(this.context);
 	
 	this.eventHandlingEnabled = false;

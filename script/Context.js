@@ -49,6 +49,11 @@ Context.prototype.draw = function(item){
 	return item;
 };
 
+Context.prototype.write = function(item){
+	this.addItem(item);
+	return item;
+};
+
 Context.prototype.startDraft = function(type, point){
 	var draftItem = new window[type];
 	draftItem.update(point);
