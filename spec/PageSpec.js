@@ -1,6 +1,16 @@
 describe("Page", function() {
 	var page;
 	var eventTrigger;
+
+	beforeEach(function() {
+		Environment.setDummy();
+		page = new Page();
+	});
+
+	it("should be able to be in DRAWING mode", function(){
+		page.selectPaintingMode();
+		expect(page.isPainting).toBe(true);
+	});
 	
 	describe("with Event Handling", function(){
 		
@@ -128,11 +138,11 @@ describe("Page", function() {
 		});
 
 		it("should create a input widget with event START_TEXTING", function(){
-			page.getPainter().selectText();
+			page.selectTextingMode();
 
 			triggerStartTextingEvent(10, 20);
 
-			var textInput = page.getPainter().getTextInput();
+			var textInput = page.getTexter().getTextInput();
 			expect(textInput).toBeDefined();
 			expect(textInput.getPosition().x).toBe(10);
 			expect(textInput.getPosition().y).toBe(20);

@@ -12,3 +12,11 @@ TextInput.prototype.write = function(text) {
 TextInput.prototype.getText = function() {
 	return this.text;
 };
+
+TextInput.prototype.setPosition = function(point){
+	this.position = point;
+};
+
+TextInput.prototype.getPosition = function(){
+	return this.position;
+};

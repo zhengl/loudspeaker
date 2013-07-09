@@ -1,12 +1,15 @@
 describe("KineticMouseEventOnPageInterpreter", function(){
 	var interpreter;
+	var page;
 
 	beforeEach(function(){
 		Environment.setDummy();
-		interpreter = new KineticMouseEventOnPageInterpreter(new Page());		
+		page = new Page();
+		interpreter = new KineticMouseEventOnPageInterpreter(page);		
 	});
 
 	it("should return Page.START_DRAWING event when receiving MOUSEDOWN event", function(){
+		page.selectPaintingMode();
 		expect(interpreter.interpret(createMouseDownEvent()).name).toBe(Page.Event.START_DRAWING);
 	});
 

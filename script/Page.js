@@ -2,12 +2,19 @@ function Page() {
 	this.context = ContextFactory.create();
 
 	this.painter = new Painter(this.context);
-	this.painter.setPage(this);	
-	
+	this.texter = new Texter();
 	this.mover = new Mover(this.context);
 	
 	this.eventHandlingEnabled = false;
 }
+
+Page.prototype.selectPaintingMode = function(){
+	this.isPainting = true;
+};
+
+Page.prototype.selectTextingMode = function(){
+	this.isTexting = true;
+};
 
 Page.prototype.notify = function(event){
 	console.log(event);
@@ -35,7 +42,7 @@ Page.prototype.notify = function(event){
 			this.getMover().finishMoving();
 			break;
 		case Page.Event.START_TEXTING:
-			this.getPainter().startTexting(event.data[0]);
+			this.getTexter().startTexting(event.data[0]);
 	}
 };
 
@@ -69,6 +76,10 @@ Page.prototype.getInputEventTrigger = function(){
 
 Page.prototype.getPainter = function() {
 	return this.painter;
+};
+
+Page.prototype.getTexter = function() {
+	return this.texter;
 };
 
 Page.prototype.getMover = function(){

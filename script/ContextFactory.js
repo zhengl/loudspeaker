@@ -9,7 +9,7 @@ ContextFactory.create = function(){
 			context = new Context();
 		break;
 		case Environment.Mouse.name:
-			context = new KineticContext(Environment.Mouse.containerId, Environment.Mouse.containerWidth, Environment.Mouse.containerHeight);
+			context = new KineticContext(Environment.containerId, Environment.containerWidth, Environment.containerHeight);
 		break;
 	}
 

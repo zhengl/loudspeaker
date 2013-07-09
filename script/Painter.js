@@ -3,10 +3,6 @@ function Painter(context){
 	this.palette = new Palette();
 }
 
-Painter.prototype.setPage = function(page){
-	this.page = page;
-};
-
 Painter.prototype.draw = function(item){
 	return this.context.draw(item);
 };
@@ -24,18 +20,30 @@ Painter.prototype.selectShape = function(shape){
 	this.palette.selectShape(shape);
 };
 
-Painter.prototype.selectText = function(){
+// Painter.prototype.selectText = function(){
+// 	this.isTextingSelected = true;
+// };
 
-};
+// Painter.prototype.selectDrawing = function(){
+// 	this.isPaintingSelected = true;
+// };
 
-Painter.prototype.startTexting = function(point) {
-	this.textInput = TextInputFactory.create();
-	this.textInput.setPosition(point);
-};
+// Painter.prototype.paintingSelected = function() {
+// 	return this.isPaintingSelected;
+// };
 
-Painter.prototype.getTextInput = function(){
-	return this.textInput;
-};
+// Painter.prototype.textingSelected = function() {
+// 	return this.isTextingSelected;
+// };
+
+// Painter.prototype.startTexting = function(point) {
+// 	this.textInput = TextInputFactory.create(this.context);
+// 	this.textInput.setPosition(point);
+// };
+
+// Painter.prototype.getTextInput = function(){
+// 	return this.textInput;
+// };
 
 Painter.prototype.draftTo = function(point){
 	var draftItem = this.context.getLastDraftItem();

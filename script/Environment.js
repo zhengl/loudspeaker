@@ -1,14 +1,9 @@
 var Environment = {
 	Dummy: {
-		name: "Dummy"
+		name: "Dummy",
 	},
 	Mouse: {
 		name: "Mouse",
-		containerId: "board",
-		containerWidth: 500,
-		containerHeight: 500,
-		layerId: "layer",
-		draftLayerId: "draftLayerId",
 	},
 	Touch: {
 		name: "Touch"
@@ -16,15 +11,18 @@ var Environment = {
 };
 
 Environment.setDummy = function(){
-	this.name = this.Dummy.name;
-	this.Mouse.containerWidth = 50;
-	this.Mouse.containerHeight = 50;
+	this.name = "Dummy";
+	this.containerWidth = 50;
+	this.containerHeight = 50;
 };
 
 Environment.setMouse = function(){
-	this.name = this.Mouse.name;
+	this.name = "Mouse";
+	this.containerId = "board";
+	this.containerWidth = 500;
+	this.containerHeight = 500;
 };
 
 Environment.setTouch = function(){
-	this.name = this.Touch.name;
+	this.name = "Touch";
 };

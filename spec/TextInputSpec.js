@@ -10,7 +10,7 @@ describe("TextInput", function(){
 		expect(textInput.getText()).toBe("Hello World!");
 	});
 
-	describe("with CanvasInput implementation", function(){
+	describe("with DOM input element implementation", function(){
 		var page;
 		var textInput;
 
