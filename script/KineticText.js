@@ -13,3 +13,8 @@ KineticText.prototype.constructor = KineticText;
 KineticText.prototype.getKineticShape = function(){
 	return this.kineticShape;
 };
+
+KineticText.prototype.moveTo = function(newPosition){
+	this.position = newPosition;
+	this.getKineticShape().setPosition(newPosition.x, newPosition.y);
+};

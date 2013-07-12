@@ -27,6 +27,7 @@ CanvasTextInput.prototype.write = function(text) {
 };
 
 CanvasTextInput.prototype.flush = function() {
+	this.text = new Text(this.element.value);
 	this.context.write(this.getText(), this.getPosition());
 	this.context.stage.getContainer().removeChild(this.element);
 	delete this.element;
