@@ -19,8 +19,8 @@ Environment.setDummy = function(){
 Environment.setMouse = function(){
 	this.name = "Mouse";
 	this.containerId = "board";
-	this.containerWidth = 200;
-	this.containerHeight = 200;
+	this.containerWidth = 500;
+	this.containerHeight = 500;
 };
 
 Environment.setTouch = function(){

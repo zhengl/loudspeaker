@@ -40,9 +40,10 @@ KineticMouseEventOnItemInterpreter.prototype.interpretMoveTo = function(event){
 
 KineticMouseEventOnItemInterpreter.prototype.interpretMouseDown = function(event){
 	if(this.target.isSelected) {
+		var mousePosition = this.target.getKineticShape().getStage().getMousePosition();
 		var currentPosition = this.target.getPosition();
-		var relativeX = event.x - currentPosition.x;
-		var relativeY = event.y - currentPosition.y;
+		var relativeX = mousePosition.x - currentPosition.x;
+		var relativeY = mousePosition.y - currentPosition.y;
 		return new AbstractEvent(Item.Event.START_MOVING, [new Point(relativeX, relativeY)]);
 	} else {
 		return null;
