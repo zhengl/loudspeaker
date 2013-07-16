@@ -78,7 +78,7 @@ describe("Page", function() {
 			eventTrigger = item.getInputEventTrigger();
 
 			triggerFinishMovingEvent();
-			expectOneItem(page);
+			expectOneItem(page);~
 			expectNoDraftItem(page);
 
 			line = page.context.getItems()[0];
@@ -147,6 +147,34 @@ describe("Page", function() {
 			expect(textInput.getPosition().x).toBe(10);
 			expect(textInput.getPosition().y).toBe(20);
 		});
+
+		it("should move a text with events, Item.START_MOVING, Page.MOVE_TO, Item.STOP_MOVING after being selected", function() {
+			var text = new Text("Hello World!");
+			var item = page.write(text);
+			
+			eventTrigger = item.getInputEventTrigger();
+			
+			triggerSelectEvent();
+			triggerStartMovingEvent(5, 5);
+			expectNoItem(page);
+			expectOneDraftItem(page);			
+			
+			eventTrigger = page.getInputEventTrigger();
+
+			triggerPageMoveToEvent(20, 20);
+			expectNoItem(page);
+			expectOneDraftItem(page);
+			
+			eventTrigger = item.getInputEventTrigger();
+
+			triggerFinishMovingEvent();
+			expectOneItem(page);
+			expectNoDraftItem(page);
+
+			line = page.context.getItems()[0];
+			expect(line.getPosition().x).toBe(15);
+			expect(line.getPosition().y).toBe(15);
+		});			
 	});
   
 	describe("with KineticJS context", function(){

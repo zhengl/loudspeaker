@@ -1,5 +1,5 @@
-function TextInput(){
-	Item.call(this);
+function TextInput(context){
+	this.context = context;
 }
 
 TextInput.prototype = new Item();
@@ -9,7 +9,8 @@ TextInput.prototype.write = function(text) {
 	this.text = text;
 };
 
-TextInput.prototype.flush = function(text) {
+TextInput.prototype.flush = function() {
+	return this.context.write(this.getText(), this.getPosition());
 };
 
 TextInput.prototype.getText = function() {

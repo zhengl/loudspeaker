@@ -1,9 +1,9 @@
 function Texter(context){
 	this.context = context;
+	this.textInput = TextInputFactory.create(this.context);
 }
 
 Texter.prototype.startTexting = function(point) {
-	this.textInput = TextInputFactory.create(this.context);
 	this.textInput.setPosition(point);
 };
 
@@ -13,5 +13,5 @@ Texter.prototype.getTextInput = function() {
 
 Texter.prototype.write = function(text){
 	this.getTextInput().write(text);
-	this.getTextInput().flush();
+	return this.getTextInput().flush();
 };

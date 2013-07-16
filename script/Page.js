@@ -92,6 +92,12 @@ Page.prototype.draw = function(item){
 	return drawnItem;
 };
 
+Page.prototype.write = function(item){
+	var textItem = this.getTexter().write(item);
+	this.tryToEnableItemEventHandling(textItem);
+	return textItem;
+};
+
 Page.prototype.tryToEnableItemEventHandling = function(item){
 	if (this.eventHandlingEnabled) {
 		item.enableEventHandling();
