@@ -158,18 +158,16 @@ describe("Page", function() {
 		it("should return a Line after DRAWING a line with direct call", function() {
 			var line = createLine(10, 10, 20, 20);
 			var item = page.getPainter().draw(line);
-			expectOneItem(page);
-			expectIsAnKineticItem(item);
+			expect(page.context.layer.getChildren().toArray().length).toEqual(1);
+			expect(item instanceof KineticLine).toBe(true);
 		});
 
 		it("should return a Line after DRAFTING a line with direct call", function() {
 			var line = createLine(10, 10, 20, 20);
 			var item = page.getPainter().draft(line);
-			expectOneDraftItem(page);
-			expectIsAnKineticItem(item);
+			expect(page.context.draftLayer.getChildren().toArray().length).toEqual(1);
+			expect(item instanceof KineticLine).toBe(true);
 		});
-		
-		
 	});
 
 	function createLine(x1, y1, x2, y2) {
@@ -193,10 +191,6 @@ describe("Page", function() {
 	}
 	
 	function expectIsAnItem(item){
-		expect(item instanceof Item).toBe(true);
-	}
-
-	function expectIsAnKineticItem(item){
 		expect(item instanceof Item).toBe(true);
 	}
 
