@@ -23,7 +23,7 @@ Page.prototype.notify = function(event){
 			this.painter.startDraft(event.data[0]);
 			break;
 		case Page.Event.FINISH_DRAWING:
-			var drawnItem = this.painter.endDraft(event.data[0]);
+			var drawnItem = this.getPainter().endDraft(event.data[0]);
 			this.tryToEnableItemEventHandling(drawnItem);
 			break;
 		case Page.Event.DRAW_TO:
@@ -43,6 +43,9 @@ Page.prototype.notify = function(event){
 			break;
 		case Page.Event.START_TEXTING:
 			this.getTexter().startTexting(event.data[0]);
+			break;
+		case Page.Event.FINISH_TEXTING:
+			this.getTexter().finishTexting();
 			break;
 	}
 };
@@ -117,4 +120,5 @@ Page.Event = {
 	FINISH_MOVING: "PAGE.FINISH_MOVING",
 
 	START_TEXTING: "PAGE.START_TEXTING",
+	FINISH_TEXTING: "PAGE.FINISH_TEXTING",
 };

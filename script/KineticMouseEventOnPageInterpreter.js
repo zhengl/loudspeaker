@@ -55,6 +55,8 @@ KineticMouseEventOnPageInterpreter.prototype.interpretMouseUp = function(event){
 		return new AbstractEvent(Page.Event.FINISH_DRAWING, [new Point(event.offsetX, event.offsetY)]);
 	} else if (this.target.getMover().isMoving){
 		return new AbstractEvent(Page.Event.FINISH_MOVING);
+	} else if (this.target.getTexter().isTexting){
+		return new AbstractEvent(Page.Event.FINISH_TEXTING);
 	} else {
 		return null;
 	}

@@ -233,11 +233,35 @@ describe("Page", function() {
 			expect(result.getPosition()).toEqual({x: 10, y: 20});
 		});
 
+		it("should return a Text after TEXTING texts in sequence with direct call", function(){
+			var text = createText("Hello ", 10, 20);
+			page.getTexter().draft(text);
+			expect(page.context.draftLayer.getChildren().toArray().length).toEqual(1);
+
+			text = createText("World!", 10, 20);
+			page.getTexter().draft(text);
+			expect(page.context.draftLayer.getChildren().toArray().length).toEqual(1);
+
+			var item = page.getTexter().finishTexting();
+			expect(page.context.layer.getChildren().toArray().length).toEqual(1);
+			expect(page.context.draftLayer.getChildren().toArray().length).toEqual(0);
+			expect(item instanceof KineticText).toBe(true);
+			
+			var result = page.context.layer.getChildren().toArray()[0];
+			expect(result.getText()).toEqual("Hello World!");
+			expect(result.getPosition()).toEqual({x: 10, y: 20});
+		});
+
 		it("should return a Text after DRAFTING a text with direct call", function(){
 			var text = createText("Hello World!", 10, 20);
 			var item = page.getTexter().draft(text);
-			expect(page.context.draftLayer.getChildren().toArray().length).toEqual(1);
+			
 			expect(item instanceof KineticText).toBe(true);
+			expect(page.context.draftLayer.getChildren().toArray().length).toEqual(1);
+
+			var result = page.context.draftLayer.getChildren().toArray()[0];
+			expect(result.getText()).toEqual("Hello World!");
+			expect(result.getPosition()).toEqual({x: 10, y: 20});
 		});
 	});
 
