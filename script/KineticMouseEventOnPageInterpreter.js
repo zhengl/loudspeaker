@@ -44,7 +44,9 @@ KineticMouseEventOnPageInterpreter.prototype.interpretMouseDown = function(event
 	if (this.target.isPainting) {
 		return new AbstractEvent(Page.Event.START_DRAWING, [new Point(event.offsetX, event.offsetY)]);
 	} else if (this.target.isTexting) {
-		return new AbstractEvent(Page.Event.START_TEXTING, [new Point(event.offsetX, event.offsetY)]);
+		if (undefined != this.target.getTexter().getTextInput()) {
+			return new AbstractEvent(Page.Event.FINISH_TEXTING);
+		}
 	} else {
 		return null;
 	}
@@ -55,8 +57,8 @@ KineticMouseEventOnPageInterpreter.prototype.interpretMouseUp = function(event){
 		return new AbstractEvent(Page.Event.FINISH_DRAWING, [new Point(event.offsetX, event.offsetY)]);
 	} else if (this.target.getMover().isMoving){
 		return new AbstractEvent(Page.Event.FINISH_MOVING);
-	} else if (this.target.getTexter().isTexting){
-		return new AbstractEvent(Page.Event.FINISH_TEXTING);
+	} else if (this.target.isTexting){
+		return new AbstractEvent(Page.Event.START_TEXTING, [new Point(event.offsetX, event.offsetY)]);
 	} else {
 		return null;
 	}
