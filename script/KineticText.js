@@ -3,7 +3,7 @@ function KineticText(text){
 		text: text,
 		fontSize: 30,
         fontFamily: 'Calibri',
-        fill: 'green'
+        fill: 'green',
 	});
 }
 

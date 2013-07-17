@@ -23,14 +23,14 @@ CanvasTextInput.prototype.enableEventHandling = function(text) {
 
 CanvasTextInput.prototype.write = function(text) {
 	this.text = text;
-	var item = this.context.draft(this.getText(), this.getPosition());
+	var item = this.context.draft(this.getText());
 	this.element.value = text.getValue();
 	return item;
 };
 
 CanvasTextInput.prototype.flush = function() {
-	this.text = new Text(this.element.value);
-	var item = this.context.write(this.getText(), this.getPosition());
+	this.text.setValue(this.element.value);
+	var item = this.context.write(this.getText());
 	item.registerEventTrigger();
 	this.context.stage.getContainer().removeChild(this.element);
 	delete this.element;

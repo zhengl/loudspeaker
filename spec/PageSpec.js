@@ -222,14 +222,19 @@ describe("Page", function() {
 		});
 
 		it("should return a Text after TEXTING a text with direct call", function(){
-			var text = createText();
+			var text = createText("Hello World!", 10, 20);
 			var item = page.getTexter().write(text);
-			expect(page.context.layer.getChildren().toArray().length).toEqual(1);
+
 			expect(item instanceof KineticText).toBe(true);
+			expect(page.context.layer.getChildren().toArray().length).toEqual(1);
+			
+			var result = page.context.layer.getChildren().toArray()[0];
+			expect(result.getText()).toEqual("Hello World!");
+			expect(result.getPosition()).toEqual({x: 10, y: 20});
 		});
 
 		it("should return a Text after DRAFTING a text with direct call", function(){
-			var text = createText();
+			var text = createText("Hello World!", 10, 20);
 			var item = page.getTexter().draft(text);
 			expect(page.context.draftLayer.getChildren().toArray().length).toEqual(1);
 			expect(item instanceof KineticText).toBe(true);
@@ -240,9 +245,9 @@ describe("Page", function() {
 		return new Line([new Point(x1, y1), new Point(x2, y2)]);
 	}
 
-	function createText(){
-		var text = new Text("Hello World!");
-		text.setPosition(new Point(10, 20));
+	function createText(content, x, y){
+		var text = new Text(content);
+		text.setPosition(new Point(x, y));
 		return text;
 	}
 	

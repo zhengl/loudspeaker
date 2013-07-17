@@ -7,6 +7,7 @@ KineticItemFactory.create = function(item){
 		var kineticItem = new KineticLine(item.points);
 	} else if (item instanceof Text) {
 		var kineticItem = new KineticText(item.getValue());
+		kineticItem.moveTo(item.getPosition());
 	} else {
 		console.log(item);
 	}

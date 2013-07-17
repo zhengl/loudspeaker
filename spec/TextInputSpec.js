@@ -6,7 +6,9 @@ describe("TextInput", function(){
 	});
 
 	it("writes and records text", function(){
-		textInput.write(new Text("Hello World!"));
+		var text = new Text("Hello World!");
+		text.setPosition(new Point(10, 20));
+		textInput.write(text);
 		expect(textInput.getText().getValue()).toBe("Hello World!");
 	});
 
@@ -21,7 +23,9 @@ describe("TextInput", function(){
 		});
 
 		it("writes and records text", function(){
-			textInput.write(new Text("Hello World!"));
+			var text = new Text("Hello World!");
+			text.setPosition(new Point(10, 20));
+			textInput.write(text);
 			expect(textInput.getText().getValue()).toBe("Hello World!");
 		});
 	});
