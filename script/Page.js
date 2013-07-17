@@ -43,6 +43,7 @@ Page.prototype.notify = function(event){
 			break;
 		case Page.Event.START_TEXTING:
 			this.getTexter().startTexting(event.data[0]);
+			break;
 	}
 };
 

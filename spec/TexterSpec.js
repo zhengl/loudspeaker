@@ -16,10 +16,16 @@ describe("Texter", function(){
 		});
 
 		it("should write some words and flush to the context", function(){
-			texter.startTexting(new Point(10, 20));
-			texter.write(new Text("Hello World"));
+			var text = createText();
+			texter.write(text);
 			expect(texter.context.getItems().length).toEqual(1);
 			expect(texter.getTextInput().element).toBeUndefined();
 		});
+		
+		function createText(){
+			var text = new Text("Hello World!");
+			text.setPosition(new Point(10, 20));
+			return text;
+		}
 	});
 });

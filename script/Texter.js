@@ -3,8 +3,8 @@ function Texter(context){
 	this.textInput = TextInputFactory.create(this.context);
 }
 
-Texter.prototype.startTexting = function(point) {
-	this.textInput.setPosition(point);
+Texter.prototype.startTexting = function(position) {
+	this.textInput.setPosition(position);
 };
 
 Texter.prototype.getTextInput = function() {
@@ -12,6 +12,12 @@ Texter.prototype.getTextInput = function() {
 };
 
 Texter.prototype.write = function(text){
+	this.textInput.setPosition(text.getPosition());
 	this.getTextInput().write(text);
 	return this.getTextInput().flush();
+};
+
+Texter.prototype.draft = function(text){
+	this.textInput.setPosition(text.getPosition());
+	return this.getTextInput().write(text);
 };

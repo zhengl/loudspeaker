@@ -149,7 +149,7 @@ describe("Page", function() {
 		});
 
 		it("should move a text with events, Item.START_MOVING, Page.MOVE_TO, Item.STOP_MOVING after being selected", function() {
-			var text = new Text("Hello World!");
+			var text = createText();
 			var item = page.write(text);
 			
 			eventTrigger = item.getInputEventTrigger();
@@ -171,10 +171,34 @@ describe("Page", function() {
 			expectOneItem(page);
 			expectNoDraftItem(page);
 
-			line = page.context.getItems()[0];
-			expect(line.getPosition().x).toBe(15);
-			expect(line.getPosition().y).toBe(15);
-		});			
+			text = page.context.getItems()[0];
+			expect(text.getPosition().x).toBe(15);
+			expect(text.getPosition().y).toBe(15);
+		});	
+
+		it("should move a text with events, Item.START_MOVING, Item.MOVE_TO, Item.STOP_MOVING after being selected", function() {
+			var text = createText();
+			var item = page.write(text);
+			
+			eventTrigger = item.getInputEventTrigger();
+			
+			triggerSelectEvent();
+			triggerStartMovingEvent(5, 5);
+			expectNoItem(page);
+			expectOneDraftItem(page);			
+			
+			triggerItemMoveToEvent(20, 20);
+			expectNoItem(page);
+			expectOneDraftItem(page);
+			
+			triggerFinishMovingEvent();
+			expectOneItem(page);
+			expectNoDraftItem(page);
+
+			text = page.context.getItems()[0];
+			expect(text.getPosition().x).toBe(15);
+			expect(text.getPosition().y).toBe(15);
+		});		
 	});
   
 	describe("with KineticJS context", function(){
@@ -196,10 +220,30 @@ describe("Page", function() {
 			expect(page.context.draftLayer.getChildren().toArray().length).toEqual(1);
 			expect(item instanceof KineticLine).toBe(true);
 		});
+
+		it("should return a Text after TEXTING a text with direct call", function(){
+			var text = createText();
+			var item = page.getTexter().write(text);
+			expect(page.context.layer.getChildren().toArray().length).toEqual(1);
+			expect(item instanceof KineticText).toBe(true);
+		});
+
+		it("should return a Text after DRAFTING a text with direct call", function(){
+			var text = createText();
+			var item = page.getTexter().draft(text);
+			expect(page.context.draftLayer.getChildren().toArray().length).toEqual(1);
+			expect(item instanceof KineticText).toBe(true);
+		});
 	});
 
 	function createLine(x1, y1, x2, y2) {
 		return new Line([new Point(x1, y1), new Point(x2, y2)]);
+	}
+
+	function createText(){
+		var text = new Text("Hello World!");
+		text.setPosition(new Point(10, 20));
+		return text;
 	}
 	
 	function expectOneItem(page){

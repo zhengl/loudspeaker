@@ -44,9 +44,8 @@ KineticContext.prototype.addDraftItem = function(kineticItem){
 	this.draftLayer.draw();
 };
 
-KineticContext.prototype.write = function(item, point){
+KineticContext.prototype.write = function(item){
 	var kineticItem = KineticItemFactory.create(item);
-	kineticItem.moveTo(point);
 	this.addItem(kineticItem);
 	return kineticItem;
 };
