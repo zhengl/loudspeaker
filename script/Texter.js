@@ -10,7 +10,9 @@ Texter.prototype.startTexting = function(position) {
 
 Texter.prototype.finishTexting = function(position) {
 	this.isTexting = false;
-	return this.getTextInput().flush();
+	var item = this.getTextInput().flush();
+	delete this.textInput;
+	return item;
 };
 
 Texter.prototype.getTextInput = function() {

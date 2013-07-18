@@ -82,8 +82,13 @@ KineticContext.prototype.removeItem = function(item){
 	this.items = resultItems;
 };
 
-KineticContext.prototype.registerEventTrigger = function(inputEventTrigger){
-	this.addEventListeners(inputEventTrigger, [
+KineticContext.prototype.getEventBus = function(){
+	return this.eventBus;
+};
+
+KineticContext.prototype.registerEventBus = function(page, eventBus){
+	this.eventBus = eventBus;
+	this.addEventListeners(page, eventBus, [
 		KineticEvent.MOVE_TO,
 		KineticEvent.MOUSE_DOWN,
 		KineticEvent.MOUSE_UP,
@@ -92,9 +97,9 @@ KineticContext.prototype.registerEventTrigger = function(inputEventTrigger){
 		KineticEvent.MOUSE_OVER,
 		KineticEvent.MOUSE_OUT
 	]);
-}
+};
 
-KineticContext.prototype.addEventListeners = function(inputEventTrigger, events){
+KineticContext.prototype.addEventListeners = function(page, eventBus, events){
 	var eventCatcher = new Kinetic.Rect({
             x: 0,
             y: 0,
@@ -105,7 +110,8 @@ KineticContext.prototype.addEventListeners = function(inputEventTrigger, events)
 	eventCatcher.moveToBottom();
 
 	eventCatcher.on(events.join(" "), function(event){
-		inputEventTrigger.trigger(event);
+		var interpreter = new KineticMouseEventOnPageInterpreter(page);
+		eventBus.publish(interpreter.interpret(event));
 	});
 	this.layer.draw();
 };

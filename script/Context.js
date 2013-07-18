@@ -3,7 +3,7 @@ function Context(){
 	this.draftItems = new Array();
 }
 
-Context.prototype.registerEventTrigger = function(inputEventTrigger){
+Context.prototype.registerEventBus = function(inputEventTrigger){
 };
 
 Context.prototype.getLastDraftItem = function(){

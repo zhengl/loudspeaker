@@ -20,7 +20,9 @@ CanvasTextInput.prototype.enableEventHandling = function(text) {
 	var self = this;
     this.element.onkeydown = function(event){
     	if(event.keyCode == 13) { // when press Enter
-	        self.flush();
+	        self.context.getEventBus().publish(
+				new AbstractEvent(Page.Event.FINISH_TEXTING)
+	        	);
 	    } else {
 	    	self.text.setValue(self.element.value);
 	    	self.write(self.text);
@@ -52,7 +54,10 @@ CanvasTextInput.prototype.flush = function() {
 	this.text.setValue(this.element.value);
 	this.context.clearDraftItems();
 	var item = this.context.write(this.getText());
-	item.enableEventHandling();
+	// console.log(this.context);
+	if (undefined != this.context.getEventBus()) {
+		item.registerEventBus(this.context.getEventBus());
+	}
 	this.context.stage.getContainer().removeChild(this.element);
 	delete this.element;
 	return item;

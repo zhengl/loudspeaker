@@ -34,7 +34,7 @@ KineticMouseEventOnPageInterpreter.prototype.interpretMoveTo = function(event){
 	if (this.target.getPainter().isPainting) {
 		return new AbstractEvent(Page.Event.DRAW_TO, [new Point(event.offsetX, event.offsetY)]);
 	} else if (this.target.getMover().isMoving) {
-		return new AbstractEvent(Page.Event.MOVE_TO, [new Point(event.offsetX, event.offsetY)]);;
+		return new AbstractEvent(Page.Event.MOVE_TO, [new Point(event.offsetX, event.offsetY)]);
 	} else {
 		return null;
 	}

@@ -3,42 +3,41 @@ function Item(){
 }
 
 Item.prototype.notify = function(event){
-	console.log(event);
-	switch(event.name) {
-		case Item.Event.START_MOVING:
-			this.relativePosition = event.data[0];
-			console.log(this.getPageEventTrigger());
-			this.getPageEventTrigger().trigger(
-				new AbstractEvent(Page.Event.START_MOVING, [this])
-				);
-			break;
-		case Item.Event.FINISH_MOVING:
-			this.getPageEventTrigger().trigger(
-				new AbstractEvent(Page.Event.FINISH_MOVING, [this])
-				);
-			break;
-		case Item.Event.MOVE_TO:
-			this.getPageEventTrigger().trigger(
-				new AbstractEvent(Page.Event.MOVE_TO, [event.data[0]])
-				);
-			break;
-		case Item.Event.SELECT:
-			this.select();
-			break;
-		case Item.Event.UNSELECT:
-			this.unselect();
-			break;
+	if (event.name.indexOf("ITEM") == 0 && event.data[0] === this){
+		switch(event.name) {
+			case Item.Event.START_MOVING:
+				this.relativePosition = event.data[1];
+				this.eventBus.publish(
+					new AbstractEvent(Page.Event.START_MOVING, [this])
+					);
+				break;
+			case Item.Event.FINISH_MOVING:
+				this.eventBus.publish(
+					new AbstractEvent(Page.Event.FINISH_MOVING, [this])
+					);
+				break;
+			case Item.Event.MOVE_TO:
+				this.eventBus.publish(
+					new AbstractEvent(Page.Event.MOVE_TO, [event.data[1]])
+					);
+				break;
+			case Item.Event.SELECT:
+				this.select();
+				break;
+			case Item.Event.UNSELECT:
+				this.unselect();
+				break;
+		}
 	}
 };
 
-Item.prototype.enableEventHandling = function(){
-	var eventChannel = EventChannelFactory.create(this);
+Item.prototype.getEventBus = function(){
+	return this.eventBus;
+};
 
-	this.setOutputEventTrigger(eventChannel.getOutputEventTrigger());
-	this.getOutputEventTrigger().addListener(this);
-	this.setInputEventTrigger(eventChannel.getInputEventTrigger());
-	this.registerEventTrigger();
-	this.pageEventTrigger = new EventTrigger();
+Item.prototype.registerEventBus = function(eventBus){
+	this.eventBus = eventBus;
+	this.eventBus.addListener(this);
 };
 
 Item.prototype.getPosition = function(){
@@ -51,11 +50,6 @@ Item.prototype.setPosition = function(point){
 
 Item.prototype.moveTo = function(newPosition){
 	this.position = newPosition;
-};
-
-
-Item.prototype.getPageEventTrigger = function(){
-	return this.pageEventTrigger;
 };
 
 Item.prototype.setOutputEventTrigger = function(outputEventTrigger){

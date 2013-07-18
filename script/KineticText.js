@@ -27,8 +27,10 @@ KineticText.prototype.undraftize = function(){
 	return this;
 };
 
-KineticText.prototype.registerEventTrigger = function(){
-	this.addEventListeners([
+KineticText.prototype.registerEventBus = function(eventBus){
+	this.eventBus = eventBus;
+	this.eventBus.addListener(this);
+	this.addEventListeners(eventBus, [
 		KineticEvent.MOUSE_OVER,
 		KineticEvent.MOUSE_ENTER,
 		KineticEvent.MOVE_TO,
@@ -39,7 +41,7 @@ KineticText.prototype.registerEventTrigger = function(){
 	]);
 };
 
-KineticText.prototype.addEventListeners = function(events){
+KineticText.prototype.addEventListeners = function(eventBus, events){
 	var self = this;
 	for(var index in events){
 		var eventType = events[index];
@@ -52,7 +54,8 @@ KineticText.prototype.addEventListeners = function(events){
                      event.ctrlKey, event.altKey, event.shiftKey, event.metaKey, 
                      event.button, event.relatedTarget);
 				translatedEvent.cancelBubble = true;
-				self.getInputEventTrigger().trigger(translatedEvent);
+				var interpreter = new KineticMouseEventOnItemInterpreter(self);
+				eventBus.publish(interpreter.interpret(translatedEvent));
 			});					
 		})(eventType);
 	}

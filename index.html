@@ -6,6 +6,7 @@
     <script type="text/javascript" src="script/lib/kinetic-v4.5.3.min.js"></script>
 
   <!-- include source files here... -->
+  <script type="text/javascript" src="script/EventBus.js"></script>
   <script type="text/javascript" src="script/Board.js"></script>
   <script type="text/javascript" src="script/Environment.js"></script>
   <script type="text/javascript" src="script/Page.js"></script>
@@ -29,8 +30,6 @@
   <script type="text/javascript" src="script/AbstractEvent.js"></script>
   <script type="text/javascript" src="script/KineticEvent.js"></script>
   <script type="text/javascript" src="script/EventTrigger.js"></script>
-  <script type="text/javascript" src="script/EventChannel.js"></script>
-  <script type="text/javascript" src="script/EventChannelFactory.js"></script>
   <script type="text/javascript" src="script/EventTriggerAdapter.js"></script>
   <script type="text/javascript" src="script/KineticMouseEventOnPageInterpreter.js"></script>
   <script type="text/javascript" src="script/KineticMouseEventOnItemInterpreter.js"></script>
@@ -41,7 +40,7 @@
 	Environment.setMouse();
   
 	var page = new Page();
-	page.enableEventHandling();
+	page.enableEventHandling(new EventBus());
   page.getPainter().selectShape(Palette.Shape.Line);
 	// page.selectPaintingMode();
   page.selectTextingMode();

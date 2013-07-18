@@ -3,9 +3,7 @@ function Page() {
 
 	this.painter = new Painter(this.context);
 	this.texter = new Texter(this.context);
-	this.mover = new Mover(this.context);
-	
-	this.eventHandlingEnabled = false;
+	this.mover = new Mover(this.context);	
 }
 
 Page.prototype.selectPaintingMode = function(){
@@ -17,14 +15,13 @@ Page.prototype.selectTextingMode = function(){
 };
 
 Page.prototype.notify = function(event){
-	console.log(event);
 	switch(event.name) {
 		case Page.Event.START_DRAWING:
 			this.painter.startDraft(event.data[0]);
 			break;
 		case Page.Event.FINISH_DRAWING:
 			var drawnItem = this.getPainter().endDraft(event.data[0]);
-			this.tryToEnableItemEventHandling(drawnItem);
+			this.registerEventBus(drawnItem);
 			break;
 		case Page.Event.DRAW_TO:
 			this.getPainter().draftTo(event.data[0]);
@@ -50,32 +47,20 @@ Page.prototype.notify = function(event){
 	}
 };
 
-Page.prototype.enableEventHandling = function(){
-	var eventChannel = EventChannelFactory.create(this);
-
-	this.setOutputEventTrigger(eventChannel.getOutputEventTrigger());
-	this.getOutputEventTrigger().addListener(this);
-
-	this.setInputEventTrigger(eventChannel.getInputEventTrigger());
-	this.context.registerEventTrigger(this.getInputEventTrigger());
-	
-	this.eventHandlingEnabled = true;
+Page.prototype.hasEventBus = function(){
+	return undefined != this.eventBus;
 };
 
-Page.prototype.setOutputEventTrigger = function(outputEventTrigger){
-	this.outputEventTrigger = outputEventTrigger;
+Page.prototype.registerEventBus = function(item){
+	if (this.hasEventBus()) {
+		item.registerEventBus(this.eventBus);
+	}
 };
 
-Page.prototype.getOutputEventTrigger = function(){
-	return this.outputEventTrigger;
-};
-
-Page.prototype.setInputEventTrigger = function(inputEventTrigger){
-	this.inputEventTrigger = inputEventTrigger;
-};
-
-Page.prototype.getInputEventTrigger = function(){
-	return this.inputEventTrigger;
+Page.prototype.enableEventHandling = function(eventBus){
+	this.eventBus = eventBus;
+	eventBus.addListener(this);
+	this.context.registerEventBus(this, eventBus);	
 };
 
 Page.prototype.getPainter = function() {
@@ -92,28 +77,21 @@ Page.prototype.getMover = function(){
 
 Page.prototype.draw = function(item){
 	var drawnItem = this.getPainter().draw(item);
-	this.tryToEnableItemEventHandling(drawnItem);
+	this.registerEventBus(drawnItem);
 	return drawnItem;
 };
 
 Page.prototype.write = function(item){
 	var textItem = this.getTexter().write(item);
-	this.tryToEnableItemEventHandling(textItem);
+	this.registerEventBus(textItem);
 	return textItem;
-};
-
-Page.prototype.tryToEnableItemEventHandling = function(item){
-	if (this.eventHandlingEnabled) {
-		item.enableEventHandling();
-		item.getPageEventTrigger().addListener(this);
-	}
 };
 
 Page.Event = {
 	START_DRAWING: "PAGE.START_DRAWING",
 	STOP_DRAWING: "PAGE.STOP_DRAWING",
 	FINISH_DRAWING: "PAGE.FINISH_DRAWING",
-	DRAW_TO: "DRAW_TO",
+	DRAW_TO: "PAGE.DRAW_TO",
 
 	START_MOVING: "PAGE.START_MOVING",
 	MOVE_TO: "PAGE.MOVE_TO",

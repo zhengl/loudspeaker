@@ -13,8 +13,7 @@ describe("Item", function(){
 	});
 
 	it("should be able to enable event handling", function(){
-		item.enableEventHandling();
-		expect(item.getOutputEventTrigger()).toBeDefined();
-		expect(item.getInputEventTrigger()).toBeDefined();
+		item.registerEventBus(new EventBus());
+		expect(item.getEventBus()).toBeDefined();
 	});
 });

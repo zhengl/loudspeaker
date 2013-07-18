@@ -1,6 +1,7 @@
 describe("Page", function() {
 	var page;
-	var eventTrigger;
+	// var eventTrigger;
+	var eventBus;
 
 	beforeEach(function() {
 		Environment.setDummy();
@@ -13,20 +14,15 @@ describe("Page", function() {
 	});
 	
 	describe("with Event Handling", function(){
-		
+
 		beforeEach(function() {
 			Environment.setDummy();
 			page = new Page();
-			page.enableEventHandling();
-			eventTrigger = page.getInputEventTrigger();
+			eventBus = new EventBus();
+			page.enableEventHandling(eventBus);
 			page.getPainter().selectShape(Palette.Shape.Line);
 		});
   
-		it("should have registered a event trigger", function() {
-			expect(page.getOutputEventTrigger()).toBeDefined();
-			expect(page.getInputEventTrigger()).toBeDefined();
-		});
-
 		it("should DRAW a line with events", function() {			
 			triggerStartDrawingEvent(10, 10);
 			triggerPageDrawToEvent(20, 20);
@@ -34,8 +30,7 @@ describe("Page", function() {
 
 			var line = page.context.getItems()[0];
 			expectIsAnItem(line);
-			expect(line.getPosition().x).toBe(10);
-			expect(line.getPosition().y).toBe(10);
+			expect(line.getPosition()).toEqual({x: 10, y: 10});
 			expect(line.points.length).toBe(3);
 		});
 		
@@ -61,54 +56,71 @@ describe("Page", function() {
 		it("should move a line with events, Item.START_MOVING, Page.MOVE_TO, Item.STOP_MOVING after being selected", function() {
 			var line = createLine(10, 10, 20, 20);
 			var item = page.draw(line);
-			
-			eventTrigger = item.getInputEventTrigger();
-			
-			triggerSelectEvent();
-			triggerStartMovingEvent(5, 5);
+						
+			triggerSelectEvent(item);
+			triggerStartMovingEvent(item, 5, 5);
 			expectNoItem(page);
 			expectOneDraftItem(page);			
 			
-			eventTrigger = page.getInputEventTrigger();
-
 			triggerPageMoveToEvent(20, 20);
 			expectNoItem(page);
 			expectOneDraftItem(page);
 			
-			eventTrigger = item.getInputEventTrigger();
-
-			triggerFinishMovingEvent();
-			expectOneItem(page);~
+			triggerFinishMovingEvent(item);
+			expectOneItem(page);
 			expectNoDraftItem(page);
 
 			line = page.context.getItems()[0];
-			expect(line.getPosition().x).toBe(15);
-			expect(line.getPosition().y).toBe(15);
+			expect(line.getPosition()).toEqual({x: 15, y: 15});
+		});
+
+		it("should move lines with events, Item.START_MOVING, Page.MOVE_TO, Item.STOP_MOVING after being selected", function() {
+			var line1 = createLine(10, 10, 20, 20);
+			var item1 = page.draw(line1);
+			
+			var line2 = createLine(30, 30, 40, 40);
+			var item2 = page.draw(line2);
+
+			expect(page.context.getItems().length).toEqual(2);
+						
+			triggerSelectEvent(item1);
+			triggerStartMovingEvent(item1, 5, 5);
+			expectOneItem(page);
+			expectOneDraftItem(page);			
+			
+			triggerPageMoveToEvent(20, 20);
+			expectOneItem(page);
+			expectOneDraftItem(page);
+			
+			triggerFinishMovingEvent(item1);
+			expect(page.context.getItems().length).toEqual(2);
+			expectNoDraftItem(page);
+
+			line1 = page.context.getItems()[1];
+			expect(line1.getPosition()).toEqual({x: 15, y: 15});
 		});	
 		
 
 		it("should move a line with events, Item.START_MOVING, Item.MOVE_TO, Item.STOP_MOVING after being selected", function() {
 			var line = createLine(10, 10, 20, 20);
 			var item = page.draw(line);
-			
-			eventTrigger = item.getInputEventTrigger();
-			
-			triggerSelectEvent();
-			triggerStartMovingEvent(5, 5);
+						
+			triggerSelectEvent(item);
+			triggerStartMovingEvent(item, 5, 5);
 			expectNoItem(page);
 			expectOneDraftItem(page);			
 			
-			triggerItemMoveToEvent(20, 20);
+			triggerItemMoveToEvent(item, 20, 20);
 			expectNoItem(page);
 			expectOneDraftItem(page);
-			
-			triggerFinishMovingEvent();
+			line = page.context.getDraftItems()[0];
+			expect(line.getPosition()).toEqual({x: 15, y: 15});			
+
+			triggerFinishMovingEvent(item);
 			expectOneItem(page);
 			expectNoDraftItem(page);
-
 			line = page.context.getItems()[0];
-			expect(line.getPosition().x).toBe(15);
-			expect(line.getPosition().y).toBe(15);
+			expect(line.getPosition()).toEqual({x: 15, y: 15});
 		});	
 
 		it("should stop drawing with event STOP_DRAWING", function(){			
@@ -127,13 +139,11 @@ describe("Page", function() {
 			var line = createLine(10, 10, 20, 20);
 			var item = page.draw(line);
 			expect(item.isSelected).toBe(false);
-			
-			eventTrigger = item.getInputEventTrigger();	
-			
-			triggerSelectEvent();		
+						
+			triggerSelectEvent(item);		
 			expect(item.isSelected).toBe(true);
 			
-			triggerUnselectEvent();			
+			triggerUnselectEvent(item);			
 			expect(item.isSelected).toBe(false);
 		});
 
@@ -144,60 +154,49 @@ describe("Page", function() {
 
 			var textInput = page.getTexter().getTextInput();
 			expect(textInput).toBeDefined();
-			expect(textInput.getPosition().x).toBe(10);
-			expect(textInput.getPosition().y).toBe(20);
+			expect(textInput.getPosition()).toEqual({x: 10, y: 20});
 		});
 
 		it("should move a text with events, Item.START_MOVING, Page.MOVE_TO, Item.STOP_MOVING after being selected", function() {
 			var text = createText();
 			var item = page.write(text);
-			
-			eventTrigger = item.getInputEventTrigger();
-			
-			triggerSelectEvent();
-			triggerStartMovingEvent(5, 5);
+						
+			triggerSelectEvent(item);
+			triggerStartMovingEvent(item, 5, 5);
 			expectNoItem(page);
 			expectOneDraftItem(page);			
 			
-			eventTrigger = page.getInputEventTrigger();
-
 			triggerPageMoveToEvent(20, 20);
 			expectNoItem(page);
 			expectOneDraftItem(page);
 			
-			eventTrigger = item.getInputEventTrigger();
-
-			triggerFinishMovingEvent();
+			triggerFinishMovingEvent(item);
 			expectOneItem(page);
 			expectNoDraftItem(page);
 
 			text = page.context.getItems()[0];
-			expect(text.getPosition().x).toBe(15);
-			expect(text.getPosition().y).toBe(15);
+			expect(text.getPosition()).toEqual({x: 15, y: 15});
 		});	
 
 		it("should move a text with events, Item.START_MOVING, Item.MOVE_TO, Item.STOP_MOVING after being selected", function() {
 			var text = createText();
 			var item = page.write(text);
-			
-			eventTrigger = item.getInputEventTrigger();
-			
-			triggerSelectEvent();
-			triggerStartMovingEvent(5, 5);
+						
+			triggerSelectEvent(item);
+			triggerStartMovingEvent(item, 5, 5);
 			expectNoItem(page);
 			expectOneDraftItem(page);			
 			
-			triggerItemMoveToEvent(20, 20);
+			triggerItemMoveToEvent(item, 20, 20);
 			expectNoItem(page);
 			expectOneDraftItem(page);
 			
-			triggerFinishMovingEvent();
+			triggerFinishMovingEvent(item);
 			expectOneItem(page);
 			expectNoDraftItem(page);
 
 			text = page.context.getItems()[0];
-			expect(text.getPosition().x).toBe(15);
-			expect(text.getPosition().y).toBe(15);
+			expect(text.getPosition()).toEqual({x: 15, y: 15});
 		});		
 	});
   
@@ -210,15 +209,19 @@ describe("Page", function() {
 		it("should return a Line after DRAWING a line with direct call", function() {
 			var line = createLine(10, 10, 20, 20);
 			var item = page.getPainter().draw(line);
-			expect(page.context.layer.getChildren().toArray().length).toEqual(1);
+
 			expect(item instanceof KineticLine).toBe(true);
+			expect(item.getPosition()).toEqual({x: 10, y: 10});
+			expect(page.context.layer.getChildren().toArray().length).toEqual(1);
 		});
 
 		it("should return a Line after DRAFTING a line with direct call", function() {
 			var line = createLine(10, 10, 20, 20);
 			var item = page.getPainter().draft(line);
-			expect(page.context.draftLayer.getChildren().toArray().length).toEqual(1);
+
 			expect(item instanceof KineticLine).toBe(true);
+			expect(item.getPosition()).toEqual({x: 10, y: 10});
+			expect(page.context.draftLayer.getChildren().toArray().length).toEqual(1);			
 		});
 
 		it("should return a Text after TEXTING a text with direct call", function(){
@@ -296,46 +299,46 @@ describe("Page", function() {
 	}
 
 	function triggerPageMoveToEvent(x, y){
-		eventTrigger.trigger(new AbstractEvent(Page.Event.MOVE_TO, [new Point(x, y)]));
+		eventBus.publish(new AbstractEvent(Page.Event.MOVE_TO, [new Point(x, y)]));
 	}
 
 	function triggerPageDrawToEvent(x, y){
-		eventTrigger.trigger(new AbstractEvent(Page.Event.DRAW_TO, [new Point(x, y)]));
+		eventBus.publish(new AbstractEvent(Page.Event.DRAW_TO, [new Point(x, y)]));
 	}
 
-	function triggerItemMoveToEvent(x, y){
-		eventTrigger.trigger(new AbstractEvent(Item.Event.MOVE_TO, [new Point(x, y)]));
+	function triggerItemMoveToEvent(item, x, y){
+		eventBus.publish(new AbstractEvent(Item.Event.MOVE_TO, [item, new Point(x, y)]));
 	}
 	
 	function triggerStartDrawingEvent(x, y){
-		eventTrigger.trigger(new AbstractEvent(Page.Event.START_DRAWING, [new Point(x, y)]));		
+		eventBus.publish(new AbstractEvent(Page.Event.START_DRAWING, [new Point(x, y)]));		
 	}
 
 	function triggerFinishDrawingEvent(x, y){
-		eventTrigger.trigger(new AbstractEvent(Page.Event.FINISH_DRAWING, [new Point(x, y)]));		
+		eventBus.publish(new AbstractEvent(Page.Event.FINISH_DRAWING, [new Point(x, y)]));		
 	}
 	
 	function triggerStopDrawingEvent(){
-		eventTrigger.trigger(new AbstractEvent(Page.Event.STOP_DRAWING));		
+		eventBus.publish(new AbstractEvent(Page.Event.STOP_DRAWING));		
 	}
 	
-	function triggerSelectEvent(){
-		eventTrigger.trigger(new AbstractEvent(Item.Event.SELECT));	
+	function triggerSelectEvent(item){
+		eventBus.publish(new AbstractEvent(Item.Event.SELECT, [item]));	
 	}
 	
-	function triggerUnselectEvent(){
-		eventTrigger.trigger(new AbstractEvent(Item.Event.UNSELECT));	
+	function triggerUnselectEvent(item){
+		eventBus.publish(new AbstractEvent(Item.Event.UNSELECT, [item]));	
 	}
 	
-	function triggerStartMovingEvent(x, y){
-		eventTrigger.trigger(new AbstractEvent(Item.Event.START_MOVING, [new Point(x, y)]));
+	function triggerStartMovingEvent(item, x, y){
+		eventBus.publish(new AbstractEvent(Item.Event.START_MOVING, [item, new Point(x, y)]));
 	}
 	
-	function triggerFinishMovingEvent(){
-		eventTrigger.trigger(new AbstractEvent(Item.Event.FINISH_MOVING));
+	function triggerFinishMovingEvent(item){
+		eventBus.publish(new AbstractEvent(Item.Event.FINISH_MOVING, [item]));
 	}
 
 	function triggerStartTextingEvent(x, y){
-		eventTrigger.trigger(new AbstractEvent(Page.Event.START_TEXTING, [new Point(x, y)]));
+		eventBus.publish(new AbstractEvent(Page.Event.START_TEXTING, [new Point(x, y)]));
 	}
 });

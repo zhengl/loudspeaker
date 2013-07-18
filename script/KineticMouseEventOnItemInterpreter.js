@@ -44,7 +44,7 @@ KineticMouseEventOnItemInterpreter.prototype.interpretMouseDown = function(event
 		var currentPosition = this.target.getPosition();
 		var relativeX = mousePosition.x - currentPosition.x;
 		var relativeY = mousePosition.y - currentPosition.y;
-		return new AbstractEvent(Item.Event.START_MOVING, [new Point(relativeX, relativeY)]);
+		return new AbstractEvent(Item.Event.START_MOVING, [this.target, new Point(relativeX, relativeY)]);
 	} else {
 		return null;
 	}
@@ -52,24 +52,24 @@ KineticMouseEventOnItemInterpreter.prototype.interpretMouseDown = function(event
 
 KineticMouseEventOnItemInterpreter.prototype.interpretMouseUp = function(event){
 	if(this.target.isMoving) {
-		return new AbstractEvent(Item.Event.FINISH_MOVING);
+		return new AbstractEvent(Item.Event.FINISH_MOVING, [this.target]);
 	} else {
 		return null;
 	}
 };
 
 KineticMouseEventOnItemInterpreter.prototype.interpretMouseEnter = function(event){
-	return new AbstractEvent(Item.Event.SELECT);
+	return new AbstractEvent(Item.Event.SELECT, [this.target]);
 };
 
 KineticMouseEventOnItemInterpreter.prototype.interpretMouseLeave = function(event){
-	return new AbstractEvent(Item.Event.UNSELECT);
+	return new AbstractEvent(Item.Event.UNSELECT, [this.target]);
 };
 
 KineticMouseEventOnItemInterpreter.prototype.interpretMouseOver = function(event){
-	return new AbstractEvent(Item.Event.SELECT);
+	return new AbstractEvent(Item.Event.SELECT, [this.target]);
 };
 
 KineticMouseEventOnItemInterpreter.prototype.interpretMouseOut = function(event){
-	return new AbstractEvent(Item.Event.UNSELECT);
+	return new AbstractEvent(Item.Event.UNSELECT, [this.target]);
 };
