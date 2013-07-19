@@ -96,6 +96,7 @@ CanvasTextInput.prototype.flush = function() {
 		item.registerEventBus(this.context.getEventBus());
 	}
 	this.context.stage.getContainer().removeChild(this.element);
+	this.cursor.destroy();
 	delete this.element;
 	return item;
 };
