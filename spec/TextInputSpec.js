@@ -19,7 +19,7 @@ describe("TextInput", function(){
 		beforeEach(function(){
 			Environment.setMouse();
 			context = ContextFactory.create();
-			textInput = new CanvasTextInput(context);
+			textInput = new KineticTextInput(context);
 		});
 
 		it("writes and records text", function(){
