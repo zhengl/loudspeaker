@@ -113,6 +113,7 @@ KineticTextInput.prototype.removeCursor = function(){
 };
 
 KineticTextInput.prototype.remove = function(){
+	this.context.clearDraftItems();
 	this.removeDOMElement();
 	this.removeCursor();
 };
