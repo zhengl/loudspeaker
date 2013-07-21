@@ -22,7 +22,6 @@ function KineticCursor(context){
 }
 
 KineticCursor.prototype.setPosition = function(point){
-    console.log(point);
     this.kineticShape.setPosition(point.x, point.y);
 };
 

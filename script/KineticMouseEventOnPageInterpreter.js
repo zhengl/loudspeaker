@@ -66,19 +66,15 @@ KineticMouseEventOnPageInterpreter.prototype.interpretMouseUp = function(event){
 KineticMouseEventOnPageInterpreter.prototype.startModeSelectionTimer = function(){
 	var page = this.target;
 	this.timer = window.setTimeout(function(){
-		console.log(page.mode);
 		if(page.isTexting()) {
 			page.selectPaintingMode();
 		} else {
   			page.selectTextingMode();
 		}
-		// console.log(page.mode);
 	}, 1000);
-	console.log("start" + this.timer);
 };
 
 KineticMouseEventOnPageInterpreter.prototype.stopModeSelectionTimer = function(){
-	console.log("stop" + this.timer)
 	if (undefined != this.timer) {
 		clearTimeout(this.timer);	
 	}
