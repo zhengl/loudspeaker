@@ -10,7 +10,12 @@ describe("Page", function() {
 
 	it("should be able to be in DRAWING mode", function(){
 		page.selectPaintingMode();
-		expect(page.isPainting).toBe(true);
+		expect(page.isPainting()).toBe(true);
+	});
+
+	it("should be able to be in TEXTING mode", function(){
+		page.selectTextingMode();
+		expect(page.isTexting()).toBe(true);
 	});
 	
 	describe("with Event Handling", function(){

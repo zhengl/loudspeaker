@@ -84,9 +84,8 @@ KineticTextInput.prototype.flush = function() {
 	if (undefined != this.context.getEventBus()) {
 		item.registerEventBus(this.context.getEventBus());
 	}
-	this.context.stage.getContainer().removeChild(this.element);
-	this.cursor.destroy();
-	delete this.element;
+	this.removeDOMElement()
+	this.removeCursor();
 	return item;
 };
 
@@ -101,5 +100,18 @@ KineticTextInput.prototype.setPosition = function(point){
 };
 
 KineticTextInput.prototype.getPosition = function(){
+	return this.position;
+};
+
+KineticTextInput.prototype.removeDOMElement = function(){
+	this.context.stage.getContainer().removeChild(this.element);
+	delete this.element;
+};
+
+KineticTextInput.prototype.removeCursor = function(){
+	this.cursor.destroy();
+};
+
+KineticTextInput.prototype.remove = function(){
 	return this.position;
 };

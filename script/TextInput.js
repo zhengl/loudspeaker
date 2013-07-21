@@ -24,3 +24,6 @@ TextInput.prototype.setPosition = function(point){
 TextInput.prototype.getPosition = function(){
 	return this.position;
 };
+
+TextInput.prototype.remove = function(){
+};

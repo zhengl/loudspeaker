@@ -43,9 +43,9 @@ KineticMouseEventOnPageInterpreter.prototype.interpretMoveTo = function(event){
 
 KineticMouseEventOnPageInterpreter.prototype.interpretMouseDown = function(event){
 	this.startModeSelectionTimer();
-	if (this.target.isPainting) {
+	if (this.target.isPainting()) {
 		return new AbstractEvent(Page.Event.START_DRAWING, [new Point(event.offsetX, event.offsetY)]);
-	} else if (this.target.isTexting) {
+	} else if (this.target.isTexting()) {
 		return new AbstractEvent(Page.Event.START_TEXTING, [new Point(event.offsetX, event.offsetY)]);
 	} else {
 		return null;
@@ -66,19 +66,19 @@ KineticMouseEventOnPageInterpreter.prototype.interpretMouseUp = function(event){
 KineticMouseEventOnPageInterpreter.prototype.startModeSelectionTimer = function(){
 	var page = this.target;
 	this.timer = window.setTimeout(function(){
-		console.log("begin");
-		console.log(page);
-		if(page.isTexting) {
-			console.log("paint");
-  			page.selectTextingMode();
-		} else {
-			console.log("text");
+		console.log(page.mode);
+		if(page.isTexting()) {
 			page.selectPaintingMode();
+		} else {
+  			page.selectTextingMode();
 		}
-	}, 3000);
+		// console.log(page.mode);
+	}, 1000);
+	console.log("start" + this.timer);
 };
 
 KineticMouseEventOnPageInterpreter.prototype.stopModeSelectionTimer = function(){
+	console.log("stop" + this.timer)
 	if (undefined != this.timer) {
 		clearTimeout(this.timer);	
 	}

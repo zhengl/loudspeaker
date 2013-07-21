@@ -3,15 +3,26 @@ function Page() {
 
 	this.painter = new Painter(this.context);
 	this.texter = new Texter(this.context);
-	this.mover = new Mover(this.context);	
+	this.mover = new Mover(this.context);
+
+	this.selectPaintingMode();
 }
 
 Page.prototype.selectPaintingMode = function(){
-	this.isPainting = true;
+	this.texter.clear();
+	this.mode = Page.Mode.DRAW;
 };
 
 Page.prototype.selectTextingMode = function(){
-	this.isTexting = true;
+	this.mode = Page.Mode.TEXT;
+};
+
+Page.prototype.isPainting = function(){
+	return this.mode == Page.Mode.DRAW;
+};
+
+Page.prototype.isTexting = function(){
+	return this.mode == Page.Mode.TEXT;
 };
 
 Page.prototype.notify = function(event){
@@ -99,4 +110,9 @@ Page.Event = {
 
 	START_TEXTING: "PAGE.START_TEXTING",
 	FINISH_TEXTING: "PAGE.FINISH_TEXTING",
+};
+
+Page.Mode = {
+	TEXT: "PAGE.TEXT",
+	DRAW: "PAGE.DRAW",
 };

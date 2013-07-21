@@ -37,3 +37,10 @@ Texter.prototype.initializeTextInput = function(text){
 		this.textInput = TextInputFactory.create(this.context);
 	}
 };
+
+Texter.prototype.clear = function(text){
+	if (undefined != this.textInput) {
+		this.textInput.remove();
+		delete this.textInput;
+	}
+};
