@@ -31,6 +31,7 @@ KineticMouseEventOnPageInterpreter.prototype.interpret = function(event){
 };
 
 KineticMouseEventOnPageInterpreter.prototype.interpretMoveTo = function(event){
+	this.stopModeSelectionTimer();
 	if (this.target.getPainter().isPainting) {
 		return new AbstractEvent(Page.Event.DRAW_TO, [new Point(event.offsetX, event.offsetY)]);
 	} else if (this.target.getMover().isMoving) {
@@ -41,6 +42,7 @@ KineticMouseEventOnPageInterpreter.prototype.interpretMoveTo = function(event){
 };
 
 KineticMouseEventOnPageInterpreter.prototype.interpretMouseDown = function(event){
+	this.startModeSelectionTimer();
 	if (this.target.isPainting) {
 		return new AbstractEvent(Page.Event.START_DRAWING, [new Point(event.offsetX, event.offsetY)]);
 	} else if (this.target.isTexting) {
@@ -51,11 +53,33 @@ KineticMouseEventOnPageInterpreter.prototype.interpretMouseDown = function(event
 };
 
 KineticMouseEventOnPageInterpreter.prototype.interpretMouseUp = function(event){
+	this.stopModeSelectionTimer();
 	if (this.target.getPainter().isPainting) {
 		return new AbstractEvent(Page.Event.FINISH_DRAWING, [new Point(event.offsetX, event.offsetY)]);
 	} else if (this.target.getMover().isMoving){
 		return new AbstractEvent(Page.Event.FINISH_MOVING);
 	} else {
 		return null;
+	}
+};
+
+KineticMouseEventOnPageInterpreter.prototype.startModeSelectionTimer = function(){
+	var page = this.target;
+	this.timer = window.setTimeout(function(){
+		console.log("begin");
+		console.log(page);
+		if(page.isTexting) {
+			console.log("paint");
+  			page.selectTextingMode();
+		} else {
+			console.log("text");
+			page.selectPaintingMode();
+		}
+	}, 3000);
+};
+
+KineticMouseEventOnPageInterpreter.prototype.stopModeSelectionTimer = function(){
+	if (undefined != this.timer) {
+		clearTimeout(this.timer);	
 	}
 };
