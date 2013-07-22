@@ -32,7 +32,7 @@ KineticMouseEventOnItemInterpreter.prototype.interpret = function(event){
 
 KineticMouseEventOnItemInterpreter.prototype.interpretMoveTo = function(event){
 	if(this.target.isMoving) {
-		return new AbstractEvent(Item.Event.MOVE_TO, [new Point(event.x, event. y)]);
+		return new AbstractEvent(Item.Event.MOVE_TO, [this.target, new Point(event.offsetX, event.offsetY)]);
 	} else {
 		return null;
 	}

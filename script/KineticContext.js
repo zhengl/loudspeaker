@@ -9,8 +9,9 @@ function KineticContext(container, width, height){
 	});
 	this.layer = new Kinetic.Layer();
 	this.draftLayer = new Kinetic.Layer();
-	this.stage.add(this.draftLayer);
 	this.stage.add(this.layer);
+	this.stage.add(this.draftLayer);
+	this.layer.moveToTop();
 }
 
 KineticContext.prototype.getLastDraftItem = function(){
@@ -100,17 +101,17 @@ KineticContext.prototype.registerEventBus = function(page, eventBus){
 };
 
 KineticContext.prototype.addEventListeners = function(page, eventBus, events){
-	var eventCatcher = new Kinetic.Rect({
+	 this.eventCatcher = new Kinetic.Rect({
             x: 0,
             y: 0,
             width: this.stage.getWidth(),
             height: this.stage.getHeight(),
           });
-	this.layer.add(eventCatcher);
-	eventCatcher.moveToBottom();
+	this.layer.add(this.eventCatcher);
+	this.eventCatcher.moveToBottom();
 
 	var interpreter = new KineticMouseEventOnPageInterpreter(page);
-	eventCatcher.on(events.join(" "), function(event){
+	this.eventCatcher.on(events.join(" "), function(event){
 		eventBus.publish(interpreter.interpret(event));
 	});
 	this.layer.draw();

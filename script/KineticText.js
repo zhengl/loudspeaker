@@ -43,6 +43,7 @@ KineticText.prototype.registerEventBus = function(eventBus){
 
 KineticText.prototype.addEventListeners = function(eventBus, events){
 	var self = this;
+	var interpreter = new KineticMouseEventOnItemInterpreter(self);
 	for(var index in events){
 		var eventType = events[index];
 		(function(eventType){
@@ -54,7 +55,6 @@ KineticText.prototype.addEventListeners = function(eventBus, events){
                      event.ctrlKey, event.altKey, event.shiftKey, event.metaKey, 
                      event.button, event.relatedTarget);
 				translatedEvent.cancelBubble = true;
-				var interpreter = new KineticMouseEventOnItemInterpreter(self);
 				eventBus.publish(interpreter.interpret(translatedEvent));
 			});					
 		})(eventType);

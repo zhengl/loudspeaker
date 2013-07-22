@@ -13,7 +13,7 @@ Item.prototype.notify = function(event){
 				break;
 			case Item.Event.FINISH_MOVING:
 				this.eventBus.publish(
-					new AbstractEvent(Page.Event.FINISH_MOVING, [this])
+					new AbstractEvent(Page.Event.FINISH_MOVING)
 					);
 				break;
 			case Item.Event.MOVE_TO:
