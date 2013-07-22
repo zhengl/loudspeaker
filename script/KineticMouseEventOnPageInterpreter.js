@@ -35,6 +35,7 @@ KineticMouseEventOnPageInterpreter.prototype.interpretMoveTo = function(event){
 	if (this.target.getPainter().isPainting) {
 		return new AbstractEvent(Page.Event.DRAW_TO, [new Point(event.offsetX, event.offsetY)]);
 	} else if (this.target.getMover().isMoving) {
+		this.moveUpEventCatcher();
 		return new AbstractEvent(Page.Event.MOVE_TO, [new Point(event.offsetX, event.offsetY)]);
 	} else {
 		return null;
@@ -44,6 +45,7 @@ KineticMouseEventOnPageInterpreter.prototype.interpretMoveTo = function(event){
 KineticMouseEventOnPageInterpreter.prototype.interpretMouseDown = function(event){
 	this.startModeSelectionTimer();
 	if (this.target.isPainting()) {
+		this.moveUpEventCatcher();
 		return new AbstractEvent(Page.Event.START_DRAWING, [new Point(event.offsetX, event.offsetY)]);
 	} else if (this.target.isTexting()) {
 		return new AbstractEvent(Page.Event.START_TEXTING, [new Point(event.offsetX, event.offsetY)]);
@@ -55,8 +57,10 @@ KineticMouseEventOnPageInterpreter.prototype.interpretMouseDown = function(event
 KineticMouseEventOnPageInterpreter.prototype.interpretMouseUp = function(event){
 	this.stopModeSelectionTimer();
 	if (this.target.getPainter().isPainting) {
+		this.moveDownEventCatcher();
 		return new AbstractEvent(Page.Event.FINISH_DRAWING, [new Point(event.offsetX, event.offsetY)]);
 	} else if (this.target.getMover().isMoving){
+		this.moveDownEventCatcher();
 		return new AbstractEvent(Page.Event.FINISH_MOVING);
 	} else {
 		return null;
@@ -78,4 +82,12 @@ KineticMouseEventOnPageInterpreter.prototype.stopModeSelectionTimer = function()
 	if (undefined != this.timer) {
 		clearTimeout(this.timer);	
 	}
+};
+
+KineticMouseEventOnPageInterpreter.prototype.moveUpEventCatcher = function(){
+	this.target.context.eventCatcher.moveToTop();
+};
+
+KineticMouseEventOnPageInterpreter.prototype.moveDownEventCatcher = function(){
+	this.target.context.eventCatcher.moveToBottom();
 };
