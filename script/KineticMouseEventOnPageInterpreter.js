@@ -85,9 +85,13 @@ KineticMouseEventOnPageInterpreter.prototype.stopModeSelectionTimer = function()
 };
 
 KineticMouseEventOnPageInterpreter.prototype.moveUpEventCatcher = function(){
-	this.target.context.eventCatcher.moveToTop();
+	if(undefined != this.target.context.eventCatcher) {
+		this.target.context.eventCatcher.moveToTop();
+	}
 };
 
 KineticMouseEventOnPageInterpreter.prototype.moveDownEventCatcher = function(){
-	this.target.context.eventCatcher.moveToBottom();
+	if(undefined != this.target.context.eventCatcher) {
+		this.target.context.eventCatcher.moveToBottom();
+	}
 };

@@ -85,36 +85,11 @@ KineticLine.flatternPoints = function(points){
 	return linePoints;
 };
 
-KineticLine.prototype.registerEventBus = function(eventBus){
+KineticLine.prototype.setEventBus = function(eventBus){
 	this.eventBus = eventBus;
-	this.eventBus.addListener(this);
-	this.addEventListeners(eventBus, [
-		KineticEvent.MOUSE_OVER,
-		KineticEvent.MOUSE_ENTER,
-		KineticEvent.MOVE_TO,
-		KineticEvent.MOUSE_DOWN,
-		KineticEvent.MOUSE_UP,
-		KineticEvent.MOUSE_OUT,
-		KineticEvent.MOUSE_LEAVE,
-	]);
 };
 
-KineticLine.prototype.addEventListeners = function(eventBus, events){
-	var self = this;
-	var interpreter = new KineticMouseEventOnItemInterpreter(self);
-	for(var index in events){
-		var eventType = events[index];
-		(function(eventType){
-			self.getKineticShape().on(eventType, function(event) {
-				event.preventDefault();
-				var translatedEvent = document.createEvent('MouseEvents');
-				translatedEvent.initMouseEvent(eventType, false, event.cancelable, event.view, 
-                     event.detail, event.screenX, event.screenY, event.clientX, event.clientY, 
-                     event.ctrlKey, event.altKey, event.shiftKey, event.metaKey, 
-                     event.button, event.relatedTarget);
-				translatedEvent.cancelBubble = true;
-				eventBus.publish(interpreter.interpret(translatedEvent));
-			});					
-		})(eventType);
-	}
+KineticLine.prototype.registerEventBus = function(eventBus){
+	var register = new KineticItemEventRegister();
+	register.registerEventBus(eventBus, this);
 };
