@@ -14,6 +14,7 @@ Page.prototype.selectPaintingMode = function(){
 };
 
 Page.prototype.selectTextingMode = function(){
+	this.painter.clear();
 	this.mode = Page.Mode.TEXT;
 };
 
@@ -28,6 +29,7 @@ Page.prototype.isTexting = function(){
 Page.prototype.notify = function(event){
 	switch(event.name) {
 		case Page.Event.START_DRAWING:
+			this.selectPaintingMode();
 			this.painter.startDraft(event.data[0]);
 			break;
 		case Page.Event.FINISH_DRAWING:
@@ -50,6 +52,7 @@ Page.prototype.notify = function(event){
 			this.getMover().finishMoving();
 			break;
 		case Page.Event.START_TEXTING:
+			this.selectTextingMode();
 			this.getTexter().startTexting(event.data[0]);
 			break;
 		case Page.Event.FINISH_TEXTING:

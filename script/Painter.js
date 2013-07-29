@@ -43,3 +43,7 @@ Painter.prototype.stopDrawing = function(){
 	this.isPainting = false;
 	this.context.clearDraftItems();
 };
+
+Painter.prototype.clear = function(){
+	this.stopDrawing();
+};

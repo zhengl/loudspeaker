@@ -40,7 +40,6 @@ Texter.prototype.initializeTextInput = function(text){
 
 Texter.prototype.clear = function(text){
 	if (undefined != this.textInput) {
-		console.log("clear!!");
 		this.textInput.remove();
 		delete this.textInput;
 	}

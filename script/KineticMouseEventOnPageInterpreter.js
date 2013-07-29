@@ -2,13 +2,15 @@ function KineticMouseEventOnPageInterpreter(target){
 	this.target = target;
 }
 
-KineticMouseEventOnPageInterpreter.prototype.interpret = function(event){
+KineticMouseEventOnPageInterpreter.defaultTimeout = 1000;
+
+KineticMouseEventOnPageInterpreter.prototype.interpret = function(event, eventBus){
 	switch(event.type){
 		case KineticEvent.MOVE_TO:
 			return this.interpretMoveTo(event);
 
 		case KineticEvent.MOUSE_DOWN:
-			return this.interpretMouseDown(event);
+			return this.interpretMouseDown(event, eventBus);
 
 		case KineticEvent.MOUSE_UP:
 			return this.interpretMouseUp(event);
@@ -42,16 +44,10 @@ KineticMouseEventOnPageInterpreter.prototype.interpretMoveTo = function(event){
 	}
 };
 
-KineticMouseEventOnPageInterpreter.prototype.interpretMouseDown = function(event){
-	this.startModeSelectionTimer();
-	if (this.target.isPainting()) {
-		this.moveUpEventCatcher();
-		return new AbstractEvent(Page.Event.START_DRAWING, [new Point(event.offsetX, event.offsetY)]);
-	} else if (this.target.isTexting()) {
-		return new AbstractEvent(Page.Event.START_TEXTING, [new Point(event.offsetX, event.offsetY)]);
-	} else {
-		return null;
-	}
+KineticMouseEventOnPageInterpreter.prototype.interpretMouseDown = function(event, eventBus){
+	this.startModeSelectionTimer(event, eventBus);
+	this.moveUpEventCatcher();
+	return new AbstractEvent(Page.Event.START_DRAWING, [new Point(event.offsetX, event.offsetY)]);
 };
 
 KineticMouseEventOnPageInterpreter.prototype.interpretMouseUp = function(event){
@@ -67,15 +63,10 @@ KineticMouseEventOnPageInterpreter.prototype.interpretMouseUp = function(event){
 	}
 };
 
-KineticMouseEventOnPageInterpreter.prototype.startModeSelectionTimer = function(){
-	var page = this.target;
+KineticMouseEventOnPageInterpreter.prototype.startModeSelectionTimer = function(event, eventBus){
 	this.timer = window.setTimeout(function(){
-		if(page.isTexting()) {
-			page.selectPaintingMode();
-		} else {
-  			page.selectTextingMode();
-		}
-	}, 1000);
+		eventBus.publish(new AbstractEvent(Page.Event.START_TEXTING, [new Point(event.offsetX, event.offsetY)]));		
+	}, KineticMouseEventOnPageInterpreter.defaultTimeout);
 };
 
 KineticMouseEventOnPageInterpreter.prototype.stopModeSelectionTimer = function(){
