@@ -30,8 +30,6 @@ describe("Painter", function(){
 	});
 	
 	it("should DRAW a line with steps", function(){
-		painter.selectShape(Palette.Shape.Line);
-
 		painter.startDraft(new Point(10, 10));
 		expectNoItem(painter);
 		expectOneDraftItem(painter);
@@ -49,6 +47,11 @@ describe("Painter", function(){
 		expectOneItem(painter);
 		expectNoDraftItem(painter);
 		expectOneItem(painter);			
+	});
+
+	it("shows pallete", function(){
+		painter.showPalette(new Point(20, 20));
+		expect(painter.getPalette().getPosition()).toEqual({x: 20, y: 20});
 	});
 	
 	function createLine(x1, y1, x2, y2) {

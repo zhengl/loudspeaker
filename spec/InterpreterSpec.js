@@ -8,10 +8,10 @@ describe("KineticMouseEventOnPageInterpreter", function(){
 		interpreter = new KineticMouseEventOnPageInterpreter(page);		
 	});
 
-	it("should return Page.START_DRAWING event when receiving MOUSEDOWN event", function(){
-		page.selectPaintingMode();
-		expect(interpreter.interpret(createMouseDownEvent()).name).toBe(Page.Event.START_DRAWING);
-	});
+	// it("should return Page.START_DRAWING event when receiving MOUSEDOWN event", function(){
+	// 	page.selectPaintingMode();
+	// 	expect(interpreter.interpret(createMouseDownEvent()).name).toBe(Page.Event.START_DRAWING);
+	// });
 
 	it("should return return Page.NULL event when receiving MOUSEMOVE event", function(){
 		expect(interpreter.interpret(createMouseMoveEvent(10, 10))).toBeNull();

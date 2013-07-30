@@ -25,7 +25,6 @@ describe("Page", function() {
 			page = new Page();
 			eventBus = new EventBus();
 			page.enableEventHandling(eventBus);
-			page.getPainter().selectShape(Palette.Shape.Line);
 		});
   
 		it("should DRAW a line with events", function() {			

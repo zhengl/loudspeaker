@@ -44,6 +44,19 @@ Painter.prototype.stopDrawing = function(){
 	this.context.clearDraftItems();
 };
 
+Painter.prototype.showPalette = function(point){
+	this.palette.setPosition(point);
+	this.palette.show();
+};
+
+Painter.prototype.hidePalette = function(point){
+	this.palette.hide();
+};
+
+Painter.prototype.getPalette = function(point){
+	return this.palette;
+};
+
 Painter.prototype.clear = function(){
 	this.stopDrawing();
 };

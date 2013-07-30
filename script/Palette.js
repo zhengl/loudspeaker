@@ -1,14 +1,20 @@
 function Palette(){
 }
 
-Palette.prototype.selectShape = function(shape){
-	this.shape = shape;
-};
-
 Palette.prototype.getShape = function(shape){
-	return this.shape;
+	return "Line";
 };
 
-Palette.Shape = {
-	Line: "Line"
+Palette.prototype.setPosition = function(point){
+	this.position = point;
+};
+
+Palette.prototype.getPosition = function(){
+	return this.position;
+};
+
+Palette.prototype.show = function(){
+};
+
+Palette.prototype.hide = function(){
 };
