@@ -27,7 +27,6 @@ Page.prototype.isTexting = function(){
 };
 
 Page.prototype.notify = function(event){
-	console.log(event.name)
 	switch(event.name) {
 		case Page.Event.START_DRAWING:
 			this.selectPaintingMode();
@@ -44,7 +43,7 @@ Page.prototype.notify = function(event){
 			this.painter.stopDrawing();
 			break;
 		case Page.Event.START_SELECTING_COLOR:
-			this.painter.showPallete();
+			this.painter.showPalette(event.data[0]);
 			break;
 		case Page.Event.START_MOVING:
 			this.getMover().startMoving(event.data[0]);

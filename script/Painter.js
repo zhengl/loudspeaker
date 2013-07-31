@@ -1,6 +1,6 @@
 function Painter(context){
 	this.context = context;
-	this.palette = new Palette();
+	this.palette = PaletteFactory.create();
 }
 
 Painter.prototype.draw = function(item){

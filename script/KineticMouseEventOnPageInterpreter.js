@@ -4,7 +4,7 @@ function KineticMouseEventOnPageInterpreter(target){
 	this.click = 0;
 }
 
-KineticMouseEventOnPageInterpreter.defaultDoubleClickTimeout = 300;
+KineticMouseEventOnPageInterpreter.defaultDoubleClickTimeout = 200;
 KineticMouseEventOnPageInterpreter.defaultLongPressTimeout = 1000;
 
 KineticMouseEventOnPageInterpreter.prototype.interpret = function(event, eventBus){
@@ -65,6 +65,11 @@ KineticMouseEventOnPageInterpreter.prototype.interpretMouseUp = function(event){
 };
 
 KineticMouseEventOnPageInterpreter.prototype.detectClickType = function(event, eventBus){
+	this.detectDoubleClick(event, eventBus);
+	this.startLongPressTimer(event, eventBus);
+};
+
+KineticMouseEventOnPageInterpreter.prototype.detectDoubleClick = function(event, eventBus){
 	this.click++;
 	var self = this;
 	window.setTimeout(function(){
@@ -76,8 +81,6 @@ KineticMouseEventOnPageInterpreter.prototype.detectClickType = function(event, e
 		}
 		self.click = 0;
 	}, KineticMouseEventOnPageInterpreter.defaultDoubleClickTimeout);
-
-	this.startLongPressTimer(event, eventBus);
 };
 
 KineticMouseEventOnPageInterpreter.prototype.startLongPressTimer = function(event, eventBus){

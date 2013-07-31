@@ -1,6 +1,73 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <style type="text/css">
+  #wrapper {
+    display:table;
+    width: 100%;
+    height: 100%;
+  }
+  
+  #cell {
+    display:table-cell;
+    vertical-align:middle;
+    /*text-align: center;*/
+  }
+
+  #board {
+/*    margin-left: auto;
+    margin-right: auto;*/
+    width: 70%;
+    border: 1px solid;
+    border-radius: 8px 8px 0px 0px;
+  }
+
+  #slot {
+    height: 50px;
+    margin-top: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 72%;
+    border: 1px solid;
+    border-radius: 8px;
+  }
+  
+  #palette {
+    border: 1px solid gray;
+    border-radius: 5px;
+    padding: 3px;
+    display: table;
+  }
+
+  #palette button {
+    width: 2.5em;
+    height: 2.5em;
+    border: 0 none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 2px;
+    display: table-cell;    
+  }
+  
+  #red {
+    background-color: #E74C3C;    
+  }
+  
+  #blue {
+    background-color: #3498DB;    
+  }
+  
+  #black {
+    background-color: #34495E; 
+  }
+  
+  body, html {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+  }
+  </style>
   <meta charset="utf-8">
   <title>Loudspeaker - Social Creativity</title>
     <script type="text/javascript" src="script/lib/kinetic-v4.5.3.min.js"></script>
@@ -13,6 +80,8 @@
   <script type="text/javascript" src="script/Texter.js"></script>
   <script type="text/javascript" src="script/Painter.js"></script>
   <script type="text/javascript" src="script/Palette.js"></script>
+  <script type="text/javascript" src="script/DOMPalette.js"></script>
+  <script type="text/javascript" src="script/PaletteFactory.js"></script>
   <script type="text/javascript" src="script/Mover.js"></script>
   <script type="text/javascript" src="script/Context.js"></script>
   <script type="text/javascript" src="script/KineticContext.js"></script>
@@ -35,15 +104,22 @@
   <script type="text/javascript" src="script/KineticMouseEventOnItemInterpreter.js"></script>
 </head>
 <body>
-  <div id="board" style="margin-left: 200px ;margin-right: auto;height:200px;width:200px;border: 1px solid;position: relative"/>
+  <div id="palette">
+    <button id="blue"></button>
+    <button id="red"></button>
+    <button id="black"></button>
+  </div>
+  <div id="wrapper">
+  <div id="cell">
+    <div id="board"></div>
+    <div id="slot"></div>
+  </div>
+  </div>
   <script defer>
 	Environment.setMouse();
   
 	var page = new Page();
 	page.enableEventHandling(new EventBus());
-  page.getPainter().selectShape(Palette.Shape.Line);
-	// page.selectPaintingMode();
-  page.selectTextingMode();
   </script>
 </body>
 </html>
