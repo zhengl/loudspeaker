@@ -1,16 +1,26 @@
 describe("KineticMouseEventOnPageInterpreter", function(){
 	var interpreter;
 	var page;
+	var eventBus;
+	var eventLogger;
 
 	beforeEach(function(){
 		Environment.setDummy();
+		eventBus = new EventBus();
+		eventLogger = new EventLogger();
+		eventBus.addListener(eventLogger);
 		page = new Page();
+		page.enableEventHandling(eventBus);
 		interpreter = new KineticMouseEventOnPageInterpreter(page);		
 	});
 
-	// it("should return Page.START_DRAWING event when receiving MOUSEDOWN event", function(){
-	// 	page.selectPaintingMode();
-	// 	expect(interpreter.interpret(createMouseDownEvent()).name).toBe(Page.Event.START_DRAWING);
+	// it("should return Page.START_DRAWING event when receiving MOUSEDOWN and MOUSEMOVE event", function(){
+	// 	interpreter.interpret(createMouseDownEvent(), eventBus);
+	// 	interpreter.interpret(createMouseMoveEvent(10, 10), eventBus);
+	// 	interpreter.interpret(createMouseUpEvent(20, 20), eventBus);
+	// 	expect(eventLogger.events.length).toBe(2);
+	// 	expect(eventLogger.events[0].event.name).toBe(Page.Event.START_DRAWING);
+	// 	expect(eventLogger.events[1].event.name).toBe(Page.Event.FINISH_DRAWING);
 	// });
 
 	// it("should return return Page.NULL event when receiving MOUSEMOVE event", function(){
@@ -25,7 +35,7 @@ describe("KineticMouseEventOnPageInterpreter", function(){
 	// 	KineticMouseEventOnPageInterpreter.defaultLongPressTimeout = 10;
 	// 	expect(interpreter.interpret(createMouseDownEvent())).toBeNull();
 	// 	sleep(15);
-		
+
 	// });
 
 	function sleep(milliseconds) {

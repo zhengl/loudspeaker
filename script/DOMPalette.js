@@ -7,7 +7,6 @@ DOMPalette.prototype = new Palette();
 DOMPalette.prototype.constructor = DOMPalette;
 
 DOMPalette.prototype.setPosition = function(point){
-	console.log(point);
 	this.position = point;
     this.element.style.position = "absolute";
     this.element.style.left = point.x + "px";
