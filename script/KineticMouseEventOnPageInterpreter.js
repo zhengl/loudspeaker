@@ -26,7 +26,6 @@ KineticMouseEventOnPageInterpreter.prototype.interpret = function(event, eventBu
 
 KineticMouseEventOnPageInterpreter.prototype.interpretMoveTo = function(event, eventBus){
 	this.stopLongPressTimer();
-	console.log(this.target.getMover().isMoving);
 	if(this.previousEvent.type == KineticEvent.MOUSE_DOWN && !this.target.getTexter().isTexting) {
 		this.moveUpEventCatcher();
 		eventBus.publish(new AbstractEvent(Page.Event.START_DRAWING, [new Point(event.offsetX, event.offsetY)]));

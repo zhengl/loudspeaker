@@ -18,3 +18,7 @@ Palette.prototype.show = function(){
 
 Palette.prototype.hide = function(){
 };
+
+Palette.prototype.setColor = function(color){
+	this.color = color;
+};
