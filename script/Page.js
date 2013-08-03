@@ -1,8 +1,9 @@
 function Page() {
 	this.context = ContextFactory.create();
+	this.palette = PaletteFactory.create();
 
-	this.painter = new Painter(this.context);
-	this.texter = new Texter(this.context);
+	this.painter = new Painter(this.context, this.palette);
+	this.texter = new Texter(this.context, this.palette);
 	this.mover = new Mover(this.context);
 
 	this.selectPaintingMode();

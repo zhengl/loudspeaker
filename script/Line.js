@@ -1,8 +1,9 @@
-function Line(points){
+function Line(points, color){
 	if (undefined == points) {
 		points = new Array();
 	}
 	this.points = points;
+	this.color = color;
 }
 
 Line.prototype = new Item();
@@ -34,4 +35,12 @@ Line.prototype.undraftize = function(){
 
 Line.prototype.update = function(point){
 	this.points.push(point);
+};
+
+Line.prototype.setColor = function(color) {
+	this.color = color;
+};
+
+Line.prototype.getColor = function() {
+	return this.color;
 };

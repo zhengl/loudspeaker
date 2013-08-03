@@ -6,7 +6,7 @@ describe("Texter", function(){
 		beforeEach(function(){
 			Environment.setMouse();
 			context = ContextFactory.create();
-			texter = new Texter(context);
+			texter = new Texter(context, new Palette());
 		});
 
 		it("should start texting and create an input", function(){

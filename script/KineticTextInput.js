@@ -9,6 +9,10 @@ function KineticTextInput(context){
 KineticTextInput.prototype = new TextInput();
 KineticTextInput.prototype.constructor = KineticTextInput;
 
+KineticTextInput.prototype.setColor = function(color){
+	this.text.setColor(color);
+};
+
 KineticTextInput.prototype.initializeCursor = function(context){
 	this.cursor = new KineticCursor(context);
 };

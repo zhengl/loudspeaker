@@ -20,3 +20,11 @@ Text.prototype.draftize = function(){
 Text.prototype.undraftize = function(){
 	return this;
 };
+
+Text.prototype.setColor = function(color) {
+	this.color = color;
+};
+
+Text.prototype.getColor = function() {
+	return this.color;
+};

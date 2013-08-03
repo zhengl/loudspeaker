@@ -1,10 +1,6 @@
 function Palette(){
 }
 
-Palette.prototype.getShape = function(shape){
-	return "Line";
-};
-
 Palette.prototype.setPosition = function(point){
 	this.position = point;
 };
@@ -21,4 +17,8 @@ Palette.prototype.hide = function(){
 
 Palette.prototype.setColor = function(color){
 	this.color = color;
+};
+
+Palette.prototype.getColor = function(color){
+	return this.color || 'black';
 };

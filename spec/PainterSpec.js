@@ -2,7 +2,7 @@ describe("Painter", function(){
 	var painter;
 	
 	beforeEach(function(){
-		painter = new Painter(new Context());	
+		painter = new Painter(new Context(), new Palette());	
 	});
 
 	it("should return a Line after drawing a line", function() {
@@ -30,6 +30,7 @@ describe("Painter", function(){
 	});
 	
 	it("should DRAW a line with steps", function(){
+		painter.getPalette().setColor('red');
 		painter.startDraft(new Point(10, 10));
 		expectNoItem(painter);
 		expectOneDraftItem(painter);
@@ -46,7 +47,8 @@ describe("Painter", function(){
 		expectIsAnItem(line);
 		expectOneItem(painter);
 		expectNoDraftItem(painter);
-		expectOneItem(painter);			
+		expectOneItem(painter);	
+		expect(line.getColor()).toEqual('red');
 	});
 
 	it("shows pallete", function(){

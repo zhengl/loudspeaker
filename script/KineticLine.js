@@ -1,12 +1,12 @@
-function KineticLine(points, stroke){
+function KineticLine(points, color){
 	Line.call(this, points);
 	
-	this.setStroke(stroke || KineticLine.defaultStroke);
-		
+	this.setColor(color || KineticLine.defaultStroke);
+
 	this.kineticShape = new Kinetic.Line({
 		points: KineticLine.flatternPoints(points),
 		strokeWidth: KineticLine.defaultStrokeWidth,
-		stroke: this.getStroke(),
+		stroke: this.getColor(),
 		lineCap: 'round',
 		lineJoin: 'bevel',
 	});
@@ -46,12 +46,13 @@ KineticLine.prototype.moveTo = function(newPosition){
 	this.getKineticShape().setPosition(newX, newY);
 };
 
-KineticLine.prototype.setStroke = function(stroke){
-	this.stroke = stroke;
+KineticLine.prototype.setColor = function(color){
+	console.log(color)
+	this.color = color;
 };
 
-KineticLine.prototype.getStroke = function(){
-	return this.stroke;
+KineticLine.prototype.getColor = function(){
+	return this.color;
 };
 
 KineticLine.prototype.getKineticShape = function(){
@@ -66,7 +67,7 @@ KineticLine.prototype.draftize = function(){
 };
 
 KineticLine.prototype.undraftize = function(){
-	this.getKineticShape().setStroke(this.getStroke());
+	this.getKineticShape().setStroke(this.getColor());
 	this.getKineticShape().disableDashArray();
 	return this;
 };

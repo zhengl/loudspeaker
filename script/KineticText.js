@@ -10,6 +10,10 @@ function KineticText(text){
 KineticText.prototype = new Text();
 KineticText.prototype.constructor = KineticText;
 
+KineticText.prototype.setColor = function(color){
+	this.getKineticShape().setFill(color);
+};
+
 KineticText.prototype.getKineticShape = function(){
 	return this.kineticShape;
 };

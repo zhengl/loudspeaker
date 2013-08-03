@@ -1,5 +1,6 @@
-function Texter(context){
+function Texter(context, palette){
 	this.context = context;
+	this.palette = palette;
 }
 
 Texter.prototype.startTexting = function(position) {
@@ -35,6 +36,7 @@ Texter.prototype.draft = function(text){
 Texter.prototype.initializeTextInput = function(text){
 	if (undefined == this.textInput) {
 		this.textInput = TextInputFactory.create(this.context);
+		this.textInput.setColor(this.palette.getColor());
 	}
 };
 

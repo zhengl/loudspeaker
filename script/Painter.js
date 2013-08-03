@@ -1,6 +1,6 @@
-function Painter(context){
+function Painter(context, palette){
 	this.context = context;
-	this.palette = PaletteFactory.create();
+	this.palette = palette;
 }
 
 Painter.prototype.draw = function(item){
@@ -13,7 +13,7 @@ Painter.prototype.draft = function(item){
 
 Painter.prototype.startDraft = function(point){
 	this.isPainting = true;
-	return this.context.startDraft(this.palette.getShape(), point);
+	return this.context.startDraft(this.palette.getColor(), point);
 };
 
 Painter.prototype.selectShape = function(shape){
