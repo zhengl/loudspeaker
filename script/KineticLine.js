@@ -23,12 +23,13 @@ KineticLine.prototype = new Line();
 KineticLine.prototype.constructor = KineticLine;
 
 KineticLine.prototype.getPosition = function(){
-	var minX = this.points[0].x;
-	var minY = this.points[0].y;
+	var points = this.getKineticShape().getPoints();
+	var minX = points[0].x;
+	var minY = points[0].y;
 	
-	for(var index in this.points) {
-		minX = this.points[index].x < minX ? this.points[index].x : minX;
-		minY = this.points[index].y < minY ? this.points[index].y : minY;
+	for(var index in points) {
+		minX = points[index].x < minX ? points[index].x : minX;
+		minY = points[index].y < minY ? points[index].y : minY;
 	}
 	
 	var relativePosition = this.getKineticShape().getPosition();
@@ -44,15 +45,6 @@ KineticLine.prototype.moveTo = function(newPosition){
 	var newX = currentKineticPosition.x + newPosition.x - currentPosition.x;
 	var newY = currentKineticPosition.y + newPosition.y - currentPosition.y;
 	this.getKineticShape().setPosition(newX, newY);
-};
-
-KineticLine.prototype.setColor = function(color){
-	console.log(color)
-	this.color = color;
-};
-
-KineticLine.prototype.getColor = function(){
-	return this.color;
 };
 
 KineticLine.prototype.getKineticShape = function(){
@@ -73,8 +65,8 @@ KineticLine.prototype.undraftize = function(){
 };
 
 KineticLine.prototype.update = function(point){
-	this.points.push(point);
-	this.getKineticShape().setPoints(KineticLine.flatternPoints(this.points));
+	var points = this.getKineticShape().getPoints();
+	points.push(point);
 };
 
 KineticLine.flatternPoints = function(points){

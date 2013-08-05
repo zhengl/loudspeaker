@@ -64,11 +64,8 @@ KineticContext.prototype.draft = function(item){
 	return kineticItem;
 };
 
-KineticContext.prototype.startDraft = function(color, point){
-	var draftItem = new Line();
-	draftItem.update(point);
-	draftItem.setColor(color);
-	var kineticItem = KineticItemFactory.create(draftItem);
+KineticContext.prototype.startDraft = function(item){
+	var kineticItem = KineticItemFactory.create(item);
 	kineticItem.draftize();
 	this.addDraftItem(kineticItem);
 	return kineticItem;

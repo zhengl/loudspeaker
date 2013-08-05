@@ -54,12 +54,9 @@ Context.prototype.write = function(item){
 	return item;
 };
 
-Context.prototype.startDraft = function(color, point){
-	var draftItem = new Line();
-	draftItem.update(point);
-	draftItem.setColor(color);
-	this.addDraftItem(draftItem);
-	return draftItem;
+Context.prototype.startDraft = function(item){
+	this.addDraftItem(item);
+	return item;
 };
 
 Context.prototype.draft = function(draftItem){

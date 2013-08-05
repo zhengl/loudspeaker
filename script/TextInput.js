@@ -2,9 +2,6 @@ function TextInput(context){
 	this.context = context;
 }
 
-// TextInput.prototype = new Item();
-// TextInput.prototype.constructor = TextInput;
-
 TextInput.prototype.write = function(text) {
 	this.text = text;
 };

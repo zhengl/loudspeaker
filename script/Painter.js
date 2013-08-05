@@ -13,7 +13,11 @@ Painter.prototype.draft = function(item){
 
 Painter.prototype.startDraft = function(point){
 	this.isPainting = true;
-	return this.context.startDraft(this.palette.getColor(), point);
+	
+	var draftItem = new Line();
+	draftItem.update(point);
+	draftItem.setColor(this.palette.getColor());
+	return this.context.startDraft(draftItem);
 };
 
 Painter.prototype.selectShape = function(shape){
