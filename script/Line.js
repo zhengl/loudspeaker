@@ -45,6 +45,10 @@ Line.prototype.getColor = function() {
 	return this.color;
 };
 
+Line.prototype.getPoints = function(){
+	return this.points;
+};
+
 Line.prototype.serialize = function() {
 	return {
 		"type": "line",
@@ -52,4 +56,10 @@ Line.prototype.serialize = function() {
 		"points": this.points,
 		"position": this.position,
 	};
+};
+
+Line.unserialize = function(json){
+	var line = new Line(json.points, json.color);
+	line.setPosition(json.position);
+	return line;
 };

@@ -17,6 +17,68 @@ describe("Page", function() {
 		page.selectTextingMode();
 		expect(page.isTexting()).toBe(true);
 	});
+
+	it("unserialize", function(){
+		page.unserialize({
+			items: [
+				{
+					type: "line",
+					color: "black",
+					points: [{x: 0, y: 0}, {x: 1, y: 1}, {x: 2, y: 2}],
+					position: {x: 10, y: 10},
+				},
+				{
+					type: "text",
+					color: "blue",
+					content: "Hello World!",
+					position: {x: 20, y: 20},
+				},
+				]
+		});
+
+		var items = page.context.getItems();
+		expect(items.length).toEqual(2);
+		
+		var line = items[0];
+		expect(line instanceof Line).toBe(true);
+		expect(line.getColor()).toEqual('black');
+		expect(line.getPosition()).toEqual({x: 10, y: 10});
+		expect(line.getPoints()).toEqual([{x: 0, y: 0}, {x: 1, y: 1}, {x: 2, y: 2}]);
+
+		var text = items[1];
+		expect(text instanceof Text).toBe(true);
+		expect(text.getValue()).toEqual('Hello World!');
+		expect(text.getColor()).toEqual('blue');
+		expect(text.getPosition()).toEqual({x: 20, y: 20});
+	});
+
+	it("serialize", function(){
+		var line = createLine(10, 10, 20, 20);
+		line.setColor('black');
+		line.setPosition(new Point(30, 30));
+		page.draw(line);
+		var text = createText("Hello World!", 10, 20);
+		text.setColor('blue');
+		text.setPosition(new Point(0, 0));
+		page.write(text);
+
+		expect(page.serialize()).toEqual({
+			items: [
+				{
+					type: "line",
+					color: "black",
+					points: [{x: 10, y: 10}, {x: 20, y: 20}],
+					position: {x: 30, y: 30},
+				},
+				{
+					type: "text",
+					color: "blue",
+					content: "Hello World!",
+					position: {x: 0, y: 0},
+				},
+				]
+		});
+	});
 	
 	describe("with Event Handling", function(){
 

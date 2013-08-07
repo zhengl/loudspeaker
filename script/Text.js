@@ -38,3 +38,9 @@ Text.prototype.serialize = function() {
 		position: this.position,
 	}
 };
+
+Text.unserialize = function(json){
+	var text = new Text(json.content, json.color);
+	text.setPosition(json.position);
+	return text;
+}

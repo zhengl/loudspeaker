@@ -105,6 +105,16 @@ Page.prototype.write = function(item){
 	return textItem;
 };
 
+Page.prototype.unserialize = function(json) {
+	var unserializer = new UnserializeStrategy();
+	unserializer.process(this, json);
+};
+
+Page.prototype.serialize = function(){
+	var serializer = new SerializeStrategy();
+	return serializer.process(this);
+};
+
 Page.Event = {
 	START_DRAWING: "PAGE.START_DRAWING",
 	STOP_DRAWING: "PAGE.STOP_DRAWING",
