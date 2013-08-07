@@ -1,5 +1,6 @@
-function Text(text){
+function Text(text, color){
 	this.content = text;
+	this.color = color;
 }
 
 Text.prototype = new Item();
@@ -27,4 +28,13 @@ Text.prototype.setColor = function(color) {
 
 Text.prototype.getColor = function() {
 	return this.color;
+};
+
+Text.prototype.serialize = function() {
+	return {
+		type: "text",
+		content: this.content,
+		color: this.color,
+		position: this.position,
+	}
 };

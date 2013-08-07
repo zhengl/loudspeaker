@@ -44,3 +44,12 @@ Line.prototype.setColor = function(color) {
 Line.prototype.getColor = function() {
 	return this.color;
 };
+
+Line.prototype.serialize = function() {
+	return {
+		"type": "line",
+		"color": this.color,
+		"points": this.points,
+		"position": this.position,
+	};
+};
