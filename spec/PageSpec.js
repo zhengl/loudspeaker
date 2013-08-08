@@ -365,46 +365,46 @@ describe("Page", function() {
 	}
 
 	function triggerPageMoveToEvent(x, y){
-		eventBus.publish(new AbstractEvent(Page.Event.MOVE_TO, [new Point(x, y)]));
+		eventBus.publish(new AbstractEvent(Event.Page.MOVE_TO, [new Point(x, y)]));
 	}
 
 	function triggerPageDrawToEvent(x, y){
-		eventBus.publish(new AbstractEvent(Page.Event.DRAW_TO, [new Point(x, y)]));
+		eventBus.publish(new AbstractEvent(Event.Page.DRAW_TO, [new Point(x, y)]));
 	}
 
 	function triggerItemMoveToEvent(item, x, y){
-		eventBus.publish(new AbstractEvent(Item.Event.MOVE_TO, [item, new Point(x, y)]));
+		eventBus.publish(new AbstractEvent(Event.Item.MOVE_TO, [item, new Point(x, y)]));
 	}
 	
 	function triggerStartDrawingEvent(x, y){
-		eventBus.publish(new AbstractEvent(Page.Event.START_DRAWING, [new Point(x, y)]));		
+		eventBus.publish(new AbstractEvent(Event.Page.START_DRAWING, [new Point(x, y)]));		
 	}
 
 	function triggerFinishDrawingEvent(x, y){
-		eventBus.publish(new AbstractEvent(Page.Event.FINISH_DRAWING, [new Point(x, y)]));		
+		eventBus.publish(new AbstractEvent(Event.Page.FINISH_DRAWING, [new Point(x, y)]));		
 	}
 	
 	function triggerStopDrawingEvent(){
-		eventBus.publish(new AbstractEvent(Page.Event.STOP_DRAWING));		
+		eventBus.publish(new AbstractEvent(Event.Page.STOP_DRAWING));		
 	}
 	
 	function triggerSelectEvent(item){
-		eventBus.publish(new AbstractEvent(Item.Event.SELECT, [item]));	
+		eventBus.publish(new AbstractEvent(Event.Item.SELECT, [item]));	
 	}
 	
 	function triggerUnselectEvent(item){
-		eventBus.publish(new AbstractEvent(Item.Event.UNSELECT, [item]));	
+		eventBus.publish(new AbstractEvent(Event.Item.UNSELECT, [item]));	
 	}
 	
 	function triggerStartMovingEvent(item, x, y){
-		eventBus.publish(new AbstractEvent(Item.Event.START_MOVING, [item, new Point(x, y)]));
+		eventBus.publish(new AbstractEvent(Event.Item.START_MOVING, [item, new Point(x, y)]));
 	}
 	
 	function triggerFinishMovingEvent(item){
-		eventBus.publish(new AbstractEvent(Item.Event.FINISH_MOVING, [item]));
+		eventBus.publish(new AbstractEvent(Event.Item.FINISH_MOVING, [item]));
 	}
 
 	function triggerStartTextingEvent(x, y){
-		eventBus.publish(new AbstractEvent(Page.Event.START_TEXTING, [new Point(x, y)]));
+		eventBus.publish(new AbstractEvent(Event.Page.START_TEXTING, [new Point(x, y)]));
 	}
 });

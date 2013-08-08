@@ -7,6 +7,8 @@ function Page() {
 	this.mover = new Mover(this.context);
 
 	this.selectPaintingMode();
+
+	this.handler = new PageEventHandler();
 }
 
 Page.prototype.selectPaintingMode = function(){
@@ -28,40 +30,8 @@ Page.prototype.isTexting = function(){
 };
 
 Page.prototype.notify = function(event){
-	switch(event.name) {
-		case Page.Event.START_DRAWING:
-			this.selectPaintingMode();
-			this.painter.startDraft(event.data[0]);
-			break;
-		case Page.Event.FINISH_DRAWING:
-			var drawnItem = this.getPainter().endDraft(event.data[0]);
-			this.registerEventBus(drawnItem);
-			break;
-		case Page.Event.DRAW_TO:
-			this.getPainter().draftTo(event.data[0]);
-			break;
-		case Page.Event.STOP_DRAWING:
-			this.painter.stopDrawing();
-			break;
-		case Page.Event.START_SELECTING_COLOR:
-			this.painter.showPalette(event.data[0]);
-			break;
-		case Page.Event.START_MOVING:
-			this.getMover().startMoving(event.data[0]);
-			break;
-		case Page.Event.MOVE_TO:
-			this.getMover().moveTo(event.data[0]);
-			break;
-		case Page.Event.FINISH_MOVING:
-			this.getMover().finishMoving();
-			break;
-		case Page.Event.START_TEXTING:
-			this.selectTextingMode();
-			this.getTexter().startTexting(event.data[0]);
-			break;
-		case Page.Event.FINISH_TEXTING:
-			this.getTexter().finishTexting();
-			break;
+	if (typeof this.handler.handle[event.name] == 'function') {
+		this.handler.handle[event.name](this, event);
 	}
 };
 
@@ -113,22 +83,6 @@ Page.prototype.unserialize = function(json) {
 Page.prototype.serialize = function(){
 	var serializer = new SerializeStrategy();
 	return serializer.process(this);
-};
-
-Page.Event = {
-	START_DRAWING: "PAGE.START_DRAWING",
-	STOP_DRAWING: "PAGE.STOP_DRAWING",
-	FINISH_DRAWING: "PAGE.FINISH_DRAWING",
-	DRAW_TO: "PAGE.DRAW_TO",
-
-	START_SELECTING_COLOR: "PAGE.START_SELECTING_COLOR",
-
-	START_MOVING: "PAGE.START_MOVING",
-	MOVE_TO: "PAGE.MOVE_TO",
-	FINISH_MOVING: "PAGE.FINISH_MOVING",
-
-	START_TEXTING: "PAGE.START_TEXTING",
-	FINISH_TEXTING: "PAGE.FINISH_TEXTING",
 };
 
 Page.Mode = {
