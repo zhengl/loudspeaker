@@ -108,9 +108,9 @@ KineticContext.prototype.addEventListeners = function(page, eventBus, events){
 	this.layer.add(this.eventCatcher);
 	this.eventCatcher.moveToBottom();
 
-	var interpreter = new KineticMouseEventOnPageInterpreter(page);
+	var interpreter = new KineticMouseEventOnPageInterpreter();
 	this.eventCatcher.on(events.join(" "), function(event){
-		interpreter.interpret(event, eventBus);
+		interpreter.interpret(page, event, eventBus);
 	});
 	this.layer.draw();
 };

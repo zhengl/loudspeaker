@@ -17,7 +17,7 @@ KineticItemEventRegister.prototype.registerEventBus = function(eventBus, item){
 };
 
 KineticItemEventRegister.prototype.addEventListeners = function(eventBus, item, events){
-	var interpreter = new KineticMouseEventOnItemInterpreter(item);
+	var interpreter = new KineticMouseEventOnItemInterpreter();
 	for(var index in events){
 		var eventType = events[index];
 		(function(eventType){
@@ -29,7 +29,7 @@ KineticItemEventRegister.prototype.addEventListeners = function(eventBus, item, 
                      event.ctrlKey, event.altKey, event.shiftKey, event.metaKey, 
                      event.button, event.relatedTarget);
 				translatedEvent.cancelBubble = true;
-				eventBus.publish(interpreter.interpret(translatedEvent));
+				eventBus.publish(interpreter.interpret(item, translatedEvent));
 			});					
 		})(eventType);
 	}

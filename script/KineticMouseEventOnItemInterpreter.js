@@ -1,75 +1,54 @@
-function KineticMouseEventOnItemInterpreter(target){
-		this.target = target;
+function KineticMouseEventOnItemInterpreter(){
 }
 
-KineticMouseEventOnItemInterpreter.prototype.interpret = function(event){
-	switch(event.type){
-		case KineticEvent.MOVE_TO:
-			return this.interpretMoveTo(event);
-
-		case KineticEvent.MOUSE_DOWN:
-			return this.interpretMouseDown(event);
-
-		case KineticEvent.MOUSE_UP:
-			return this.interpretMouseUp(event);
-
-		case KineticEvent.MOUSE_ENTER:
-			return this.interpretMouseEnter(event);
-			
-		case KineticEvent.MOUSE_LEAVE:
-			return this.interpretMouseLeave(event);
-			
-		case KineticEvent.MOUSE_OVER:
-			return this.interpretMouseOver(event);
-			
-		case KineticEvent.MOUSE_OUT:
-			return this.interpretMouseOut(event);
-
-		default:
-			return null;
-	}	
+KineticMouseEventOnItemInterpreter.prototype.interpret = function(item, event){
+	if(typeof this.handle[event.type] == 'function') {
+		return this.handle[event.type](item, event);
+	}
 };
 
-KineticMouseEventOnItemInterpreter.prototype.interpretMoveTo = function(event){
-	if(this.target.isMoving) {
-		return new AbstractEvent(Event.Item.MOVE_TO, [this.target, new Point(event.offsetX, event.offsetY)]);
+KineticMouseEventOnItemInterpreter.prototype.handle = {};
+
+KineticMouseEventOnItemInterpreter.prototype.handle[KineticEvent.MOVE_TO] = function(item, event){
+	if(item.isMoving) {
+		return new AbstractEvent(Event.Item.MOVE_TO, [item, new Point(event.offsetX, event.offsetY)]);
 	} else {
 		return null;
 	}
 };
 
-KineticMouseEventOnItemInterpreter.prototype.interpretMouseDown = function(event){
-	if(this.target.isSelected) {
-		var mousePosition = this.target.getKineticShape().getStage().getMousePosition();
-		var currentPosition = this.target.getPosition();
+KineticMouseEventOnItemInterpreter.prototype.handle[KineticEvent.MOUSE_DOWN] = function(item, event){
+	if(item.isSelected) {
+		var mousePosition = item.getKineticShape().getStage().getMousePosition();
+		var currentPosition = item.getPosition();
 		var relativeX = mousePosition.x - currentPosition.x;
 		var relativeY = mousePosition.y - currentPosition.y;
-		return new AbstractEvent(Event.Item.START_MOVING, [this.target, new Point(relativeX, relativeY)]);
+		return new AbstractEvent(Event.Item.START_MOVING, [item, new Point(relativeX, relativeY)]);
 	} else {
 		return null;
 	}
 };
 
-KineticMouseEventOnItemInterpreter.prototype.interpretMouseUp = function(event){
-	if(this.target.isMoving) {
-		return new AbstractEvent(Event.Item.FINISH_MOVING, [this.target]);
+KineticMouseEventOnItemInterpreter.prototype.handle[KineticEvent.MOUSE_UP] = function(item, event){
+	if(item.isMoving) {
+		return new AbstractEvent(Event.Item.FINISH_MOVING, [item]);
 	} else {
 		return null;
 	}
 };
 
-KineticMouseEventOnItemInterpreter.prototype.interpretMouseEnter = function(event){
-	return new AbstractEvent(Event.Item.SELECT, [this.target]);
+KineticMouseEventOnItemInterpreter.prototype.handle[KineticEvent.MOUSE_ENTER] = function(item, event){
+	return new AbstractEvent(Event.Item.SELECT, [item]);
 };
 
-KineticMouseEventOnItemInterpreter.prototype.interpretMouseLeave = function(event){
-	return new AbstractEvent(Event.Item.UNSELECT, [this.target]);
+KineticMouseEventOnItemInterpreter.prototype.handle[KineticEvent.MOUSE_LEAVE] = function(item, event){
+	return new AbstractEvent(Event.Item.UNSELECT, [item]);
 };
 
-KineticMouseEventOnItemInterpreter.prototype.interpretMouseOver = function(event){
-	return new AbstractEvent(Event.Item.SELECT, [this.target]);
+KineticMouseEventOnItemInterpreter.prototype.handle[KineticEvent.MOUSE_OVER] = function(item, event){
+	return new AbstractEvent(Event.Item.SELECT, [item]);
 };
 
-KineticMouseEventOnItemInterpreter.prototype.interpretMouseOut = function(event){
-	return new AbstractEvent(Event.Item.UNSELECT, [this.target]);
+KineticMouseEventOnItemInterpreter.prototype.handle[KineticEvent.MOUSE_OUT] = function(item, event){
+	return new AbstractEvent(Event.Item.UNSELECT, [item]);
 };
