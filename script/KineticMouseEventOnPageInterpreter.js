@@ -28,12 +28,12 @@ KineticMouseEventOnPageInterpreter.prototype.interpretMoveTo = function(event, e
 	this.stopLongPressTimer();
 	if(this.previousEvent.type == KineticEvent.MOUSE_DOWN && !this.target.getTexter().isTexting) {
 		this.moveUpEventCatcher();
-		eventBus.publish(new AbstractEvent(Page.Event.START_DRAWING, [new Point(event.offsetX, event.offsetY)]));
+		eventBus.publish(new AbstractEvent(Event.Page.START_DRAWING, [new Point(event.offsetX, event.offsetY)]));
 	} else if (this.target.getPainter().isPainting) {
-		eventBus.publish(new AbstractEvent(Page.Event.DRAW_TO, [new Point(event.offsetX, event.offsetY)]));
+		eventBus.publish(new AbstractEvent(Event.Page.DRAW_TO, [new Point(event.offsetX, event.offsetY)]));
 	} else if (this.target.getMover().isMoving) {
 		this.moveUpEventCatcher();
-		eventBus.publish(new AbstractEvent(Page.Event.MOVE_TO, [new Point(event.offsetX, event.offsetY)]));
+		eventBus.publish(new AbstractEvent(Event.Page.MOVE_TO, [new Point(event.offsetX, event.offsetY)]));
 	}
 };
 
@@ -45,10 +45,10 @@ KineticMouseEventOnPageInterpreter.prototype.interpretMouseUp = function(event, 
 	this.stopLongPressTimer();
 	if (this.target.getPainter().isPainting) {
 		this.moveDownEventCatcher();
-		eventBus.publish(new AbstractEvent(Page.Event.FINISH_DRAWING, [new Point(event.offsetX, event.offsetY)]));
+		eventBus.publish(new AbstractEvent(Event.Page.FINISH_DRAWING, [new Point(event.offsetX, event.offsetY)]));
 	} else if (this.target.getMover().isMoving){
 		this.moveDownEventCatcher();
-		eventBus.publish(new AbstractEvent(Page.Event.FINISH_MOVING));
+		eventBus.publish(new AbstractEvent(Event.Page.FINISH_MOVING));
 	}
 };
 
@@ -59,7 +59,7 @@ KineticMouseEventOnPageInterpreter.prototype.detectClickType = function(event, e
 		if(self.click == 1) {
 			self.startLongPressTimer(event, eventBus);
 		} else if (self.click == 2) {
-			eventBus.publish(new AbstractEvent(Page.Event.START_TEXTING, [new Point(event.offsetX, event.offsetY)]));		
+			eventBus.publish(new AbstractEvent(Event.Page.START_TEXTING, [new Point(event.offsetX, event.offsetY)]));		
 		}
 		self.click = 0;
 	}, KineticMouseEventOnPageInterpreter.defaultDoubleClickTimeout);
@@ -67,7 +67,7 @@ KineticMouseEventOnPageInterpreter.prototype.detectClickType = function(event, e
 
 KineticMouseEventOnPageInterpreter.prototype.startLongPressTimer = function(event, eventBus){
 	this.longPressTimer = window.setTimeout(function(){
-		eventBus.publish(new AbstractEvent(Page.Event.START_SELECTING_COLOR, [new Point(event.offsetX, event.offsetY)]));		
+		eventBus.publish(new AbstractEvent(Event.Page.START_SELECTING_COLOR, [new Point(event.offsetX, event.offsetY)]));		
 	}, KineticMouseEventOnPageInterpreter.defaultLongPressTimeout);
 };
 

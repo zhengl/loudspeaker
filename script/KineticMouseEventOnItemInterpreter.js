@@ -32,7 +32,7 @@ KineticMouseEventOnItemInterpreter.prototype.interpret = function(event){
 
 KineticMouseEventOnItemInterpreter.prototype.interpretMoveTo = function(event){
 	if(this.target.isMoving) {
-		return new AbstractEvent(Item.Event.MOVE_TO, [this.target, new Point(event.offsetX, event.offsetY)]);
+		return new AbstractEvent(Event.Item.MOVE_TO, [this.target, new Point(event.offsetX, event.offsetY)]);
 	} else {
 		return null;
 	}
@@ -44,7 +44,7 @@ KineticMouseEventOnItemInterpreter.prototype.interpretMouseDown = function(event
 		var currentPosition = this.target.getPosition();
 		var relativeX = mousePosition.x - currentPosition.x;
 		var relativeY = mousePosition.y - currentPosition.y;
-		return new AbstractEvent(Item.Event.START_MOVING, [this.target, new Point(relativeX, relativeY)]);
+		return new AbstractEvent(Event.Item.START_MOVING, [this.target, new Point(relativeX, relativeY)]);
 	} else {
 		return null;
 	}
@@ -52,24 +52,24 @@ KineticMouseEventOnItemInterpreter.prototype.interpretMouseDown = function(event
 
 KineticMouseEventOnItemInterpreter.prototype.interpretMouseUp = function(event){
 	if(this.target.isMoving) {
-		return new AbstractEvent(Item.Event.FINISH_MOVING, [this.target]);
+		return new AbstractEvent(Event.Item.FINISH_MOVING, [this.target]);
 	} else {
 		return null;
 	}
 };
 
 KineticMouseEventOnItemInterpreter.prototype.interpretMouseEnter = function(event){
-	return new AbstractEvent(Item.Event.SELECT, [this.target]);
+	return new AbstractEvent(Event.Item.SELECT, [this.target]);
 };
 
 KineticMouseEventOnItemInterpreter.prototype.interpretMouseLeave = function(event){
-	return new AbstractEvent(Item.Event.UNSELECT, [this.target]);
+	return new AbstractEvent(Event.Item.UNSELECT, [this.target]);
 };
 
 KineticMouseEventOnItemInterpreter.prototype.interpretMouseOver = function(event){
-	return new AbstractEvent(Item.Event.SELECT, [this.target]);
+	return new AbstractEvent(Event.Item.SELECT, [this.target]);
 };
 
 KineticMouseEventOnItemInterpreter.prototype.interpretMouseOut = function(event){
-	return new AbstractEvent(Item.Event.UNSELECT, [this.target]);
+	return new AbstractEvent(Event.Item.UNSELECT, [this.target]);
 };

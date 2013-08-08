@@ -48,7 +48,7 @@ KineticTextInput.prototype.enableEventHandling = function() {
     this.element.onkeydown = function(event){
     	if(event.keyCode == 13) { // when press Enter
 	        self.context.getEventBus().publish(
-				new AbstractEvent(Page.Event.FINISH_TEXTING)
+				new AbstractEvent(Event.Page.FINISH_TEXTING)
 	        	);
 	    } else {
 	    	window.setTimeout(function(){

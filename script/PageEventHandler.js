@@ -43,5 +43,5 @@ PageEventHandler.prototype.handle[Event.Page.START_TEXTING] = function(page, eve
 };
 
 PageEventHandler.prototype.handle[Event.Page.FINISH_TEXTING] = function(event){
-	this.page.getTexter().finishTexting();
+	page.getTexter().finishTexting();
 };
