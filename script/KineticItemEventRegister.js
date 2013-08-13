@@ -5,7 +5,7 @@ function KineticItemEventRegister(){
 KineticItemEventRegister.prototype.registerEventBus = function(eventBus, item){
 	item.setEventBus(eventBus);
 	eventBus.addListener(item);
-	this.addEventListeners(eventBus, item, [
+	this.addEventListeners(item, eventBus, [
 		KineticEvent.MOUSE_OVER,
 		KineticEvent.MOUSE_ENTER,
 		KineticEvent.MOVE_TO,
@@ -16,8 +16,8 @@ KineticItemEventRegister.prototype.registerEventBus = function(eventBus, item){
 	]);
 };
 
-KineticItemEventRegister.prototype.addEventListeners = function(eventBus, item, events){
-	var interpreter = new KineticMouseEventOnItemInterpreter();
+KineticItemEventRegister.prototype.addEventListeners = function(item, eventBus, events){
+	var interpreter = new KineticMouseEventOnItemInterpreter(item);
 	for(var index in events){
 		var eventType = events[index];
 		(function(eventType){
@@ -29,7 +29,7 @@ KineticItemEventRegister.prototype.addEventListeners = function(eventBus, item, 
                      event.ctrlKey, event.altKey, event.shiftKey, event.metaKey, 
                      event.button, event.relatedTarget);
 				translatedEvent.cancelBubble = true;
-				eventBus.publish(interpreter.interpret(item, translatedEvent));
+				interpreter.interpret(translatedEvent, eventBus);
 			});					
 		})(eventType);
 	}

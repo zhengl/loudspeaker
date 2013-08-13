@@ -69,6 +69,10 @@ KineticLine.prototype.update = function(point){
 	points.push(point);
 };
 
+KineticLine.prototype.getPoints = function(){
+	return this.getKineticShape().getPoints();
+};
+
 KineticLine.flatternPoints = function(points){
 	var linePoints = new Array();
 	for(var index in points){
