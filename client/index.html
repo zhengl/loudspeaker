@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<!DOCTYPE html>
+<html>
+<head>
+  <style type="text/css">
+  #wrapper {
+    display:table;
+    width: 100%;
+    height: 100%;
+  }
+  
+  #cell {
+    display:table-cell;
+    vertical-align:middle;
+    /*text-align: center;*/
+  }
+
+  #board {
+/*    margin-left: auto;
+    margin-right: auto;*/
+    width: 70%;
+    border: 1px solid;
+    border-radius: 8px 8px 0px 0px;
+  }
+
+  #slot {
+    height: 50px;
+    margin-top: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 72%;
+    border: 1px solid;
+    border-radius: 8px;
+  }
+  
+  #palette {
+    border: 1px solid gray;
+    border-radius: 5px;
+    padding: 3px;
+    display: table;
+    z-index: 999;  
+  }
+
+  #palette button {
+    width: 2.5em;
+    height: 2.5em;
+    border: 0 none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 2px;
+    display: table-cell;
+  }
+  
+  #red {
+    background-color: #E74C3C;    
+  }
+  
+  #blue {
+    background-color: #3498DB;    
+  }
+  
+  #black {
+    background-color: #34495E; 
+  }
+  
+  body, html {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+  }
+  </style>
+  <meta charset="utf-8">
+  <title>Loudspeaker - Social Creativity</title>
+    <script type="text/javascript" src="../lib/kinetic/kinetic-v4.5.3.min.js"></script>
+
+  <!-- include source files here... -->
+  <script type="text/javascript" src="scripts/Event.js"></script>
+  <script type="text/javascript" src="scripts/PageEventHandler.js"></script>
+  <script type="text/javascript" src="scripts/ItemEventHandler.js"></script>
+  <script type="text/javascript" src="scripts/EventBus.js"></script>
+  <script type="text/javascript" src="scripts/Board.js"></script>
+  <script type="text/javascript" src="scripts/Environment.js"></script>
+  <script type="text/javascript" src="scripts/Page.js"></script>
+  <script type="text/javascript" src="scripts/Texter.js"></script>
+  <script type="text/javascript" src="scripts/Painter.js"></script>
+  <script type="text/javascript" src="scripts/Palette.js"></script>
+  <script type="text/javascript" src="scripts/DOMPalette.js"></script>
+  <script type="text/javascript" src="scripts/PaletteFactory.js"></script>
+  <script type="text/javascript" src="scripts/Mover.js"></script>
+  <script type="text/javascript" src="scripts/Context.js"></script>
+  <script type="text/javascript" src="scripts/KineticContext.js"></script>
+  <script type="text/javascript" src="scripts/ContextFactory.js"></script>
+  <script type="text/javascript" src="scripts/Point.js"></script>
+  <script type="text/javascript" src="scripts/Item.js"></script>
+  <script type="text/javascript" src="scripts/Text.js"></script>
+  <script type="text/javascript" src="scripts/KineticText.js"></script>
+  <script type="text/javascript" src="scripts/TextInput.js"></script>
+  <script type="text/javascript" src="scripts/KineticTextInput.js"></script>
+  <script type="text/javascript" src="scripts/KineticCursor.js"></script>
+  <script type="text/javascript" src="scripts/TextInputFactory.js"></script>
+  <script type="text/javascript" src="scripts/KineticItemFactory.js"></script>
+  <script type="text/javascript" src="scripts/KineticItemEventRegister.js"></script>
+  <script type="text/javascript" src="scripts/Line.js"></script>
+  <script type="text/javascript" src="scripts/KineticLine.js"></script>
+  <script type="text/javascript" src="scripts/AbstractEvent.js"></script>
+  <script type="text/javascript" src="scripts/KineticEvent.js"></script>
+  <script type="text/javascript" src="scripts/KineticMouseEventOnPageInterpreter.js"></script>
+  <script type="text/javascript" src="scripts/KineticMouseEventOnItemInterpreter.js"></script>
+</head>
+<body>
+  <div id="palette">
+    <button id="blue" onclick="page.getPainter().getPalette().setColor('blue');page.getPainter().getPalette().hide();"></button>
+    <button id="red" onclick="page.getPainter().getPalette().setColor('red');page.getPainter().getPalette().hide();"></button>
+    <button id="black" onclick="page.getPainter().getPalette().setColor('black');page.getPainter().getPalette().hide();"></button>
+  </div>
+  <div id="wrapper">
+  <div id="cell">
+    <div id="board"></div>
+    <div id="slot"></div>
+  </div>
+  </div>
+  <script defer>
+	Environment.setMouse();
+  
+	var page = new Page();
+	page.enableEventHandling(new EventBus());
+  </script>
+</body>
+</html>
