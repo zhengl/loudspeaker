@@ -6,11 +6,11 @@ module.exports = function(grunt){
 			src: 'client/scripts/*.js',
 			options: {
 				specs: 'client/spec/*.js',
-				// keepRunner: true,
+				keepRunner: true,
 				template: require('grunt-template-jasmine-requirejs'),
 				templateOptions: {
          			requireConfig: {
-         				urlArgs: "bust=" + (new Date()).getTime(),
+         				urlArgs: "bust=" + Math.random(),
 						paths: {
 							Kinetic: 'lib/kinetic/kinetic-v4.5.3.min'
 						}

@@ -11,4 +11,9 @@ require(['Environment', 'Page', 'EventBus'], function(Environment, Page, EventBu
   
 	var page = new Page();
 	page.enableEventHandling(new EventBus());
+
+	palette = page.getPainter().getPalette();
+	palette.addColorButton('red');
+	palette.addColorButton('blue');
+	palette.addColorButton('black');
 });

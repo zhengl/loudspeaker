@@ -3,7 +3,6 @@ define(['Environment', 'Page', 'Item', 'Point', 'Line', 'Text', 'EventBus', 'Abs
 
 describe("Page", function() {
 	var page;
-	// var eventTrigger;
 	var eventBus;
 
 	beforeEach(function() {
