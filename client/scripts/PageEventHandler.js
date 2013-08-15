@@ -1,3 +1,6 @@
+define('PageEventHandler', ['Event'], function(Event){
+
+
 function PageEventHandler(){
 }
 
@@ -42,6 +45,11 @@ PageEventHandler.prototype.handle[Event.Page.START_TEXTING] = function(page, eve
 	page.getTexter().startTexting(event.data[0]);
 };
 
-PageEventHandler.prototype.handle[Event.Page.FINISH_TEXTING] = function(event){
+PageEventHandler.prototype.handle[Event.Page.FINISH_TEXTING] = function(page, event){
 	page.getTexter().finishTexting();
 };
+
+return PageEventHandler;
+
+
+});

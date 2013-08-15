@@ -1,0 +1,24 @@
+{
+  "name": "loudspeaker",
+  "version": "0.0.0",
+  "description": "Social Creativity",
+  "main": "index.js",
+  "scripts": {
+    "test": "grunt test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/zhengl/loudspeaker.git"
+  },
+  "author": "Zheng Li",
+  "license": "BSD",
+  "bugs": {
+    "url": "https://github.com/zhengl/loudspeaker/issues"
+  },
+  "devDependencies": {
+    "grunt": "~0.4.1",
+    "grunt-contrib-jasmine": "~0.5.1",
+    "grunt-contrib-uglify": "~0.2.2",
+    "grunt-template-jasmine-requirejs": "~0.1.5"
+  }
+}

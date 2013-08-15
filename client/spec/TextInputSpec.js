@@ -1,3 +1,5 @@
+define(['TextInput', 'Text', 'Point', 'Environment', 'ContextFactory', 'KineticTextInput'], function(TextInput, Text, Point, Environment, ContextFactory, KineticTextInput){
+
 describe("TextInput", function(){
 	var textInput;
 
@@ -29,4 +31,6 @@ describe("TextInput", function(){
 			expect(textInput.getText().getValue()).toBe("Hello World!");
 		});
 	});
+});
+
 });

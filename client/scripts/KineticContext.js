@@ -1,3 +1,6 @@
+define('KineticContext', ['Kinetic', 'KineticEvent', 'KineticItemFactory', 'KineticMouseEventOnPageInterpreter'], function(Kinetic, KineticEvent, KineticItemFactory, KineticMouseEventOnPageInterpreter){
+
+
 function KineticContext(container, width, height){
 	this.items = new Array();
 	this.draftItems = new Array();
@@ -122,4 +125,9 @@ KineticContext.prototype.refreshItems = function(){
 KineticContext.prototype.refreshDraftItems = function(){
 	this.draftLayer.draw();
 };
+
+return KineticContext;
+
+
+});
 

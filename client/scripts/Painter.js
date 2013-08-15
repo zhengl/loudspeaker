@@ -1,3 +1,6 @@
+define('Painter', ['Line'], function(Line){
+
+
 function Painter(context, palette){
 	this.context = context;
 	this.palette = palette;
@@ -64,3 +67,8 @@ Painter.prototype.getPalette = function(point){
 Painter.prototype.clear = function(){
 	this.stopDrawing();
 };
+
+return Painter;
+
+
+});

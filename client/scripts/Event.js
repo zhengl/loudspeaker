@@ -1,3 +1,6 @@
+define('Event', function(){
+
+
 Event.Item = {
 	START_MOVING: "ITEM.START_MOVING",
 	FINISH_MOVING: "ITEM.FINISH_MOVING",
@@ -21,3 +24,8 @@ Event.Page = {
 	START_TEXTING: "PAGE.START_TEXTING",
 	FINISH_TEXTING: "PAGE.FINISH_TEXTING",
 };
+
+return Event;
+
+	
+});

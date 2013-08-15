@@ -1,3 +1,6 @@
+define('TextInput', function(){
+
+
 function TextInput(context){
 	this.context = context;
 }
@@ -28,3 +31,8 @@ TextInput.prototype.remove = function(){
 TextInput.prototype.setColor = function(color){
 	this.color = color;
 };
+
+return TextInput;
+
+
+});

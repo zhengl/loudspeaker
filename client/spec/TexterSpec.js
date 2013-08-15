@@ -1,3 +1,5 @@
+define(['Environment','Texter', 'ContextFactory', 'Palette', 'Point', 'Text'], function(Environment, Texter, ContextFactory, Palette, Point, Text){
+
 describe("Texter", function(){
 	var texter;
 	var context;
@@ -28,4 +30,6 @@ describe("Texter", function(){
 			return text;
 		}
 	});
+});
+
 });

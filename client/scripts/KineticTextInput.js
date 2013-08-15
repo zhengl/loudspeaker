@@ -1,3 +1,6 @@
+define('KineticTextInput', ['Point', 'Text', 'TextInput','KineticCursor', 'AbstractEvent'], function(Point, Text, TextInput, KineticCursor, AbstractEvent){
+
+
 function KineticTextInput(context){
 	this.context = context;
 	this.initializeDOMElement(this.context);
@@ -121,3 +124,8 @@ KineticTextInput.prototype.remove = function(){
 	this.removeDOMElement();
 	this.removeCursor();
 };
+
+return KineticTextInput;
+
+
+});

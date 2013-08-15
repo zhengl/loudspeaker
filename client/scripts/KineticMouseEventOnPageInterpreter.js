@@ -1,3 +1,6 @@
+define('KineticMouseEventOnPageInterpreter', ['Event', 'Point', 'KineticEvent', 'AbstractEvent'], function(Event, Point, KineticEvent, AbstractEvent){
+
+
 function KineticMouseEventOnPageInterpreter(page){
 	this.target = page;
 	this.previousEvent = KineticEvent.MOUSE_UP;
@@ -79,12 +82,17 @@ KineticMouseEventOnPageInterpreter.prototype.stopLongPressTimer = function(){
 
 KineticMouseEventOnPageInterpreter.prototype.moveUpEventCatcher = function(){
 	if(undefined != this.target.context.eventCatcher) {
-		page.context.eventCatcher.moveToTop();
+		this.target.context.eventCatcher.moveToTop();
 	}
 };
 
 KineticMouseEventOnPageInterpreter.prototype.moveDownEventCatcher = function(){
 	if(undefined != this.target.context.eventCatcher) {
-		page.context.eventCatcher.moveToBottom();
+		this.target.context.eventCatcher.moveToBottom();
 	}
 };
+
+return KineticMouseEventOnPageInterpreter;
+
+
+});

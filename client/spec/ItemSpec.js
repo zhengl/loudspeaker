@@ -1,3 +1,6 @@
+define(['Environment', 'Page', 'Item', 'Point', 'Line', 'Text', 'EventBus'], function(Environment, Page, Item, Point, Line, Text, EventBus){
+
+
 describe("Item", function(){
 	var item;
 
@@ -60,4 +63,7 @@ describe("Text", function(){
 			position: {x: 10, y: 10},
 		});
 	});
+});
+
+
 });

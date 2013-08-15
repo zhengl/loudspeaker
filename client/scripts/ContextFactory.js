@@ -1,3 +1,6 @@
+define('ContextFactory', ['Environment', 'Context', 'KineticContext'], function(Environment, Context, KineticContext){	
+
+
 function ContextFactory(){
 }
 
@@ -15,3 +18,8 @@ ContextFactory.create = function(){
 
 	return context;
 }
+
+return ContextFactory;
+
+	
+});

@@ -1,3 +1,6 @@
+define('KineticItemFactory', ['Line', 'Text', 'KineticLine', 'KineticText'], function(Line, Text, KineticLine, KineticText){
+
+
 function KineticItemFactory(){
 }
 
@@ -15,3 +18,8 @@ KineticItemFactory.create = function(item){
 	}
 	return kineticItem;
 };
+
+return KineticItemFactory;
+
+	
+});

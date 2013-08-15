@@ -1,3 +1,6 @@
+define('TextInputFactory', ['Environment', 'TextInput', 'KineticTextInput'], function(Environment, TextInput, KineticTextInput){
+
+
 function TextInputFactory(){
 
 }
@@ -16,3 +19,8 @@ TextInputFactory.create = function(context){
 
 	return textInput;
 };
+
+return TextInputFactory;
+
+	
+});

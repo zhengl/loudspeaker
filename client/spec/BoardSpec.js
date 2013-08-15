@@ -1,3 +1,5 @@
+define(['Board', 'Page'], function(Board, Page){
+
 describe("Board", function(){
 	it("should be able to have multiple Pages", function(){
 		var board = new Board("board");
@@ -10,4 +12,6 @@ describe("Board", function(){
 		
 		expect(board.pages.length).toBe(3);
 	});
+});
+
 });

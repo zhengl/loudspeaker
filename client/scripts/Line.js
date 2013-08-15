@@ -1,3 +1,6 @@
+define('Line', ['Item', 'Point'], function(Item, Point){
+
+
 function Line(points, color){
 	if (undefined == points) {
 		points = new Array();
@@ -63,3 +66,8 @@ Line.unserialize = function(json){
 	line.setPosition(json.position);
 	return line;
 };
+
+return Line;
+
+
+});

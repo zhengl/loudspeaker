@@ -1,3 +1,6 @@
+define('DOMPalette', ['Palette'], function(Palette){
+
+
 function DOMPalette(elementId) {
 	this.element = document.getElementById(elementId);
 	this.hide();
@@ -24,4 +27,9 @@ DOMPalette.prototype.show = function(){
 DOMPalette.prototype.hide = function(){
 	this.element.style.visibility = "hidden";
 };
+
+return DOMPalette;
+
+	
+});
 

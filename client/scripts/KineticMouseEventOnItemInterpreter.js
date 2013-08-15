@@ -1,3 +1,6 @@
+define('KineticMouseEventOnItemInterpreter', ['Event', 'Point', 'KineticEvent', 'AbstractEvent'], function(Event, Point, KineticEvent, AbstractEvent){
+
+
 function KineticMouseEventOnItemInterpreter(item){
 	this.target = item;
 }
@@ -53,4 +56,9 @@ KineticMouseEventOnItemInterpreter.addHandle(KineticEvent.MOUSE_OVER, function(e
 
 KineticMouseEventOnItemInterpreter.addHandle(KineticEvent.MOUSE_OUT, function(event, eventBus){
 	eventBus.publish(new AbstractEvent(Event.Item.UNSELECT, [this.target]));
+});
+
+return KineticMouseEventOnItemInterpreter;
+
+
 });

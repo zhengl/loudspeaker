@@ -1,3 +1,6 @@
+define('ItemEventHandler', ['Event', 'AbstractEvent'], function(Event, AbstractEvent){
+
+
 function ItemEventHandler(){
 }
 
@@ -29,3 +32,8 @@ ItemEventHandler.prototype.handle[Event.Item.SELECT] = function(item, event){
 ItemEventHandler.prototype.handle[Event.Item.UNSELECT] = function(item, event){
 	item.unselect();
 };
+
+return ItemEventHandler;
+
+	
+});

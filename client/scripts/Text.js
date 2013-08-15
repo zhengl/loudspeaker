@@ -1,3 +1,6 @@
+define('Text', ['Item'], function(Item){
+
+
 function Text(text, color){
 	this.content = text;
 	this.color = color;
@@ -44,3 +47,8 @@ Text.unserialize = function(json){
 	text.setPosition(json.position);
 	return text;
 }
+
+return Text;
+
+
+});

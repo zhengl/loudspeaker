@@ -1,3 +1,6 @@
+define('Palette', function(){
+
+
 function Palette(){
 }
 
@@ -22,3 +25,8 @@ Palette.prototype.setColor = function(color){
 Palette.prototype.getColor = function(color){
 	return this.color || 'black';
 };
+
+return Palette;
+
+
+});

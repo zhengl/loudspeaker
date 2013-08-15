@@ -1,3 +1,6 @@
+define('KineticItemEventRegister', ['KineticMouseEventOnItemInterpreter'], function(KineticMouseEventOnItemInterpreter){
+
+
 function KineticItemEventRegister(){
 
 }
@@ -34,3 +37,8 @@ KineticItemEventRegister.prototype.addEventListeners = function(item, eventBus, 
 		})(eventType);
 	}
 };
+
+return KineticItemEventRegister;
+
+	
+});

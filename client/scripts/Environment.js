@@ -1,3 +1,6 @@
+define('Environment', function(){
+
+
 var Environment = {
 	Dummy: {
 		name: "Dummy",
@@ -26,3 +29,8 @@ Environment.setMouse = function(){
 Environment.setTouch = function(){
 	this.name = "Touch";
 };
+
+return Environment;
+
+	
+});

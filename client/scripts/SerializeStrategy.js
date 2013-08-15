@@ -1,3 +1,6 @@
+define('SerializeStrategy', function(){
+
+
 function SerializeStrategy(){
 	
 }
@@ -11,3 +14,8 @@ SerializeStrategy.prototype.process = function(page) {
 
 	return {items: jsonizedItems};
 };
+
+return SerializeStrategy;
+
+
+});

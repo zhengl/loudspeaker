@@ -1,3 +1,6 @@
+define('Item', ['ItemEventHandler'], function(ItemEventHandler){
+
+
 function Item(){
 	this.isSelected = false;
 
@@ -38,3 +41,8 @@ Item.prototype.select = function(){
 Item.prototype.unselect = function(){
 	this.isSelected = false;
 };
+
+return Item;
+
+	
+});

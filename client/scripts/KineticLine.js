@@ -1,3 +1,6 @@
+define('KineticLine', ['Kinetic', 'Line', 'Point', 'KineticItemEventRegister'], function(Kinetic, Line, Point, KineticItemEventRegister){
+
+
 function KineticLine(points, color){
 	Line.call(this, points);
 	
@@ -90,3 +93,8 @@ KineticLine.prototype.registerEventBus = function(eventBus){
 	var register = new KineticItemEventRegister();
 	register.registerEventBus(eventBus, this);
 };
+
+return KineticLine;
+
+	
+});

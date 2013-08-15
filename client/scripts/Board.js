@@ -1,3 +1,6 @@
+define('Board', function(){
+
+
 function Board(){
 	this.pages = new Array();
 }
@@ -5,3 +8,8 @@ function Board(){
 Board.prototype.addPage = function(page){
 	this.pages.push(page);
 };
+
+return Board;
+
+	
+});

@@ -1,3 +1,6 @@
+define('KineticCursor', ['Kinetic'], function(Kinetic){
+
+
 function KineticCursor(context){
 	this.kineticShape = new Kinetic.Line({
         points: [0, 0, 0, 30],
@@ -28,3 +31,8 @@ KineticCursor.prototype.setPosition = function(point){
 KineticCursor.prototype.destroy = function(point){
     this.kineticShape.destroy();
 };
+
+return KineticCursor;
+
+
+});

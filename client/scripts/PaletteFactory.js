@@ -1,3 +1,6 @@
+define('PaletteFactory', ['Environment', 'Palette', 'DOMPalette'], function(Environment, Palette, DOMPalette){
+
+
 function PaletteFactory(){
 
 }
@@ -16,3 +19,8 @@ PaletteFactory.create = function(){
 
 	return palette;
 }
+
+return PaletteFactory;
+
+
+});

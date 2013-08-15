@@ -1,3 +1,6 @@
+define('KineticText', ['Kinetic', 'Text','KineticItemEventRegister'], function(Kinetic, Text, KineticItemEventRegister){
+
+
 function KineticText(text){
 	this.kineticShape = new Kinetic.Text({
 		text: text,
@@ -39,3 +42,8 @@ KineticText.prototype.registerEventBus = function(eventBus){
 	var register = new KineticItemEventRegister();
 	register.registerEventBus(eventBus, this);
 };
+
+return KineticText;
+
+
+});

@@ -1,3 +1,6 @@
+define('Texter', ['TextInputFactory'], function(TextInputFactory){
+
+
 function Texter(context, palette){
 	this.context = context;
 	this.palette = palette;
@@ -46,3 +49,8 @@ Texter.prototype.clear = function(text){
 		delete this.textInput;
 	}
 };
+
+return Texter;
+
+
+});

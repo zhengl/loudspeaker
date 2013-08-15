@@ -1,3 +1,6 @@
+define('UnserializeStrategy', ['Line', 'Text'], function(Line, Text){
+
+
 function UnserializeStrategy(){
 	
 }
@@ -17,3 +20,8 @@ UnserializeStrategy.prototype.process = function(page, json) {
 		}
 	}
 };
+
+return UnserializeStrategy;
+
+
+});

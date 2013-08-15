@@ -1,3 +1,6 @@
+define(['Painter', 'Context', 'Palette', 'Point', 'Item', 'Line'], function(Painter, Context, Palette, Point, Item, Line){
+
+
 describe("Painter", function(){
 	var painter;
 	
@@ -79,4 +82,7 @@ describe("Painter", function(){
 	function expectIsAnItem(item){
 		expect(item instanceof Item).toBe(true);
 	}	
+});
+
+
 });

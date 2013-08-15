@@ -1,3 +1,6 @@
+define(['Environment', 'Page', 'Item', 'Point', 'Line', 'Text', 'EventBus', 'AbstractEvent', 'KineticLine', 'KineticText'], function(Environment, Page, Item, Point, Line, Text, EventBus, AbstractEvent, KineticLine, KineticText){
+
+
 describe("Page", function() {
 	var page;
 	// var eventTrigger;
@@ -268,6 +271,16 @@ describe("Page", function() {
   
 	describe("with KineticJS context", function(){
 		beforeEach(function() {
+			var body = document.getElementsByTagName('body')[0];
+			var board = document.createElement('div');
+			board.id = "board";
+
+			var palette = document.createElement('div');
+			palette.id = "palette";
+
+			body.appendChild(board);
+			body.appendChild(palette);
+
 			Environment.setMouse();
 			page = new Page();
 		});
@@ -407,4 +420,7 @@ describe("Page", function() {
 	function triggerStartTextingEvent(x, y){
 		eventBus.publish(new AbstractEvent(Event.Page.START_TEXTING, [new Point(x, y)]));
 	}
+});
+
+
 });

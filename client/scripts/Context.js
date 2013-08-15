@@ -1,3 +1,6 @@
+define('Context', function(){
+
+
 function Context(){
 	this.items = new Array();
 	this.draftItems = new Array();
@@ -72,3 +75,8 @@ Context.prototype.clearDraftItems = function(){
 Context.prototype.refreshItems = function(){};
 
 Context.prototype.refreshDraftItems = function(){};
+
+return Context;
+
+	
+});

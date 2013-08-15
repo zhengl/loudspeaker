@@ -1,3 +1,6 @@
+define('Mover', ['Point'], function(Point){
+
+
 function Mover(context){
 	this.context = context;
 }
@@ -31,3 +34,8 @@ Mover.prototype.moveTo = function(point){
 	item.moveTo(new Point(newX, newY));
 	this.context.refreshDraftItems();
 };
+
+return Mover;
+
+
+});

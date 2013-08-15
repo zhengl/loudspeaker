@@ -1,3 +1,6 @@
+define('Page', ['ContextFactory','PaletteFactory', 'Painter', 'Texter', 'Mover', 'PageEventHandler', 'SerializeStrategy', 'UnserializeStrategy'], function(ContextFactory, PaletteFactory, Painter, Texter, Mover, PageEventHandler, SerializeStrategy, UnserializeStrategy){
+
+
 function Page() {
 	this.context = ContextFactory.create();
 	this.palette = PaletteFactory.create();
@@ -89,3 +92,8 @@ Page.Mode = {
 	TEXT: "PAGE.TEXT",
 	DRAW: "PAGE.DRAW",
 };
+
+return Page;
+
+
+});

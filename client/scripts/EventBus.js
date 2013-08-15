@@ -1,3 +1,6 @@
+define('EventBus', function(){
+
+
 function EventBus(){
 	this.listeners = new Array();
 }
@@ -15,3 +18,8 @@ EventBus.prototype.publish = function(event, data){
 		this.listeners[index].notify(event, data);
 	}
 }
+
+return EventBus;
+
+	
+});

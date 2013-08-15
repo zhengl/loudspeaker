@@ -72,41 +72,7 @@
   </style>
   <meta charset="utf-8">
   <title>Loudspeaker - Social Creativity</title>
-    <script type="text/javascript" src="../lib/kinetic/kinetic-v4.5.3.min.js"></script>
-
-  <!-- include source files here... -->
-  <script type="text/javascript" src="scripts/Event.js"></script>
-  <script type="text/javascript" src="scripts/PageEventHandler.js"></script>
-  <script type="text/javascript" src="scripts/ItemEventHandler.js"></script>
-  <script type="text/javascript" src="scripts/EventBus.js"></script>
-  <script type="text/javascript" src="scripts/Board.js"></script>
-  <script type="text/javascript" src="scripts/Environment.js"></script>
-  <script type="text/javascript" src="scripts/Page.js"></script>
-  <script type="text/javascript" src="scripts/Texter.js"></script>
-  <script type="text/javascript" src="scripts/Painter.js"></script>
-  <script type="text/javascript" src="scripts/Palette.js"></script>
-  <script type="text/javascript" src="scripts/DOMPalette.js"></script>
-  <script type="text/javascript" src="scripts/PaletteFactory.js"></script>
-  <script type="text/javascript" src="scripts/Mover.js"></script>
-  <script type="text/javascript" src="scripts/Context.js"></script>
-  <script type="text/javascript" src="scripts/KineticContext.js"></script>
-  <script type="text/javascript" src="scripts/ContextFactory.js"></script>
-  <script type="text/javascript" src="scripts/Point.js"></script>
-  <script type="text/javascript" src="scripts/Item.js"></script>
-  <script type="text/javascript" src="scripts/Text.js"></script>
-  <script type="text/javascript" src="scripts/KineticText.js"></script>
-  <script type="text/javascript" src="scripts/TextInput.js"></script>
-  <script type="text/javascript" src="scripts/KineticTextInput.js"></script>
-  <script type="text/javascript" src="scripts/KineticCursor.js"></script>
-  <script type="text/javascript" src="scripts/TextInputFactory.js"></script>
-  <script type="text/javascript" src="scripts/KineticItemFactory.js"></script>
-  <script type="text/javascript" src="scripts/KineticItemEventRegister.js"></script>
-  <script type="text/javascript" src="scripts/Line.js"></script>
-  <script type="text/javascript" src="scripts/KineticLine.js"></script>
-  <script type="text/javascript" src="scripts/AbstractEvent.js"></script>
-  <script type="text/javascript" src="scripts/KineticEvent.js"></script>
-  <script type="text/javascript" src="scripts/KineticMouseEventOnPageInterpreter.js"></script>
-  <script type="text/javascript" src="scripts/KineticMouseEventOnItemInterpreter.js"></script>
+  <script data-main="main" src="../lib/require/require.js"></script>
 </head>
 <body>
   <div id="palette">
@@ -120,11 +86,5 @@
     <div id="slot"></div>
   </div>
   </div>
-  <script defer>
-	Environment.setMouse();
-  
-	var page = new Page();
-	page.enableEventHandling(new EventBus());
-  </script>
 </body>
 </html>
