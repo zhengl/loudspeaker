@@ -10,6 +10,7 @@ module.exports = function(grunt){
 				template: require('grunt-template-jasmine-requirejs'),
 				templateOptions: {
          			requireConfig: {
+         				urlArgs: "bust=" + (new Date()).getTime(),
 						paths: {
 							Kinetic: 'lib/kinetic/kinetic-v4.5.3.min'
 						}
