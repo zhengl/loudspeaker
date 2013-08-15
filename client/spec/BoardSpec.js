@@ -1,4 +1,4 @@
-define(['Board', 'Page'], function(Board, Page){
+require(['Board', 'Page'], function(Board, Page){
 
 describe("Board", function(){
 	it("should be able to have multiple Pages", function(){

@@ -1,4 +1,4 @@
-define(['Painter', 'Context', 'Palette', 'Point', 'Item', 'Line'], function(Painter, Context, Palette, Point, Item, Line){
+require(['Painter', 'Context', 'Palette', 'Point', 'Item', 'Line'], function(Painter, Context, Palette, Point, Item, Line){
 
 
 describe("Painter", function(){

@@ -1,4 +1,4 @@
-define(['Environment', 'Page', 'Item', 'Point', 'Line', 'Text', 'EventBus', 'AbstractEvent', 'KineticLine', 'KineticText'], function(Environment, Page, Item, Point, Line, Text, EventBus, AbstractEvent, KineticLine, KineticText){
+require(['Environment', 'Page', 'Item', 'Point', 'Line', 'Text', 'EventBus', 'AbstractEvent', 'KineticLine', 'KineticText'], function(Environment, Page, Item, Point, Line, Text, EventBus, AbstractEvent, KineticLine, KineticText){
 
 
 describe("Page", function() {

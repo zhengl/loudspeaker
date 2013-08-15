@@ -1,4 +1,4 @@
-define(['TextInput', 'Text', 'Point', 'Environment', 'ContextFactory', 'KineticTextInput'], function(TextInput, Text, Point, Environment, ContextFactory, KineticTextInput){
+require(['TextInput', 'Text', 'Point', 'Environment', 'ContextFactory', 'KineticTextInput'], function(TextInput, Text, Point, Environment, ContextFactory, KineticTextInput){
 
 describe("TextInput", function(){
 	var textInput;

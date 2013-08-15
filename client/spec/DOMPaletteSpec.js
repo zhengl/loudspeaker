@@ -1,4 +1,4 @@
-define(['DOMPalette'], function(DOMPalette){
+require(['DOMPalette'], function(DOMPalette){
 
 
 describe('Palette', function(){

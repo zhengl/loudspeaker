@@ -1,4 +1,4 @@
-define(['Environment', 'Page', 'Item', 'Point', 'Line', 'Text', 'EventBus'], function(Environment, Page, Item, Point, Line, Text, EventBus){
+require(['Environment', 'Page', 'Item', 'Point', 'Line', 'Text', 'EventBus'], function(Environment, Page, Item, Point, Line, Text, EventBus){
 
 
 describe("Item", function(){

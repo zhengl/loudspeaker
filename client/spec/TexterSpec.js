@@ -1,4 +1,4 @@
-define(['Environment','Texter', 'ContextFactory', 'Palette', 'Point', 'Text'], function(Environment, Texter, ContextFactory, Palette, Point, Text){
+require(['Environment','Texter', 'ContextFactory', 'Palette', 'Point', 'Text'], function(Environment, Texter, ContextFactory, Palette, Point, Text){
 
 describe("Texter", function(){
 	var texter;
