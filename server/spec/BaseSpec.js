@@ -1,23 +1,20 @@
-var request = require('superagent');
-var expect = require('expect.js');
+var request = require('request');
 var server = require('../server')
-var server;
 
-before(function(){
+beforeEach(function(){
 	server.start(8080);
 })
 
 
 describe("Server", function(){
 	it("runs", function(done){
-		request.get("localhost:8080").end(function(res){
-			expect(res).to.exist;
-			expect(res.status).to.equal(200);
+		request("http://localhost:8080", function(error, response, body){
+			expect(response.statusCode).toEqual(200);
 			done();
 		});
 	});
 });
 
-after(function(){
+afterEach(function(){
 	server.stop();
 })

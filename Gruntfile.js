@@ -19,6 +19,10 @@ module.exports = function(grunt){
 			}
 		},
 
+		jasmine_node: {
+			projectRoot: "server/spec",
+		},
+
 		uglify: {
 			build: {
 				src: 'client/scripts/*.js',
@@ -29,4 +33,5 @@ module.exports = function(grunt){
 
 	grunt.loadNpmTasks('grunt-contrib-uglify');
 	grunt.loadNpmTasks('grunt-contrib-jasmine');
+	grunt.loadNpmTasks('grunt-jasmine-node');
 };
