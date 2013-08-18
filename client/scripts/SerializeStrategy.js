@@ -6,7 +6,7 @@ function SerializeStrategy(){
 }
 
 SerializeStrategy.prototype.process = function(page) {
-	var items = page.context.getItems();
+	var items = page.getContext().getItems();
 	var jsonizedItems = new Array();
 	for(var i = 0; i < items.length; i++) {
 		jsonizedItems.push(items[i].serialize());

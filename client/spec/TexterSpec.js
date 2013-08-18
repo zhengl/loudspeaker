@@ -6,6 +6,12 @@ describe("Texter", function(){
 
 	describe("with KineticJS context", function(){
 		beforeEach(function(){
+			var body = document.getElementsByTagName('body')[0];
+			var board = document.createElement('div');
+			board.id = "board";
+
+			body.appendChild(board);
+
 			Environment.setMouse();
 			context = ContextFactory.create();
 			texter = new Texter(context, new Palette());

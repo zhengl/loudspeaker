@@ -1,4 +1,4 @@
-require(['Environment', 'Page', 'Item', 'Point', 'Line', 'Text', 'EventBus', 'AbstractEvent', 'KineticLine', 'KineticText'], function(Environment, Page, Item, Point, Line, Text, EventBus, AbstractEvent, KineticLine, KineticText){
+require(['Environment', 'Page', 'Item', 'Point', 'Line', 'Text', 'EventBus', 'AbstractEvent', 'KineticLine', 'KineticText', 'Context', 'Palette', 'DOMPalette', 'Painter', 'Texter', 'Mover', 'SerializeStrategy', 'UnserializeStrategy', 'PageEventHandler', 'KineticContext'], function(Environment, Page, Item, Point, Line, Text, EventBus, AbstractEvent, KineticLine, KineticText, Context, Palette, DOMPalette, Painter, Texter, Mover, SerializeStrategy, UnserializeStrategy, PageEventHandler, KineticContext){
 
 
 describe("Page", function() {
@@ -7,7 +7,13 @@ describe("Page", function() {
 
 	beforeEach(function() {
 		Environment.setDummy();
-		page = new Page();
+
+		var palette = new Palette();
+		var context = new Context();
+		var painter = new Painter(context, palette);
+		var texter = new Texter(context, palette);
+		var mover = new Mover(context);
+		page = new Page(painter, texter, mover);
 	});
 
 	it("should be able to be in DRAWING mode", function(){
@@ -21,7 +27,8 @@ describe("Page", function() {
 	});
 
 	it("unserialize", function(){
-		page.unserialize({
+		var unserializer = new UnserializeStrategy();
+		unserializer.process(page, {
 			items: [
 				{
 					type: "line",
@@ -38,7 +45,7 @@ describe("Page", function() {
 				]
 		});
 
-		var items = page.context.getItems();
+		var items = page.getContext().getItems();
 		expect(items.length).toEqual(2);
 		
 		var line = items[0];
@@ -64,7 +71,8 @@ describe("Page", function() {
 		text.setPosition(new Point(0, 0));
 		page.write(text);
 
-		expect(page.serialize()).toEqual({
+		var serializer = new SerializeStrategy();
+		expect(serializer.process(page)).toEqual({
 			items: [
 				{
 					type: "line",
@@ -85,10 +93,9 @@ describe("Page", function() {
 	describe("with Event Handling", function(){
 
 		beforeEach(function() {
-			Environment.setDummy();
-			page = new Page();
 			eventBus = new EventBus();
-			page.enableEventHandling(eventBus);
+			handler = new PageEventHandler();
+			page.enableEventHandling(eventBus, handler);
 		});
   
 		it("should DRAW a line with events", function() {			
@@ -96,7 +103,7 @@ describe("Page", function() {
 			triggerPageDrawToEvent(20, 20);
 			triggerFinishDrawingEvent(20, 20);
 
-			var line = page.context.getItems()[0];
+			var line = page.getPainter().context.getItems()[0];
 			expectIsAnItem(line);
 			expect(line.getPosition()).toEqual({x: 10, y: 10});
 			expect(line.points.length).toBe(3);
@@ -117,7 +124,7 @@ describe("Page", function() {
 			expectNoDraftItem(page);
 			expectOneItem(page);
 
-			var line = page.context.getItems()[0];
+			var line = page.getPainter().context.getItems()[0];
 			expectIsAnItem(line);
 		});
 		
@@ -138,7 +145,7 @@ describe("Page", function() {
 			expectOneItem(page);
 			expectNoDraftItem(page);
 
-			line = page.context.getItems()[0];
+			line = page.getPainter().context.getItems()[0];
 			expect(line.getPosition()).toEqual({x: 15, y: 15});
 		});
 
@@ -149,7 +156,7 @@ describe("Page", function() {
 			var line2 = createLine(30, 30, 40, 40);
 			var item2 = page.draw(line2);
 
-			expect(page.context.getItems().length).toEqual(2);
+			expect(page.getPainter().context.getItems().length).toEqual(2);
 						
 			triggerSelectEvent(item1);
 			triggerStartMovingEvent(item1, 5, 5);
@@ -161,10 +168,10 @@ describe("Page", function() {
 			expectOneDraftItem(page);
 			
 			triggerFinishMovingEvent(item1);
-			expect(page.context.getItems().length).toEqual(2);
+			expect(page.getPainter().context.getItems().length).toEqual(2);
 			expectNoDraftItem(page);
 
-			line1 = page.context.getItems()[1];
+			line1 = page.getPainter().context.getItems()[1];
 			expect(line1.getPosition()).toEqual({x: 15, y: 15});
 		});	
 		
@@ -181,13 +188,13 @@ describe("Page", function() {
 			triggerItemMoveToEvent(item, 20, 20);
 			expectNoItem(page);
 			expectOneDraftItem(page);
-			line = page.context.getDraftItems()[0];
+			line = page.getPainter().context.getDraftItems()[0];
 			expect(line.getPosition()).toEqual({x: 15, y: 15});			
 
 			triggerFinishMovingEvent(item);
 			expectOneItem(page);
 			expectNoDraftItem(page);
-			line = page.context.getItems()[0];
+			line = page.getPainter().context.getItems()[0];
 			expect(line.getPosition()).toEqual({x: 15, y: 15});
 		});	
 
@@ -242,7 +249,7 @@ describe("Page", function() {
 			expectOneItem(page);
 			expectNoDraftItem(page);
 
-			text = page.context.getItems()[0];
+			text = page.getPainter().context.getItems()[0];
 			expect(text.getPosition()).toEqual({x: 15, y: 15});
 		});	
 
@@ -263,13 +270,14 @@ describe("Page", function() {
 			expectOneItem(page);
 			expectNoDraftItem(page);
 
-			text = page.context.getItems()[0];
+			text = page.getPainter().context.getItems()[0];
 			expect(text.getPosition()).toEqual({x: 15, y: 15});
 		});		
 	});
   
 	describe("with KineticJS context", function(){
 		beforeEach(function() {
+			Environment.setMouse();
 			var body = document.getElementsByTagName('body')[0];
 			var board = document.createElement('div');
 			board.id = "board";
@@ -280,8 +288,13 @@ describe("Page", function() {
 			body.appendChild(board);
 			body.appendChild(palette);
 
-			Environment.setMouse();
-			page = new Page();
+			var palette = new DOMPalette("palette");
+			var context = new KineticContext("board", 50, 50);
+			var painter = new Painter(context, palette);
+			var texter = new Texter(context, palette);
+			var mover = new Mover(context);
+
+			page = new Page(painter, texter, mover);
 		});
 		
 		it("should return a Line after DRAWING a line with direct call", function() {
@@ -290,7 +303,7 @@ describe("Page", function() {
 
 			expect(item instanceof KineticLine).toBe(true);
 			expect(item.getPosition()).toEqual({x: 10, y: 10});
-			expect(page.context.layer.getChildren().toArray().length).toEqual(1);
+			expect(page.getPainter().context.layer.getChildren().toArray().length).toEqual(1);
 		});
 
 		it("should return a Line after DRAFTING a line with direct call", function() {
@@ -299,7 +312,7 @@ describe("Page", function() {
 
 			expect(item instanceof KineticLine).toBe(true);
 			expect(item.getPosition()).toEqual({x: 10, y: 10});
-			expect(page.context.draftLayer.getChildren().toArray().length).toEqual(1);			
+			expect(page.getPainter().context.draftLayer.getChildren().toArray().length).toEqual(1);			
 		});
 
 		it("should return a Text after TEXTING a text with direct call", function(){
@@ -307,9 +320,9 @@ describe("Page", function() {
 			var item = page.getTexter().write(text);
 
 			expect(item instanceof KineticText).toBe(true);
-			expect(page.context.layer.getChildren().toArray().length).toEqual(1);
+			expect(page.getPainter().context.layer.getChildren().toArray().length).toEqual(1);
 			
-			var result = page.context.layer.getChildren().toArray()[0];
+			var result = page.getPainter().context.layer.getChildren().toArray()[0];
 			expect(result.getText()).toEqual("Hello World!");
 			expect(result.getPosition()).toEqual({x: 10, y: 20});
 		});
@@ -317,18 +330,18 @@ describe("Page", function() {
 		it("should return a Text after TEXTING texts in sequence with direct call", function(){
 			var text = createText("Hello ", 10, 20);
 			page.getTexter().draft(text);
-			expect(page.context.draftLayer.getChildren().toArray().length).toEqual(1);
+			expect(page.getTexter().context.draftLayer.getChildren().toArray().length).toEqual(1);
 
 			text = createText("World!", 10, 20);
 			page.getTexter().draft(text);
-			expect(page.context.draftLayer.getChildren().toArray().length).toEqual(1);
+			expect(page.getTexter().context.draftLayer.getChildren().toArray().length).toEqual(1);
 
 			var item = page.getTexter().finishTexting();
-			expect(page.context.layer.getChildren().toArray().length).toEqual(1);
-			expect(page.context.draftLayer.getChildren().toArray().length).toEqual(0);
+			expect(page.getTexter().context.layer.getChildren().toArray().length).toEqual(1);
+			expect(page.getTexter().context.draftLayer.getChildren().toArray().length).toEqual(0);
 			expect(item instanceof KineticText).toBe(true);
 			
-			var result = page.context.layer.getChildren().toArray()[0];
+			var result = page.getTexter().context.layer.getChildren().toArray()[0];
 			expect(result.getText()).toEqual("Hello World!");
 			expect(result.getPosition()).toEqual({x: 10, y: 20});
 		});
@@ -338,9 +351,9 @@ describe("Page", function() {
 			var item = page.getTexter().draft(text);
 			
 			expect(item instanceof KineticText).toBe(true);
-			expect(page.context.draftLayer.getChildren().toArray().length).toEqual(1);
+			expect(page.getTexter().context.draftLayer.getChildren().toArray().length).toEqual(1);
 
-			var result = page.context.draftLayer.getChildren().toArray()[0];
+			var result = page.getTexter().context.draftLayer.getChildren().toArray()[0];
 			expect(result.getText()).toEqual("Hello World!");
 			expect(result.getPosition()).toEqual({x: 10, y: 20});
 		});
@@ -357,19 +370,19 @@ describe("Page", function() {
 	}
 	
 	function expectOneItem(page){
-		expect(page.context.getItems().length).toEqual(1);
+		expect(page.getPainter().context.getItems().length).toEqual(1);
 	}
 
 	function expectOneDraftItem(page){
-		expect(page.context.getDraftItems().length).toEqual(1);
+		expect(page.getPainter().context.getDraftItems().length).toEqual(1);
 	}
 	
 	function expectNoItem(page){
-		expect(page.context.getItems().length).toEqual(0);
+		expect(page.getPainter().context.getItems().length).toEqual(0);
 	}
 	
 	function expectNoDraftItem(page){
-		expect(page.context.getDraftItems().length).toEqual(0);
+		expect(page.getPainter().context.getDraftItems().length).toEqual(0);
 	}
 	
 	function expectIsAnItem(item){

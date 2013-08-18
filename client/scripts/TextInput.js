@@ -9,6 +9,14 @@ TextInput.prototype.write = function(text) {
 	this.text = text;
 };
 
+TextInput.prototype.append = function(text) {
+	if (undefined == this.text) {
+		this.write(text);
+	} else {
+		this.text.setValue(this.text.getValue + text.getValue());
+	}
+};
+
 TextInput.prototype.flush = function() {
 	return this.context.write(this.getText(), this.getPosition());
 };

@@ -1,18 +1,34 @@
-define('Page', ['ContextFactory','PaletteFactory', 'Painter', 'Texter', 'Mover', 'PageEventHandler', 'SerializeStrategy', 'UnserializeStrategy'], function(ContextFactory, PaletteFactory, Painter, Texter, Mover, PageEventHandler, SerializeStrategy, UnserializeStrategy){
+define('Page', function(){
 
 
-function Page() {
-	this.context = ContextFactory.create();
-	this.palette = PaletteFactory.create();
+function Page(painter, texter, mover) {
+	this.painter = painter;
+	this.texter = texter;
+	this.mover = mover;
 
-	this.painter = new Painter(this.context, this.palette);
-	this.texter = new Texter(this.context, this.palette);
-	this.mover = new Mover(this.context);
+	// this.context = ContextFactory.create();
+	// this.palette = PaletteFactory.create();
 
-	this.selectPaintingMode();
+	// this.painter = new Painter(this.context, this.palette);
+	// this.texter = new Texter(this.context, this.palette);
+	// this.mover = new Mover(this.context);
 
-	this.handler = new PageEventHandler();
+	// this.selectPaintingMode();
+
+	// this.handler = new PageEventHandler();
 }
+
+Page.prototype.setPainter = function(painter){
+	this.painter = painter;
+};
+
+Page.prototype.setTexter = function(texter){
+	this.texter = texter;
+};
+
+Page.prototype.setMover = function(mover){
+	this.mover = mover;
+};
 
 Page.prototype.selectPaintingMode = function(){
 	this.texter.clear();
@@ -48,10 +64,11 @@ Page.prototype.registerEventBus = function(item){
 	}
 };
 
-Page.prototype.enableEventHandling = function(eventBus){
+Page.prototype.enableEventHandling = function(eventBus, handlers){
 	this.eventBus = eventBus;
+	this.handler = handlers;
 	eventBus.addListener(this);
-	this.context.registerEventBus(this, eventBus);	
+	this.getPainter().context.registerEventBus(this, eventBus);	
 };
 
 Page.prototype.getPainter = function() {
@@ -78,15 +95,19 @@ Page.prototype.write = function(item){
 	return textItem;
 };
 
-Page.prototype.unserialize = function(json) {
-	var unserializer = new UnserializeStrategy();
-	unserializer.process(this, json);
+Page.prototype.getContext = function(){
+	return this.getPainter().context;
 };
 
-Page.prototype.serialize = function(){
-	var serializer = new SerializeStrategy();
-	return serializer.process(this);
-};
+// Page.prototype.unserialize = function(json) {
+// 	var unserializer = new UnserializeStrategy();
+// 	unserializer.process(this, json);
+// };
+
+// Page.prototype.serialize = function(){
+// 	var serializer = new SerializeStrategy();
+// 	return serializer.process(this);
+// };
 
 Page.Mode = {
 	TEXT: "PAGE.TEXT",

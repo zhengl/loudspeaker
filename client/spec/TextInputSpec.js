@@ -19,6 +19,12 @@ describe("TextInput", function(){
 		var textInput;
 
 		beforeEach(function(){
+			var body = document.getElementsByTagName('body')[0];
+			var board = document.createElement('div');
+			board.id = "board";
+
+			body.appendChild(board);
+
 			Environment.setMouse();
 			context = ContextFactory.create();
 			textInput = new KineticTextInput(context);

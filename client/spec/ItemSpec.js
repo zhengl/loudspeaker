@@ -1,4 +1,4 @@
-require(['Environment', 'Page', 'Item', 'Point', 'Line', 'Text', 'EventBus'], function(Environment, Page, Item, Point, Line, Text, EventBus){
+require(['Environment', 'Page', 'Item', 'Point', 'Line', 'Text', 'EventBus', 'Context', 'Painter', 'Texter'], function(Environment, Page, Item, Point, Line, Text, EventBus, Context, Painter, Texter){
 
 
 describe("Item", function(){
@@ -25,8 +25,9 @@ describe("Line", function(){
 	var page;
 
 	beforeEach(function(){
-		Environment.setDummy();
-		page = new Page();
+		var context = new Context();
+		var painter = new Painter(context);
+		page = new Page(painter);
 	});
 
 	it("serialize to JSON", function(){
@@ -47,8 +48,9 @@ describe("Text", function(){
 	var page;
 
 	beforeEach(function(){
-		Environment.setDummy();
-		page = new Page();
+		var context = new Context();
+		var texter = new Texter(context);
+		page = new Page(null, texter, null);
 	});
 
 	it("serialize to JSON", function(){

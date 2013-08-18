@@ -39,7 +39,9 @@ Texter.prototype.draft = function(text){
 Texter.prototype.initializeTextInput = function(text){
 	if (undefined == this.textInput) {
 		this.textInput = TextInputFactory.create(this.context);
-		this.textInput.setColor(this.palette.getColor());
+		if (undefined != this.palette) {
+			this.textInput.setColor(this.palette.getColor());
+		}
 	}
 };
 
