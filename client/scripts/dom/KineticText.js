@@ -1,4 +1,4 @@
-define('KineticText', ['Kinetic', 'Text','KineticItemEventRegister'], function(Kinetic, Text, KineticItemEventRegister){
+define('KineticText', ['Kinetic', 'Text', 'KineticItemEventRegister'], function(Kinetic, Text, KineticItemEventRegister){
 
 
 function KineticText(text){

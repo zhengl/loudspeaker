@@ -1,13 +1,14 @@
-define('Texter', ['TextInputFactory'], function(TextInputFactory){
+define('Texter', function(){
 
 
-function Texter(context, palette){
-	this.context = context;
+function Texter(palette, textInput){
 	this.palette = palette;
+	this.textInput = textInput;
 }
 
 Texter.prototype.startTexting = function(position) {
-	this.initializeTextInput();
+	this.textInput.show();
+	this.textInput.setColor(this.palette.getColor());
 	this.textInput.setPosition(position);
 	this.isTexting = true;
 };
@@ -15,7 +16,6 @@ Texter.prototype.startTexting = function(position) {
 Texter.prototype.finishTexting = function(position) {
 	this.isTexting = false;
 	var item = this.getTextInput().flush();
-	delete this.textInput;
 	return item;
 };
 
@@ -24,32 +24,23 @@ Texter.prototype.getTextInput = function() {
 };
 
 Texter.prototype.write = function(text){
-	this.initializeTextInput();
+	this.textInput.show();
+	this.textInput.setColor(this.palette.getColor());
 	this.textInput.setPosition(text.getPosition());
 	this.getTextInput().write(text);
-	return this.getTextInput().flush();
+	var item = this.getTextInput().flush();
+	this.textInput.remove();
+	return item;
 };
 
 Texter.prototype.draft = function(text){
-	this.initializeTextInput();
+	this.textInput.setColor(this.palette.getColor());
 	this.textInput.setPosition(text.getPosition());
 	return this.getTextInput().append(text);
 };
 
-Texter.prototype.initializeTextInput = function(text){
-	if (undefined == this.textInput) {
-		this.textInput = TextInputFactory.create(this.context);
-		if (undefined != this.palette) {
-			this.textInput.setColor(this.palette.getColor());
-		}
-	}
-};
-
 Texter.prototype.clear = function(text){
-	if (undefined != this.textInput) {
-		this.textInput.remove();
-		delete this.textInput;
-	}
+	this.textInput.remove();
 };
 
 return Texter;

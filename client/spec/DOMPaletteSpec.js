@@ -1,7 +1,7 @@
 require(['DOMPalette'], function(DOMPalette){
 
 
-describe('Palette', function(){
+describe('DOMPalette', function(){
 	var palette;
 
 	beforeEach(function(){
@@ -15,6 +15,8 @@ describe('Palette', function(){
 
 		palette = new DOMPalette("palette");
 		palette.addColorButton('red');
+		palette.show();
+		expect(palette.isHidden()).toBe(false);
 		expect(palette.hasColorButton('red')).toBe(true);
 
 		palette.getColorButton('red').click();

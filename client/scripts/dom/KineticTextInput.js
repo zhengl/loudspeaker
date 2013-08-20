@@ -1,16 +1,19 @@
-define('KineticTextInput', ['Point', 'Text', 'TextInput','KineticCursor', 'AbstractEvent'], function(Point, Text, TextInput, KineticCursor, AbstractEvent){
+define('KineticTextInput', ['Point', 'Text', 'TextInput', 'KineticCursor', 'Event'], function(Point, Text, TextInput, KineticCursor, Event){
 
 
 function KineticTextInput(context){
 	this.context = context;
-	this.initializeDOMElement(this.context);
-    this.initializeCursor(this.context);
-    
     this.text = new Text("");
 }
 
 KineticTextInput.prototype = new TextInput();
 KineticTextInput.prototype.constructor = KineticTextInput;
+
+KineticTextInput.prototype.show = function(){
+	this.initializeDOMElement(this.context);
+    this.initializeCursor(this.context);
+    this.enableEventHandling();
+};
 
 KineticTextInput.prototype.setColor = function(color){
 	this.text.setColor(color);
@@ -51,7 +54,7 @@ KineticTextInput.prototype.enableEventHandling = function() {
     this.element.onkeydown = function(event){
     	if(event.keyCode == 13) { // when press Enter
 	        self.context.getEventBus().publish(
-				new AbstractEvent(Event.Page.FINISH_TEXTING)
+				new Event(Event.Page.FINISH_TEXTING)
 	        	);
 	    } else {
 	    	window.setTimeout(function(){
@@ -86,13 +89,8 @@ KineticTextInput.prototype.draftToContext = function(value, point){
 
 KineticTextInput.prototype.flush = function() {
 	this.text.setValue(this.element.value);
-	this.context.clearDraftItems();
+	this.remove();
 	var item = this.context.write(this.getText());
-	if (undefined != this.context.getEventBus()) {
-		item.registerEventBus(this.context.getEventBus());
-	}
-	this.removeDOMElement()
-	this.removeCursor();
 	return item;
 };
 
@@ -110,18 +108,14 @@ KineticTextInput.prototype.getPosition = function(){
 	return this.position;
 };
 
-KineticTextInput.prototype.removeDOMElement = function(){
-	this.context.stage.getContainer().removeChild(this.element);
-	delete this.element;
-};
-
 KineticTextInput.prototype.removeCursor = function(){
-	this.cursor.destroy();
+	if(undefined != this.cursor){
+		this.cursor.destroy();
+	}
 };
 
 KineticTextInput.prototype.remove = function(){
 	this.context.clearDraftItems();
-	this.removeDOMElement();
 	this.removeCursor();
 };
 

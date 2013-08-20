@@ -26,7 +26,7 @@ KineticLine.prototype = new Line();
 KineticLine.prototype.constructor = KineticLine;
 
 KineticLine.prototype.getPosition = function(){
-	var points = this.getKineticShape().getPoints();
+	var points = this.getPoints();
 	var minX = points[0].x;
 	var minY = points[0].y;
 	

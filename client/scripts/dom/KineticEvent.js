@@ -1,7 +1,6 @@
-define('KineticEvent', function(){
+define('KineticEvent', ['Event'], function(Event){
 
-
-KineticEvent = {
+Event.Kinetic = {
 	MOVE_TO: "mousemove",
 	MOUSE_DOWN: "mousedown",
 	MOUSE_UP: "mouseup",
@@ -9,9 +8,9 @@ KineticEvent = {
 	MOUSE_LEAVE: "mouseleave",
 	MOUSE_OVER: "mouseover",
 	MOUSE_OUT: "mouseout"
-}
+};
 
-return KineticEvent;
+return Event;
 
 
 });

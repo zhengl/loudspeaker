@@ -1,4 +1,4 @@
-define('KineticItemEventRegister', ['KineticMouseEventOnItemInterpreter'], function(KineticMouseEventOnItemInterpreter){
+define('KineticItemEventRegister', ['KineticEvent', 'KineticMouseEventOnItemInterpreter', 'ItemEventHandler'], function(Event, KineticMouseEventOnItemInterpreter, ItemEventHandler){
 
 
 function KineticItemEventRegister(){
@@ -7,15 +7,16 @@ function KineticItemEventRegister(){
 
 KineticItemEventRegister.prototype.registerEventBus = function(eventBus, item){
 	item.setEventBus(eventBus);
+	item.setEventHandler(new ItemEventHandler());
 	eventBus.addListener(item);
 	this.addEventListeners(item, eventBus, [
-		KineticEvent.MOUSE_OVER,
-		KineticEvent.MOUSE_ENTER,
-		KineticEvent.MOVE_TO,
-		KineticEvent.MOUSE_DOWN,
-		KineticEvent.MOUSE_UP,
-		KineticEvent.MOUSE_OUT,
-		KineticEvent.MOUSE_LEAVE,
+		Event.Kinetic.MOUSE_OVER,
+		Event.Kinetic.MOUSE_ENTER,
+		Event.Kinetic.MOVE_TO,
+		Event.Kinetic.MOUSE_DOWN,
+		Event.Kinetic.MOUSE_UP,
+		Event.Kinetic.MOUSE_OUT,
+		Event.Kinetic.MOUSE_LEAVE,
 	]);
 };
 

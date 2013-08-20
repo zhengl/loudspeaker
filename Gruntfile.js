@@ -3,18 +3,13 @@ module.exports = function(grunt){
 		pkg: grunt.file.readJSON('package.json'),
 
 		jasmine: {
-			src: 'client/scripts/*.js',
+			src: 'client/scripts/**/*.js',
 			options: {
-				specs: 'client/spec/*.js',
+				specs: 'client/spec/*Spec.js',
 				keepRunner: true,
 				template: require('grunt-template-jasmine-requirejs'),
 				templateOptions: {
-         			requireConfig: {
-         				urlArgs: "bust=" + Math.random(),
-						paths: {
-							Kinetic: 'lib/kinetic/kinetic-v4.5.3.min'
-						}
-					}
+         			requireConfigFile: 'client/spec/main.js'
         		}
 			}
 		},

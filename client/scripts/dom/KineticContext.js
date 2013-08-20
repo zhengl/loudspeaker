@@ -1,4 +1,4 @@
-define('KineticContext', ['Kinetic', 'KineticEvent', 'KineticItemFactory', 'KineticMouseEventOnPageInterpreter'], function(Kinetic, KineticEvent, KineticItemFactory, KineticMouseEventOnPageInterpreter){
+define('KineticContext', ['Kinetic', 'KineticEvent', 'KineticItemFactory', 'KineticMouseEventOnPageInterpreter'], function(Kinetic, Event, KineticItemFactory, KineticMouseEventOnPageInterpreter){
 
 
 function KineticContext(container, width, height){
@@ -91,13 +91,13 @@ KineticContext.prototype.getEventBus = function(){
 KineticContext.prototype.registerEventBus = function(page, eventBus){
 	this.eventBus = eventBus;
 	this.addEventListeners(page, eventBus, [
-		KineticEvent.MOVE_TO,
-		KineticEvent.MOUSE_DOWN,
-		KineticEvent.MOUSE_UP,
-		KineticEvent.MOUSE_ENTER,
-		KineticEvent.MOUSE_LEAVE,
-		KineticEvent.MOUSE_OVER,
-		KineticEvent.MOUSE_OUT
+		Event.Kinetic.MOVE_TO,
+		Event.Kinetic.MOUSE_DOWN,
+		Event.Kinetic.MOUSE_UP,
+		Event.Kinetic.MOUSE_ENTER,
+		Event.Kinetic.MOUSE_LEAVE,
+		Event.Kinetic.MOUSE_OVER,
+		Event.Kinetic.MOUSE_OUT
 	]);
 };
 

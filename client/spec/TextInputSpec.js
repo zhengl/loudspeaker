@@ -1,10 +1,11 @@
-require(['TextInput', 'Text', 'Point', 'Environment', 'ContextFactory', 'KineticTextInput'], function(TextInput, Text, Point, Environment, ContextFactory, KineticTextInput){
+require(['TextInput', 'Text', 'Point', 'Context', 'KineticContext', 'KineticTextInput'], function(TextInput, Text, Point, Context, KineticContext, KineticTextInput){
 
 describe("TextInput", function(){
 	var textInput;
 
 	beforeEach(function(){
-		textInput = new TextInput();
+		var context = new Context();
+		textInput = new TextInput(context);
 	});
 
 	it("writes and records text", function(){
@@ -15,7 +16,6 @@ describe("TextInput", function(){
 	});
 
 	describe("with DOM input element implementation", function(){
-		var page;
 		var textInput;
 
 		beforeEach(function(){
@@ -25,9 +25,9 @@ describe("TextInput", function(){
 
 			body.appendChild(board);
 
-			Environment.setMouse();
-			context = ContextFactory.create();
+			var context = new KineticContext('board', 50, 50);
 			textInput = new KineticTextInput(context);
+			textInput.show();
 		});
 
 		it("writes and records text", function(){

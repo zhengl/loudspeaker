@@ -1,9 +1,9 @@
-define('KineticMouseEventOnPageInterpreter', ['Event', 'Point', 'KineticEvent', 'AbstractEvent'], function(Event, Point, KineticEvent, AbstractEvent){
+define('KineticMouseEventOnPageInterpreter', ['KineticEvent', 'Point'], function(Event, Point){
 
 
 function KineticMouseEventOnPageInterpreter(page){
 	this.target = page;
-	this.previousEvent = KineticEvent.MOUSE_UP;
+	this.previousEvent = Event.Kinetic.MOUSE_UP;
 	this.click = 0;
 }
 
@@ -27,31 +27,31 @@ KineticMouseEventOnPageInterpreter.addHandle = function(eventType, callback) {
 	this.prototype[KineticMouseEventOnPageInterpreter.getHandlerName(eventType)] = callback;
 };
 
-KineticMouseEventOnPageInterpreter.addHandle(KineticEvent.MOVE_TO, function(event, eventBus){
+KineticMouseEventOnPageInterpreter.addHandle(Event.Kinetic.MOVE_TO, function(event, eventBus){
 	this.stopLongPressTimer();
-	if(this.previousEvent.type == KineticEvent.MOUSE_DOWN && !this.target.getTexter().isTexting) {
+	if(this.previousEvent.type == Event.Kinetic.MOUSE_DOWN && !this.target.getTexter().isTexting) {
 		this.moveUpEventCatcher();
-		eventBus.publish(new AbstractEvent(Event.Page.START_DRAWING, [new Point(event.offsetX, event.offsetY)]));
+		eventBus.publish(new Event(Event.Page.START_DRAWING, [new Point(event.offsetX, event.offsetY)]));
 	} else if (this.target.getPainter().isPainting) {
-		eventBus.publish(new AbstractEvent(Event.Page.DRAW_TO, [new Point(event.offsetX, event.offsetY)]));
+		eventBus.publish(new Event(Event.Page.DRAW_TO, [new Point(event.offsetX, event.offsetY)]));
 	} else if (this.target.getMover().isMoving) {
 		this.moveUpEventCatcher();
-		eventBus.publish(new AbstractEvent(Event.Page.MOVE_TO, [new Point(event.offsetX, event.offsetY)]));
+		eventBus.publish(new Event(Event.Page.MOVE_TO, [new Point(event.offsetX, event.offsetY)]));
 	}
 });
 
-KineticMouseEventOnPageInterpreter.addHandle(KineticEvent.MOUSE_DOWN, function(event, eventBus){
+KineticMouseEventOnPageInterpreter.addHandle(Event.Kinetic.MOUSE_DOWN, function(event, eventBus){
 	this.detectClickType(event, eventBus);
 });
 
-KineticMouseEventOnPageInterpreter.addHandle(KineticEvent.MOUSE_UP, function(event, eventBus){
+KineticMouseEventOnPageInterpreter.addHandle(Event.Kinetic.MOUSE_UP, function(event, eventBus){
 	this.stopLongPressTimer();
 	if (this.target.getPainter().isPainting) {
 		this.moveDownEventCatcher();
-		eventBus.publish(new AbstractEvent(Event.Page.FINISH_DRAWING, [new Point(event.offsetX, event.offsetY)]));
+		eventBus.publish(new Event(Event.Page.FINISH_DRAWING, [new Point(event.offsetX, event.offsetY)]));
 	} else if (this.target.getMover().isMoving){
 		this.moveDownEventCatcher();
-		eventBus.publish(new AbstractEvent(Event.Page.FINISH_MOVING));
+		eventBus.publish(new Event(Event.Page.FINISH_MOVING));
 	}
 });
 
@@ -62,7 +62,7 @@ KineticMouseEventOnPageInterpreter.prototype.detectClickType = function(event, e
 		if(self.click == 1) {
 			self.startLongPressTimer(event, eventBus);
 		} else if (self.click == 2) {
-			eventBus.publish(new AbstractEvent(Event.Page.START_TEXTING, [new Point(event.offsetX, event.offsetY)]));		
+			eventBus.publish(new Event(Event.Page.START_TEXTING, [new Point(event.offsetX, event.offsetY)]));		
 		}
 		self.click = 0;
 	}, KineticMouseEventOnPageInterpreter.defaultDoubleClickTimeout);
@@ -70,7 +70,7 @@ KineticMouseEventOnPageInterpreter.prototype.detectClickType = function(event, e
 
 KineticMouseEventOnPageInterpreter.prototype.startLongPressTimer = function(event, eventBus){
 	this.longPressTimer = window.setTimeout(function(){
-		eventBus.publish(new AbstractEvent(Event.Page.START_SELECTING_COLOR, [new Point(event.offsetX, event.offsetY)]));		
+		eventBus.publish(new Event(Event.Page.START_SELECTING_COLOR, [new Point(event.offsetX, event.offsetY)]));		
 	}, KineticMouseEventOnPageInterpreter.defaultLongPressTimeout);
 };
 
@@ -81,14 +81,14 @@ KineticMouseEventOnPageInterpreter.prototype.stopLongPressTimer = function(){
 };
 
 KineticMouseEventOnPageInterpreter.prototype.moveUpEventCatcher = function(){
-	if(undefined != this.target.context.eventCatcher) {
-		this.target.context.eventCatcher.moveToTop();
+	if(undefined != this.target.getPainter().context.eventCatcher) {
+		this.target.getPainter().context.eventCatcher.moveToTop();
 	}
 };
 
 KineticMouseEventOnPageInterpreter.prototype.moveDownEventCatcher = function(){
-	if(undefined != this.target.context.eventCatcher) {
-		this.target.context.eventCatcher.moveToBottom();
+	if(undefined != this.target.getPainter().context.eventCatcher) {
+		this.target.getPainter().context.eventCatcher.moveToBottom();
 	}
 };
 

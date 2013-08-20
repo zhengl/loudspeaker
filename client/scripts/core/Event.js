@@ -1,5 +1,9 @@
 define('Event', function(){
 
+function Event(name, data){
+	this.name = name;
+	this.data = data;
+}
 
 Event.Item = {
 	START_MOVING: "ITEM.START_MOVING",

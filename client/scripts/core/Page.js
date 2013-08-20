@@ -5,17 +5,6 @@ function Page(painter, texter, mover) {
 	this.painter = painter;
 	this.texter = texter;
 	this.mover = mover;
-
-	// this.context = ContextFactory.create();
-	// this.palette = PaletteFactory.create();
-
-	// this.painter = new Painter(this.context, this.palette);
-	// this.texter = new Texter(this.context, this.palette);
-	// this.mover = new Mover(this.context);
-
-	// this.selectPaintingMode();
-
-	// this.handler = new PageEventHandler();
 }
 
 Page.prototype.setPainter = function(painter){
@@ -64,9 +53,9 @@ Page.prototype.registerEventBus = function(item){
 	}
 };
 
-Page.prototype.enableEventHandling = function(eventBus, handlers){
+Page.prototype.enableEventHandling = function(eventBus, handler){
 	this.eventBus = eventBus;
-	this.handler = handlers;
+	this.handler = handler;
 	eventBus.addListener(this);
 	this.getPainter().context.registerEventBus(this, eventBus);	
 };
@@ -98,16 +87,6 @@ Page.prototype.write = function(item){
 Page.prototype.getContext = function(){
 	return this.getPainter().context;
 };
-
-// Page.prototype.unserialize = function(json) {
-// 	var unserializer = new UnserializeStrategy();
-// 	unserializer.process(this, json);
-// };
-
-// Page.prototype.serialize = function(){
-// 	var serializer = new SerializeStrategy();
-// 	return serializer.process(this);
-// };
 
 Page.Mode = {
 	TEXT: "PAGE.TEXT",

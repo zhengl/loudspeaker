@@ -1,4 +1,4 @@
-require(['Environment','Texter', 'ContextFactory', 'Palette', 'Point', 'Text'], function(Environment, Texter, ContextFactory, Palette, Point, Text){
+require(['Texter', 'Palette', 'Point', 'Text', 'KineticContext', 'KineticTextInput'], function(Texter, Palette, Point, Text, KineticContext, KineticTextInput){
 
 describe("Texter", function(){
 	var texter;
@@ -12,9 +12,9 @@ describe("Texter", function(){
 
 			body.appendChild(board);
 
-			Environment.setMouse();
-			context = ContextFactory.create();
-			texter = new Texter(context, new Palette());
+			var context = new KineticContext("board", 500, 500);
+			var textInput = new KineticTextInput(context);
+			texter = new Texter(new Palette(), textInput);
 		});
 
 		it("should start texting and create an input", function(){
@@ -26,8 +26,7 @@ describe("Texter", function(){
 		it("should write some words and flush to the context", function(){
 			var text = createText();
 			texter.write(text);
-			expect(texter.context.getItems().length).toEqual(1);
-			expect(texter.getTextInput().element).toBeUndefined();
+			expect(texter.getTextInput().context.getItems().length).toEqual(1);
 		});
 		
 		function createText(){

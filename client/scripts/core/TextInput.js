@@ -7,17 +7,25 @@ function TextInput(context){
 
 TextInput.prototype.write = function(text) {
 	this.text = text;
+	this.context.clearDraftItems();
+	return this.context.draft(this.getText());
 };
 
 TextInput.prototype.append = function(text) {
+	var item;
+
 	if (undefined == this.text) {
-		this.write(text);
+		item = this.write(text);
 	} else {
-		this.text.setValue(this.text.getValue + text.getValue());
+		this.text.setValue(this.text.getValue() + text.getValue());
+		item = this.write(this.text);
 	}
+
+	return item;
 };
 
 TextInput.prototype.flush = function() {
+	this.context.clearDraftItems();
 	return this.context.write(this.getText(), this.getPosition());
 };
 
@@ -31,6 +39,9 @@ TextInput.prototype.setPosition = function(point){
 
 TextInput.prototype.getPosition = function(){
 	return this.position;
+};
+
+TextInput.prototype.show = function(){
 };
 
 TextInput.prototype.remove = function(){

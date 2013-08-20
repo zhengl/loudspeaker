@@ -3,8 +3,6 @@ define('Item', ['ItemEventHandler'], function(ItemEventHandler){
 
 function Item(){
 	this.isSelected = false;
-
-	this.handler = new ItemEventHandler();
 }
 
 Item.prototype.notify = function(event){
@@ -17,7 +15,12 @@ Item.prototype.getEventBus = function(){
 	return this.eventBus;
 };
 
+Item.prototype.setEventHandler = function(handler){
+	this.handler = handler;
+};
+
 Item.prototype.registerEventBus = function(eventBus){
+	this.setEventHandler(new ItemEventHandler());
 	this.eventBus = eventBus;
 	this.eventBus.addListener(this);
 };

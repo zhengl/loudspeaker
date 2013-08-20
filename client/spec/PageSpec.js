@@ -1,4 +1,18 @@
-require(['Environment', 'Page', 'Item', 'Point', 'Line', 'Text', 'EventBus', 'AbstractEvent', 'KineticLine', 'KineticText', 'Context', 'Palette', 'DOMPalette', 'Painter', 'Texter', 'Mover', 'SerializeStrategy', 'UnserializeStrategy', 'PageEventHandler', 'KineticContext'], function(Environment, Page, Item, Point, Line, Text, EventBus, AbstractEvent, KineticLine, KineticText, Context, Palette, DOMPalette, Painter, Texter, Mover, SerializeStrategy, UnserializeStrategy, PageEventHandler, KineticContext){
+define(function(require){
+	var UnserializeStrategy = require('UnserializeStrategy');
+	var SerializeStrategy = require('SerializeStrategy');
+	var Page = require('Page');
+	var Painter = require('Painter');
+	var Palette = require('Palette');
+	var Context = require('Context');
+	var Line = require('Line');
+	var Text = require('Text');
+	var Texter = require('Texter');
+	var TextInput = require('TextInput');
+	var Mover = require('Mover');
+	var Point = require('Point');
+	var Event = require('Event');
+	var Item = require('Item');
 
 
 describe("Page", function() {
@@ -6,14 +20,13 @@ describe("Page", function() {
 	var eventBus;
 
 	beforeEach(function() {
-		Environment.setDummy();
-
 		var palette = new Palette();
 		var context = new Context();
+		var textInput = new TextInput(context);
 		var painter = new Painter(context, palette);
-		var texter = new Texter(context, palette);
+		var texter = new Texter(palette, textInput);
 		var mover = new Mover(context);
-		page = new Page(painter, texter, mover);
+		page =  new Page(painter, texter, mover);
 	});
 
 	it("should be able to be in DRAWING mode", function(){
@@ -91,14 +104,16 @@ describe("Page", function() {
 	});
 	
 	describe("with Event Handling", function(){
+		var EventBus = require('EventBus');
+		var PageEventHandler = require('PageEventHandler');
 
 		beforeEach(function() {
 			eventBus = new EventBus();
-			handler = new PageEventHandler();
+			var handler = new PageEventHandler();
 			page.enableEventHandling(eventBus, handler);
 		});
   
-		it("should DRAW a line with events", function() {			
+		it("should DRAW a line with events", function() {		
 			triggerStartDrawingEvent(10, 10);
 			triggerPageDrawToEvent(20, 20);
 			triggerFinishDrawingEvent(20, 20);
@@ -254,7 +269,7 @@ describe("Page", function() {
 		});	
 
 		it("should move a text with events, Item.START_MOVING, Item.MOVE_TO, Item.STOP_MOVING after being selected", function() {
-			var text = createText();
+			var text = createText("Hello World", 0, 0);
 			var item = page.write(text);
 						
 			triggerSelectEvent(item);
@@ -276,8 +291,13 @@ describe("Page", function() {
 	});
   
 	describe("with KineticJS context", function(){
+		var DOMPalette = require('DOMPalette');
+		var KineticContext = require('KineticContext');
+		var KineticTextInput = require('KineticTextInput');
+		var KineticLine = require('KineticLine');
+		var KineticText = require('KineticText');
+
 		beforeEach(function() {
-			Environment.setMouse();
 			var body = document.getElementsByTagName('body')[0];
 			var board = document.createElement('div');
 			board.id = "board";
@@ -290,8 +310,11 @@ describe("Page", function() {
 
 			var palette = new DOMPalette("palette");
 			var context = new KineticContext("board", 50, 50);
+
 			var painter = new Painter(context, palette);
-			var texter = new Texter(context, palette);
+			
+			var textInput = new TextInput(context);
+			var texter = new Texter(palette, textInput);
 			var mover = new Mover(context);
 
 			page = new Page(painter, texter, mover);
@@ -300,6 +323,7 @@ describe("Page", function() {
 		it("should return a Line after DRAWING a line with direct call", function() {
 			var line = createLine(10, 10, 20, 20);
 			var item = page.getPainter().draw(line);
+
 
 			expect(item instanceof KineticLine).toBe(true);
 			expect(item.getPosition()).toEqual({x: 10, y: 10});
@@ -330,18 +354,18 @@ describe("Page", function() {
 		it("should return a Text after TEXTING texts in sequence with direct call", function(){
 			var text = createText("Hello ", 10, 20);
 			page.getTexter().draft(text);
-			expect(page.getTexter().context.draftLayer.getChildren().toArray().length).toEqual(1);
+			expect(page.getTexter().getTextInput().context.draftLayer.getChildren().toArray().length).toEqual(1);
 
 			text = createText("World!", 10, 20);
 			page.getTexter().draft(text);
-			expect(page.getTexter().context.draftLayer.getChildren().toArray().length).toEqual(1);
+			expect(page.getTexter().getTextInput().context.draftLayer.getChildren().toArray().length).toEqual(1);
 
 			var item = page.getTexter().finishTexting();
-			expect(page.getTexter().context.layer.getChildren().toArray().length).toEqual(1);
-			expect(page.getTexter().context.draftLayer.getChildren().toArray().length).toEqual(0);
+			expect(page.getTexter().getTextInput().context.layer.getChildren().toArray().length).toEqual(1);
+			expect(page.getTexter().getTextInput().context.draftLayer.getChildren().toArray().length).toEqual(0);
 			expect(item instanceof KineticText).toBe(true);
 			
-			var result = page.getTexter().context.layer.getChildren().toArray()[0];
+			var result = page.getTexter().getTextInput().context.layer.getChildren().toArray()[0];
 			expect(result.getText()).toEqual("Hello World!");
 			expect(result.getPosition()).toEqual({x: 10, y: 20});
 		});
@@ -351,9 +375,9 @@ describe("Page", function() {
 			var item = page.getTexter().draft(text);
 			
 			expect(item instanceof KineticText).toBe(true);
-			expect(page.getTexter().context.draftLayer.getChildren().toArray().length).toEqual(1);
+			expect(page.getTexter().getTextInput().context.draftLayer.getChildren().toArray().length).toEqual(1);
 
-			var result = page.getTexter().context.draftLayer.getChildren().toArray()[0];
+			var result = page.getTexter().getTextInput().context.draftLayer.getChildren().toArray()[0];
 			expect(result.getText()).toEqual("Hello World!");
 			expect(result.getPosition()).toEqual({x: 10, y: 20});
 		});
@@ -390,47 +414,47 @@ describe("Page", function() {
 	}
 
 	function triggerPageMoveToEvent(x, y){
-		eventBus.publish(new AbstractEvent(Event.Page.MOVE_TO, [new Point(x, y)]));
+		eventBus.publish(new Event(Event.Page.MOVE_TO, [new Point(x, y)]));
 	}
 
 	function triggerPageDrawToEvent(x, y){
-		eventBus.publish(new AbstractEvent(Event.Page.DRAW_TO, [new Point(x, y)]));
+		eventBus.publish(new Event(Event.Page.DRAW_TO, [new Point(x, y)]));
 	}
 
 	function triggerItemMoveToEvent(item, x, y){
-		eventBus.publish(new AbstractEvent(Event.Item.MOVE_TO, [item, new Point(x, y)]));
+		eventBus.publish(new Event(Event.Item.MOVE_TO, [item, new Point(x, y)]));
 	}
 	
 	function triggerStartDrawingEvent(x, y){
-		eventBus.publish(new AbstractEvent(Event.Page.START_DRAWING, [new Point(x, y)]));		
+		eventBus.publish(new Event(Event.Page.START_DRAWING, [new Point(x, y)]));		
 	}
 
 	function triggerFinishDrawingEvent(x, y){
-		eventBus.publish(new AbstractEvent(Event.Page.FINISH_DRAWING, [new Point(x, y)]));		
+		eventBus.publish(new Event(Event.Page.FINISH_DRAWING, [new Point(x, y)]));		
 	}
 	
 	function triggerStopDrawingEvent(){
-		eventBus.publish(new AbstractEvent(Event.Page.STOP_DRAWING));		
+		eventBus.publish(new Event(Event.Page.STOP_DRAWING));		
 	}
 	
 	function triggerSelectEvent(item){
-		eventBus.publish(new AbstractEvent(Event.Item.SELECT, [item]));	
+		eventBus.publish(new Event(Event.Item.SELECT, [item]));	
 	}
 	
 	function triggerUnselectEvent(item){
-		eventBus.publish(new AbstractEvent(Event.Item.UNSELECT, [item]));	
+		eventBus.publish(new Event(Event.Item.UNSELECT, [item]));	
 	}
 	
 	function triggerStartMovingEvent(item, x, y){
-		eventBus.publish(new AbstractEvent(Event.Item.START_MOVING, [item, new Point(x, y)]));
+		eventBus.publish(new Event(Event.Item.START_MOVING, [item, new Point(x, y)]));
 	}
 	
 	function triggerFinishMovingEvent(item){
-		eventBus.publish(new AbstractEvent(Event.Item.FINISH_MOVING, [item]));
+		eventBus.publish(new Event(Event.Item.FINISH_MOVING, [item]));
 	}
 
 	function triggerStartTextingEvent(x, y){
-		eventBus.publish(new AbstractEvent(Event.Page.START_TEXTING, [new Point(x, y)]));
+		eventBus.publish(new Event(Event.Page.START_TEXTING, [new Point(x, y)]));
 	}
 });
 

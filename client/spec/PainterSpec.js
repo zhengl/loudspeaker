@@ -5,7 +5,7 @@ describe("Painter", function(){
 	var painter;
 	
 	beforeEach(function(){
-		painter = new Painter(new Context(), new Palette());	
+		painter = new Painter(new Context(), new Palette());
 	});
 
 	it("should return a Line after drawing a line", function() {

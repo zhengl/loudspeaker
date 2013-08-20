@@ -1,4 +1,4 @@
-define('ItemEventHandler', ['Event', 'AbstractEvent'], function(Event, AbstractEvent){
+define('ItemEventHandler', ['Event'], function(Event){
 
 
 function ItemEventHandler(){
@@ -9,19 +9,19 @@ ItemEventHandler.prototype.handle = {};
 ItemEventHandler.prototype.handle[Event.Item.START_MOVING] = function(item, event){
 	item.relativePosition = event.data[1];
 	item.eventBus.publish(
-		new AbstractEvent(Event.Page.START_MOVING, [item])
+		new Event(Event.Page.START_MOVING, [item])
 		);
 };
 
 ItemEventHandler.prototype.handle[Event.Item.FINISH_MOVING] = function(item, event){
 	item.eventBus.publish(
-		new AbstractEvent(Event.Page.FINISH_MOVING)
+		new Event(Event.Page.FINISH_MOVING)
 		);
 };
 
 ItemEventHandler.prototype.handle[Event.Item.MOVE_TO] = function(item, event){
 	item.eventBus.publish(
-		new AbstractEvent(Event.Page.MOVE_TO, [event.data[1]])
+		new Event(Event.Page.MOVE_TO, [event.data[1]])
 		);
 };
 
