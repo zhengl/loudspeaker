@@ -1,12 +1,13 @@
 var data;
 
-function populate(allData){
+exports.populate = function(allData){
 	data = allData;
-}
+};
 
-function findAllBoards(){
+exports.findAllBoards = function(){
 	return data;
-}
+};
 
-exports.populate = populate;
-exports.findAllBoards = findAllBoards;
+exports.addBoard = function(newBoard){
+	data.push(newBoard);
+};
