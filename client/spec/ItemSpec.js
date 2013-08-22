@@ -18,6 +18,13 @@ describe("Item", function(){
 		item.registerEventBus(new EventBus());
 		expect(item.getEventBus()).toBeDefined();
 	});
+
+	it("has UUID", function(){
+		var item2 = new Item();
+		expect(item.getUUID()).toBeDefined();
+		expect(item2.getUUID()).toBeDefined();
+		expect(item.getUUID()).not.toEqual(item2.getUUID());
+	})
 });
 
 

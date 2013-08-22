@@ -1,9 +1,19 @@
-define('Item', ['ItemEventHandler'], function(ItemEventHandler){
+define('Item', ['ItemEventHandler', 'uuid'], function(ItemEventHandler, UUID){
 
 
 function Item(){
 	this.isSelected = false;
+	this.uuid = UUID.genV4().toString();
 }
+
+Item.prototype.getUUID = function(){
+	return this.uuid;
+};
+
+Item.prototype.setUUID = function(uuid){
+	this.uuid = uuid;
+};
+
 
 Item.prototype.notify = function(event){
 	if(typeof this.handler.handle[event.name] == 'function' && event.data[0] === this) {

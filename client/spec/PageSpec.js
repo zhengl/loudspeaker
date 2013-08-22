@@ -44,12 +44,14 @@ describe("Page", function() {
 		unserializer.process(page, {
 			items: [
 				{
+					uuid: "00000000-0000-0000-0000-000000000001",
 					type: "line",
 					color: "black",
 					points: [{x: 0, y: 0}, {x: 1, y: 1}, {x: 2, y: 2}],
 					position: {x: 10, y: 10},
 				},
 				{
+					uuid: "00000000-0000-0000-0000-000000000002",
 					type: "text",
 					color: "blue",
 					content: "Hello World!",
@@ -63,12 +65,14 @@ describe("Page", function() {
 		
 		var line = items[0];
 		expect(line instanceof Line).toBe(true);
+		expect(line.getUUID()).toEqual("00000000-0000-0000-0000-000000000001");
 		expect(line.getColor()).toEqual('black');
 		expect(line.getPosition()).toEqual({x: 10, y: 10});
 		expect(line.getPoints()).toEqual([{x: 0, y: 0}, {x: 1, y: 1}, {x: 2, y: 2}]);
 
 		var text = items[1];
 		expect(text instanceof Text).toBe(true);
+		expect(text.getUUID()).toEqual("00000000-0000-0000-0000-000000000002");
 		expect(text.getValue()).toEqual('Hello World!');
 		expect(text.getColor()).toEqual('blue');
 		expect(text.getPosition()).toEqual({x: 20, y: 20});
@@ -76,10 +80,13 @@ describe("Page", function() {
 
 	it("serialize", function(){
 		var line = createLine(10, 10, 20, 20);
+		var lineUUID = line.getUUID();
 		line.setColor('black');
 		line.setPosition(new Point(30, 30));
 		page.draw(line);
+
 		var text = createText("Hello World!", 10, 20);
+		var textUUID = text.getUUID();
 		text.setColor('blue');
 		text.setPosition(new Point(0, 0));
 		page.write(text);
@@ -88,12 +95,14 @@ describe("Page", function() {
 		expect(serializer.process(page)).toEqual({
 			items: [
 				{
+					uuid: lineUUID,
 					type: "line",
 					color: "black",
 					points: [{x: 10, y: 10}, {x: 20, y: 20}],
 					position: {x: 30, y: 30},
 				},
 				{
+					uuid: textUUID,
 					type: "text",
 					color: "blue",
 					content: "Hello World!",

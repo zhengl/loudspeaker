@@ -54,15 +54,17 @@ Line.prototype.getPoints = function(){
 
 Line.prototype.serialize = function() {
 	return {
-		"type": "line",
-		"color": this.color,
-		"points": this.points,
-		"position": this.position,
+		uuid: this.getUUID(),
+		type: "line",
+		color: this.color,
+		points: this.points,
+		position: this.position,
 	};
 };
 
 Line.unserialize = function(json){
 	var line = new Line(json.points, json.color);
+	line.setUUID(json.uuid);
 	line.setPosition(json.position);
 	return line;
 };

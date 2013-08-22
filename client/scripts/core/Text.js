@@ -35,6 +35,7 @@ Text.prototype.getColor = function() {
 
 Text.prototype.serialize = function() {
 	return {
+		uuid: this.getUUID(),
 		type: "text",
 		content: this.content,
 		color: this.color,
@@ -44,6 +45,7 @@ Text.prototype.serialize = function() {
 
 Text.unserialize = function(json){
 	var text = new Text(json.content, json.color);
+	text.setUUID(json.uuid);
 	text.setPosition(json.position);
 	return text;
 }
