@@ -12,7 +12,10 @@ SerializeStrategy.prototype.process = function(page) {
 		jsonizedItems.push(items[i].serialize());
 	}
 
-	return {items: jsonizedItems};
+	return {
+		uuid: page.getUUID(),
+		items: jsonizedItems
+	};
 };
 
 return SerializeStrategy;

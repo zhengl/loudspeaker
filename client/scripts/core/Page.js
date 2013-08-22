@@ -1,4 +1,4 @@
-define('Page', function(){
+define('Page', ['Item'], function(Item){
 
 
 function Page(painter, texter, mover) {
@@ -6,6 +6,9 @@ function Page(painter, texter, mover) {
 	this.texter = texter;
 	this.mover = mover;
 }
+
+Page.prototype = new Item();
+Page.prototype.constructor = Page;
 
 Page.prototype.setPainter = function(painter){
 	this.painter = painter;

@@ -6,6 +6,7 @@ function UnserializeStrategy(){
 }
 
 UnserializeStrategy.prototype.process = function(page, json) {
+	page.setUUID(json.uuid);
 	var items = json.items;
 	for(var i = 0; i < items.length; i++){
 		switch(items[i].type) {

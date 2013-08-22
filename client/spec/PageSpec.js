@@ -42,6 +42,7 @@ describe("Page", function() {
 	it("unserialize", function(){
 		var unserializer = new UnserializeStrategy();
 		unserializer.process(page, {
+			uuid: "00000000-0000-0000-0001-000000000000",
 			items: [
 				{
 					uuid: "00000000-0000-0000-0000-000000000001",
@@ -61,6 +62,7 @@ describe("Page", function() {
 		});
 
 		var items = page.getContext().getItems();
+		expect(page.getUUID()).toEqual("00000000-0000-0000-0001-000000000000");
 		expect(items.length).toEqual(2);
 		
 		var line = items[0];
@@ -79,6 +81,8 @@ describe("Page", function() {
 	});
 
 	it("serialize", function(){
+		var pageUUID = page.getUUID();
+
 		var line = createLine(10, 10, 20, 20);
 		var lineUUID = line.getUUID();
 		line.setColor('black');
@@ -93,6 +97,7 @@ describe("Page", function() {
 
 		var serializer = new SerializeStrategy();
 		expect(serializer.process(page)).toEqual({
+			uuid: pageUUID,
 			items: [
 				{
 					uuid: lineUUID,
