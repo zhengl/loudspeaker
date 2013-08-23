@@ -1,12 +1,14 @@
 <!DOCTYPE html>
 <html>
 <head>
+	<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+  	<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
 	<style type="text/css">
 	.note {
 		width:250px;
 		height:250px;
 		background-color:#FFA;
-		margin:40px auto;
+		margin:0 auto;
 		position: relative;
 		-webkit-box-shadow: 0 5px 6px -6px #777;
    		-moz-box-shadow: 0 5px 6px -6px #777;
@@ -44,20 +46,35 @@
 	  left: auto;
 	}
 
-	.note_coner
+	#droppable_zone
 	{
-		width: 50px;
-		height: 50px;
-		position: absolute;
-		right: 0px;
-		bottom: 0px;
-		opacity: 0;
+		position: relative;
+		width: 100%;
+		height: 100px;
 	}
+
+	#draggable_zone
+	{
+		position: relative;
+		width: 100%;
+		height: 100px;
+	}
+	
 	</style>
+	<script>
+		$(function() {
+			$( ".draggable" ).draggable();
+			$( ".droppable" ).droppable({
+				drop: function( event, ui ) {
+					console.log("Get!");
+				}
+			});
+		});
+	</script>
 </head>
 <body>
-	<div class="note">
-		<div class="note_coner"></div>
-	</div>
+	<div id="droppable_zone" class="droppable"></div>
+	<div class="note"></div>
+	<div id="draggable_zone" class="draggable"></div>
 </body>
 </html>
