@@ -1,9 +1,15 @@
 require.config({
 	baseUrl: "./scripts",
 	paths: {
-		Kinetic: '../../lib/kinetic/kinetic-v4.5.3.min'
+		Kinetic: '../../lib/kinetic/kinetic-v4.5.3.min',
+		uuid: '../../lib/uuid/uuid'
 	},
-	urlArgs: "bust=" + (new Date()).getTime()
+	urlArgs: "bust=" + (new Date()).getTime(),
+	shim: {
+			'uuid': {
+				exports: 'UUID',
+			}
+	}
 });
 
 require([

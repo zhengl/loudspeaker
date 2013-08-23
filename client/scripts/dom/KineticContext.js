@@ -12,8 +12,8 @@ function KineticContext(container, width, height){
 	});
 	this.layer = new Kinetic.Layer();
 	this.draftLayer = new Kinetic.Layer();
-	this.stage.add(this.layer);
 	this.stage.add(this.draftLayer);
+	this.stage.add(this.layer);
 	this.layer.moveToTop();
 }
 
