@@ -48,7 +48,7 @@ require([
 			palette.addColorButton('red');
 			palette.addColorButton('blue');
 			palette.addColorButton('black');
-			var context = new KineticContext("board", 500, 500);
+			var context = new KineticContext("board", 700, 700);
 
 			var painter = new Painter(context, palette);
 
