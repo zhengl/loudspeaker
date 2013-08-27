@@ -18,8 +18,9 @@ Mover.prototype.startMoving = function(item) {
 
 Mover.prototype.finishMoving = function() {
 	this.isMoving = false;
-	if (this.removalZone && this.removalZone.covers(this.movingItem.getPosition())) {
+	if (this.rubbishBin && this.rubbishBin.isOpen) {
 		this.context.removeItem(this.movingItem);
+		this.context.clearDraftItems();
 	} else {
 		this.movingItem.undraftize();
 		this.context.addItem(this.movingItem);
@@ -40,8 +41,8 @@ Mover.prototype.moveTo = function(point){
 	this.context.refreshDraftItems();
 };
 
-Mover.prototype.setRemovalZone = function(removalZone){
-	this.removalZone = removalZone;
+Mover.prototype.setRubbishBin = function(rubbishBin){
+	this.rubbishBin = rubbishBin;
 };
 
 return Mover;

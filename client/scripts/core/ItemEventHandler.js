@@ -15,7 +15,7 @@ ItemEventHandler.prototype.handle[Event.Item.START_MOVING] = function(item, even
 
 ItemEventHandler.prototype.handle[Event.Item.FINISH_MOVING] = function(item, event){
 	item.eventBus.publish(
-		new Event(Event.Page.FINISH_MOVING)
+		new Event(Event.Page.FINISH_MOVING, [event.data[1]])
 		);
 };
 

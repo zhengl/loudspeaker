@@ -51,7 +51,7 @@ KineticMouseEventOnPageInterpreter.addHandle(Event.Kinetic.MOUSE_UP, function(ev
 		eventBus.publish(new Event(Event.Page.FINISH_DRAWING, [new Point(event.offsetX, event.offsetY)]));
 	} else if (this.target.getMover().isMoving){
 		this.moveDownEventCatcher();
-		eventBus.publish(new Event(Event.Page.FINISH_MOVING));
+		eventBus.publish(new Event(Event.Page.FINISH_MOVING, [new Point(event.offsetX, event.offsetY)]));
 	}
 });
 

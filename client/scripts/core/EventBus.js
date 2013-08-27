@@ -13,7 +13,7 @@ EventBus.prototype.publish = function(event, data){
 	if (!event){
 		return;
 	}
-	console.log(event);
+	// console.log(event);
 	for (var index in this.listeners) {
 		this.listeners[index].notify(event, data);
 	}

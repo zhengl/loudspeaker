@@ -37,7 +37,7 @@ PageEventHandler.prototype.handle[Event.Page.MOVE_TO] = function(page, event){
 };
 
 PageEventHandler.prototype.handle[Event.Page.FINISH_MOVING] = function(page, event){
-	page.getMover().finishMoving();
+	page.getMover().finishMoving(event.data[0]);
 };
 
 PageEventHandler.prototype.handle[Event.Page.START_TEXTING] = function(page, event){

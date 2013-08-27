@@ -1,4 +1,4 @@
-require(['Mover', 'RemovalZone', 'Context', 'Line', 'Point'], function(Mover, RemovalZone, Context, Line, Point){
+require(['Mover', 'RubbishBin', 'Context', 'Line', 'Point'], function(Mover, RubbishBin, Context, Line, Point){
 
 describe("Mover", function(){
 	var mover;
@@ -22,7 +22,10 @@ describe("Mover", function(){
 	it("should be able to set removal zone", function(){
 		expect(context.getItems().length).toEqual(1);
 
-		mover.setRemovalZone(new RemovalZone(new Point(40, 0), new Point(50, 50)));
+		var rubbishBin = new RubbishBin();
+		mover.setRubbishBin(rubbishBin);
+		rubbishBin.open();
+
 		mover.startMoving(line);
 		mover.moveTo(new Point(45, 10));
 		mover.finishMoving();

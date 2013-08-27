@@ -1,0 +1,19 @@
+require(['DOMRubbishBin', 'Point'], function(DOMRubbishBin, Point){
+
+describe("DOMRubbishBin", function(){
+	it("should cover a point", function(){
+		var body = document.getElementsByTagName('body')[0];
+		var rubbishBin = document.createElement('div');
+		var rubbishBinId = rubbishBin.id = "rubbish_bin";
+		body.appendChild(rubbishBin);		
+
+		var bin = new DOMRubbishBin(new Point(40, 0), new Point(50, 50), rubbishBinId);
+		bin.close();
+		expect(bin.element.className).toEqual("collapse");
+
+		bin.open();
+		expect(bin.element.className).toEqual("expand");
+	});
+});
+
+});
