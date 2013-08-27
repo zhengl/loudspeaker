@@ -189,7 +189,9 @@ describe("Page", function() {
 						
 			triggerSelectEvent(item1);
 			triggerStartMovingEvent(item1, 5, 5);
+			console.log(page.getContext().getItems());
 			expectOneItem(page);
+
 			expectOneDraftItem(page);			
 			
 			triggerPageMoveToEvent(20, 20);

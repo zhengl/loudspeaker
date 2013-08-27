@@ -19,9 +19,9 @@ Context.prototype.getItems = function(){
 
 Context.prototype.removeItem = function(item){
 	var resultItems = new Array();
-	for(var index in this.items){
-		if(item != this.items[index]) {
-			resultItems.push(this.items[index]);
+	for(var i = 0; i < this.items.length; i++){
+		if(item != this.items[i]) {
+			resultItems.push(this.items[i]);
 		}
 	}
 	this.items = resultItems;
