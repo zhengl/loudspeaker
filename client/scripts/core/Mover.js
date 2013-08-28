@@ -21,6 +21,7 @@ Mover.prototype.finishMoving = function() {
 	if (this.rubbishBin && this.rubbishBin.isOpen) {
 		this.context.removeItem(this.movingItem);
 		this.context.clearDraftItems();
+		this.rubbishBin.close();
 	} else {
 		this.movingItem.undraftize();
 		this.context.addItem(this.movingItem);

@@ -28,7 +28,7 @@ RubbishBin.prototype.registerEventBus = function(eventBus) {
 };
 
 RubbishBin.prototype.notify = function(event){
-	if (event.name == Event.Page.FINISH_MOVING && this.isInside(event.data[0])) {
+	if ((event.name == Event.Page.FINISH_MOVING || event.name == Event.Page.MOVE_TO) && this.isInside(event.data[0])) {
 		this.open();
 	} else {
 		this.close();

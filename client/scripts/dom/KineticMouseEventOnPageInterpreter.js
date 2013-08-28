@@ -70,7 +70,7 @@ KineticMouseEventOnPageInterpreter.prototype.detectClickType = function(event, e
 
 KineticMouseEventOnPageInterpreter.prototype.startLongPressTimer = function(event, eventBus){
 	this.longPressTimer = window.setTimeout(function(){
-		eventBus.publish(new Event(Event.Page.START_SELECTING_COLOR, [new Point(event.offsetX, event.offsetY)]));		
+		eventBus.publish(new Event(Event.Page.START_SELECTING_COLOR, [new Point(event.pageX, event.pageY)]));		
 	}, KineticMouseEventOnPageInterpreter.defaultLongPressTimeout);
 };
 
