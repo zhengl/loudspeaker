@@ -3,7 +3,7 @@ module.exports = function(grunt){
 		pkg: grunt.file.readJSON('package.json'),
 
 		jasmine: {
-			src: 'client/scripts/**/*.js',
+			src: 'client/scripts/*/*.js',
 			options: {
 				specs: 'client/spec/*Spec.js',
 				keepRunner: true,
