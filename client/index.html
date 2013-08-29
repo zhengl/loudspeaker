@@ -7,9 +7,19 @@
   <script src="../lib/jquery/jquery-ui.js"></script>
   <script data-main="scripts/main" src="../lib/require/require.js"></script>
   <link rel="stylesheet" type="text/css" href="styles/main.css" />
+  <script>
+  $(function() {
+    $( "#draggable_zone" ).draggable({ revert: true });
+    $( "#droppable_zone" ).droppable({
+      drop: function( event, ui ) {
+        console.log("aaaa");
+      }
+    });
+  });
+  </script>
 </head>
 <body>
-  <button onclick="showNote();" style="float: right">Note</button>
+  <button id="create_note" style="float: right;">Note</button>
   <div id="palette"></div>
   <div id="wrapper">
     <div id="cell">
@@ -25,12 +35,5 @@
     <div id="draggable_zone" class="draggable"></div>
   </div>
   <div id="modal_cover"></div>
-  <script type="text/javascript">
-    function showNote(){
-      document.getElementById("modal").className = "noteIsShown";
-      document.getElementById("modal_cover").className = "noteIsShown";
-      document.getElementById("wrapper").className = "noteIsShown";
-    }
-  </script>
 </body>
 </html>

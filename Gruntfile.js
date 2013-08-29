@@ -24,11 +24,23 @@ module.exports = function(grunt){
 				dest: 'client/scripts/<%= pkg.name %>.min.js',
 			}
 		},
+
+		less: {
+            dev: {
+                files: {
+                    "./client/styles/main.css": "./client/assets/less/main.less",
+                }
+            }
+        },
+
+        clean: ["./client/styles"]
 	});
 
 	grunt.loadNpmTasks('grunt-contrib-uglify');
 	grunt.loadNpmTasks('grunt-contrib-jasmine');
 	grunt.loadNpmTasks('grunt-jasmine-node');
+	grunt.loadNpmTasks('grunt-contrib-less');
+	grunt.loadNpmTasks('grunt-contrib-clean');
 
 	grunt.registerTask('test', ['jasmine', 'jasmine_node']);
 };
