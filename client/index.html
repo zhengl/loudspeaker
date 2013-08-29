@@ -7,16 +7,6 @@
   <script src="../lib/jquery/jquery-ui.js"></script>
   <script data-main="scripts/main" src="../lib/require/require.js"></script>
   <link rel="stylesheet" type="text/css" href="styles/main.css" />
-  <script>
-  $(function() {
-    $( "#draggable_zone" ).draggable({ revert: true });
-    $( "#droppable_zone" ).droppable({
-      drop: function( event, ui ) {
-        console.log("aaaa");
-      }
-    });
-  });
-  </script>
 </head>
 <body>
   <button id="create_note" style="float: right;">Note</button>

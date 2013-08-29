@@ -121,8 +121,8 @@ require([
 
 			$( "#draggable_zone" ).draggable({ revert: true });
 			$( "#droppable_zone" ).droppable({
-					drop: function( event, ui ) {
-						console.log("aaaa");
+				drop: function( event, ui ) {
+						console.log("dropped!")
 					}
 				});
 			});
