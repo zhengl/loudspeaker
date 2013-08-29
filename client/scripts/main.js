@@ -110,7 +110,7 @@ require([
         
         'dom/KineticTextInput' 
 	], function(){
-		require(['DOMBoardFactory', 'jquery-ui'], function(DOMBoardFactory){
+		require(['DOMBoardFactory', 'jquery', 'jquery-ui'], function(DOMBoardFactory, $){
 			DOMBoardFactory.create("board", "palette", "rubbish_bin");
 
 			$("#create_note").click(function(){
