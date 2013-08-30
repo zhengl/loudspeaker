@@ -9,10 +9,10 @@ describe("DOMRubbishBin", function(){
 
 		var bin = new DOMRubbishBin(new Point(40, 0), new Point(50, 50), rubbishBinId);
 		bin.close();
-		expect(bin.element.className).toEqual("collapse");
+		expect(bin.element.className).toEqual("rubbishbin-collapse");
 
 		bin.open();
-		expect(bin.element.className).toEqual("expand");
+		expect(bin.element.className).toEqual("rubbishbin-expand");
 	});
 });
 

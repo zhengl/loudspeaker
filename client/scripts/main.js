@@ -75,7 +75,19 @@ require([
         'dom/DOMBoardFactory' ,
       
         
+        'dom/DOMNoteDnDDecorator' ,
+      
+        
+        'dom/DOMNoteFactory' ,
+      
+        
+        'dom/DOMPageFactory' ,
+      
+        
         'dom/DOMPalette' ,
+      
+        
+        'dom/DOMPaletteFactory' ,
       
         
         'dom/DOMRubbishBin' ,
@@ -110,20 +122,17 @@ require([
         
         'dom/KineticTextInput' 
 	], function(){
-		require(['DOMBoardFactory', 'jquery', 'jquery-ui'], function(DOMBoardFactory, $){
-			DOMBoardFactory.create("board", "palette", "rubbish_bin");
+		require(['DOMBoardFactory', 'DOMNoteFactory', 'DOMNoteDnDDecorator', 'uuid', 'jquery', 'jquery-ui'], function(DOMBoardFactory, DOMNoteFactory, DOMNoteDnDDecorator, UUID, $){
+			var board = DOMBoardFactory.create("board", "palette", "rubbishbin");
+			$("#create-note").click(function(){
+				$("#modal").toggleClass("noteIsShown");
+				$("#wrapper").toggleClass("noteIsShown");
+				$("#modal-cover").toggleClass("noteIsShown");
 
-			$("#create_note").click(function(){
-		      $("#modal").toggleClass("noteIsShown");
-		      $("#wrapper").toggleClass("noteIsShown");
-		      $("#modal_cover").toggleClass("noteIsShown");
+				var noteUuid = UUID.genV4().toString();
+                                DOMNoteDnDDecorator.create(DOMNoteFactory, "modal", board.getPainter().getPalette(), noteUuid);
+		    	
 			});
 
-			$( "#draggable_zone" ).draggable({ revert: true });
-			$( "#droppable_zone" ).droppable({
-				drop: function( event, ui ) {
-						console.log("dropped!")
-					}
-				});
-			});
+		});
 });
