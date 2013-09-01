@@ -126,36 +126,8 @@ describe("Page", function() {
 			var handler = new PageEventHandler();
 			page.enableEventHandling(eventBus, handler);
 		});
-  
-		it("should DRAW a line with events", function() {		
-			triggerStartDrawingEvent(10, 10);
-			triggerPageDrawToEvent(20, 20);
-			triggerFinishDrawingEvent(20, 20);
-
-			var line = page.getPainter().context.getItems()[0];
-			expectIsAnItem(line);
-			expect(line.getPosition()).toEqual({x: 10, y: 10});
-			expect(line.points.length).toBe(3);
-		});
 		
-		it("should DRAFT a line with events", function() {
-			triggerStartDrawingEvent(10, 10);
-			
-			triggerPageDrawToEvent(20, 20);
-			expectOneDraftItem(page);
-			expectNoItem(page);
-			
-			triggerPageDrawToEvent(30, 30);
-			expectOneDraftItem(page);
-			expectNoItem(page);
-			
-			triggerFinishDrawingEvent(30, 30);
-			expectNoDraftItem(page);
-			expectOneItem(page);
 
-			var line = page.getPainter().context.getItems()[0];
-			expectIsAnItem(line);
-		});
 		
 		it("should move a line with events, Item.START_MOVING, Page.MOVE_TO, Item.STOP_MOVING after being selected", function() {
 			var line = createLine(10, 10, 20, 20);
@@ -229,17 +201,6 @@ describe("Page", function() {
 			expect(line.getPosition()).toEqual({x: 15, y: 15});
 		});	
 
-		it("should stop drawing with event STOP_DRAWING", function(){			
-			triggerStartDrawingEvent(10, 10);
-			
-			triggerPageDrawToEvent(20, 20);
-			expectOneDraftItem(page);
-			expectNoItem(page);
-			
-			triggerStopDrawingEvent();
-			expectNoDraftItem(page);
-			expectNoItem(page);
-		});
 
 		it("should be selected and unselected with event SELECT and UNSELECT", function() {
 			var line = createLine(10, 10, 20, 20);
@@ -447,10 +408,6 @@ describe("Page", function() {
 
 	function triggerFinishDrawingEvent(x, y){
 		eventBus.publish(new Event(Event.Page.FINISH_DRAWING, [new Point(x, y)]));		
-	}
-	
-	function triggerStopDrawingEvent(){
-		eventBus.publish(new Event(Event.Page.STOP_DRAWING));		
 	}
 	
 	function triggerSelectEvent(item){

@@ -1,9 +1,10 @@
-require(['Painter', 'Context', 'Palette', 'Point', 'Item', 'Line'], function(Painter, Context, Palette, Point, Item, Line){
+require(['Painter', 'Context', 'Palette', 'Point', 'Item', 'Line', 'EventBus', 'Event', 'PainterEventHandler'], function(Painter, Context, Palette, Point, Item, Line, EventBus, Event, PainterEventHandler){
 
 
 describe("Painter", function(){
 	var painter;
-	
+	var eventBus;
+
 	beforeEach(function(){
 		painter = new Painter(new Context(), new Palette());
 	});
@@ -58,30 +59,96 @@ describe("Painter", function(){
 		painter.showPalette(new Point(20, 20));
 		expect(painter.getPalette().getPosition()).toEqual({x: 20, y: 20});
 	});
+
+	describe('with event handling', function(){
+		beforeEach(function(){
+			eventBus = new EventBus();
+			eventBus.addListener(painter);
+			painter.setEventHandler(new PainterEventHandler());
+		});
+
+		it("should DRAW a line with events", function() {		
+			triggerStartDrawingEvent(10, 10);
+			triggerPageDrawToEvent(20, 20);
+			triggerFinishDrawingEvent(20, 20);
+
+			var line = painter.getContext().getItems()[0];
+			expectIsAnItem(line);
+			expect(line.getPosition()).toEqual({x: 10, y: 10});
+			expect(line.points.length).toBe(3);
+		});
+
+		it("should DRAFT a line with events", function() {
+			triggerStartDrawingEvent(10, 10);
+			
+			triggerPageDrawToEvent(20, 20);
+			expectOneDraftItem(painter);
+			expectNoItem(painter);
+			
+			triggerPageDrawToEvent(30, 30);
+			expectOneDraftItem(painter);
+			expectNoItem(painter);
+			
+			triggerFinishDrawingEvent(30, 30);
+			expectNoDraftItem(painter);
+			expectOneItem(painter);
+
+			var line = painter.getContext().getItems()[0];
+			expectIsAnItem(line);
+		});
+
+		it("should stop drawing with event STOP_DRAWING", function(){			
+			triggerStartDrawingEvent(10, 10);
+			
+			triggerPageDrawToEvent(20, 20);
+			expectOneDraftItem(painter);
+			expectNoItem(painter);
+			
+			triggerStopDrawingEvent();
+			expectNoDraftItem(painter);
+			expectNoItem(painter);
+		});
+	});
 	
 	function createLine(x1, y1, x2, y2) {
 		return new Line([new Point(x1, y1), new Point(x2, y2)]);
 	}
 	
 	function expectOneItem(painter){
-		expect(painter.context.getItems().length).toEqual(1);
+		expect(painter.getContext().getItems().length).toEqual(1);
 	}
 
 	function expectOneDraftItem(painter){
-		expect(painter.context.getDraftItems().length).toEqual(1);
+		expect(painter.getContext().getDraftItems().length).toEqual(1);
 	}
 	
 	function expectNoItem(painter){
-		expect(painter.context.getItems().length).toEqual(0);
+		expect(painter.getContext().getItems().length).toEqual(0);
 	}
 	
 	function expectNoDraftItem(painter){
-		expect(painter.context.getDraftItems().length).toEqual(0);
+		expect(painter.getContext().getDraftItems().length).toEqual(0);
 	}
 	
 	function expectIsAnItem(item){
 		expect(item instanceof Item).toBe(true);
-	}	
+	}
+
+	function triggerPageDrawToEvent(x, y){
+		eventBus.publish(new Event(Event.Page.DRAW_TO, [new Point(x, y)]));
+	}
+
+	function triggerStartDrawingEvent(x, y){
+		eventBus.publish(new Event(Event.Page.START_DRAWING, [new Point(x, y)]));		
+	}
+
+	function triggerFinishDrawingEvent(x, y){
+		eventBus.publish(new Event(Event.Page.FINISH_DRAWING, [new Point(x, y)]));		
+	}
+
+	function triggerStopDrawingEvent(){
+		eventBus.publish(new Event(Event.Page.STOP_DRAWING));		
+	}
 });
 
 

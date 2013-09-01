@@ -6,6 +6,20 @@ function Painter(context, palette){
 	this.palette = palette;
 }
 
+Painter.prototype.getContext = function(){
+	return this.context;
+}
+
+Painter.prototype.setEventHandler = function(handler){
+	this.handler = handler;
+};
+
+Painter.prototype.notify = function(event){
+	if (typeof this.handler.handle[event.name] == 'function') {
+		this.handler.handle[event.name](this, event);
+	}
+};
+
 Painter.prototype.draw = function(item){
 	return this.context.draw(item);
 };
