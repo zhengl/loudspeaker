@@ -61,6 +61,7 @@ KineticContext.prototype.draw = function(item){
 };
 
 KineticContext.prototype.draft = function(item){
+	this.clearDraftItems();
 	var kineticItem = KineticItemFactory.create(item);
 	kineticItem.draftize();
 	this.addDraftItem(kineticItem);

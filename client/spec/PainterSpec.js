@@ -12,16 +12,16 @@ describe("Painter", function(){
 	it("should return a Line after drawing a line", function() {
 		var line = createLine(0, 0, 10, 10);
 		var item = painter.draw(line);
+		expect(item instanceof Line).toBeTruthy();
 		expectOneItem(painter);
-		expectIsAnItem(item);
 	});
 
 	it("should have no item after drafting a line", function(){
 		var line = createLine(0, 0, 10, 10);
 		var item = painter.draft(line);
+		expect(item instanceof Line).toBeTruthy();
 		expectOneDraftItem(painter);
 		expectNoItem(painter);
-		expectIsAnItem(item);
 	});
 	
 	it("should have only one draft item when repeat drafting", function(){
@@ -48,7 +48,6 @@ describe("Painter", function(){
 		painter.endDraft(new Point(30, 30));
 		
 		var line = painter.context.getItems()[0];
-		expectIsAnItem(line);
 		expectOneItem(painter);
 		expectNoDraftItem(painter);
 		expectOneItem(painter);	
@@ -73,7 +72,6 @@ describe("Painter", function(){
 			triggerFinishDrawingEvent(20, 20);
 
 			var line = painter.getContext().getItems()[0];
-			expectIsAnItem(line);
 			expect(line.getPosition()).toEqual({x: 10, y: 10});
 			expect(line.points.length).toBe(3);
 		});
