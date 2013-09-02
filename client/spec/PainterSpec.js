@@ -1,4 +1,4 @@
-require(['Painter', 'Context', 'Palette', 'Point', 'Item', 'Line', 'EventBus', 'Event', 'PainterEventHandler'], function(Painter, Context, Palette, Point, Item, Line, EventBus, Event, PainterEventHandler){
+require(['Painter', 'Context', 'Palette', 'Point', 'Item', 'Line', 'EventBus', 'Event'], function(Painter, Context, Palette, Point, Item, Line, EventBus, Event){
 
 
 describe("Painter", function(){
@@ -62,8 +62,7 @@ describe("Painter", function(){
 	describe('with event handling', function(){
 		beforeEach(function(){
 			eventBus = new EventBus();
-			eventBus.addListener(painter);
-			painter.setEventHandler(new PainterEventHandler());
+			painter.registerEventBus(eventBus);
 		});
 
 		it("should DRAW a line with events", function() {		

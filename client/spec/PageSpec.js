@@ -128,27 +128,7 @@ describe("Page", function() {
 		});
 		
 
-		
-		it("should move a line with events, Item.START_MOVING, Page.MOVE_TO, Item.STOP_MOVING after being selected", function() {
-			var line = createLine(10, 10, 20, 20);
-			var item = page.draw(line);
-						
-			triggerSelectEvent(item);
-			triggerStartMovingEvent(item, 5, 5);
-			expectNoItem(page);
-			expectOneDraftItem(page);			
-			
-			triggerPageMoveToEvent(20, 20);
-			expectNoItem(page);
-			expectOneDraftItem(page);
-			
-			triggerFinishMovingEvent(item);
-			expectOneItem(page);
-			expectNoDraftItem(page);
-
-			line = page.getPainter().context.getItems()[0];
-			expect(line.getPosition()).toEqual({x: 15, y: 15});
-		});
+	
 
 		it("should move lines with events, Item.START_MOVING, Page.MOVE_TO, Item.STOP_MOVING after being selected", function() {
 			var line1 = createLine(10, 10, 20, 20);

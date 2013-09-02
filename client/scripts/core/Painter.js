@@ -1,4 +1,4 @@
-define('Painter', ['Line'], function(Line){
+define('Painter', ['Line', 'PainterEventHandler'], function(Line, PainterEventHandler){
 
 
 function Painter(context, palette){
@@ -18,6 +18,12 @@ Painter.prototype.notify = function(event){
 	if (typeof this.handler.handle[event.name] == 'function') {
 		this.handler.handle[event.name](this, event);
 	}
+};
+
+Painter.prototype.registerEventBus = function(eventBus){
+	this.setEventHandler(new PainterEventHandler());
+	this.eventBus = eventBus;
+	this.eventBus.addListener(this);
 };
 
 Painter.prototype.draw = function(item){
