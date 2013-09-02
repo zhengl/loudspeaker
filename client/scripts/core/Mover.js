@@ -19,7 +19,7 @@ Mover.prototype.notify = function(event){
 	}
 };
 
-Mover.prototype.registerEventBus = function(eventBus){
+Mover.prototype.enableEventHandling = function(eventBus){
 	this.setEventHandler(new MoverEventHandler());
 	this.eventBus = eventBus;
 	this.eventBus.addListener(this);

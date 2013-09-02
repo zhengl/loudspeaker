@@ -38,13 +38,13 @@ describe("Mover", function(){
 	describe("with event handling", function(){
 		beforeEach(function(){
 			eventBus = new EventBus();
-			mover.registerEventBus(eventBus);	
+			mover.enableEventHandling(eventBus);	
 		});
 
 		it("should move a line with events, Item.START_MOVING, Page.MOVE_TO, Item.STOP_MOVING after being selected", function() {
 			var line = new Line([new Point(0, 0), new Point(10, 10)])
 			context.draw(line);
-			line.registerEventBus(eventBus);
+			line.enableEventHandling(eventBus);
 
 			triggerSelectEvent(line);
 			triggerStartMovingEvent(line, 5, 5);
@@ -67,7 +67,7 @@ describe("Mover", function(){
 		it("should move lines with events, Item.START_MOVING, Page.MOVE_TO, Item.STOP_MOVING after being selected", function() {
 			var line = new Line([new Point(0, 0), new Point(10, 10)])
 			context.draw(line);
-			line.registerEventBus(eventBus);
+			line.enableEventHandling(eventBus);
 
 			var line2 = new Line([new Point(0, 0), new Point(10, 10)])
 			context.draw(line2);
@@ -94,7 +94,7 @@ describe("Mover", function(){
 		it("should move a line with events, Item.START_MOVING, Item.MOVE_TO, Item.STOP_MOVING after being selected", function() {
 			var line = new Line([new Point(0, 0), new Point(10, 10)])
 			context.draw(line);
-			line.registerEventBus(eventBus);
+			line.enableEventHandling(eventBus);
 
 			triggerSelectEvent(line);
 			triggerStartMovingEvent(line, 5, 5);
@@ -119,7 +119,7 @@ describe("Mover", function(){
 			var text = new Text("Hello World");
 			text.setPosition(new Point(10, 10));
 			context.write(text);
-			text.registerEventBus(eventBus);
+			text.enableEventHandling(eventBus);
 		
 			triggerSelectEvent(text);
 			triggerStartMovingEvent(text, 5, 5);
@@ -142,7 +142,7 @@ describe("Mover", function(){
 			var text = new Text("Hello World");
 			text.setPosition(new Point(10, 10));
 			context.write(text);
-			text.registerEventBus(eventBus);
+			text.enableEventHandling(eventBus);
 
 			triggerSelectEvent(text);
 			triggerStartMovingEvent(text, 5, 5);

@@ -28,7 +28,7 @@ Item.prototype.setEventHandler = function(handler){
 	this.handler = handler;
 };
 
-Item.prototype.registerEventBus = function(eventBus){
+Item.prototype.enableEventHandling = function(eventBus){
 	this.setEventHandler(new ItemEventHandler());
 	this.eventBus = eventBus;
 	this.eventBus.addListener(this);

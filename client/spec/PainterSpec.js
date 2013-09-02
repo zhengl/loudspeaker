@@ -62,7 +62,7 @@ describe("Painter", function(){
 	describe('with event handling', function(){
 		beforeEach(function(){
 			eventBus = new EventBus();
-			painter.registerEventBus(eventBus);
+			painter.enableEventHandling(eventBus);
 		});
 
 		it("should DRAW a line with events", function() {		

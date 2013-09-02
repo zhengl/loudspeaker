@@ -6,6 +6,14 @@ function Context(){
 	this.draftItems = new Array();
 }
 
+Context.prototype.getUUID = function(){
+	return this.uuid;
+};
+
+Context.prototype.setUUID = function(uuid){
+	this.uuid = uuid;
+};
+
 Context.prototype.registerEventBus = function(inputEventTrigger){
 };
 

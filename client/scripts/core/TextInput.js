@@ -5,6 +5,10 @@ function TextInput(context){
 	this.context = context;
 }
 
+TextInput.prototype.getContext = function(){
+	return this.context;
+}
+
 TextInput.prototype.write = function(text) {
 	this.text = text;
 	this.context.clearDraftItems();

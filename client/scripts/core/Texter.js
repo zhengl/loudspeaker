@@ -1,10 +1,30 @@
-define('Texter', function(){
+define('Texter', ['TexterEventHandler'], function(TexterEventHandler){
 
 
 function Texter(palette, textInput){
 	this.palette = palette;
 	this.textInput = textInput;
 }
+
+Texter.prototype.getContext = function(){
+	return this.textInput.getContext();
+}
+
+Texter.prototype.setEventHandler = function(handler){
+	this.handler = handler;
+};
+
+Texter.prototype.notify = function(event){
+	if (typeof this.handler.handle[event.name] == 'function') {
+		this.handler.handle[event.name](this, event);
+	}
+};
+
+Texter.prototype.enableEventHandling = function(eventBus){
+	this.setEventHandler(new TexterEventHandler());
+	this.eventBus = eventBus;
+	this.eventBus.addListener(this);
+};
 
 Texter.prototype.startTexting = function(position) {
 	this.textInput.show();

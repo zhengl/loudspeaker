@@ -20,7 +20,7 @@ Painter.prototype.notify = function(event){
 	}
 };
 
-Painter.prototype.registerEventBus = function(eventBus){
+Painter.prototype.enableEventHandling = function(eventBus){
 	this.setEventHandler(new PainterEventHandler());
 	this.eventBus = eventBus;
 	this.eventBus.addListener(this);
