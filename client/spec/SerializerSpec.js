@@ -1,19 +1,19 @@
-require(['Serializer', 'Context', 'Line', 'Text', 'Point', 'uuid'], function(Serializer, Context, Line, Text, Point, UUID){
+require(['Serializer', 'Context', 'Line', 'Point', 'Text'], function(Serializer, Context, Line, Point, Text){
 
 
 describe("Serializer", function(){
-		var context;
+	var context;
 
-		beforeEach(function(){
-			context = new Context();
-		});
+	beforeEach(function(){
+		context = new Context();
+	});
 
-		it("serializes context", function(){
-		var contextUUID = UUID.genV4().toString();
+	it("serializes context", function(){
+		var contextUUID = "contextUUID";
 		context.setUUID(contextUUID);
 
 		var line = new Line([new Point(0, 0), new Point(10, 10)]);
-		var lineUUID = UUID.genV4().toString();
+		var lineUUID = "lineUUID";
 		line.setUUID(lineUUID);
 		line.setColor('black');
 		line.setPosition(new Point(30, 30));
@@ -21,7 +21,7 @@ describe("Serializer", function(){
 
 		var text = new Text("Hello World!");
 		text.setPosition(new Point(0, 0));
-		var textUUID = UUID.genV4().toString();
+		var textUUID = "textUUID";
 		text.setUUID(textUUID);
 		text.setColor('blue');
 		text.setPosition(new Point(0, 0));

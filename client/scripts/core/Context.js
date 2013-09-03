@@ -14,9 +14,6 @@ Context.prototype.setUUID = function(uuid){
 	this.uuid = uuid;
 };
 
-Context.prototype.registerEventBus = function(inputEventTrigger){
-};
-
 Context.prototype.getLastDraftItem = function(){
 	return this.draftItems[this.draftItems.length - 1];
 };
@@ -35,14 +32,6 @@ Context.prototype.removeItem = function(item){
 	this.items = resultItems;
 };
 
-Context.prototype.setEventTrigger = function(eventTrigger){
-	this.eventTrigger = eventTrigger;
-};
-
-Context.prototype.getEventTrigger = function(){
-	return this.eventTrigger;
-};
-
 Context.prototype.getDraftItems = function(){
 	return this.draftItems;
 };
@@ -55,34 +44,9 @@ Context.prototype.addDraftItem = function(draftItem){
 	this.draftItems.push(draftItem)
 };
 
-Context.prototype.draw = function(item){
-	this.addItem(item);
-	return item;
-};
-
-Context.prototype.write = function(item){
-	this.addItem(item);
-	return item;
-};
-
-Context.prototype.startDraft = function(item){
-	this.addDraftItem(item);
-	return item;
-};
-
-Context.prototype.draft = function(draftItem){
-	this.clearDraftItems();
-	this.addDraftItem(draftItem);
-	return draftItem;
-};
-
 Context.prototype.clearDraftItems = function(){
 	this.draftItems = [];
 };
-
-Context.prototype.refreshItems = function(){};
-
-Context.prototype.refreshDraftItems = function(){};
 
 return Context;
 

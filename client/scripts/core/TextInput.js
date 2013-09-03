@@ -12,7 +12,8 @@ TextInput.prototype.getContext = function(){
 TextInput.prototype.write = function(text) {
 	this.text = text;
 	this.context.clearDraftItems();
-	return this.context.draft(this.getText());
+	this.context.addDraftItem(this.getText());
+	return this.getText();
 };
 
 TextInput.prototype.append = function(text) {
@@ -30,7 +31,8 @@ TextInput.prototype.append = function(text) {
 
 TextInput.prototype.flush = function() {
 	this.context.clearDraftItems();
-	return this.context.write(this.getText(), this.getPosition());
+	this.context.addItem(this.getText());
+	return this.getText();
 };
 
 TextInput.prototype.getText = function() {

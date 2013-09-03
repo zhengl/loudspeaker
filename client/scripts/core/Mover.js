@@ -59,7 +59,6 @@ Mover.prototype.moveTo = function(point){
 	var newPosition = new Point(newX, newY);
 
 	item.moveTo(newPosition);
-	this.context.refreshDraftItems();
 };
 
 Mover.prototype.setRubbishBin = function(rubbishBin){

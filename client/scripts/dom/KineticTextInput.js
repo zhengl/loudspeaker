@@ -1,9 +1,9 @@
-define('KineticTextInput', ['Point', 'Text', 'TextInput', 'KineticCursor', 'Event'], function(Point, Text, TextInput, KineticCursor, Event){
+define('KineticTextInput', ['Point', 'KineticText', 'TextInput', 'KineticCursor', 'Event'], function(Point, KineticText, TextInput, KineticCursor, Event){
 
 
 function KineticTextInput(context){
 	this.context = context;
-    this.text = new Text("");
+    this.text = new KineticText("");
 }
 
 KineticTextInput.prototype = new TextInput();
@@ -83,14 +83,18 @@ KineticTextInput.prototype.draftToContext = function(value, point){
 	this.getText().setPosition(point);
 
 	this.context.clearDraftItems();
-	var item = this.context.draft(this.getText());
+
+	var kineticItem = new KineticText(this.getText().getValue());
+	kineticItem.moveTo(this.getText().getPosition());
+	kineticItem.setColor(this.getText().getColor());
+	var item = this.context.addDraftItem(kineticItem);
 	return item;
 }
 
 KineticTextInput.prototype.flush = function() {
 	this.text.setValue(this.element.value);
 	this.remove();
-	var item = this.context.write(this.getText());
+	var item = this.context.addItem(this.getText());
 	return item;
 };
 

@@ -11,7 +11,7 @@ describe("Mover", function(){
 
 	it("should move a line", function(){
 		var line = new Line([new Point(0, 0), new Point(10, 10)])
-		context.draw(line);
+		context.addItem(line);
 
 		mover.startMoving(line);
 		mover.moveTo(new Point(20, 20));
@@ -21,7 +21,7 @@ describe("Mover", function(){
 
 	it("should be able to set removal zone", function(){
 		var line = new Line([new Point(0, 0), new Point(10, 10)])
-		context.draw(line);
+		context.addItem(line);
 
 		expect(context.getItems().length).toEqual(1);
 
@@ -43,7 +43,7 @@ describe("Mover", function(){
 
 		it("should move a line with events, Item.START_MOVING, Page.MOVE_TO, Item.STOP_MOVING after being selected", function() {
 			var line = new Line([new Point(0, 0), new Point(10, 10)])
-			context.draw(line);
+			context.addItem(line);
 			line.enableEventHandling(eventBus);
 
 			triggerSelectEvent(line);
@@ -66,11 +66,11 @@ describe("Mover", function(){
 
 		it("should move lines with events, Item.START_MOVING, Page.MOVE_TO, Item.STOP_MOVING after being selected", function() {
 			var line = new Line([new Point(0, 0), new Point(10, 10)])
-			context.draw(line);
+			context.addItem(line);
 			line.enableEventHandling(eventBus);
 
 			var line2 = new Line([new Point(0, 0), new Point(10, 10)])
-			context.draw(line2);
+			context.addItem(line2);
 
 			expect(mover.getContext().getItems().length).toEqual(2);
 						
@@ -93,7 +93,7 @@ describe("Mover", function(){
 
 		it("should move a line with events, Item.START_MOVING, Item.MOVE_TO, Item.STOP_MOVING after being selected", function() {
 			var line = new Line([new Point(0, 0), new Point(10, 10)])
-			context.draw(line);
+			context.addItem(line);
 			line.enableEventHandling(eventBus);
 
 			triggerSelectEvent(line);
@@ -118,7 +118,7 @@ describe("Mover", function(){
 		it("should move a text with events, Item.START_MOVING, Page.MOVE_TO, Item.STOP_MOVING after being selected", function() {
 			var text = new Text("Hello World");
 			text.setPosition(new Point(10, 10));
-			context.write(text);
+			context.addItem(text);
 			text.enableEventHandling(eventBus);
 		
 			triggerSelectEvent(text);
@@ -141,7 +141,7 @@ describe("Mover", function(){
 		it("should move a text with events, Item.START_MOVING, Item.MOVE_TO, Item.STOP_MOVING after being selected", function() {
 			var text = new Text("Hello World");
 			text.setPosition(new Point(10, 10));
-			context.write(text);
+			context.addItem(text);
 			text.enableEventHandling(eventBus);
 
 			triggerSelectEvent(text);

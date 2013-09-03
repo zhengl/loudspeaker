@@ -1,4 +1,4 @@
-define('KineticContext', ['Kinetic', 'KineticEvent', 'KineticItemFactory', 'KineticMouseEventOnPageInterpreter'], function(Kinetic, Event, KineticItemFactory, KineticMouseEventOnPageInterpreter){
+define('KineticContext', ['Context', 'Kinetic', 'KineticEvent', 'KineticMouseEventOnPageInterpreter'], function(Context, Kinetic, Event, KineticMouseEventOnPageInterpreter){
 
 
 function KineticContext(container, width, height){
@@ -17,22 +17,13 @@ function KineticContext(container, width, height){
 	this.layer.moveToTop();
 }
 
-KineticContext.prototype.getLastDraftItem = function(){
-	return this.draftItems[this.draftItems.length - 1];
-};
+KineticContext.prototype = new Context();
+KineticContext.constructor = KineticContext;
 
 KineticContext.prototype.clearDraftItems = function(){
 	this.draftItems = [];
 	this.draftLayer.removeChildren();
 	this.draftLayer.draw();
-};
-
-KineticContext.prototype.getItems = function(){
-	return this.items;
-};
-
-KineticContext.prototype.getDraftItems = function(){
-	return this.draftItems;
 };
 
 KineticContext.prototype.addItem = function(kineticItem){
@@ -42,52 +33,12 @@ KineticContext.prototype.addItem = function(kineticItem){
 };
 
 KineticContext.prototype.addDraftItem = function(kineticItem){
-	this.draftItems.push(kineticItem)
+	this.draftItems.push(kineticItem);
 	kineticItem.getKineticShape().moveTo(this.draftLayer);
 	this.layer.draw();
 	this.draftLayer.draw();
 };
 
-KineticContext.prototype.write = function(item){
-	var kineticItem = KineticItemFactory.create(item);
-	this.addItem(kineticItem);
-	return kineticItem;
-};
-
-KineticContext.prototype.draw = function(item){
-	var kineticItem = KineticItemFactory.create(item);
-	this.addItem(kineticItem);
-	return kineticItem;
-};
-
-KineticContext.prototype.draft = function(item){
-	this.clearDraftItems();
-	var kineticItem = KineticItemFactory.create(item);
-	kineticItem.draftize();
-	this.addDraftItem(kineticItem);
-	return kineticItem;
-};
-
-KineticContext.prototype.startDraft = function(item){
-	var kineticItem = KineticItemFactory.create(item);
-	kineticItem.draftize();
-	this.addDraftItem(kineticItem);
-	return kineticItem;
-};
-
-KineticContext.prototype.removeItem = function(item){
-	var resultItems = new Array();
-	for(var index in this.items){
-		if(item != this.items[index]) {
-			resultItems.push(this.items[index]);
-		}
-	}
-	this.items = resultItems;
-};
-
-KineticContext.prototype.getEventBus = function(){
-	return this.eventBus;
-};
 
 KineticContext.prototype.registerEventBus = function(page, eventBus){
 	this.eventBus = eventBus;
