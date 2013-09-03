@@ -2,7 +2,7 @@ require(['Unserializer', 'Context', 'Line', 'Text', 'Point'], function(Unseriali
 
 
 describe("Unserializer", function(){
-	it("unserialize", function(){
+	it("unserializes context", function(){
 		var context = new Context();
 		var unserializer = new Unserializer();
 		unserializer.process(context, {

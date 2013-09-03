@@ -17,14 +17,16 @@ describe("Texter", function(){
 
 		it("should return a Text after writing words", function() {
 			var text = createText();
-			var item = texter.write(text);
+			texter.write(text);
+			var item = texter.getContext().getItems()[0];
 			expect(item instanceof Text).toBeTruthy();
 			expectOneItem(texter);
 		});
 
 		it("should have no item after writing words", function(){
 			var text = createText();
-			var item = texter.draft(text);
+			texter.draft(text);
+			var item = texter.getContext().getDraftItems()[0];
 			expect(item instanceof Text).toBeTruthy();
 			expectOneDraftItem(texter);
 			expectNoItem(texter);

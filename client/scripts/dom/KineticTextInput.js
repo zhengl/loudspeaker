@@ -87,15 +87,15 @@ KineticTextInput.prototype.draftToContext = function(value, point){
 	var kineticItem = new KineticText(this.getText().getValue());
 	kineticItem.moveTo(this.getText().getPosition());
 	kineticItem.setColor(this.getText().getColor());
-	var item = this.context.addDraftItem(kineticItem);
-	return item;
+	this.context.addDraftItem(kineticItem);
+	return kineticItem;
 }
 
 KineticTextInput.prototype.flush = function() {
 	this.text.setValue(this.element.value);
 	this.remove();
-	var item = this.context.addItem(this.getText());
-	return item;
+	this.context.addItem(this.getText());
+	return this.getText();
 };
 
 KineticTextInput.prototype.getText = function() {

@@ -28,13 +28,11 @@ Painter.prototype.enableEventHandling = function(eventBus){
 
 Painter.prototype.draw = function(item){
 	this.context.addItem(item);
-	return item;
 };
 
 Painter.prototype.draft = function(item){
 	this.context.clearDraftItems();
 	this.context.addDraftItem(item);
-	return item;
 };
 
 Painter.prototype.startDraft = function(point){
@@ -44,7 +42,6 @@ Painter.prototype.startDraft = function(point){
 	draftItem.update(point);
 	draftItem.setColor(this.palette.getColor());
 	this.context.addDraftItem(draftItem);
-	return draftItem;
 };
 
 Painter.prototype.selectShape = function(shape){
@@ -56,7 +53,6 @@ Painter.prototype.draftTo = function(point){
 	draftItem.update(point);
 	this.context.clearDraftItems();
 	this.context.addDraftItem(draftItem);
-	return draftItem;
 };
 
 Painter.prototype.endDraft = function(point){
@@ -67,7 +63,6 @@ Painter.prototype.endDraft = function(point){
 	var item = draftItem.undraftize();
 	this.context.addItem(item);
 	this.context.clearDraftItems();
-	return item;
 };
 
 Painter.prototype.stopDrawing = function(){

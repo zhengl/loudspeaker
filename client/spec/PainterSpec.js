@@ -11,14 +11,16 @@ describe("Painter", function(){
 
 	it("should return a Line after drawing a line", function() {
 		var line = createLine(0, 0, 10, 10);
-		var item = painter.draw(line);
+		painter.draw(line);
+		var item = painter.getContext().getItems()[0];
 		expect(item instanceof Line).toBeTruthy();
 		expectOneItem(painter);
 	});
 
 	it("should have no item after drafting a line", function(){
 		var line = createLine(0, 0, 10, 10);
-		var item = painter.draft(line);
+		painter.draft(line);
+		var item = painter.getContext().getDraftItems()[0];
 		expect(item instanceof Line).toBeTruthy();
 		expectOneDraftItem(painter);
 		expectNoItem(painter);

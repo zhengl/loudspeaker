@@ -1,4 +1,4 @@
-require(['KineticTexter', 'KineticContext', 'DOMPalette', 'Point', 'Text', 'KineticText', 'EventBus', 'Event', 'TextInput'], function(KineticTexter, KineticContext, DOMPalette, Point, Text, KineticText, EventBus, Event, TextInput){
+require(['KineticTexter', 'KineticContext', 'DOMPalette', 'Point', 'Text', 'KineticText', 'EventBus', 'Event', 'KineticTextInput'], function(KineticTexter, KineticContext, DOMPalette, Point, Text, KineticText, EventBus, Event, KineticTextInput){
 
 
 describe("KineticTexter", function(){
@@ -15,18 +15,20 @@ describe("KineticTexter", function(){
 
 		body.appendChild(board);
 		body.appendChild(palette);
-		texter = new KineticTexter(new DOMPalette('palette'), new TextInput(new KineticContext('board', 50, 50)));
+		texter = new KineticTexter(new DOMPalette('palette'), new KineticTextInput(new KineticContext('board', 50, 50)));
 	});
 
 	it("should return a KineticText after drawing a line", function() {
 		var text = createText();
-		var item = texter.write(text);
+		texter.write(text);
+		var item = texter.getContext().getItems()[0];
 		expect(item instanceof KineticText).toBeTruthy();
 	});
 
 	it("should have no item after drafting a line", function(){
 		var text = createText();
-		var item = texter.write(text);
+		texter.write(text);
+		var item = texter.getContext().getItems()[0];
 		expect(item instanceof KineticText).toBeTruthy()
 	});
 
