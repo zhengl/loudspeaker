@@ -48,6 +48,7 @@ KineticLine.prototype.moveTo = function(newPosition){
 	var newX = currentKineticPosition.x + newPosition.x - currentPosition.x;
 	var newY = currentKineticPosition.y + newPosition.y - currentPosition.y;
 	this.getKineticShape().setPosition(newX, newY);
+	this.getKineticShape().getLayer().draw();
 };
 
 KineticLine.prototype.getKineticShape = function(){
@@ -85,11 +86,7 @@ KineticLine.flatternPoints = function(points){
 	return linePoints;
 };
 
-KineticLine.prototype.setEventBus = function(eventBus){
-	this.eventBus = eventBus;
-};
-
-KineticLine.prototype.registerEventBus = function(eventBus){
+KineticLine.prototype.enableEventHandling = function(eventBus){
 	var register = new KineticItemEventRegister();
 	register.registerEventBus(eventBus, this);
 };

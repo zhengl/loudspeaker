@@ -17,13 +17,27 @@ KineticText.prototype.setColor = function(color){
 	this.getKineticShape().setFill(color);
 };
 
+KineticText.prototype.setValue = function(text){
+	this.getKineticShape().setText(text);
+};
+
+KineticText.prototype.getValue = function(){
+	return this.getKineticShape().getText();
+};
+
 KineticText.prototype.getKineticShape = function(){
 	return this.kineticShape;
+};
+
+KineticText.prototype.setPosition = function(newPosition){
+	this.position = newPosition;
+	this.getKineticShape().setPosition(newPosition.x, newPosition.y);
 };
 
 KineticText.prototype.moveTo = function(newPosition){
 	this.position = newPosition;
 	this.getKineticShape().setPosition(newPosition.x, newPosition.y);
+	this.getKineticShape().getLayer().draw();
 };
 
 KineticText.prototype.draftize = function(){
@@ -34,11 +48,7 @@ KineticText.prototype.undraftize = function(){
 	return this;
 };
 
-KineticText.prototype.setEventBus = function(eventBus){
-	this.eventBus = eventBus;
-};
-
-KineticText.prototype.registerEventBus = function(eventBus){
+KineticText.prototype.enableEventHandling = function(eventBus){
 	var register = new KineticItemEventRegister();
 	register.registerEventBus(eventBus, this);
 };

@@ -25,7 +25,7 @@ describe("KineticTextInput", function(){
 		textInput.flush();
 		item = textInput.getContext().getItems()[0];
 		expect(item instanceof KineticText).toBeTruthy();
-		expect(textInput.getText().getValue()).toBe("Hello World!");
+		expect(item.getValue()).toBe("Hello World!");
 	});
 });
 

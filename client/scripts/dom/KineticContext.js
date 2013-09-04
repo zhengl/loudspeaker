@@ -1,4 +1,4 @@
-define('KineticContext', ['Context', 'Kinetic', 'KineticEvent', 'KineticMouseEventOnPageInterpreter'], function(Context, Kinetic, Event, KineticMouseEventOnPageInterpreter){
+define('KineticContext', ['Context', 'Kinetic', 'KineticEvent', 'KineticMouseEventOnContextInterpreter'], function(Context, Kinetic, Event, KineticMouseEventOnContextInterpreter){
 
 
 function KineticContext(container, width, height){
@@ -40,9 +40,9 @@ KineticContext.prototype.addDraftItem = function(kineticItem){
 };
 
 
-KineticContext.prototype.registerEventBus = function(page, eventBus){
+KineticContext.prototype.enableEventHandling = function(eventBus){
 	this.eventBus = eventBus;
-	this.addEventListeners(page, eventBus, [
+	this.addEventListeners(eventBus, [
 		Event.Kinetic.MOVE_TO,
 		Event.Kinetic.MOUSE_DOWN,
 		Event.Kinetic.MOUSE_UP,
@@ -53,7 +53,7 @@ KineticContext.prototype.registerEventBus = function(page, eventBus){
 	]);
 };
 
-KineticContext.prototype.addEventListeners = function(page, eventBus, events){
+KineticContext.prototype.addEventListeners = function(eventBus, events){
 	 this.eventCatcher = new Kinetic.Rect({
             x: 0,
             y: 0,
@@ -63,7 +63,7 @@ KineticContext.prototype.addEventListeners = function(page, eventBus, events){
 	this.layer.add(this.eventCatcher);
 	this.eventCatcher.moveToBottom();
 
-	var interpreter = new KineticMouseEventOnPageInterpreter(page);
+	var interpreter = new KineticMouseEventOnContextInterpreter(this);
 	this.eventCatcher.on(events.join(" "), function(event){
 		interpreter.interpret(event, eventBus);
 	});

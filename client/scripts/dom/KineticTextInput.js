@@ -4,15 +4,14 @@ define('KineticTextInput', ['Point', 'KineticText', 'TextInput', 'KineticCursor'
 function KineticTextInput(context){
 	this.context = context;
     this.text = new KineticText("");
+	this.initializeDOMElement(this.context);
 }
 
 KineticTextInput.prototype = new TextInput();
 KineticTextInput.prototype.constructor = KineticTextInput;
 
 KineticTextInput.prototype.show = function(){
-	this.initializeDOMElement(this.context);
     this.initializeCursor(this.context);
-    this.enableEventHandling();
 };
 
 KineticTextInput.prototype.setColor = function(color){
@@ -49,11 +48,12 @@ KineticTextInput.prototype.adjustCursor = function() {
 		));
 };
 
-KineticTextInput.prototype.enableEventHandling = function() {
+KineticTextInput.prototype.enableEventHandling = function(eventBus) {
 	var self = this;
+	this.eventBus = eventBus;
     this.element.onkeydown = function(event){
     	if(event.keyCode == 13) { // when press Enter
-	        self.context.getEventBus().publish(
+	        eventBus.publish(
 				new Event(Event.Page.FINISH_TEXTING)
 	        	);
 	    } else {
@@ -84,32 +84,28 @@ KineticTextInput.prototype.draftToContext = function(value, point){
 
 	this.context.clearDraftItems();
 
-	var kineticItem = new KineticText(this.getText().getValue());
-	kineticItem.moveTo(this.getText().getPosition());
-	kineticItem.setColor(this.getText().getColor());
-	this.context.addDraftItem(kineticItem);
-	return kineticItem;
+	this.context.addDraftItem(this.getText());
+	return this.getText();
 }
 
 KineticTextInput.prototype.flush = function() {
-	this.text.setValue(this.element.value);
 	this.remove();
-	this.context.addItem(this.getText());
-	return this.getText();
-};
+	this.getText().setValue(this.element.value);
 
-KineticTextInput.prototype.getText = function() {
-	return this.text;
+	var kineticItem = new KineticText(this.getText().getValue());
+	kineticItem.setPosition(this.getText().getPosition());
+	kineticItem.setColor(this.getText().getColor());
+
+	this.getText().setValue("");
+	this.element.value = "";
+	this.context.addItem(kineticItem);
+	return kineticItem;
 };
 
 KineticTextInput.prototype.setPosition = function(point){
 	this.position = point;
 	this.getText().setPosition(point);
 	this.cursor.setPosition(point);
-};
-
-KineticTextInput.prototype.getPosition = function(){
-	return this.position;
 };
 
 KineticTextInput.prototype.removeCursor = function(){

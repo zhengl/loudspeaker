@@ -1,4 +1,4 @@
-define('Texter', ['TexterEventHandler'], function(TexterEventHandler){
+define('Texter', ['TexterEventHandler', 'Context'], function(TexterEventHandler, Context){
 
 
 function Texter(palette, textInput){
@@ -27,14 +27,16 @@ Texter.prototype.enableEventHandling = function(eventBus){
 };
 
 Texter.prototype.startTexting = function(position) {
-	this.isTexting = true;
+	this.getContext().setMode(Context.MODE.TEXTING);
+
 	this.textInput.show();
 	this.textInput.setColor(this.palette.getColor());
 	this.textInput.setPosition(position);
 };
 
 Texter.prototype.finishTexting = function(position) {
-	this.isTexting = false;
+	this.getContext().setMode(Context.MODE.IDLE);
+
 	this.getTextInput().flush();
 };
 

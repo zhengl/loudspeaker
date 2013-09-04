@@ -1,4 +1,4 @@
-define('Mover', ['Point', 'MoverEventHandler'], function(Point, MoverEventHandler){
+define('Mover', ['Point', 'MoverEventHandler', 'Context'], function(Point, MoverEventHandler, Context){
 
 
 function Mover(context){
@@ -26,7 +26,7 @@ Mover.prototype.enableEventHandling = function(eventBus){
 };
 
 Mover.prototype.startMoving = function(item) {
-	this.isMoving = true;
+	this.context.setMode(Context.MODE.MOVING);
 
 	item.draftize();
 	this.context.addDraftItem(item);
@@ -37,7 +37,8 @@ Mover.prototype.startMoving = function(item) {
 };
 
 Mover.prototype.finishMoving = function() {
-	this.isMoving = false;
+	this.context.setMode(Context.MODE.IDLE);
+
 	if (this.rubbishBin && this.rubbishBin.isOpen) {
 		this.context.removeItem(this.movingItem);
 		this.context.clearDraftItems();

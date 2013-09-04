@@ -15,10 +15,7 @@ require.config({
 });
 
 require([
-'core/Board' ,
-      
-        
-        'core/Context' ,
+'core/Context' ,
       
         
         'core/Event' ,
@@ -39,16 +36,19 @@ require([
         'core/Mover' ,
       
         
-        'core/Page' ,
-      
-        
-        'core/PageEventHandler' ,
+        'core/MoverEventHandler' ,
       
         
         'core/Painter' ,
       
         
+        'core/PainterEventHandler' ,
+      
+        
         'core/Palette' ,
+      
+        
+        'core/PaletteEventHandler' ,
       
         
         'core/Point' ,
@@ -57,7 +57,7 @@ require([
         'core/RubbishBin' ,
       
         
-        'core/SerializeStrategy' ,
+        'core/Serializer' ,
       
         
         'core/Text' ,
@@ -69,7 +69,10 @@ require([
         'core/Texter' ,
       
         
-        'core/UnserializeStrategy' ,
+        'core/TexterEventHandler' ,
+      
+        
+        'core/Unserializer' ,
       
         
         'dom/DOMBoardFactory' ,
@@ -111,28 +114,34 @@ require([
         'dom/KineticLine' ,
       
         
+        'dom/KineticMouseEventOnContextInterpreter' ,
+      
+        
         'dom/KineticMouseEventOnItemInterpreter' ,
       
         
-        'dom/KineticMouseEventOnPageInterpreter' ,
+        'dom/KineticPainter' ,
       
         
         'dom/KineticText' ,
       
         
-        'dom/KineticTextInput' 
+        'dom/KineticTextInput' ,
+      
+        
+        'dom/KineticTexter' 
 	], function(){
-		require(['DOMBoardFactory', 'DOMNoteFactory', 'DOMNoteDnDDecorator', 'uuid', 'jquery', 'jquery-ui'], function(DOMBoardFactory, DOMNoteFactory, DOMNoteDnDDecorator, UUID, $){
+		require(['DOMBoardFactory', 'jquery', 'jquery-ui'], function(DOMBoardFactory, $){
 			var board = DOMBoardFactory.create("board", "palette", "rubbishbin");
-			$("#create-note").click(function(){
-				$("#modal").toggleClass("noteIsShown");
-				$("#wrapper").toggleClass("noteIsShown");
-				$("#modal-cover").toggleClass("noteIsShown");
+			// $("#create-note").click(function(){
+			// 	$("#modal").toggleClass("noteIsShown");
+			// 	$("#wrapper").toggleClass("noteIsShown");
+			// 	$("#modal-cover").toggleClass("noteIsShown");
 
-				var noteUuid = UUID.genV4().toString();
-                                DOMNoteDnDDecorator.create(DOMNoteFactory, "modal", board.getPainter().getPalette(), noteUuid);
+			// 	var noteUuid = UUID.genV4().toString();
+   //                              DOMNoteDnDDecorator.create(DOMNoteFactory, "modal", board.getPainter().getPalette(), noteUuid);
 		    	
-			});
+			// });
 
 		});
 });

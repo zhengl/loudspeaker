@@ -1,4 +1,4 @@
-define('Painter', ['Line', 'PainterEventHandler'], function(Line, PainterEventHandler){
+define('Painter', ['Line', 'PainterEventHandler', 'Context'], function(Line, PainterEventHandler, Context){
 
 
 function Painter(context, palette){
@@ -36,11 +36,12 @@ Painter.prototype.draft = function(item){
 };
 
 Painter.prototype.startDraft = function(point){
-	this.isPainting = true;
-	
+	this.context.setMode(Context.MODE.PAINTING);
+
 	var draftItem = new Line();
 	draftItem.update(point);
 	draftItem.setColor(this.palette.getColor());
+	draftItem.draftize();
 	this.context.addDraftItem(draftItem);
 };
 
@@ -56,8 +57,8 @@ Painter.prototype.draftTo = function(point){
 };
 
 Painter.prototype.endDraft = function(point){
-	this.isPainting = false;
-	
+	this.context.setMode(Context.MODE.IDLE);
+
 	this.draftTo(point);	
 	var draftItem = this.context.getLastDraftItem();
 	var item = draftItem.undraftize();
@@ -66,7 +67,6 @@ Painter.prototype.endDraft = function(point){
 };
 
 Painter.prototype.stopDrawing = function(){
-	this.isPainting = false;
 	this.context.clearDraftItems();
 };
 

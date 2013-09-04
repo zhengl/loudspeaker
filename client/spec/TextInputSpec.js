@@ -14,6 +14,14 @@ describe("TextInput", function(){
 		textInput.write(text);
 		expect(textInput.getText().getValue()).toBe("Hello World!");
 	});
+
+	it("flushes and empty its value", function(){
+		var text = new Text("Hello World!");
+		text.setPosition(new Point(10, 20));
+		textInput.write(text);
+		textInput.flush();
+		expect(textInput.getText().getValue()).toBe("");
+	});
 });
 
 });

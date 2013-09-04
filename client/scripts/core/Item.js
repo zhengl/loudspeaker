@@ -20,6 +20,10 @@ Item.prototype.notify = function(event){
 	}
 };
 
+Item.prototype.setEventBus = function(eventBus){
+	this.eventBus = eventBus;
+};
+
 Item.prototype.getEventBus = function(){
 	return this.eventBus;
 };
