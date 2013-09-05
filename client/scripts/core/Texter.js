@@ -1,4 +1,4 @@
-define('Texter', ['TexterEventHandler', 'Context'], function(TexterEventHandler, Context){
+define('Texter', ['EventHandleable', 'TexterEventHandler', 'Context'], function(EventHandleable, TexterEventHandler, Context){
 
 
 function Texter(palette, textInput){
@@ -6,25 +6,12 @@ function Texter(palette, textInput){
 	this.textInput = textInput;
 }
 
+Texter.prototype = new EventHandleable(new TexterEventHandler());
+Texter.prototype.constructor = Texter;
+
 Texter.prototype.getContext = function(){
 	return this.textInput.getContext();
 }
-
-Texter.prototype.setEventHandler = function(handler){
-	this.handler = handler;
-};
-
-Texter.prototype.notify = function(event){
-	if (typeof this.handler.handle[event.name] == 'function') {
-		this.handler.handle[event.name](this, event);
-	}
-};
-
-Texter.prototype.enableEventHandling = function(eventBus){
-	this.setEventHandler(new TexterEventHandler());
-	this.eventBus = eventBus;
-	this.eventBus.addListener(this);
-};
 
 Texter.prototype.startTexting = function(position) {
 	this.getContext().setMode(Context.MODE.TEXTING);

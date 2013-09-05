@@ -20,6 +20,16 @@ function KineticContext(container, width, height){
 KineticContext.prototype = new Context();
 KineticContext.constructor = KineticContext;
 
+KineticContext.EVENTS = [
+	Event.Kinetic.MOVE_TO,
+	Event.Kinetic.MOUSE_DOWN,
+	Event.Kinetic.MOUSE_UP,
+	Event.Kinetic.MOUSE_ENTER,
+	Event.Kinetic.MOUSE_LEAVE,
+	Event.Kinetic.MOUSE_OVER,
+	Event.Kinetic.MOUSE_OUT
+]
+
 KineticContext.prototype.clearDraftItems = function(){
 	this.draftItems = [];
 	this.draftLayer.removeChildren();
@@ -42,15 +52,7 @@ KineticContext.prototype.addDraftItem = function(kineticItem){
 
 KineticContext.prototype.enableEventHandling = function(eventBus){
 	this.eventBus = eventBus;
-	this.addEventListeners(eventBus, [
-		Event.Kinetic.MOVE_TO,
-		Event.Kinetic.MOUSE_DOWN,
-		Event.Kinetic.MOUSE_UP,
-		Event.Kinetic.MOUSE_ENTER,
-		Event.Kinetic.MOUSE_LEAVE,
-		Event.Kinetic.MOUSE_OVER,
-		Event.Kinetic.MOUSE_OUT
-	]);
+	this.addEventListeners(eventBus, KineticContext.EVENTS);
 };
 
 KineticContext.prototype.addEventListeners = function(eventBus, events){
@@ -67,6 +69,18 @@ KineticContext.prototype.addEventListeners = function(eventBus, events){
 	this.eventCatcher.on(events.join(" "), function(event){
 		interpreter.interpret(event, eventBus);
 	});
+	this.layer.draw();
+};
+
+KineticContext.prototype.disableEventHandling = function(){
+	this.eventBus.removeListener(this);
+	this.removeEventListeners(this.eventBus, KineticContext.EVENTS);
+};
+
+KineticContext.prototype.removeEventListeners = function(eventBus, events){
+	this.layer.remove(this.eventCatcher);
+
+	this.eventCatcher.off(events.join(" "));
 	this.layer.draw();
 };
 

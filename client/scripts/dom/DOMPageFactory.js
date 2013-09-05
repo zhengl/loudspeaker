@@ -12,6 +12,7 @@ DOMPageFactory.create = function(pageId, pageWidth, pageHeight, paletteId, rubbi
 	
 	var context = new KineticContext(pageId, pageWidth, pageHeight);
 	context.enableEventHandling(eventBus);
+	context.disableEventHandling();
 
 	var palette = DOMPaletteFactory.create(paletteId);
 	palette.enableEventHandling(eventBus);

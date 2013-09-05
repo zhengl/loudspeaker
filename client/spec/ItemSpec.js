@@ -26,6 +26,18 @@ describe("Item", function(){
 			triggerUnselectEvent(item);			
 			expect(item.isSelected).toBe(false);
 		});
+
+		it("should have no reaction after disabling event handling", function(){
+			eventBus = new EventBus();
+			item.enableEventHandling(eventBus);
+			item.disableEventHandling();
+
+			triggerSelectEvent(item);		
+			expect(item.isSelected).toBe(false);
+			
+			triggerUnselectEvent(item);			
+			expect(item.isSelected).toBe(false);
+		});
 	});
 
 	function triggerSelectEvent(item){

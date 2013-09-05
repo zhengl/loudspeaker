@@ -66,6 +66,11 @@ KineticTextInput.prototype.enableEventHandling = function(eventBus) {
     };
 };
 
+KineticTextInput.prototype.disableEventHandling = function() {
+	this.eventBus = null;
+    this.element.onkeydown = null;
+};
+
 KineticTextInput.prototype.append = function(text) {
 	var item = this.draftToContext(this.getText().getValue() + text.getValue(), text.getPosition());
 	this.element.value = this.text.getValue();

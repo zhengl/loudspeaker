@@ -1,28 +1,15 @@
-define('Mover', ['Point', 'MoverEventHandler', 'Context'], function(Point, MoverEventHandler, Context){
+define('Mover', ['EventHandleable', 'Point', 'MoverEventHandler', 'Context'], function(EventHandleable, Point, MoverEventHandler, Context){
 
 
 function Mover(context){
 	this.context = context;
 }
 
+Mover.prototype = new EventHandleable(new MoverEventHandler());
+Mover.prototype.constructor = Mover;
+
 Mover.prototype.getContext = function(){
 	return this.context;
-}
-
-Mover.prototype.setEventHandler = function(handler){
-	this.handler = handler;
-};
-
-Mover.prototype.notify = function(event){
-	if (typeof this.handler.handle[event.name] == 'function') {
-		this.handler.handle[event.name](this, event);
-	}
-};
-
-Mover.prototype.enableEventHandling = function(eventBus){
-	this.setEventHandler(new MoverEventHandler());
-	this.eventBus = eventBus;
-	this.eventBus.addListener(this);
 };
 
 Mover.prototype.startMoving = function(item) {

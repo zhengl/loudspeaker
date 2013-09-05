@@ -24,6 +24,9 @@ require([
         'core/EventBus' ,
       
         
+        'core/EventHandleable' ,
+      
+        
         'core/Item' ,
       
         

@@ -1,9 +1,12 @@
-define('Item', ['ItemEventHandler'], function(ItemEventHandler){
+define('Item', ['EventHandleable', 'ItemEventHandler'], function(EventHandleable, ItemEventHandler){
 
 
 function Item(){
 	this.isSelected = false;
 }
+
+Item.prototype = new EventHandleable(new ItemEventHandler());
+Item.prototype.constructor = Item;
 
 Item.prototype.getUUID = function(){
 	return this.uuid;
@@ -11,31 +14,6 @@ Item.prototype.getUUID = function(){
 
 Item.prototype.setUUID = function(uuid){
 	this.uuid = uuid;
-};
-
-
-Item.prototype.notify = function(event){
-	if(typeof this.handler.handle[event.name] == 'function' && event.data[0] === this) {
-		this.handler.handle[event.name](this, event);
-	}
-};
-
-Item.prototype.setEventBus = function(eventBus){
-	this.eventBus = eventBus;
-};
-
-Item.prototype.getEventBus = function(){
-	return this.eventBus;
-};
-
-Item.prototype.setEventHandler = function(handler){
-	this.handler = handler;
-};
-
-Item.prototype.enableEventHandling = function(eventBus){
-	this.setEventHandler(new ItemEventHandler());
-	this.eventBus = eventBus;
-	this.eventBus.addListener(this);
 };
 
 Item.prototype.getPosition = function(){

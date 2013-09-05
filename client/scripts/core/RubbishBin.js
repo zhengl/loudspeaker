@@ -1,10 +1,13 @@
-define('RubbishBin', ['Event'], function(Event){
+define('RubbishBin', ['EventHandleable', 'RubbishBinEventHandler'], function(EventHandleable, RubbishBinEventHandler){
 
 
 function RubbishBin(leftTop, rightBottom){
 	this.leftTop = leftTop;
 	this.rightBottom = rightBottom;
 }
+
+RubbishBin.prototype = new EventHandleable(new RubbishBinEventHandler());
+RubbishBin.prototype.constructor = RubbishBin;
 
 RubbishBin.prototype.isInside = function(point) {
 	return point.x > this.leftTop.x && point.x < this.rightBottom.x
@@ -17,20 +20,6 @@ RubbishBin.prototype.open = function() {
 
 RubbishBin.prototype.close = function() {
 	this.isOpen = false;
-};
-
-RubbishBin.prototype.setEventBus = function(eventBus) {
-	this.eventBus = eventBus;
-};
-
-RubbishBin.prototype.enableEventHandling = function(eventBus) {
-	eventBus.addListener(this);
-};
-
-RubbishBin.prototype.notify = function(event){
-	if ((event.name == Event.Page.FINISH_MOVING || event.name == Event.Page.MOVE_TO) && this.isInside(event.data[0])) {
-		this.open();
-	}
 };
 
 return RubbishBin;
