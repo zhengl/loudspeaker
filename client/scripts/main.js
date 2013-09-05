@@ -128,7 +128,7 @@ require([
         
         'dom/KineticTexter' 
 	], function(){
-		require(['DOMPageFactory', 'uuid', 'jquery', 'jquery-ui'], function(DOMPageFactory, UUID, $){
+		require(['DOMPageFactory', 'DOMNoteDnDDecorator', 'uuid', 'jquery', 'jquery-ui'], function(DOMPageFactory, DOMNoteDnDDecorator, UUID, $){
 			var board = DOMPageFactory.create("board", 700, 700, "palette", "rubbishbin", 100, 700);
 			$("#create-note").click(function(){
 				$("#modal").toggleClass("noteIsShown");
@@ -137,7 +137,7 @@ require([
 
 				// var noteUuid = UUID.genV4().toString();
                 var note = DOMPageFactory.create("note", 250, 250, "note-palette", "note-rubbishbin", 50, 250);
-                // DOMNoteDnDDecorator.create(DOMNoteFactory, "modal", board.getPainter().getPalette(), noteUuid);
+                DOMNoteDnDDecorator.create("note", note, board);
 		    	
 			});
 

@@ -5,16 +5,14 @@ function DOMNoteDnDDecorator(){
 	
 }
 
-DOMNoteDnDDecorator.create = function(factory, parentId, palette, uuid){
-	factory.create(parentId, palette, uuid);
-
+DOMNoteDnDDecorator.create = function(noteId, note, board){
 	var droppableZone = document.createElement('div');
 	droppableZone.className = "droppable-zone";
 
 	var draggableZone = document.createElement('div');
 	draggableZone.className = "draggable-zone";
 
-	var parentNode = document.getElementById(parentId);
+	var parentNode = document.getElementById(noteId).parentNode;
 	parentNode.insertBefore(droppableZone, parentNode.firstChild);
 	parentNode.appendChild(draggableZone);
 
