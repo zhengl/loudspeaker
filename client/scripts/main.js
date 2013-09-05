@@ -15,7 +15,7 @@ require.config({
 });
 
 require([
-'core/Context' ,
+ 'core/Context' ,
       
         
         'core/Event' ,
@@ -37,6 +37,9 @@ require([
       
         
         'core/MoverEventHandler' ,
+      
+        
+        'core/Page' ,
       
         
         'core/Painter' ,
@@ -75,13 +78,7 @@ require([
         'core/Unserializer' ,
       
         
-        'dom/DOMBoardFactory' ,
-      
-        
         'dom/DOMNoteDnDDecorator' ,
-      
-        
-        'dom/DOMNoteFactory' ,
       
         
         'dom/DOMPageFactory' ,
@@ -131,17 +128,18 @@ require([
         
         'dom/KineticTexter' 
 	], function(){
-		require(['DOMBoardFactory', 'jquery', 'jquery-ui'], function(DOMBoardFactory, $){
-			var board = DOMBoardFactory.create("board", "palette", "rubbishbin");
-			// $("#create-note").click(function(){
-			// 	$("#modal").toggleClass("noteIsShown");
-			// 	$("#wrapper").toggleClass("noteIsShown");
-			// 	$("#modal-cover").toggleClass("noteIsShown");
+		require(['DOMPageFactory', 'uuid', 'jquery', 'jquery-ui'], function(DOMPageFactory, UUID, $){
+			var board = DOMPageFactory.create("board", 700, 700, "palette", "rubbishbin", 100, 700);
+			$("#create-note").click(function(){
+				$("#modal").toggleClass("noteIsShown");
+				$("#wrapper").toggleClass("noteIsShown");
+				$("#modal-cover").toggleClass("noteIsShown");
 
-			// 	var noteUuid = UUID.genV4().toString();
-   //                              DOMNoteDnDDecorator.create(DOMNoteFactory, "modal", board.getPainter().getPalette(), noteUuid);
+				// var noteUuid = UUID.genV4().toString();
+                var note = DOMPageFactory.create("note", 250, 250, "note-palette", "note-rubbishbin", 50, 250);
+                // DOMNoteDnDDecorator.create(DOMNoteFactory, "modal", board.getPainter().getPalette(), noteUuid);
 		    	
-			// });
+			});
 
 		});
 });

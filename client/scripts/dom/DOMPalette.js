@@ -34,7 +34,7 @@ DOMPalette.prototype.isHidden = function(){
 
 DOMPalette.prototype.addColorButton = function(color){
 	var button = document.createElement('button');
-	button.id = "palette_" + color;
+	button.className = "palette_" + color;
 	var self = this;
 	button.onclick = function(){
 		self.setColor(color);
