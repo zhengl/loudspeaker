@@ -12,6 +12,7 @@ KineticTextInput.prototype.constructor = KineticTextInput;
 
 KineticTextInput.prototype.show = function(){
     this.initializeCursor(this.context);
+    this.element.focus();
 };
 
 KineticTextInput.prototype.setColor = function(color){
@@ -25,7 +26,6 @@ KineticTextInput.prototype.initializeCursor = function(context){
 KineticTextInput.prototype.initializeDOMElement = function(context){
 	this.element = this.createDOMElement();
     context.stage.getContainer().appendChild(this.element);
-    this.element.focus();
 };
 
 KineticTextInput.prototype.createDOMElement = function() {
