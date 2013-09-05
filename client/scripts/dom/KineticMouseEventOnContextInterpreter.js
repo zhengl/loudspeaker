@@ -29,7 +29,7 @@ KineticMouseEventOnContextInterpreter.addHandle = function(eventType, callback) 
 
 KineticMouseEventOnContextInterpreter.addHandle(Event.Kinetic.MOVE_TO, function(event, eventBus){
 	this.stopLongPressTimer();
-	if(this.previousEvent.type == Event.Kinetic.MOUSE_DOWN && ! this.isTexting) {
+	if(this.previousEvent.type == Event.Kinetic.MOUSE_DOWN && ! this.target.isTexting()) {
 		this.moveUpEventCatcher();
 		eventBus.publish(new Event(Event.Page.START_DRAWING, [new Point(event.offsetX, event.offsetY)]));
 	} else if (this.target.isPainting()) {
