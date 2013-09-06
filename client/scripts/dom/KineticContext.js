@@ -46,10 +46,12 @@ KineticContext.prototype.getLastDraftItem = function(){
 
 KineticContext.prototype.addItem = function(item){
 	this.layer.addItem(item);
+	this.draftLayer.draw();
 };
 
 KineticContext.prototype.addDraftItem = function(item){
 	this.draftLayer.addDraftItem(item);
+	this.layer.draw();
 };
 
 

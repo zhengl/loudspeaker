@@ -33,7 +33,7 @@ DOMPageFactory.create = function(pageId, pageWidth, pageHeight, paletteId, rubbi
 	mover.enableEventHandling(eventBus);
 	page.setMover(mover);
 
-	var rubbishbin = new DOMRubbishBin(new Point(pageWidth - rubbishbinWidth, 0), new Point(pageWidth, pageHeight - rubbishbinHeight), rubbishbinId);
+	var rubbishbin = new DOMRubbishBin(new Point(pageWidth - rubbishbinWidth, 0), new Point(pageWidth, rubbishbinHeight), rubbishbinId);
 	rubbishbin.enableEventHandling(eventBus);
 	mover.setRubbishBin(rubbishbin);
 
