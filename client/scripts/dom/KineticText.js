@@ -17,6 +17,10 @@ KineticText.prototype.setColor = function(color){
 	this.getKineticShape().setFill(color);
 };
 
+KineticText.prototype.getColor = function(){
+	return this.getKineticShape().getFill();
+};
+
 KineticText.prototype.setValue = function(text){
 	this.getKineticShape().setText(text);
 };

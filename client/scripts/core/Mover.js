@@ -15,8 +15,7 @@ Mover.prototype.getContext = function(){
 Mover.prototype.startMoving = function(item) {
 	this.context.setMode(Context.MODE.MOVING);
 
-	item.draftize();
-	this.context.addDraftItem(item);
+	this.context.addDraftItem(item);	
 	this.context.removeItem(item);
 	this.movingItem = item;
 	this.movingItem.isMoving = true;
@@ -31,7 +30,6 @@ Mover.prototype.finishMoving = function() {
 		this.context.clearDraftItems();
 		this.rubbishBin.close();
 	} else {
-		this.movingItem.undraftize();
 		this.context.addItem(this.movingItem);
 		this.context.clearDraftItems();
 		this.movingItem.isMoving = false;

@@ -63,6 +63,9 @@ require([
         'core/RubbishBin' ,
       
         
+        'core/RubbishBinEventHandler' ,
+      
+        
         'core/Serializer' ,
       
         
@@ -102,6 +105,9 @@ require([
         'dom/KineticCursor' ,
       
         
+        'dom/KineticDraftLayer' ,
+      
+        
         'dom/KineticEvent' ,
       
         
@@ -109,6 +115,9 @@ require([
       
         
         'dom/KineticItemFactory' ,
+      
+        
+        'dom/KineticLayer' ,
       
         
         'dom/KineticLine' ,

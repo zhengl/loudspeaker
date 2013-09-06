@@ -1,4 +1,4 @@
-require(['TextInput', 'Text', 'Point', 'Context', 'KineticContext', 'KineticTextInput'], function(TextInput, Text, Point, Context, KineticContext, KineticTextInput){
+require(['TextInput', 'Text', 'Point', 'Context'], function(TextInput, Text, Point, Context){
 
 describe("TextInput", function(){
 	var textInput;

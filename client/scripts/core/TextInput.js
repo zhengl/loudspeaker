@@ -13,7 +13,6 @@ TextInput.prototype.write = function(text) {
 	this.text = text;
 	this.context.clearDraftItems();
 	this.context.addDraftItem(this.getText());
-	return this.getText();
 };
 
 TextInput.prototype.append = function(text) {
@@ -25,8 +24,6 @@ TextInput.prototype.append = function(text) {
 		this.text.setValue(this.text.getValue() + text.getValue());
 		item = this.write(this.text);
 	}
-
-	return item;
 };
 
 TextInput.prototype.flush = function() {

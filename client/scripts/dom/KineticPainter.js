@@ -10,7 +10,6 @@ KineticPainter.constructor = KineticPainter;
 KineticPainter.prototype.draw = function(item) {
 	var kineticItem = new KineticLine(item.points);
 	kineticItem.setColor(item.getColor());
-
 	this.context.addItem(kineticItem);
 	return kineticItem;
 };
@@ -18,8 +17,6 @@ KineticPainter.prototype.draw = function(item) {
 KineticPainter.prototype.draft = function(item) {
 	var kineticItem = new KineticLine(item.points);
 	kineticItem.setColor(item.getColor());
-	kineticItem.draftize();
-
 	this.context.addDraftItem(kineticItem);
 	return kineticItem;
 };
@@ -30,7 +27,6 @@ KineticPainter.prototype.startDraft = function(point){
 	var draftItem = new KineticLine();
 	draftItem.update(point);
 	draftItem.setColor(this.palette.getColor());
-	draftItem.draftize();
 	this.context.addDraftItem(draftItem);
 };
 
@@ -38,8 +34,7 @@ KineticPainter.prototype.endDraft = function(point){
 	this.context.setMode(Context.MODE.IDLE);
 
 	this.draftTo(point);	
-	var draftItem = this.context.getLastDraftItem();
-	var item = draftItem.undraftize();
+	var item = this.context.getLastDraftItem();
 	this.context.addItem(item);
 	this.context.clearDraftItems();
 

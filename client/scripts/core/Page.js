@@ -1,8 +1,19 @@
-define('Page', function(){
+define('Page', ['Item'], function(Item){
 
 function Page(){
 	
 }
+
+Page.prototype = new Item();
+Page.prototype.constructor = Page;
+
+Page.prototype.getContext = function() {
+	return this.context;
+};
+
+Page.prototype.setContext = function(context) {
+	this.context = context;
+};
 
 Page.prototype.getEventBus = function() {
 	return this.eventBus;
@@ -43,6 +54,22 @@ Page.prototype.getMover = function() {
 Page.prototype.setMover = function(mover) {
 	this.mover = mover;
 };
+
+Page.prototype.appendPage = function(page) {
+	page.disableEventHandling();
+	this.getContext().getItems().push(page);
+
+	page.enableEventHandling(this.getEventBus());
+};
+
+Page.prototype.disableEventHandling = function(page) {
+	this.getContext().disableEventHandling();
+	this.getMover().disableEventHandling();
+	this.getTexter().disableEventHandling();
+	this.getPainter().disableEventHandling();
+	this.getPalette().disableEventHandling();
+};
+
 
 return Page;
 

@@ -41,6 +41,7 @@ Texter.prototype.write = function(text){
 };
 
 Texter.prototype.draft = function(text){
+	this.textInput.show();
 	this.textInput.setColor(this.palette.getColor());
 	this.textInput.setPosition(text.getPosition());
 	this.getTextInput().append(text);

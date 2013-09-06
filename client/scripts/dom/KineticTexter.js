@@ -1,10 +1,10 @@
-define('KineticTexter', ['Texter', 'KineticText', 'Context'], function(Painter, KineticText, Context){
+define('KineticTexter', ['Texter', 'KineticText', 'Context'], function(Texter, KineticText, Context){
 
 function KineticTexter(palette, textInput){
-	Painter.call(this, palette, textInput);
+	Texter.call(this, palette, textInput);
 }
 
-KineticTexter.prototype = new Painter();
+KineticTexter.prototype = new Texter();
 KineticTexter.constructor = KineticTexter;
 
 KineticTexter.prototype.finishTexting = function(position) {

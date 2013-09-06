@@ -59,7 +59,7 @@ KineticTextInput.prototype.enableEventHandling = function(eventBus) {
 	    } else {
 	    	window.setTimeout(function(){
 	    		self.text.setValue(self.element.value);
-	    		self.write(self.text);
+	    		self.write(self.getText());
 	    		self.adjustCursor();
 	    	}, 1);
 	    }
@@ -88,7 +88,6 @@ KineticTextInput.prototype.draftToContext = function(value, point){
 	this.getText().setPosition(point);
 
 	this.context.clearDraftItems();
-
 	this.context.addDraftItem(this.getText());
 	return this.getText();
 }

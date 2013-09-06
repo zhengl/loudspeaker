@@ -6,10 +6,9 @@ function PaletteEventHandler(){
 
 PaletteEventHandler.prototype.handle = {};
 
-PaletteEventHandler.prototype.handle[Event.Page.FINISH_MOVING] = function(palette, event){
-	if ((event.name == Event.Page.FINISH_MOVING || event.name == Event.Page.MOVE_TO) && this.isInside(event.data[0])) {
-		this.open();
-	}
+PaletteEventHandler.prototype.handle[Event.Page.START_SELECTING_COLOR] = function(palette, event){
+	palette.setPosition(event.data[0]);
+	palette.show();
 };
 
 return PaletteEventHandler;

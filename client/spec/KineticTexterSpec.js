@@ -16,20 +16,23 @@ describe("KineticTexter", function(){
 		body.appendChild(board);
 		body.appendChild(palette);
 		texter = new KineticTexter(new DOMPalette('palette'), new KineticTextInput(new KineticContext('board', 50, 50)));
+		texter.palette.setColor('red');
 	});
 
-	it("should return a KineticText after drawing a line", function() {
+	it("should return a KineticText after write words", function() {
 		var text = createText();
 		texter.write(text);
 		var item = texter.getContext().getItems()[0];
 		expect(item instanceof KineticText).toBeTruthy();
+		expect(item.getColor()).toEqual('red');
 	});
 
-	it("should have no item after drafting a line", function(){
+	it("should have no item after drafting words", function(){
 		var text = createText();
-		texter.write(text);
-		var item = texter.getContext().getItems()[0];
-		expect(item instanceof KineticText).toBeTruthy()
+		texter.draft(text);
+		var item = texter.getContext().getDraftItems()[0];
+		expect(item instanceof KineticText).toBeTruthy();
+		expect(texter.getContext().getItems().length).toEqual(0);
 	});
 
 		

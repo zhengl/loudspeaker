@@ -28,7 +28,6 @@ Painter.prototype.startDraft = function(point){
 	var draftItem = new Line();
 	draftItem.update(point);
 	draftItem.setColor(this.palette.getColor());
-	draftItem.draftize();
 	this.context.addDraftItem(draftItem);
 };
 
@@ -47,8 +46,7 @@ Painter.prototype.endDraft = function(point){
 	this.context.setMode(Context.MODE.IDLE);
 
 	this.draftTo(point);	
-	var draftItem = this.context.getLastDraftItem();
-	var item = draftItem.undraftize();
+	var item = this.context.getLastDraftItem();
 	this.context.addItem(item);
 	this.context.clearDraftItems();
 };

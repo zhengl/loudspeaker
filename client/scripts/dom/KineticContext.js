@@ -1,17 +1,14 @@
-define('KineticContext', ['Context', 'Kinetic', 'KineticEvent', 'KineticMouseEventOnContextInterpreter'], function(Context, Kinetic, Event, KineticMouseEventOnContextInterpreter){
+define('KineticContext', ['Context', 'Kinetic', 'KineticLayer', 'KineticDraftLayer','KineticEvent', 'KineticMouseEventOnContextInterpreter'], function(Context, Kinetic, KineticLayer, KineticDraftLayer, Event, KineticMouseEventOnContextInterpreter){
 
 
 function KineticContext(container, width, height){
-	this.items = new Array();
-	this.draftItems = new Array();
-	
 	this.stage = new Kinetic.Stage({
 		container: container,
 		width: width,
 		height: height,
 	});
-	this.layer = new Kinetic.Layer();
-	this.draftLayer = new Kinetic.Layer();
+	this.layer = new KineticLayer();
+	this.draftLayer = new KineticDraftLayer();
 	this.stage.add(this.draftLayer);
 	this.stage.add(this.layer);
 	this.layer.moveToTop();
@@ -30,23 +27,29 @@ KineticContext.EVENTS = [
 	Event.Kinetic.MOUSE_OUT
 ]
 
+KineticContext.prototype.getItems = function(){
+	return this.layer.getItems();
+};
+
+KineticContext.prototype.getDraftItems = function(){
+	return this.draftLayer.getDraftItems();
+};
+
 KineticContext.prototype.clearDraftItems = function(){
-	this.draftItems = [];
-	this.draftLayer.removeChildren();
-	this.draftLayer.draw();
+	this.draftLayer.clear();
 };
 
-KineticContext.prototype.addItem = function(kineticItem){
-	this.items.push(kineticItem)
-	kineticItem.getKineticShape().moveTo(this.layer);
-	this.layer.draw();
+KineticContext.prototype.getLastDraftItem = function(){
+	var draftItems = this.getDraftItems();
+	return draftItems[draftItems.length - 1];
 };
 
-KineticContext.prototype.addDraftItem = function(kineticItem){
-	this.draftItems.push(kineticItem);
-	kineticItem.getKineticShape().moveTo(this.draftLayer);
-	this.layer.draw();
-	this.draftLayer.draw();
+KineticContext.prototype.addItem = function(item){
+	this.layer.addItem(item);
+};
+
+KineticContext.prototype.addDraftItem = function(item){
+	this.draftLayer.addDraftItem(item);
 };
 
 

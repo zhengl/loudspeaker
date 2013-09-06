@@ -12,7 +12,7 @@ DOMPageFactory.create = function(pageId, pageWidth, pageHeight, paletteId, rubbi
 	
 	var context = new KineticContext(pageId, pageWidth, pageHeight);
 	context.enableEventHandling(eventBus);
-	context.disableEventHandling();
+	page.setContext(context);
 
 	var palette = DOMPaletteFactory.create(paletteId);
 	palette.enableEventHandling(eventBus);
@@ -27,7 +27,7 @@ DOMPageFactory.create = function(pageId, pageWidth, pageHeight, paletteId, rubbi
 
 	var texter = new KineticTexter(palette, textInput);
 	texter.enableEventHandling(eventBus);
-	page.setPainter();
+	page.setTexter(texter);
 
 	var mover = new Mover(context);
 	mover.enableEventHandling(eventBus);
