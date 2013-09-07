@@ -1,0 +1,19 @@
+require.config({
+	baseUrl: "client/scripts",
+	paths: {
+		<% paths.forEach(function(path){ %>
+			<%= path %>
+		<% }); %>
+		"jquery": '../../lib/jquery/jquery-1.9.1',
+		"jquery-ui": '../../lib/jquery/jquery-ui',
+		"domReady": '../../lib/domReady/domReady',
+		"Kinetic": '../../lib/kinetic/kinetic-v4.6.0',
+		"uuid": '../../lib/uuid/uuid'
+	},
+	urlArgs: "bust=" + (new Date()).getTime(),
+	shim: {
+			'uuid': {
+				exports: 'UUID',
+			}
+	}
+});

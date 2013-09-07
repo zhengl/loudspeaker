@@ -1,9 +1,15 @@
 module.exports = function(grunt){
+	var dependencies = [];
+	grunt.file.recurse("client/scripts", function(abspath, rootdir, subdir, filename){
+		var basename = filename.replace(".js", "");
+		dependencies.push(basename + ': "' + subdir + '/' + basename + '",');
+	});
+
 	grunt.initConfig({
 		pkg: grunt.file.readJSON('package.json'),
 
 		requirejs: {
-			compile: {
+			dev: {
 				options: {
 					baseUrl: "client/scripts",
 					mainConfigFile: "client/config.js",
@@ -43,13 +49,6 @@ module.exports = function(grunt){
         },
 
 		watch: {
-			scripts: {
-				files: ['client/scripts/**/*.js'],
-				tasks: ['requirejs'],
-				options: {
-					spawn: false,
-				},
-			},
 			styles: {
 				files: ['client/assets/**/*.less'],
 				tasks: ['less'],
@@ -59,14 +58,35 @@ module.exports = function(grunt){
 			},
 			tests: {
 				files: ['client/spec/**/*Spec.js'],
-				tasks: ['test'],
+				tasks: ['template', 'test'],
 				options: {
 					spawn: false,
 				},
 			}
 		},
 
-        clean: ["./client/styles"]
+		template: {
+			dev: {
+				files: [
+					{
+						src: "client/templates/index.html.tmpl",
+						dest: "client/index.html",
+						data: {
+							main: "main"
+						}
+					},
+					{
+						src: "client/templates/config.js.tmpl",
+						dest: "client/config.js",
+						data: {
+							paths: dependencies
+						}
+					}
+				]
+			},
+		},
+
+        clean: ["./client/styles", "./client/index.html", "./client/main.min.js", "./client/config.js"]
 	});
 
 	grunt.loadNpmTasks('grunt-contrib-jasmine');
@@ -76,6 +96,15 @@ module.exports = function(grunt){
 	grunt.loadNpmTasks('grunt-contrib-requirejs');
 	grunt.loadNpmTasks('grunt-contrib-watch');
 
-	grunt.registerTask('test', ['jasmine', 'jasmine_node']);
-	grunt.registerTask('default', ['test', 'requirejs', 'less']);
+	grunt.registerTask('compile', ['template', 'less'])
+	grunt.registerTask('test', ['template', 'jasmine', 'jasmine_node']);
+	grunt.registerTask('default', ['compile', 'test']);
+	grunt.registerMultiTask('template', 'aaa', function(){
+		var files = this.data.files;
+		for(var i = 0; i < files.length; i++) {
+			grunt.log.writeln("Generate " + files[i].dest);
+			var template = grunt.file.read(files[i].src);
+			grunt.file.write(files[i].dest, grunt.template.process(template, {data: files[i].data}));
+		}
+	});
 };

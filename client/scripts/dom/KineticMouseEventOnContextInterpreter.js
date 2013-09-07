@@ -82,13 +82,13 @@ KineticMouseEventOnContextInterpreter.prototype.stopLongPressTimer = function(){
 
 KineticMouseEventOnContextInterpreter.prototype.moveUpEventCatcher = function(){
 	if(undefined != this.eventCatcher) {
-		this.target.getPainter().context.eventCatcher.moveToTop();
+		this.target.eventCatcher.moveToTop();
 	}
 };
 
 KineticMouseEventOnContextInterpreter.prototype.moveDownEventCatcher = function(){
 	if(undefined != this.eventCatcher) {
-		this.target.getPainter().context.eventCatcher.moveToBottom();
+		this.target.eventCatcher.moveToBottom();
 	}
 };
 
