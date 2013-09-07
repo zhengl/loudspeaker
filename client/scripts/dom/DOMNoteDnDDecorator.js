@@ -14,7 +14,7 @@ DOMNoteDnDDecorator.create = function(noteElementId, note, boardElementId, board
 		drop: function( event, ui ) {
 				board.appendPage(note);
 				$("#" + noteElementId).addClass("note-on-board").removeClass("note-off-board");
-				$("#" + noteElementId).appendTo($("#" + boardElementId).parent());
+				$("#" + noteElementId).appendTo($("#" + boardElementId));
 				$("#modal").toggleClass("noteIsShown");
                 $("#wrapper").toggleClass("noteIsShown");
                 $("#modal-cover").toggleClass("noteIsShown");
