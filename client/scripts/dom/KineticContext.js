@@ -1,14 +1,17 @@
-define('KineticContext', ['Context', 'Kinetic', 'KineticLayer', 'KineticDraftLayer','KineticEvent', 'KineticMouseEventOnContextInterpreter'], function(Context, Kinetic, KineticLayer, KineticDraftLayer, Event, KineticMouseEventOnContextInterpreter){
+define('KineticContext', ['Context', 'Kinetic','KineticEvent', 'KineticMouseEventOnContextInterpreter'], function(Context, Kinetic, Event, KineticMouseEventOnContextInterpreter){
 
 
 function KineticContext(container, width, height){
+	this.items = [];
+	this.draftItems = [];
+
 	this.stage = new Kinetic.Stage({
 		container: container,
 		width: width,
 		height: height,
 	});
-	this.layer = new KineticLayer();
-	this.draftLayer = new KineticDraftLayer();
+	this.layer = new Kinetic.Layer();
+	this.draftLayer = new Kinetic.Layer();
 	this.stage.add(this.draftLayer);
 	this.stage.add(this.layer);
 	this.layer.moveToTop();
@@ -28,15 +31,17 @@ KineticContext.EVENTS = [
 ]
 
 KineticContext.prototype.getItems = function(){
-	return this.layer.getItems();
+	return this.items;
 };
 
 KineticContext.prototype.getDraftItems = function(){
-	return this.draftLayer.getDraftItems();
+	return this.draftItems;
 };
 
 KineticContext.prototype.clearDraftItems = function(){
-	this.draftLayer.clear();
+	this.draftItems = [];
+	this.draftLayer.removeChildren();
+	this.draftLayer.draw();
 };
 
 KineticContext.prototype.getLastDraftItem = function(){
@@ -45,12 +50,26 @@ KineticContext.prototype.getLastDraftItem = function(){
 };
 
 KineticContext.prototype.addItem = function(item){
-	this.layer.addItem(item);
+	this.items.push(item)
+	if(item.undraftize){
+		item.undraftize();
+	}
+	if(item.kineticShape){
+		item.getKineticShape().moveTo(this.layer);
+		this.layer.draw();
+	}
 	this.draftLayer.draw();
 };
 
 KineticContext.prototype.addDraftItem = function(item){
-	this.draftLayer.addDraftItem(item);
+	this.draftItems.push(item)
+	if(item.draftize){
+		item.draftize();
+	}
+	if(item.kineticShape){
+		item.getKineticShape().moveTo(this.draftLayer);
+		this.draftLayer.draw();
+	}
 	this.layer.draw();
 };
 

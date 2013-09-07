@@ -3,7 +3,8 @@ require.config({
 	paths: {
 		"jquery": '../../lib/jquery/jquery-1.9.1',
 		"jquery-ui": '../../lib/jquery/jquery-ui',
-		"Kinetic": '../../lib/kinetic/kinetic-v4.5.3.min',
+		"Kinetic": '../../lib/kinetic/kinetic-v4.6.0',
+                "domReady": '../../lib/domReady/domReady',
 		"uuid": '../../lib/uuid/uuid'
 	},
 	urlArgs: "bust=" + (new Date()).getTime(),
@@ -105,9 +106,6 @@ require([
         'dom/KineticCursor' ,
       
         
-        'dom/KineticDraftLayer' ,
-      
-        
         'dom/KineticEvent' ,
       
         
@@ -115,9 +113,6 @@ require([
       
         
         'dom/KineticItemFactory' ,
-      
-        
-        'dom/KineticLayer' ,
       
         
         'dom/KineticLine' ,
@@ -140,18 +135,18 @@ require([
         
         'dom/KineticTexter' 
 	], function(){
-		require(['DOMPageFactory', 'DOMNoteDnDDecorator', 'uuid', 'jquery', 'jquery-ui'], function(DOMPageFactory, DOMNoteDnDDecorator, UUID, $){
-			var board = DOMPageFactory.create("board", 700, 700, "palette", "rubbishbin", 100, 700);
-			$("#create-note").click(function(){
-				$("#modal").toggleClass("noteIsShown");
-				$("#wrapper").toggleClass("noteIsShown");
-				$("#modal-cover").toggleClass("noteIsShown");
+		require(['domReady','DOMPageFactory', 'DOMNoteDnDDecorator', 'uuid', 'jquery', 'jquery-ui'], function(domReady, DOMPageFactory, DOMNoteDnDDecorator, UUID, $){
+                        domReady(function(){      
+                                var board = DOMPageFactory.create("board", 700, 700, "palette", "rubbishbin", 100, 700);
+                                $("#create-note").click(function(){
+                                        $("#modal").toggleClass("noteIsShown");
+                                        $("#wrapper").toggleClass("noteIsShown");
+                                        $("#modal-cover").toggleClass("noteIsShown");
 
-				// var noteUuid = UUID.genV4().toString();
-                var note = DOMPageFactory.create("note", 250, 250, "note-palette", "note-rubbishbin", 50, 250);
-                DOMNoteDnDDecorator.create("note", note, board);
-		    	
-			});
-
-		});
+                                        var note = DOMPageFactory.create("note", 250, 250, "note-palette", "note-rubbishbin", 50, 250);
+                                        DOMNoteDnDDecorator.create("note", note, board);
+                                
+                                });
+                        });
+                });
 });

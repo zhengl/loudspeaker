@@ -1,4 +1,4 @@
-define('DOMRubbishBin', ['RubbishBin'], function(RubbishBin){
+define('DOMRubbishBin', ['RubbishBin', 'jquery'], function(RubbishBin, $){
 
 
 function DOMRubbishBin(leftTop, rightBottom, elementId){

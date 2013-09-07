@@ -33,7 +33,6 @@ describe("KineticPainter", function(){
 	it("should DRAW a line with steps", function(){
 		painter.getPalette().setColor('red');
 		painter.startDraft(new Point(10, 10));
-		console.log(painter.getContext().getItems());
 		expectNoItem(painter);
 		expectOneDraftItem(painter);
 		
