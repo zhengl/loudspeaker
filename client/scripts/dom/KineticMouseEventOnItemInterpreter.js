@@ -29,7 +29,6 @@ KineticMouseEventOnItemInterpreter.addHandle(Event.Kinetic.MOVE_TO, function(eve
 KineticMouseEventOnItemInterpreter.addHandle(Event.Kinetic.MOUSE_DOWN, function(event, eventBus){
 	if(this.target.isSelected) {
 		var mousePosition = this.target.getKineticShape().getStage().getMousePosition();
-		console.log(this.target.getKineticShape().getStage().getContainer())
 		var currentPosition = this.target.getPosition();
 
 		var relativeX = mousePosition.x - currentPosition.x;

@@ -5,21 +5,19 @@ function DOMNoteDnDDecorator(){
 	
 }
 
-DOMNoteDnDDecorator.create = function(noteId, note, board){
-	var droppableZone = document.createElement('div');
-	droppableZone.className = "droppable-zone";
-
-	var draggableZone = document.createElement('div');
-	draggableZone.className = "draggable-zone";
-
-	var parentNode = document.getElementById(noteId).parentNode;
-	parentNode.insertBefore(droppableZone, parentNode.firstChild);
-	parentNode.appendChild(draggableZone);
+DOMNoteDnDDecorator.create = function(noteElementId, note, boardElementId, board){
+	var droppableZone = document.getElementById('note-droppable-zone');
+	var draggableZone = document.getElementById('note-draggable-zone');
 
 	$(draggableZone).draggable({ revert: true });
 	$(droppableZone).droppable({
 		drop: function( event, ui ) {
-				console.log("dropped!")
+				board.appendPage(note);
+				$("#" + noteElementId).addClass("note-on-board").removeClass("note-off-board");
+				$("#" + noteElementId).appendTo($("#" + boardElementId).parent());
+				$("#modal").toggleClass("noteIsShown");
+                $("#wrapper").toggleClass("noteIsShown");
+                $("#modal-cover").toggleClass("noteIsShown");
 		}
 	});
 }

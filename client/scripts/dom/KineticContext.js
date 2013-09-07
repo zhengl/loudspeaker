@@ -102,7 +102,7 @@ KineticContext.prototype.disableEventHandling = function(){
 };
 
 KineticContext.prototype.removeEventListeners = function(eventBus, events){
-	this.layer.remove(this.eventCatcher);
+	this.eventCatcher.remove();
 
 	this.eventCatcher.off(events.join(" "));
 	this.layer.draw();
