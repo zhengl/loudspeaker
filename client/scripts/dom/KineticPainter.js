@@ -21,21 +21,11 @@ KineticPainter.prototype.draft = function(item) {
 	return kineticItem;
 };
 
-KineticPainter.prototype.startDraft = function(point){
-	this.context.setMode(Context.MODE.PAINTING);
-
-	var draftItem = new KineticLine();
-	draftItem.update(point);
-	draftItem.setColor(this.palette.getColor());
-	this.context.addDraftItem(draftItem);
-};
-
 KineticPainter.prototype.endDraft = function(point){
 	this.context.setMode(Context.MODE.IDLE);
 
 	this.draftTo(point);	
-	var item = this.context.getLastDraftItem();
-	this.context.addItem(item);
+	this.context.addItem(this.draftItem);
 	this.context.clearDraftItems();
 
 	if (undefined != this.eventBus) {

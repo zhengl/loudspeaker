@@ -25,29 +25,23 @@ Painter.prototype.draft = function(item){
 Painter.prototype.startDraft = function(point){
 	this.context.setMode(Context.MODE.PAINTING);
 
-	var draftItem = new Line();
-	draftItem.update(point);
-	draftItem.setColor(this.palette.getColor());
-	this.context.addDraftItem(draftItem);
-};
-
-Painter.prototype.selectShape = function(shape){
-	this.palette.selectShape(shape);
+	this.draftItem = new Line();
+	this.draftItem.update(point);
+	this.draftItem.setColor(this.palette.getColor());
+	this.context.addDraftItem(this.draftItem);
 };
 
 Painter.prototype.draftTo = function(point){
-	var draftItem = this.context.getLastDraftItem();
-	draftItem.update(point);
+	this.draftItem.update(point);
 	this.context.clearDraftItems();
-	this.context.addDraftItem(draftItem);
+	this.context.addDraftItem(this.draftItem);
 };
 
 Painter.prototype.endDraft = function(point){
 	this.context.setMode(Context.MODE.IDLE);
 
 	this.draftTo(point);	
-	var item = this.context.getLastDraftItem();
-	this.context.addItem(item);
+	this.context.addItem(this.draftItem);
 	this.context.clearDraftItems();
 };
 
