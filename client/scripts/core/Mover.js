@@ -18,7 +18,6 @@ Mover.prototype.startMoving = function(item) {
 	this.context.addDraftItem(item);	
 	this.context.removeItem(item);
 	this.movingItem = item;
-	return this.movingItem;
 };
 
 Mover.prototype.finishMoving = function() {
@@ -26,14 +25,12 @@ Mover.prototype.finishMoving = function() {
 
 	if (this.rubbishBin && this.rubbishBin.isOpen) {
 		this.context.removeItem(this.movingItem);
-		this.context.clearDraftItems();
 		this.rubbishBin.close();
 	} else {
 		this.context.addItem(this.movingItem);
-		this.context.clearDraftItems();
 	}
-
-	return this.movingItem;
+		
+	this.context.clearDraftItems();
 };
 
 Mover.prototype.moveTo = function(point){
