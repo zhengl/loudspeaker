@@ -2,10 +2,7 @@ define('Line', ['Item', 'Point'], function(Item, Point){
 
 
 function Line(points, color){
-	if (undefined == points) {
-		points = new Array();
-	}
-	this.points = points;
+	this.points = points ? points : [];
 	this.color = color;
 }
 
