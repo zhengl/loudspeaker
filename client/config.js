@@ -1,5 +1,5 @@
 require.config({
-	baseUrl: "client/scripts",
+	baseUrl: "scripts",
 	paths: {
 		
 			Context: "core/Context",

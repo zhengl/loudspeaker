@@ -22,13 +22,25 @@ KineticMouseEventOnItemInterpreter.addHandle = function(eventType, callback) {
 
 KineticMouseEventOnItemInterpreter.addHandle(Event.Kinetic.MOVE_TO, function(event, eventBus){
 	if(this.target.isMoving) {
-		eventBus.publish(new Event(Event.Item.MOVE_TO, [this.target, new Point(event.offsetX, event.offsetY)]));
+		if (this.target.kineticShape) {
+			eventBus.publish(new Event(Event.Item.MOVE_TO, [this.target, new Point(event.offsetX, event.offsetY)]));
+		} else {
+			var containerPosition = this.target.parent.getContext().stage.getContainer().getBoundingClientRect();
+			mousePosition = {x: (event.clientX - containerPosition.left), y: (event.clientY - containerPosition.top)};
+			eventBus.publish(new Event(Event.Item.MOVE_TO, [this.target, new Point(mousePosition.x, mousePosition.y)]));
+		}
 	}
 });
 
 KineticMouseEventOnItemInterpreter.addHandle(Event.Kinetic.MOUSE_DOWN, function(event, eventBus){
 	if(this.target.isSelected) {
-		var mousePosition = this.target.getKineticShape().getStage().getMousePosition();
+		var mousePosition;
+		if (this.target.kineticShape) {
+			mousePosition = this.target.getKineticShape().getStage().getMousePosition();
+		} else {
+			var containerPosition = this.target.parent.getContext().stage.getContainer().getBoundingClientRect();
+			mousePosition = {x: (event.clientX - containerPosition.left), y: (event.clientY - containerPosition.top)};
+		}
 		var currentPosition = this.target.getPosition();
 
 		var relativeX = mousePosition.x - currentPosition.x;

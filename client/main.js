@@ -3,6 +3,8 @@ require(['config'], function(){
 require(['domReady', 'DOMPageFactory', 'DOMNoteDnDDecorator', 'uuid', 'jquery', 'jquery-ui'], function(domReady, DOMPageFactory, DOMNoteDnDDecorator, UUID, $){
        domReady(function(){
         var board = DOMPageFactory.create("board", 700, 700, "palette", "rubbishbin", 100, 700);
+        $("#rubbishbin").appendTo($("#board"));
+
         $("#create-note").click(function(){
                 $("#modal").toggleClass("noteIsShown");
                 $("#wrapper").toggleClass("noteIsShown");

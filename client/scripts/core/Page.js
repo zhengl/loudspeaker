@@ -1,4 +1,4 @@
-define('Page', ['Item'], function(Item){
+define('Page', ['Item', 'Point'], function(Item, Point){
 
 function Page(){
 	
@@ -58,6 +58,8 @@ Page.prototype.setMover = function(mover) {
 Page.prototype.appendPage = function(page) {
 	page.disableEventHandling();
 	this.getContext().getItems().push(page);
+	page.setPosition(new Point(0, 0));
+	page.parent = this;
 
 	page.enableEventHandling(this.getEventBus());
 };
@@ -68,6 +70,13 @@ Page.prototype.disableEventHandling = function(page) {
 	this.getTexter().disableEventHandling();
 	this.getPainter().disableEventHandling();
 	this.getPalette().disableEventHandling();
+};
+
+Page.prototype.moveTo = function(point){
+	this.position = point;
+    this.element.style.position = "absolute";
+    this.element.style.left = point.x + "px";
+	this.element.style.top = point.y + "px";
 };
 
 
