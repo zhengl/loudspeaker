@@ -18,7 +18,6 @@ Mover.prototype.startMoving = function(item) {
 	this.context.addDraftItem(item);	
 	this.context.removeItem(item);
 	this.movingItem = item;
-	this.movingItem.isMoving = true;
 	return this.movingItem;
 };
 
@@ -32,7 +31,6 @@ Mover.prototype.finishMoving = function() {
 	} else {
 		this.context.addItem(this.movingItem);
 		this.context.clearDraftItems();
-		this.movingItem.isMoving = false;
 	}
 
 	return this.movingItem;

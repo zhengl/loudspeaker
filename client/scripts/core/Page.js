@@ -74,9 +74,11 @@ Page.prototype.disableEventHandling = function(page) {
 
 Page.prototype.moveTo = function(point){
 	this.position = point;
-    this.element.style.position = "absolute";
-    this.element.style.left = point.x + "px";
-	this.element.style.top = point.y + "px";
+	if (this.element) {
+	    this.element.style.position = "absolute";
+	    this.element.style.left = point.x + "px";
+		this.element.style.top = point.y + "px";
+	}
 };
 
 
