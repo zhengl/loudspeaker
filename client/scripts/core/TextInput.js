@@ -48,7 +48,7 @@ TextInput.prototype.getPosition = function(){
 TextInput.prototype.show = function(){
 };
 
-TextInput.prototype.remove = function(){
+TextInput.prototype.hide = function(){
 };
 
 TextInput.prototype.setColor = function(color){

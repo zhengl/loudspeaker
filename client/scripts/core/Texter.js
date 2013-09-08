@@ -24,7 +24,8 @@ Texter.prototype.startTexting = function(position) {
 Texter.prototype.finishTexting = function(position) {
 	this.getContext().setMode(Context.MODE.IDLE);
 
-	this.getTextInput().flush();
+	this.textInput.hide();
+	this.textInput.flush();
 };
 
 Texter.prototype.getTextInput = function() {
@@ -35,20 +36,21 @@ Texter.prototype.write = function(text){
 	this.textInput.show();
 	this.textInput.setColor(this.palette.getColor());
 	this.textInput.setPosition(text.getPosition());
-	this.getTextInput().write(text);
-	this.getTextInput().flush();
-	this.textInput.remove();
+	this.textInput.write(text);
+	this.textInput.flush();
+	this.textInput.hide();
 };
 
 Texter.prototype.draft = function(text){
 	this.textInput.show();
 	this.textInput.setColor(this.palette.getColor());
 	this.textInput.setPosition(text.getPosition());
-	this.getTextInput().append(text);
+	this.textInput.append(text);
+	this.textInput.hide();
 };
 
 Texter.prototype.clear = function(text){
-	this.textInput.remove();
+	this.textInput.hide();
 };
 
 return Texter;
