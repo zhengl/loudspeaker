@@ -5,6 +5,8 @@
   <meta charset="utf-8">
   <script data-main="<%= main %>" src="../lib/require/require.js"></script>
   <link rel="stylesheet" type="text/css" href="styles/main.css" />
+  <style>
+  </style>
 </head>
 <body>
   <button id="create-note" style="float: right;">Note</button>
@@ -24,5 +26,31 @@
     <div id="note-draggable-zone" class="draggable-zone"></div>
   </div>
   <div id="modal-cover"></div>
+  <% if(debug){ %>
+  <div id="debug">
+    <table>
+      <tr>
+        <td>previous event: </td>
+        <td id="debugger-previous-event"></td>
+      </tr>
+      <tr>
+        <td >current event: </td>
+        <td id="debugger-current-event"></td>
+      </tr>
+      <tr>
+        <td>items: </td>
+        <td>
+          <ul id="debugger-items"></ul>
+        </td>
+      </tr>
+      <tr>
+        <td>draft items: </td>
+        <td>
+          <ul id="debugger-draft-items"></ul>
+        </td>
+      </tr>
+    </table>
+  </div>
+  <% } %>
 </body>
 </html>

@@ -2,7 +2,11 @@ module.exports = function(grunt){
 	var dependencies = [];
 	grunt.file.recurse("client/scripts", function(abspath, rootdir, subdir, filename){
 		var basename = filename.replace(".js", "");
-		dependencies.push(basename + ': "' + subdir + '/' + basename + '",');
+		if (subdir){
+			dependencies.push(basename + ': "' + subdir + '/' + basename + '",');
+		} else {
+			dependencies.push(basename + ': "' + basename + '",');
+		}
 	});
 
 	grunt.initConfig({
@@ -57,7 +61,7 @@ module.exports = function(grunt){
 				},
 			},
 			tests: {
-				files: ['client/spec/**/*Spec.js'],
+				files: ['client/spec/**/*Spec.js', 'client/scripts/**/*.js'],
 				tasks: ['template', 'test'],
 				options: {
 					spawn: false,
@@ -72,9 +76,18 @@ module.exports = function(grunt){
 						src: "client/templates/index.html.tmpl",
 						dest: "client/index.html",
 						data: {
-							main: "main"
+							main: "main",
+							debug: false
 						}
 					},
+					{
+						src: "client/templates/index.html.tmpl",
+						dest: "client/debug.html",
+						data: {
+							main: "debug",
+							debug: true
+						}
+					},					
 					{
 						src: "client/templates/config.js.tmpl",
 						dest: "client/config.js",

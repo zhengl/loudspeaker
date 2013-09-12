@@ -21,6 +21,15 @@ KineticPainter.prototype.draft = function(item) {
 	return kineticItem;
 };
 
+KineticPainter.prototype.startDraft = function(point){
+	this.context.setMode(Context.MODE.PAINTING);
+
+	this.draftItem = new KineticLine();
+	this.draftItem.update(point);
+	this.draftItem.setColor(this.palette.getColor());
+	this.context.addDraftItem(this.draftItem);
+};
+
 KineticPainter.prototype.endDraft = function(point){
 	this.context.setMode(Context.MODE.IDLE);
 
@@ -29,7 +38,7 @@ KineticPainter.prototype.endDraft = function(point){
 	this.context.clearDraftItems();
 
 	if (undefined != this.eventBus) {
-		item.enableEventHandling(this.eventBus);	
+		this.draftItem.enableEventHandling(this.eventBus);	
 	}
 };
 

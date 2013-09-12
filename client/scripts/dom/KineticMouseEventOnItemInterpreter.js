@@ -1,4 +1,4 @@
-define('KineticMouseEventOnItemInterpreter', ['KineticEvent', 'Point'], function(Event, Point){
+define('KineticMouseEventOnItemInterpreter', ['KineticEvent', 'Point' , 'MousePositionHelper'], function(Event, Point, MousePositionHelper){
 
 
 function KineticMouseEventOnItemInterpreter(item){

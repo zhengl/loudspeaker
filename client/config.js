@@ -2,6 +2,8 @@ require.config({
 	baseUrl: "scripts",
 	paths: {
 		
+			app: "app",
+		
 			Context: "core/Context",
 		
 			Event: "core/Event",
@@ -19,8 +21,6 @@ require.config({
 			Mover: "core/Mover",
 		
 			MoverEventHandler: "core/MoverEventHandler",
-		
-			Page: "core/Page",
 		
 			Painter: "core/Painter",
 		
@@ -58,6 +58,10 @@ require.config({
 		
 			DOMRubbishBin: "dom/DOMRubbishBin",
 		
+			GestureDetector: "dom/GestureDetector",
+		
+			GestureStep: "dom/GestureStep",
+		
 			KineticContext: "dom/KineticContext",
 		
 			KineticCursor: "dom/KineticCursor",
@@ -81,6 +85,12 @@ require.config({
 			KineticTexter: "dom/KineticTexter",
 		
 			KineticTextInput: "dom/KineticTextInput",
+		
+			Page: "dom/Page",
+		
+			Debugger: "helper/Debugger",
+		
+			MousePositionHelper: "helper/MousePositionHelper",
 		
 		"jquery": '../../lib/jquery/jquery-1.9.1',
 		"jquery-ui": '../../lib/jquery/jquery-ui',

@@ -5,6 +5,10 @@ function Event(name, data){
 	this.data = data;
 }
 
+Event.prototype.stringify = function() {
+	return this.name;
+};
+
 Event.Item = {
 	START_MOVING: "ITEM.START_MOVING",
 	FINISH_MOVING: "ITEM.FINISH_MOVING",
