@@ -88,6 +88,12 @@ require.config({
 		
 			Page: "dom/Page",
 		
+			PaintingGestureDetector: "dom/PaintingGestureDetector",
+		
+			PaletteGestureDetector: "dom/PaletteGestureDetector",
+		
+			TextingGestureDetector: "dom/TextingGestureDetector",
+		
 			Debugger: "helper/Debugger",
 		
 			MousePositionHelper: "helper/MousePositionHelper",
