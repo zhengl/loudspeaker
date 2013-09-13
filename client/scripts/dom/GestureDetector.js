@@ -1,9 +1,11 @@
 define('GestureDetector', function(){
 
 
-function GestureDetector(step){
+function GestureDetector(step, monitor){
 	this.currentCandidateSteps = [step];
 	this.rootSteps = this.currentCandidateSteps;
+
+	this.monitor = monitor;
 }
 
 GestureDetector.prototype.detect = function(event) {
@@ -22,6 +24,12 @@ GestureDetector.prototype.getCurrentCandidateSteps = function() {
 
 GestureDetector.prototype.rewind = function() {
 	this.currentCandidateSteps = this.rootSteps;
+};
+
+GestureDetector.prototype.inform = function() {
+	if(undefined != this.monitor) {
+		this.monitor.inform(this);
+	}
 };
 
 return GestureDetector;

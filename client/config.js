@@ -74,8 +74,6 @@ require.config({
 		
 			KineticLine: "dom/KineticLine",
 		
-			KineticMouseEventOnContextInterpreter: "dom/KineticMouseEventOnContextInterpreter",
-		
 			KineticMouseEventOnItemInterpreter: "dom/KineticMouseEventOnItemInterpreter",
 		
 			KineticPainter: "dom/KineticPainter",
@@ -85,6 +83,8 @@ require.config({
 			KineticTexter: "dom/KineticTexter",
 		
 			KineticTextInput: "dom/KineticTextInput",
+		
+			MouseEventOnContextInterpreter: "dom/MouseEventOnContextInterpreter",
 		
 			Page: "dom/Page",
 		

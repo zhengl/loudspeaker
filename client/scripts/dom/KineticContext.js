@@ -1,4 +1,4 @@
-define('KineticContext', ['Context', 'Kinetic','KineticEvent', 'KineticMouseEventOnContextInterpreter'], function(Context, Kinetic, Event, KineticMouseEventOnContextInterpreter){
+define('KineticContext', ['Context', 'Kinetic','KineticEvent', 'MouseEventOnContextInterpreter'], function(Context, Kinetic, Event, MouseEventOnContextInterpreter){
 
 
 function KineticContext(container, width, height){
@@ -89,7 +89,7 @@ KineticContext.prototype.addEventListeners = function(eventBus, events){
 	this.layer.add(this.eventCatcher);
 	this.eventCatcher.moveToBottom();
 
-	var interpreter = new KineticMouseEventOnContextInterpreter(this);
+	var interpreter = new MouseEventOnContextInterpreter(this);
 	this.eventCatcher.on(events.join(" "), function(event){
 		interpreter.interpret(event, eventBus);
 	});

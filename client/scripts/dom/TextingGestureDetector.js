@@ -1,7 +1,7 @@
 define('TextingGestureDetector', ['GestureDetector', 'GestureStep', 'Event', 'Point'], function(GestureDetector, GestureStep, Event, Point){
 
 
-function TextingGestureDetector(eventBus){
+function TextingGestureDetector(eventBus, monitor){
 	this.eventBus = eventBus;
 	this.click = 0;
 	this.doubleClickTimerId;
@@ -11,7 +11,7 @@ function TextingGestureDetector(eventBus){
 
 	readyToTextStep.addNextStep(startTextingStep);
 	startTextingStep.addNextStep(readyToTextStep);
-	GestureDetector.call(this, readyToTextStep);
+	GestureDetector.call(this, readyToTextStep, monitor);
 }
 
 DOUBLE_CLICK = 2;
@@ -34,6 +34,7 @@ TextingGestureDetector.prototype.startTexting = function(event) {
 		this.click = 0;
 		window.clearTimeout(this.doubleClickTimerId);
 		this.eventBus.publish(new Event(Event.Page.START_TEXTING, [new Point(event.offsetX, event.offsetY)]));
+		this.inform(this);
 	}
 };
 

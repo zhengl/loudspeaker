@@ -19,13 +19,13 @@ EventBus.prototype.removeListener = function(listener){
 	this.listeners = resultListeners;
 };
 
-EventBus.prototype.publish = function(event, data){
+EventBus.prototype.publish = function(event){
 	if (!event){
 		return;
 	}
 	console.log(event);
 	for (var index in this.listeners) {
-		this.listeners[index].notify(event, data);
+		this.listeners[index].notify(event);
 	}
 }
 
