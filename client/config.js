@@ -44,13 +44,7 @@ require.config({
 		
 			TextInput: "core/TextInput",
 		
-			DOMNoteDnDDecorator: "dom/DOMNoteDnDDecorator",
-		
-			DOMPageFactory: "dom/DOMPageFactory",
-		
 			DOMPalette: "dom/DOMPalette",
-		
-			DOMPaletteFactory: "dom/DOMPaletteFactory",
 		
 			DOMRubbishBin: "dom/DOMRubbishBin",
 		
@@ -93,6 +87,12 @@ require.config({
 			TextingGestureDetector: "dom/TextingGestureDetector",
 		
 			Debugger: "helper/Debugger",
+		
+			DOMNoteDnDDecorator: "helper/DOMNoteDnDDecorator",
+		
+			DOMPageFactory: "helper/DOMPageFactory",
+		
+			DOMPaletteFactory: "helper/DOMPaletteFactory",
 		
 			MousePositionHelper: "helper/MousePositionHelper",
 		
