@@ -13,16 +13,12 @@ Mover.prototype.getContext = function(){
 };
 
 Mover.prototype.startMoving = function(item) {
-	this.context.setMode(Context.MODE.MOVING);
-
 	this.context.addDraftItem(item);	
 	this.context.removeItem(item);
 	this.movingItem = item;
 };
 
 Mover.prototype.finishMoving = function() {
-	this.context.setMode(Context.MODE.IDLE);
-
 	if (this.rubbishBin && this.rubbishBin.isOpen) {
 		this.context.removeItem(this.movingItem);
 		this.rubbishBin.close();

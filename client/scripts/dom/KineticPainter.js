@@ -22,8 +22,6 @@ KineticPainter.prototype.draft = function(item) {
 };
 
 KineticPainter.prototype.startDraft = function(point){
-	this.context.setMode(Context.MODE.PAINTING);
-
 	this.draftItem = new KineticLine();
 	this.draftItem.update(point);
 	this.draftItem.setColor(this.palette.getColor());
@@ -31,8 +29,6 @@ KineticPainter.prototype.startDraft = function(point){
 };
 
 KineticPainter.prototype.endDraft = function(point){
-	this.context.setMode(Context.MODE.IDLE);
-
 	this.draftTo(point);	
 	this.context.addItem(this.draftItem);
 	this.context.clearDraftItems();

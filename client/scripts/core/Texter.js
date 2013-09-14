@@ -14,16 +14,12 @@ Texter.prototype.getContext = function(){
 }
 
 Texter.prototype.startTexting = function(position) {
-	this.getContext().setMode(Context.MODE.TEXTING);
-
 	this.textInput.show();
 	this.textInput.setColor(this.palette.getColor());
 	this.textInput.setPosition(position);
 };
 
 Texter.prototype.finishTexting = function(position) {
-	this.getContext().setMode(Context.MODE.IDLE);
-
 	this.textInput.hide();
 	this.textInput.flush();
 };

@@ -48,29 +48,6 @@ Context.prototype.clearDraftItems = function(){
 	this.draftItems = [];
 };
 
-Context.prototype.setMode = function(mode){
-	this.mode = mode;
-};
-
-Context.prototype.isPainting = function(){
-	return this.mode == Context.MODE.PAINTING;
-};
-
-Context.prototype.isTexting = function(){
-	return this.mode == Context.MODE.TEXTING;
-};
-
-Context.prototype.isMoving = function(){
-	return this.mode == Context.MODE.MOVING;
-};
-
-Context.MODE = {
-	IDLE: "CONTEXT.IDLE",
-	PAINTING: "CONTEXT.PAINTING",
-	TEXTING: "CONTEXT.TEXTING",
-	MOVING: "CONTEXT.MOVING",
-};
-
 return Context;
 
 	
