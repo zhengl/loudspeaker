@@ -86,6 +86,8 @@ require.config({
 		
 			MouseEventOnContextInterpreter: "dom/MouseEventOnContextInterpreter",
 		
+			MovingGestureDetector: "dom/MovingGestureDetector",
+		
 			Page: "dom/Page",
 		
 			PaintingGestureDetector: "dom/PaintingGestureDetector",
