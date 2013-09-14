@@ -86,19 +86,19 @@ require.config({
 		
 			Page: "dom/Page",
 		
-			Debugger: "helper/Debugger",
+			Debugger: "util/Debugger",
 		
-			DOMNoteDnDDecorator: "helper/DOMNoteDnDDecorator",
+			DOMNoteDnDDecorator: "util/DOMNoteDnDDecorator",
 		
-			DOMPageFactory: "helper/DOMPageFactory",
+			DOMPageFactory: "util/DOMPageFactory",
 		
-			DOMPaletteFactory: "helper/DOMPaletteFactory",
+			DOMPaletteFactory: "util/DOMPaletteFactory",
 		
-			MousePositionHelper: "helper/MousePositionHelper",
+			MousePositionHelper: "util/MousePositionHelper",
 		
-			Serializer: "helper/Serializer",
+			Serializer: "util/Serializer",
 		
-			Unserializer: "helper/Unserializer",
+			Unserializer: "util/Unserializer",
 		
 		"jquery": '../../lib/jquery/jquery-1.9.1',
 		"jquery-ui": '../../lib/jquery/jquery-ui',
