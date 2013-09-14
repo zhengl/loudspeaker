@@ -1,13 +1,13 @@
-require(['MouseEventOnContextInterpreter', 'EventBus', 'Event'], function(MouseEventOnContextInterpreter, EventBus, Event){
+require(['MouseEventInterpreter', 'EventBus', 'Event'], function(MouseEventInterpreter, EventBus, Event){
 
-describe('MouseEventOnContextInterpreter', function(){
+describe('MouseEventInterpreter', function(){
 	var interpreter;
 	var eventBus;
 
 	beforeEach(function(){
 		eventBus = new EventBus();
 		eventBus.publish = jasmine.createSpy();
-		interpreter = new MouseEventOnContextInterpreter(eventBus);
+		interpreter = new MouseEventInterpreter(eventBus);
 		jasmine.Clock.useMock();
 	});
 

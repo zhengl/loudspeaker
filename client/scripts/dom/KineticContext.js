@@ -1,4 +1,4 @@
-define('KineticContext', ['Context', 'Kinetic','KineticEvent', 'MouseEventOnContextInterpreter'], function(Context, Kinetic, Event, MouseEventOnContextInterpreter){
+define('KineticContext', ['Context', 'Kinetic','KineticEvent', 'MouseEventInterpreter'], function(Context, Kinetic, Event, MouseEventInterpreter){
 
 
 function KineticContext(container, width, height){
@@ -10,7 +10,9 @@ function KineticContext(container, width, height){
 		width: width,
 		height: height,
 	});
+	this.eventCatcher = new Kinetic.Group();
 	this.layer = new Kinetic.Layer();
+	this.layer.add(this.eventCatcher);
 	this.draftLayer = new Kinetic.Layer();
 	this.stage.add(this.draftLayer);
 	this.stage.add(this.layer);
@@ -19,16 +21,6 @@ function KineticContext(container, width, height){
 
 KineticContext.prototype = new Context();
 KineticContext.constructor = KineticContext;
-
-KineticContext.EVENTS = [
-	Event.Kinetic.MOVE_TO,
-	Event.Kinetic.MOUSE_DOWN,
-	Event.Kinetic.MOUSE_UP,
-	Event.Kinetic.MOUSE_ENTER,
-	Event.Kinetic.MOUSE_LEAVE,
-	Event.Kinetic.MOUSE_OVER,
-	Event.Kinetic.MOUSE_OUT
-]
 
 KineticContext.prototype.getItems = function(){
 	return this.items;
@@ -50,12 +42,12 @@ KineticContext.prototype.getLastDraftItem = function(){
 };
 
 KineticContext.prototype.addItem = function(item){
-	this.items.push(item)
+	this.items.push(item);
 	if(item.undraftize){
 		item.undraftize();
 	}
 	if(item.kineticShape){
-		item.getKineticShape().moveTo(this.layer);
+		item.getKineticShape().moveTo(this.eventCatcher);
 		this.layer.draw();
 	}
 	this.draftLayer.draw();
@@ -76,29 +68,19 @@ KineticContext.prototype.addDraftItem = function(item){
 
 KineticContext.prototype.enableEventHandling = function(eventBus){
 	this.eventBus = eventBus;
-	this.addEventListeners(eventBus, KineticContext.EVENTS);
+	this.addEventListeners(eventBus, Event.Kinetic.EVENTS);
 };
 
 KineticContext.prototype.addEventListeners = function(eventBus, events){
-	 this.eventCatcher = new Kinetic.Rect({
-            x: 0,
-            y: 0,
-            width: this.stage.getWidth(),
-            height: this.stage.getHeight(),
-          });
-	this.layer.add(this.eventCatcher);
-	this.eventCatcher.moveToBottom();
-
-	var interpreter = new MouseEventOnContextInterpreter(this);
+	var interpreter = new MouseEventInterpreter(this);
 	this.eventCatcher.on(events.join(" "), function(event){
 		interpreter.interpret(event, eventBus);
 	});
-	this.layer.draw();
 };
 
 KineticContext.prototype.disableEventHandling = function(){
 	this.eventBus.removeListener(this);
-	this.removeEventListeners(this.eventBus, KineticContext.EVENTS);
+	this.removeEventListeners(this.eventBus, Event.Kinetic.EVENTS);
 };
 
 KineticContext.prototype.removeEventListeners = function(eventBus, events){

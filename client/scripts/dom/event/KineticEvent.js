@@ -6,9 +6,12 @@ Event.Kinetic = {
 	MOUSE_UP: "mouseup",
 	MOUSE_ENTER: "mouseenter",
 	MOUSE_LEAVE: "mouseleave",
-	MOUSE_OVER: "mouseover",
-	MOUSE_OUT: "mouseout"
 };
+
+Event.Kinetic.EVENTS = [];
+for(var key in Event.Kinetic) {
+    Event.Kinetic.EVENTS.push(Event.Kinetic[key]);
+}
 
 return Event;
 

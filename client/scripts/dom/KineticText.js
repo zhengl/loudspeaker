@@ -1,4 +1,4 @@
-define('KineticText', ['Kinetic', 'Text', 'KineticItemEventRegister'], function(Kinetic, Text, KineticItemEventRegister){
+define('KineticText', ['Kinetic', 'Text', 'Event'], function(Kinetic, Text, Event){
 
 
 function KineticText(text){
@@ -52,9 +52,11 @@ KineticText.prototype.undraftize = function(){
 	return this;
 };
 
-KineticText.prototype.enableEventHandling = function(eventBus){
-	var register = new KineticItemEventRegister();
-	register.registerEventBus(eventBus, this);
+KineticText.prototype.enableEventHandling = function(){
+	var self = this;
+	this.getKineticShape().on(Event.Kinetic.EVENTS.join(" "), function(event){
+		event.targetItem = self;
+	});
 };
 
 return KineticText;

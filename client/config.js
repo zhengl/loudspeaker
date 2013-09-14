@@ -54,9 +54,7 @@ require.config({
 		
 			KineticEvent: "dom/event/KineticEvent",
 		
-			KineticItemEventRegister: "dom/event/KineticItemEventRegister",
-		
-			MouseEventOnContextInterpreter: "dom/event/MouseEventOnContextInterpreter",
+			MouseEventInterpreter: "dom/event/MouseEventInterpreter",
 		
 			MovingGestureDetector: "dom/event/MovingGestureDetector",
 		
@@ -72,11 +70,7 @@ require.config({
 		
 			KineticCursor: "dom/KineticCursor",
 		
-			KineticItemFactory: "dom/KineticItemFactory",
-		
 			KineticLine: "dom/KineticLine",
-		
-			KineticMouseEventOnItemInterpreter: "dom/KineticMouseEventOnItemInterpreter",
 		
 			KineticPainter: "dom/KineticPainter",
 		

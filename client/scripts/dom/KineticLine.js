@@ -1,4 +1,4 @@
-define('KineticLine', ['Kinetic', 'Line', 'Point', 'KineticItemEventRegister'], function(Kinetic, Line, Point, KineticItemEventRegister){
+define('KineticLine', ['Kinetic', 'Line', 'Point', 'Event'], function(Kinetic, Line, Point, Event){
 
 
 function KineticLine(points, color){
@@ -86,9 +86,11 @@ KineticLine.flatternPoints = function(points){
 	return linePoints;
 };
 
-KineticLine.prototype.enableEventHandling = function(eventBus){
-	var register = new KineticItemEventRegister();
-	register.registerEventBus(eventBus, this);
+KineticLine.prototype.enableEventHandling = function(){
+	var self = this;
+	this.getKineticShape().on(Event.Kinetic.EVENTS.join(" "), function(event){
+		event.targetItem = self;
+	});
 };
 
 return KineticLine;
