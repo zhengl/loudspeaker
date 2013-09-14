@@ -6,41 +6,41 @@ require.config({
 		
 			Context: "core/Context",
 		
-			Event: "core/Event",
+			Event: "core/event/Event",
 		
-			EventBus: "core/EventBus",
+			EventBus: "core/event/EventBus",
 		
-			EventHandleable: "core/EventHandleable",
+			EventHandleable: "core/event/EventHandleable",
+		
+			ItemEventHandler: "core/event/ItemEventHandler",
+		
+			MoverEventHandler: "core/event/MoverEventHandler",
+		
+			PainterEventHandler: "core/event/PainterEventHandler",
+		
+			PaletteEventHandler: "core/event/PaletteEventHandler",
+		
+			RubbishBinEventHandler: "core/event/RubbishBinEventHandler",
+		
+			TexterEventHandler: "core/event/TexterEventHandler",
 		
 			Item: "core/Item",
-		
-			ItemEventHandler: "core/ItemEventHandler",
 		
 			Line: "core/Line",
 		
 			Mover: "core/Mover",
 		
-			MoverEventHandler: "core/MoverEventHandler",
-		
 			Painter: "core/Painter",
 		
-			PainterEventHandler: "core/PainterEventHandler",
-		
 			Palette: "core/Palette",
-		
-			PaletteEventHandler: "core/PaletteEventHandler",
 		
 			Point: "core/Point",
 		
 			RubbishBin: "core/RubbishBin",
 		
-			RubbishBinEventHandler: "core/RubbishBinEventHandler",
-		
 			Text: "core/Text",
 		
 			Texter: "core/Texter",
-		
-			TexterEventHandler: "core/TexterEventHandler",
 		
 			TextInput: "core/TextInput",
 		
