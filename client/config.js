@@ -48,17 +48,27 @@ require.config({
 		
 			DOMRubbishBin: "dom/DOMRubbishBin",
 		
-			GestureDetector: "dom/GestureDetector",
+			GestureDetector: "dom/event/GestureDetector",
 		
-			GestureStep: "dom/GestureStep",
+			GestureStep: "dom/event/GestureStep",
+		
+			KineticEvent: "dom/event/KineticEvent",
+		
+			KineticItemEventRegister: "dom/event/KineticItemEventRegister",
+		
+			MouseEventOnContextInterpreter: "dom/event/MouseEventOnContextInterpreter",
+		
+			MovingGestureDetector: "dom/event/MovingGestureDetector",
+		
+			PaintingGestureDetector: "dom/event/PaintingGestureDetector",
+		
+			PaletteGestureDetector: "dom/event/PaletteGestureDetector",
+		
+			TextingGestureDetector: "dom/event/TextingGestureDetector",
 		
 			KineticContext: "dom/KineticContext",
 		
 			KineticCursor: "dom/KineticCursor",
-		
-			KineticEvent: "dom/KineticEvent",
-		
-			KineticItemEventRegister: "dom/KineticItemEventRegister",
 		
 			KineticItemFactory: "dom/KineticItemFactory",
 		
@@ -74,17 +84,7 @@ require.config({
 		
 			KineticTextInput: "dom/KineticTextInput",
 		
-			MouseEventOnContextInterpreter: "dom/MouseEventOnContextInterpreter",
-		
-			MovingGestureDetector: "dom/MovingGestureDetector",
-		
 			Page: "dom/Page",
-		
-			PaintingGestureDetector: "dom/PaintingGestureDetector",
-		
-			PaletteGestureDetector: "dom/PaletteGestureDetector",
-		
-			TextingGestureDetector: "dom/TextingGestureDetector",
 		
 			Debugger: "helper/Debugger",
 		
