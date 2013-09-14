@@ -36,8 +36,6 @@ require.config({
 		
 			RubbishBinEventHandler: "core/RubbishBinEventHandler",
 		
-			Serializer: "core/Serializer",
-		
 			Text: "core/Text",
 		
 			Texter: "core/Texter",
@@ -45,8 +43,6 @@ require.config({
 			TexterEventHandler: "core/TexterEventHandler",
 		
 			TextInput: "core/TextInput",
-		
-			Unserializer: "core/Unserializer",
 		
 			DOMNoteDnDDecorator: "dom/DOMNoteDnDDecorator",
 		
@@ -99,6 +95,10 @@ require.config({
 			Debugger: "helper/Debugger",
 		
 			MousePositionHelper: "helper/MousePositionHelper",
+		
+			Serializer: "helper/Serializer",
+		
+			Unserializer: "helper/Unserializer",
 		
 		"jquery": '../../lib/jquery/jquery-1.9.1',
 		"jquery-ui": '../../lib/jquery/jquery-ui',
