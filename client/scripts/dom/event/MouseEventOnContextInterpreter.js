@@ -1,4 +1,4 @@
-define('MouseEventOnContextInterpreter', ['PaintingGestureDetector', 'TextingGestureDetector', 'PaletteGestureDetector'], function(PaintingGestureDetector, TextingGestureDetector, PaletteGestureDetector){
+define('MouseEventOnContextInterpreter', ['PaintingGestureDetector', 'TextingGestureDetector', 'PaletteGestureDetector', 'SelectingGestureDetector'], function(PaintingGestureDetector, TextingGestureDetector, PaletteGestureDetector, SelectingGestureDetector){
 
 
 function MouseEventOnContextInterpreter(eventBus){
@@ -7,7 +7,8 @@ function MouseEventOnContextInterpreter(eventBus){
 	this.detectors = [
 		new PaintingGestureDetector(eventBus, this),
 		new TextingGestureDetector(eventBus, this),
-		new PaletteGestureDetector(eventBus, this)
+		new PaletteGestureDetector(eventBus, this),
+		new SelectingGestureDetector(eventBus, this)
 	];
 
 }

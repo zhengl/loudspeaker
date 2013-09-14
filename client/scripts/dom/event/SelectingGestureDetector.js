@@ -17,7 +17,8 @@ SelectingGestureDetector.prototype.constructor = SelectingGestureDetector;
 
 SelectingGestureDetector.prototype.select = function(event) {
 	if (undefined != event.targetItem) {
-		event.targetItem.select()
+		event.targetItem.select();
+		this.inform();
 	} else {
 		this.rewind();
 	}
@@ -26,7 +27,8 @@ SelectingGestureDetector.prototype.select = function(event) {
 SelectingGestureDetector.prototype.unselect = function(event) {
 	console.log(event)
 	if (undefined != event.targetItem) {
-		event.targetItem.unselect()
+		event.targetItem.unselect();
+		this.inform();
 	}
 };
 
