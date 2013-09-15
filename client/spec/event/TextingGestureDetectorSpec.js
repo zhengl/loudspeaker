@@ -12,8 +12,9 @@ describe("TextingGestureDetector", function(){
 		jasmine.Clock.useMock();
 	});
 
-	it("triggers START_TEXTING after MOUSE_DOWN and MOUSE_DOWN", function(){
+	it("triggers START_TEXTING after MOUSE_DOWN, MOVE_TO and MOUSE_DOWN", function(){
 		detector.detect(createEvent(Event.Kinetic.MOUSE_DOWN, 10, 10));
+		detector.detect(createEvent(Event.Kinetic.MOVE_TO, 10, 10));
 		jasmine.Clock.tick(100);
 		detector.detect(createEvent(Event.Kinetic.MOUSE_DOWN, 10, 10));
 
@@ -22,6 +23,7 @@ describe("TextingGestureDetector", function(){
 
 	it("triggers nothing after MOUSE_DOWN (a while long then doubleclick interval) and MOUSE_DOWN", function(){
 		detector.detect(createEvent(Event.Kinetic.MOUSE_DOWN, 10, 10));
+		detector.detect(createEvent(Event.Kinetic.MOVE_TO, 10, 10));
 		jasmine.Clock.tick(201);
 		detector.detect(createEvent(Event.Kinetic.MOUSE_DOWN, 10, 10));
 
@@ -30,8 +32,11 @@ describe("TextingGestureDetector", function(){
 
 	it("triggers START_TEXTING after two double-clicks", function(){
 		detector.detect(createEvent(Event.Kinetic.MOUSE_DOWN, 10, 10));
+		detector.detect(createEvent(Event.Kinetic.MOVE_TO, 10, 10));
 		detector.detect(createEvent(Event.Kinetic.MOUSE_DOWN, 10, 10));
+		
 		detector.detect(createEvent(Event.Kinetic.MOUSE_DOWN, 20, 20));
+		detector.detect(createEvent(Event.Kinetic.MOVE_TO, 10, 10));
 		detector.detect(createEvent(Event.Kinetic.MOUSE_DOWN, 20, 20));
 
 		expect(eventBus.publish).toHaveBeenCalledWith(new Event(Event.Page.START_TEXTING, [{x: 20, y: 20}]));

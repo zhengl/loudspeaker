@@ -21,6 +21,7 @@ describe('MouseEventInterpreter', function(){
 
 	it("triggers START_TEXTING after MOUSE_DOWN and MOUSE_DOWN", function(){
 		interpreter.interpret(createEvent(Event.Kinetic.MOUSE_DOWN, 10, 10));
+		interpreter.interpret(createEvent(Event.Kinetic.MOVE_TO, 10, 10));
 		interpreter.interpret(createEvent(Event.Kinetic.MOUSE_DOWN, 10, 10));
 
 		expect(eventBus.publish).toHaveBeenCalledWith(new Event(Event.Page.START_TEXTING, [{x: 10, y: 10}]));

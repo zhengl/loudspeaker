@@ -6,12 +6,14 @@ function TextingGestureDetector(eventBus, monitor){
 	this.click = 0;
 	this.doubleClickTimerId;
 
-	var readyToTextStep = new GestureStep(Event.Kinetic.MOUSE_DOWN, this.readyToText);
+	var readyToTextStep1 = new GestureStep(Event.Kinetic.MOUSE_DOWN, this.readyToText1);
+	var readyToTextStep2 = new GestureStep(Event.Kinetic.MOVE_TO, this.readyToText2);
 	var startTextingStep = new GestureStep(Event.Kinetic.MOUSE_DOWN, this.startTexting);
 
-	readyToTextStep.addNextStep(startTextingStep);
-	startTextingStep.addNextStep(readyToTextStep);
-	GestureDetector.call(this, readyToTextStep, monitor);
+	readyToTextStep1.addNextStep(readyToTextStep2);
+	readyToTextStep2.addNextStep(startTextingStep);
+	startTextingStep.addNextStep(readyToTextStep1);
+	GestureDetector.call(this, readyToTextStep1, monitor);
 }
 
 DOUBLE_CLICK = 2;
@@ -20,12 +22,15 @@ DOUBLE_CLICK_INTERVAL = 200;
 TextingGestureDetector.prototype = new GestureDetector();
 TextingGestureDetector.prototype.constructor = TextingGestureDetector;
 
-TextingGestureDetector.prototype.readyToText = function(event) {
+TextingGestureDetector.prototype.readyToText1 = function(event) {
 	this.click++;
 	var self = this;
 	this.doubleClickTimerId = window.setTimeout(function(){
 		self.click = 0;
 	}, DOUBLE_CLICK_INTERVAL);
+};
+
+TextingGestureDetector.prototype.readyToText2 = function(event) {
 };
 
 TextingGestureDetector.prototype.startTexting = function(event) {
