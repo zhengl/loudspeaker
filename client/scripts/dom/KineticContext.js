@@ -10,9 +10,7 @@ function KineticContext(container, width, height){
 		width: width,
 		height: height,
 	});
-	this.eventCatcher = new Kinetic.Group();
 	this.layer = new Kinetic.Layer();
-	this.layer.add(this.eventCatcher);
 	this.draftLayer = new Kinetic.Layer();
 	this.stage.add(this.draftLayer);
 	this.stage.add(this.layer);
@@ -47,7 +45,7 @@ KineticContext.prototype.addItem = function(item){
 		item.undraftize();
 	}
 	if(item.kineticShape){
-		item.getKineticShape().moveTo(this.eventCatcher);
+		item.getKineticShape().moveTo(this.layer);
 		this.layer.draw();
 	}
 	this.draftLayer.draw();
@@ -72,10 +70,21 @@ KineticContext.prototype.enableEventHandling = function(eventBus){
 };
 
 KineticContext.prototype.addEventListeners = function(eventBus, events){
-	var interpreter = new MouseEventInterpreter(this);
-	this.eventCatcher.on(events.join(" "), function(event){
-		interpreter.interpret(event, eventBus);
+	this.eventCatcher = new Kinetic.Rect({
+		x: 0,
+		y: 0,
+		width: this.stage.getWidth(),
+		height: this.stage.getHeight(),
 	});
+	this.layer.add(this.eventCatcher);
+
+	var interpreter = new MouseEventInterpreter(eventBus);
+	this.eventCatcher.moveToBottom();
+	this.eventCatcher.on(events.join(" "), function(event){
+		console.log(event.type)
+		interpreter.interpret(event);
+	});
+	this.layer.draw();
 };
 
 KineticContext.prototype.disableEventHandling = function(){

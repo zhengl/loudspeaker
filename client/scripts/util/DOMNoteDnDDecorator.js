@@ -1,4 +1,4 @@
-define('DOMNoteDnDDecorator', ['Event', 'KineticMouseEventOnItemInterpreter', 'jquery', 'jquery-ui'], function(Event, KineticMouseEventOnItemInterpreter, $){
+define('DOMNoteDnDDecorator', ['Event', 'jquery', 'jquery-ui'], function(Event, $){
 
 
 function DOMNoteDnDDecorator(){
@@ -20,19 +20,19 @@ DOMNoteDnDDecorator.create = function(noteElementId, note, boardElementId, board
                 $("#wrapper").toggleClass("noteIsShown");
                 $("#modal-cover").toggleClass("noteIsShown");
 
-                var interpreter = new KineticMouseEventOnItemInterpreter(note);
-                note.element = noteNode.get(0);
-                noteNode.on([
-					Event.Kinetic.MOUSE_OVER,
-					Event.Kinetic.MOUSE_ENTER,
-					Event.Kinetic.MOVE_TO,
-					Event.Kinetic.MOUSE_DOWN,
-					Event.Kinetic.MOUSE_UP,
-					Event.Kinetic.MOUSE_OUT,
-					Event.Kinetic.MOUSE_LEAVE,
-				].join(" "), function(event){
-					interpreter.interpret(event, board.getEventBus());
-                });
+    //             var interpreter = new KineticMouseEventOnItemInterpreter(note);
+    //             note.element = noteNode.get(0);
+    //             noteNode.on([
+				// 	Event.Kinetic.MOUSE_OVER,
+				// 	Event.Kinetic.MOUSE_ENTER,
+				// 	Event.Kinetic.MOVE_TO,
+				// 	Event.Kinetic.MOUSE_DOWN,
+				// 	Event.Kinetic.MOUSE_UP,
+				// 	Event.Kinetic.MOUSE_OUT,
+				// 	Event.Kinetic.MOUSE_LEAVE,
+				// ].join(" "), function(event){
+				// 	interpreter.interpret(event, board.getEventBus());
+    //             });
 		}
 	});
 }

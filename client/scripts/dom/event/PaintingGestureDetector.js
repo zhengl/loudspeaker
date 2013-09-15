@@ -5,18 +5,20 @@ function PaintingGestureDetector(eventBus, monitor){
 	this.eventBus = eventBus;
 	this.monitor = monitor;
 
-	var readyToDrawStep = new GestureStep(Event.Kinetic.MOUSE_DOWN, this.readyToDraw);
+	var readyToDrawStep1 = new GestureStep(Event.Kinetic.MOUSE_DOWN, this.readyToDraw);
+	var readyToDrawStep2 = new GestureStep(Event.Kinetic.MOVE_TO, this.readyToDraw);
 	var startDrawingStep = new GestureStep(Event.Kinetic.MOVE_TO, this.startDrawing);
 	var drawToStep = new GestureStep(Event.Kinetic.MOVE_TO, this.drawTo);
 	var finishDrawingStep = new GestureStep(Event.Kinetic.MOUSE_UP, this.finishDrawing);
 
-	readyToDrawStep.addNextStep(startDrawingStep);
+	readyToDrawStep1.addNextStep(readyToDrawStep2);
+	readyToDrawStep2.addNextStep(startDrawingStep);
 	startDrawingStep.addNextStep(drawToStep);
 	startDrawingStep.addNextStep(finishDrawingStep);
 	drawToStep.addNextStep(drawToStep);
 	drawToStep.addNextStep(finishDrawingStep);
-	finishDrawingStep.addNextStep(readyToDrawStep);
-	GestureDetector.call(this, readyToDrawStep, monitor);
+	finishDrawingStep.addNextStep(readyToDrawStep1);
+	GestureDetector.call(this, readyToDrawStep1, monitor);
 }
 
 PaintingGestureDetector.prototype = new GestureDetector();

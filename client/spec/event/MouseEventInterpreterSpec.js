@@ -14,6 +14,7 @@ describe('MouseEventInterpreter', function(){
 	it("triggers START_DRAWING after MOUSE_DOWN and MOVE_TO", function(){
 		interpreter.interpret(createEvent(Event.Kinetic.MOUSE_DOWN, 10, 10));
 		interpreter.interpret(createEvent(Event.Kinetic.MOVE_TO, 20, 20));
+		interpreter.interpret(createEvent(Event.Kinetic.MOVE_TO, 20, 20));
 
 		expect(eventBus.publish).toHaveBeenCalledWith(new Event(Event.Page.START_DRAWING, [{x: 20, y: 20}]));
 	});
@@ -34,6 +35,7 @@ describe('MouseEventInterpreter', function(){
 
 	it("should not trigger START_SELECTING_COLOR after long drawing", function(){
 		interpreter.interpret(createEvent(Event.Kinetic.MOUSE_DOWN, 10, 10));
+		interpreter.interpret(createEvent(Event.Kinetic.MOVE_TO, 20, 20));
 		interpreter.interpret(createEvent(Event.Kinetic.MOVE_TO, 20, 20));
 		jasmine.Clock.tick(1001);
 

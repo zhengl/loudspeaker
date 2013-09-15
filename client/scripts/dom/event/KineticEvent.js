@@ -8,10 +8,12 @@ Event.Kinetic = {
 	MOUSE_LEAVE: "mouseleave",
 };
 
-Event.Kinetic.EVENTS = [];
+var events = [];
 for(var key in Event.Kinetic) {
-    Event.Kinetic.EVENTS.push(Event.Kinetic[key]);
-}
+    events.push(Event.Kinetic[key]);
+};
+
+Event.Kinetic.EVENTS = events;
 
 return Event;
 
