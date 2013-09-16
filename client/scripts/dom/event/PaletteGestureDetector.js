@@ -3,12 +3,14 @@ define('PaletteGestureDetector', ['GestureDetector', 'GestureStep', 'Event', 'Po
 
 function PaletteGestureDetector(eventBus, monitor){
 	this.eventBus = eventBus;
-	this.longPressTimerId;
+	this.longPressTimerIds;
 
-	var startShowPaletteStep = new GestureStep(Event.Kinetic.MOUSE_DOWN, this.startShowPalette);
+	var startShowingPaletteStep = new GestureStep(Event.Kinetic.MOUSE_DOWN, this.startShowingPalette);
+	var stopShowingPaletteStep = new GestureStep(Event.Kinetic.MOUSE_UP, this.stopShowingPalette);
 
-	startShowPaletteStep.addNextStep(startShowPaletteStep);
-	GestureDetector.call(this, startShowPaletteStep, monitor);
+	startShowingPaletteStep.addNextStep(stopShowingPaletteStep);
+	stopShowingPaletteStep.addNextStep(startShowingPaletteStep);
+	GestureDetector.call(this, startShowingPaletteStep, monitor);
 }
 
 LONG_PRESS_INTERVAL = 1000;
@@ -16,7 +18,7 @@ LONG_PRESS_INTERVAL = 1000;
 PaletteGestureDetector.prototype = new GestureDetector();
 PaletteGestureDetector.prototype.constructor = PaletteGestureDetector;
 
-PaletteGestureDetector.prototype.startShowPalette = function(event) {
+PaletteGestureDetector.prototype.startShowingPalette = function(event) {
 	var self = this;
 	this.longPressTimerId = window.setTimeout(function(){
 		self.eventBus.publish(new Event(Event.Page.START_SELECTING_COLOR, [new Point(event.pageX, event.pageY)]));
@@ -24,9 +26,12 @@ PaletteGestureDetector.prototype.startShowPalette = function(event) {
 	}, LONG_PRESS_INTERVAL);
 };
 
+PaletteGestureDetector.prototype.stopShowingPalette = function(event) {
+	this.rewind();
+};
+
 PaletteGestureDetector.prototype.rewind = function() {
 	this.currentCandidateSteps = this.rootSteps;
-
 	if (this.longPressTimerId) {
 		window.clearTimeout(this.longPressTimerId);
 	}

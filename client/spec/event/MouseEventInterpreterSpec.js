@@ -21,7 +21,6 @@ describe('MouseEventInterpreter', function(){
 
 	it("triggers START_TEXTING after MOUSE_DOWN and MOUSE_DOWN", function(){
 		interpreter.interpret(createEvent(Event.Kinetic.MOUSE_DOWN, 10, 10));
-		interpreter.interpret(createEvent(Event.Kinetic.MOVE_TO, 10, 10));
 		interpreter.interpret(createEvent(Event.Kinetic.MOUSE_DOWN, 10, 10));
 
 		expect(eventBus.publish).toHaveBeenCalledWith(new Event(Event.Page.START_TEXTING, [{x: 10, y: 10}]));
@@ -41,7 +40,15 @@ describe('MouseEventInterpreter', function(){
 		jasmine.Clock.tick(1001);
 
 		expect(eventBus.publish).not.toHaveBeenCalledWith(new Event(Event.Page.START_SELECTING_COLOR, [{x: 10, y: 10}]));
-	});		
+	});
+
+	it("should not trigger START_SELECTING_COLOR after START_TEXTING", function(){
+		interpreter.interpret(createEvent(Event.Kinetic.MOUSE_DOWN, 10, 10));
+		interpreter.interpret(createEvent(Event.Kinetic.MOUSE_DOWN, 10, 10));
+		jasmine.Clock.tick(1001);
+
+		expect(eventBus.publish).not.toHaveBeenCalledWith(new Event(Event.Page.START_SELECTING_COLOR, [{x: 10, y: 10}]));
+	});				
 
 	function createEvent(type, x, y){
 		var options = {
