@@ -86,15 +86,11 @@ KineticLine.flatternPoints = function(points){
 	return linePoints;
 };
 
-KineticLine.prototype.enableEventHandling = function(eventBus){
+KineticLine.prototype.enableEventHandling = function(){
 	var self = this;
 	this.getKineticShape().on(Event.Kinetic.EVENTS.join(" "), function(event){
 		event.targetItem = self;
 	});
-
-	this.setEventHandler(this.getEventHandler());
-	this.eventBus = eventBus;
-	this.eventBus.addListener(this);
 };
 
 return KineticLine;

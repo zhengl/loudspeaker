@@ -33,13 +33,13 @@ describe('Page', function(){
 
 		expectOneItem(note);
 		expectNoDraftItem(note);
-		expect(board.getContext().getItems().length).toEqual(2);
+		expectOneItem(board);
 		expectNoDraftItem(board);
 
 		drawALineOn(board, 20, 20, 30, 30);
 		expectOneItem(note);
 		expectNoDraftItem(note);
-		expect(board.getContext().getItems().length).toEqual(3);
+		expect(board.getContext().getItems().length).toEqual(2);
 		expectNoDraftItem(board);
 	});
 

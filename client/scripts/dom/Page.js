@@ -59,8 +59,6 @@ Page.prototype.addItem = function(page) {
 	page.disableEventHandling();
 	this.getContext().addItem(page);
 	page.setPosition(new Point(0, 0));
-
-	page.enableEventHandling(this.getEventBus());
 };
 
 Page.prototype.remove = function(page) {

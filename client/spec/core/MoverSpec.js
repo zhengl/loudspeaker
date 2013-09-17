@@ -44,7 +44,6 @@ describe("Mover", function(){
 		it("should move a line with events, Page.START_MOVING, Page.MOVE_TO, Page.STOP_MOVING", function() {
 			var line = new Line([new Point(0, 0), new Point(10, 10)])
 			context.addItem(line);
-			line.enableEventHandling(eventBus);
 
 			triggerStartMovingEvent(line, 5, 5);
 			expectNoItem(mover);

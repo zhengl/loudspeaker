@@ -1,12 +1,9 @@
-define('Item', ['EventHandleable', 'ItemEventHandler'], function(EventHandleable, ItemEventHandler){
+define('Item', function(){
 
 
 function Item(){
 	this.isSelected = false;
 }
-
-Item.prototype = new EventHandleable(new ItemEventHandler());
-Item.prototype.constructor = Item;
 
 Item.prototype.getUUID = function(){
 	return this.uuid;
