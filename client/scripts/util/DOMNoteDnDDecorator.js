@@ -12,7 +12,7 @@ DOMNoteDnDDecorator.create = function(noteElementId, note, boardElementId, board
 	$(draggableZone).draggable({ revert: true });
 	$(droppableZone).droppable({
 		drop: function( event, ui ) {
-				board.appendPage(note);
+				board.addItem(note);
 				var noteNode = $("#" + noteElementId);
 				noteNode.addClass("note-on-board").removeClass("note-off-board");
 				noteNode.appendTo($("#" + boardElementId));

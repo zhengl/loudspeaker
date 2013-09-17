@@ -63,10 +63,10 @@ Page.prototype.addItem = function(page) {
 	page.enableEventHandling(this.getEventBus());
 };
 
-Page.prototype.removeItem = function(page) {
-	this.getContext().removeItem(this);
+Page.prototype.remove = function(page) {
+	this.parent.removeItem(this);
 	if(this.element) {
-		this.element.parent.removeChild(this.element);
+		this.element.parentNode.removeChild(this.element);
 	}
 };
 
