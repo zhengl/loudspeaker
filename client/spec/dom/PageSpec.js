@@ -47,7 +47,7 @@ describe('Page', function(){
 		board.addItem(note);
 
 		triggerStartMovingEvent(board.getEventBus(), note, 0, 0);
-		triggerPageMoveToEvent(board.getEventBus(), 10, 10);
+		triggerMoveToEvent(board.getEventBus(), 10, 10);
 		triggerFinishMovingEvent(board.getEventBus());
 
 		expect(note.getPosition()).toEqual({x: 10, y: 10});
@@ -68,48 +68,8 @@ describe('Page', function(){
 
 	function drawALineOn(page, x1, y1, x2, y2){
 		triggerStartDrawingEvent(page.getEventBus(), x1, y1);
-		triggerPageDrawToEvent(page.getEventBus(), x2, x2);
+		triggerDrawToEvent(page.getEventBus(), x2, x2);
 		triggerFinishDrawingEvent(page.getEventBus(), x2, y2);		
-	}
-
-	function triggerPageDrawToEvent(eventBus, x, y){
-		eventBus.publish(new Event(Event.Page.DRAW_TO, [new Point(x, y)]));
-	}
-
-	function triggerStartDrawingEvent(eventBus, x, y){
-		eventBus.publish(new Event(Event.Page.START_DRAWING, [new Point(x, y)]));		
-	}
-
-	function triggerFinishDrawingEvent(eventBus, x, y){
-		eventBus.publish(new Event(Event.Page.FINISH_DRAWING, [new Point(x, y)]));		
-	}
-
-	function triggerStartMovingEvent(eventBus, item, x, y){
-		eventBus.publish(new Event(Event.Page.START_MOVING, [item, new Point(x, y)]));
-	}
-	
-	function triggerFinishMovingEvent(eventBus, item){
-		eventBus.publish(new Event(Event.Page.FINISH_MOVING, [item]));
-	}
-
-	function triggerPageMoveToEvent(eventBus, x, y){
-		eventBus.publish(new Event(Event.Page.MOVE_TO, [new Point(x, y)]));
-	}
-
-	function expectOneItem(page){
-		expect(page.getContext().getItems().length).toEqual(1);
-	}
-
-	function expectOneDraftItem(page){
-		expect(page.getContext().getDraftItems().length).toEqual(1);
-	}
-	
-	function expectNoItem(page){
-		expect(page.getContext().getItems().length).toEqual(0);
-	}
-	
-	function expectNoDraftItem(page){
-		expect(page.getContext().getDraftItems().length).toEqual(0);
 	}
 
 });

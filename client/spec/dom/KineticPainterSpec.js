@@ -55,22 +55,6 @@ describe("KineticPainter", function(){
 	function createLine(x1, y1, x2, y2) {
 		return new Line([new Point(x1, y1), new Point(x2, y2)]);
 	}
-
-	function expectOneItem(painter){
-		expect(painter.getContext().getItems().length).toEqual(1);
-	}
-
-	function expectOneDraftItem(painter){
-		expect(painter.getContext().getDraftItems().length).toEqual(1);
-	}
-	
-	function expectNoItem(painter){
-		expect(painter.getContext().getItems().length).toEqual(0);
-	}
-	
-	function expectNoDraftItem(painter){
-		expect(painter.getContext().getDraftItems().length).toEqual(0);
-	}	
 	
 });
 

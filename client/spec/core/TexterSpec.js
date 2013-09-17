@@ -33,7 +33,7 @@ describe("Texter", function(){
 		});
 
 		it("should create a input widget with event START_TEXTING", function(){
-			triggerStartTextingEvent(10, 20);
+			triggerStartTextingEvent(eventBus, 10, 20);
 
 			var textInput = texter.getTextInput();
 			expect(textInput).toBeDefined();
@@ -48,25 +48,6 @@ describe("Texter", function(){
 		return text;
 	}
 
-	function expectOneItem(texter){
-		expect(texter.getContext().getItems().length).toEqual(1);
-	}
-
-	function expectOneDraftItem(texter){
-		expect(texter.getContext().getDraftItems().length).toEqual(1);
-	}
-	
-	function expectNoItem(texter){
-		expect(texter.getContext().getItems().length).toEqual(0);
-	}
-	
-	function expectNoDraftItem(texter){
-		expect(texter.getContext().getDraftItems().length).toEqual(0);
-	}
-
-	function triggerStartTextingEvent(x, y){
-		eventBus.publish(new Event(Event.Page.START_TEXTING, [new Point(x, y)]));
-	}
 });
 
 });

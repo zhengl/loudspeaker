@@ -1,4 +1,4 @@
-require(['Mover', 'RubbishBin', 'Context', 'Line', 'Text', 'Point', 'EventBus', 'Event', 'TestHelper'], function(Mover, RubbishBin, Context, Line, Text, Point, EventBus, Event, h){
+require(['Mover', 'RubbishBin', 'Context', 'Line', 'Text', 'Point', 'EventBus', 'Event'], function(Mover, RubbishBin, Context, Line, Text, Point, EventBus, Event){
 
 describe("Mover", function(){
 	var mover;
@@ -47,17 +47,17 @@ describe("Mover", function(){
 			var line = new Line([new Point(0, 0), new Point(10, 10)])
 			context.addItem(line);
 
-			h.triggerStartMovingEvent(eventBus, line, 5, 5);
-			h.expectNoItem(mover);
-			h.expectOneDraftItem(mover);			
+			triggerStartMovingEvent(eventBus, line, 5, 5);
+			expectNoItem(mover);
+			expectOneDraftItem(mover);			
 			
-			h.triggerMoveToEvent(20, 20);
-			h.expectNoItem(mover);
-			h.expectOneDraftItem(eventBus, mover);
+			triggerMoveToEvent(eventBus, 20, 20);
+			expectNoItem(mover);
+			expectOneDraftItem(mover);
 			
-			h.triggerFinishMovingEvent(eventBus, line);
-			h.expectOneItem(mover);
-			h.expectNoDraftItem(mover);
+			triggerFinishMovingEvent(eventBus, line);
+			expectOneItem(mover);
+			expectNoDraftItem(mover);
 
 			line = mover.getContext().getItems()[0];
 			expect(line.getPosition()).toEqual({x: 15, y: 15});

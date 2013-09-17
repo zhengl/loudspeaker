@@ -17,7 +17,7 @@ describe("TextingGestureDetector", function(){
 		jasmine.Clock.tick(100);
 		detector.detect(createEvent(Event.Kinetic.MOUSE_DOWN, 10, 10));
 
-		expect(eventBus.publish).toHaveBeenCalledWith(new Event(Event.Page.START_TEXTING, [{x: 10, y: 10}]));
+		expect(eventBus.publish).toHaveBeenCalledWith(new Event(Event.Page.START_TEXTING, { position: {x: 10, y: 10} }));
 	});
 
 	it("triggers nothing after MOUSE_DOWN, MOVE_TO and MOUSE_DOWN at item", function(){
@@ -44,7 +44,7 @@ describe("TextingGestureDetector", function(){
 		detector.detect(createEvent(Event.Kinetic.MOUSE_DOWN, 20, 20));
 		detector.detect(createEvent(Event.Kinetic.MOUSE_DOWN, 20, 20));
 
-		expect(eventBus.publish).toHaveBeenCalledWith(new Event(Event.Page.START_TEXTING, [{x: 20, y: 20}]));
+		expect(eventBus.publish).toHaveBeenCalledWith(new Event(Event.Page.START_TEXTING, { position: {x: 20, y: 20} }));
 	});
 
 	it("rewinds", function(){
@@ -55,35 +55,7 @@ describe("TextingGestureDetector", function(){
 		jasmine.Clock.tick(101);
 
 		expect(eventBus.publish).not.toHaveBeenCalled();
-	});
-
-
-	function createEvent(type, x, y, targetItem){
-		var options = {
-			bubbles: false,
-			cancelable: false,
-			view: window,
-			detail: 0,
-			screenX: 0,
-			screenY: 0,
-			clientX: x,
-			clientY: y,
-			ctrlKey: false,
-			altKey: false,
-			shiftKey: false,
-			metaKey: false,
-			button: 0,
-			relatedTarget: undefined
-		};
-		var event = document.createEvent('MouseEvents');
-		event.initMouseEvent( type, options.bubbles, options.cancelable,
-			options.view, options.detail,
-			options.screenX, options.screenY, options.clientX, options.clientY,
-			options.ctrlKey, options.altKey, options.shiftKey, options.metaKey,
-			options.button, options.relatedTarget || document.body.parentNode );
-		event.targetItem = targetItem;
-		return event;
-	}
+	});	
 });
 
 

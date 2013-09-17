@@ -16,7 +16,7 @@ describe("PaintingGestureDetector", function(){
 		detector.detect(createEvent(Event.Kinetic.MOVE_TO, 20, 20));
 		detector.detect(createEvent(Event.Kinetic.MOVE_TO, 30, 30));
 
-		expect(eventBus.publish).toHaveBeenCalledWith(new Event(Event.Page.START_DRAWING, [{x: 30, y: 30}]));
+		expect(eventBus.publish).toHaveBeenCalledWith(new Event(Event.Page.START_DRAWING, { position: {x: 30, y: 30} }));
 	});
 
 	it("triggers DRAW_TO after MOUSE_DOWN, MOVE_TO, MOVE_TO and MOVE_TO", function(){
@@ -25,7 +25,7 @@ describe("PaintingGestureDetector", function(){
 		detector.detect(createEvent(Event.Kinetic.MOVE_TO, 30, 30));
 		detector.detect(createEvent(Event.Kinetic.MOVE_TO, 40, 40));
 
-		expect(eventBus.publish).toHaveBeenCalledWith(new Event(Event.Page.DRAW_TO, [{x: 40, y: 40}]));
+		expect(eventBus.publish).toHaveBeenCalledWith(new Event(Event.Page.DRAW_TO, { position: {x: 40, y: 40} }));
 	});	
 
 	it("triggers FINISH_DRAWING after MOUSE_DOWN, MOVE_TO, MOVE_TO and MOUSE_UP", function(){
@@ -34,7 +34,7 @@ describe("PaintingGestureDetector", function(){
 		detector.detect(createEvent(Event.Kinetic.MOVE_TO, 30, 30));
 		detector.detect(createEvent(Event.Kinetic.MOUSE_UP, 40, 40));
 
-		expect(eventBus.publish).toHaveBeenCalledWith(new Event(Event.Page.FINISH_DRAWING, [{x: 40, y: 40}]));
+		expect(eventBus.publish).toHaveBeenCalledWith(new Event(Event.Page.FINISH_DRAWING, { position: {x: 40, y: 40} }));
 	});
 
 	it("triggers nothing after MOUSE_UP", function(){
@@ -58,7 +58,7 @@ describe("PaintingGestureDetector", function(){
 		detector.detect(createEvent(Event.Kinetic.MOVE_TO, 50, 50));
 		detector.detect(createEvent(Event.Kinetic.MOVE_TO, 50, 50));
 
-		expect(eventBus.publish).toHaveBeenCalledWith(new Event(Event.Page.START_DRAWING, [{x: 50, y: 50}]));
+		expect(eventBus.publish).toHaveBeenCalledWith(new Event(Event.Page.START_DRAWING, { position: {x: 50, y: 50} }));
 	});
 
 	it("triggers nothing MOUSE_DOWN, MOVE_TO, MOVE_TO on item", function(){
@@ -67,36 +67,8 @@ describe("PaintingGestureDetector", function(){
 		detector.detect(createEvent(Event.Kinetic.MOVE_TO, 20, 20, line));
 		detector.detect(createEvent(Event.Kinetic.MOVE_TO, 20, 20, line));
 
-		console.log(eventBus.publish.mostRecentCall)
 		expect(eventBus.publish).not.toHaveBeenCalled();
-	});		
-
-	function createEvent(type, x, y, targetItem){
-		var options = {
-			bubbles: false,
-			cancelable: false,
-			view: window,
-			detail: 0,
-			screenX: 0,
-			screenY: 0,
-			clientX: x,
-			clientY: y,
-			ctrlKey: false,
-			altKey: false,
-			shiftKey: false,
-			metaKey: false,
-			button: 0,
-			relatedTarget: undefined
-		};
-		var event = document.createEvent('MouseEvents');
-		event.initMouseEvent( type, options.bubbles, options.cancelable,
-			options.view, options.detail,
-			options.screenX, options.screenY, options.clientX, options.clientY,
-			options.ctrlKey, options.altKey, options.shiftKey, options.metaKey,
-			options.button, options.relatedTarget || document.body.parentNode );
-		event.targetItem = targetItem;
-		return event;
-	}	
+	});	
 });
 
 

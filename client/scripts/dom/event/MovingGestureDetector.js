@@ -33,11 +33,11 @@ MovingGestureDetector.prototype.startMoving = function(event) {
 };
 
 MovingGestureDetector.prototype.moveTo = function(event) {
-	this.eventBus.publish(new Event(Event.Page.MOVE_TO, { data: new Point(event.offsetX, event.offsetY) }));
+	this.eventBus.publish(new Event(Event.Page.MOVE_TO, { position: new Point(event.offsetX, event.offsetY) }));
 };
 
 MovingGestureDetector.prototype.finishMoving = function(event) {
-	this.eventBus.publish(new Event(Event.Page.FINISH_MOVING, { data: new Point(event.offsetX, event.offsetY) }));
+	this.eventBus.publish(new Event(Event.Page.FINISH_MOVING, { position: new Point(event.offsetX, event.offsetY) }));
 };
 
 return MovingGestureDetector;

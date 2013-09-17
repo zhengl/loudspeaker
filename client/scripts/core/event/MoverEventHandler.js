@@ -15,7 +15,7 @@ MoverEventHandler.prototype.handle[Event.Page.MOVE_TO] = function(mover, event){
 };
 
 MoverEventHandler.prototype.handle[Event.Page.FINISH_MOVING] = function(mover, event){
-	mover.finishMoving(event.data.position);
+	mover.finishMoving();
 };
 
 return MoverEventHandler;

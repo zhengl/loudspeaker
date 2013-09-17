@@ -33,33 +33,7 @@ describe("SelectingGestureDetector", function(){
 
 		expect(line.select).not.toHaveBeenCalled();
 	});	
-
-	function createEvent(type, x, y, target){
-		var options = {
-			bubbles: false,
-			cancelable: false,
-			view: window,
-			detail: 0,
-			screenX: 0,
-			screenY: 0,
-			clientX: x,
-			clientY: y,
-			ctrlKey: false,
-			altKey: false,
-			shiftKey: false,
-			metaKey: false,
-			button: 0,
-			relatedTarget: undefined
-		};
-		var event = document.createEvent('MouseEvents');
-		event.initMouseEvent( type, options.bubbles, options.cancelable,
-			options.view, options.detail,
-			options.screenX, options.screenY, options.clientX, options.clientY,
-			options.ctrlKey, options.altKey, options.shiftKey, options.metaKey,
-			options.button, options.relatedTarget || document.body.parentNode );
-		event.targetItem = target;
-		return event;
-	}	
+	
 });
 
 });
