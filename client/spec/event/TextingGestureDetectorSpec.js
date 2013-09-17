@@ -1,4 +1,4 @@
-require(['TextingGestureDetector', 'EventBus', 'Event'], function(TextingGestureDetector, EventBus, Event){
+require(['TextingGestureDetector', 'EventBus', 'Event', 'Line'], function(TextingGestureDetector, EventBus, Event, Line){
 
 
 describe("TextingGestureDetector", function(){
@@ -19,6 +19,15 @@ describe("TextingGestureDetector", function(){
 
 		expect(eventBus.publish).toHaveBeenCalledWith(new Event(Event.Page.START_TEXTING, [{x: 10, y: 10}]));
 	});
+
+	it("triggers nothing after MOUSE_DOWN, MOVE_TO and MOUSE_DOWN at item", function(){
+		var line = new Line()
+		detector.detect(createEvent(Event.Kinetic.MOUSE_DOWN, 10, 10, line));
+		jasmine.Clock.tick(100);
+		detector.detect(createEvent(Event.Kinetic.MOUSE_DOWN, 10, 10, line));
+
+		expect(eventBus.publish).not.toHaveBeenCalled();
+	});	
 
 	it("triggers nothing after MOUSE_DOWN (a while long then doubleclick interval) and MOUSE_DOWN", function(){
 		detector.detect(createEvent(Event.Kinetic.MOUSE_DOWN, 10, 10));
@@ -49,7 +58,7 @@ describe("TextingGestureDetector", function(){
 	});
 
 
-	function createEvent(type, x, y){
+	function createEvent(type, x, y, targetItem){
 		var options = {
 			bubbles: false,
 			cancelable: false,
@@ -72,8 +81,9 @@ describe("TextingGestureDetector", function(){
 			options.screenX, options.screenY, options.clientX, options.clientY,
 			options.ctrlKey, options.altKey, options.shiftKey, options.metaKey,
 			options.button, options.relatedTarget || document.body.parentNode );
+		event.targetItem = targetItem;
 		return event;
-	}	
+	}
 });
 
 

@@ -1,4 +1,4 @@
-define('MouseEventInterpreter', ['PaintingGestureDetector', 'TextingGestureDetector', 'PaletteGestureDetector', 'SelectingGestureDetector'], function(PaintingGestureDetector, TextingGestureDetector, PaletteGestureDetector, SelectingGestureDetector){
+define('MouseEventInterpreter', ['PaintingGestureDetector', 'TextingGestureDetector', 'PaletteGestureDetector', 'SelectingGestureDetector', 'MovingGestureDetector'], function(PaintingGestureDetector, TextingGestureDetector, PaletteGestureDetector, SelectingGestureDetector, MovingGestureDetector){
 
 
 function MouseEvextInterpreter(eventBus){
@@ -8,7 +8,8 @@ function MouseEvextInterpreter(eventBus){
 		new PaletteGestureDetector(eventBus, this),
 		new PaintingGestureDetector(eventBus, this),
 		new TextingGestureDetector(eventBus, this),
-		new SelectingGestureDetector(eventBus, this)
+		new SelectingGestureDetector(eventBus, this),
+		new MovingGestureDetector(eventBus, this)
 	];
 
 }

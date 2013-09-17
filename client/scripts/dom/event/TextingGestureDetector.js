@@ -21,11 +21,15 @@ TextingGestureDetector.prototype = new GestureDetector();
 TextingGestureDetector.prototype.constructor = TextingGestureDetector;
 
 TextingGestureDetector.prototype.readyToText = function(event) {
-	this.click++;
-	var self = this;
-	this.doubleClickTimerId = window.setTimeout(function(){
-		self.click = 0;
-	}, DOUBLE_CLICK_INTERVAL);
+	if (undefined == event.targetItem){
+		this.click++;
+		var self = this;
+		this.doubleClickTimerId = window.setTimeout(function(){
+			self.click = 0;
+		}, DOUBLE_CLICK_INTERVAL);
+	} else {
+		this.rewind();
+	}
 };
 
 TextingGestureDetector.prototype.startTexting = function(event) {

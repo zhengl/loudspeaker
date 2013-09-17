@@ -21,7 +21,8 @@ MovingGestureDetector.prototype.constructor = MovingGestureDetector;
 
 MovingGestureDetector.prototype.startMoving = function(event) {
 	if (undefined != event.targetItem) {
-		this.eventBus.publish(new Event(Event.Page.START_MOVING, [event.targetItem, new Point(event.offsetX, event.offsetY)]));
+		var currentPosition = event.targetItem.getPosition();
+		this.eventBus.publish(new Event(Event.Page.START_MOVING, [event.targetItem, new Point(event.offsetX - currentPosition.x, event.offsetY - currentPosition.y)]));
 	} else {
 		this.rewind();
 	}

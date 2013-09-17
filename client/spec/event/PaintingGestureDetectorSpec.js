@@ -1,4 +1,4 @@
-require(['PaintingGestureDetector', 'EventBus', 'Event'], function(PaintingGestureDetector, EventBus, Event){
+require(['PaintingGestureDetector', 'EventBus', 'Event', 'Line'], function(PaintingGestureDetector, EventBus, Event, Line){
 
 
 describe("PaintingGestureDetector", function(){
@@ -59,9 +59,19 @@ describe("PaintingGestureDetector", function(){
 		detector.detect(createEvent(Event.Kinetic.MOVE_TO, 50, 50));
 
 		expect(eventBus.publish).toHaveBeenCalledWith(new Event(Event.Page.START_DRAWING, [{x: 50, y: 50}]));
-	});	
+	});
 
-	function createEvent(type, x, y){
+	it("triggers nothing MOUSE_DOWN, MOVE_TO, MOVE_TO on item", function(){
+		var line = new Line();
+		detector.detect(createEvent(Event.Kinetic.MOUSE_DOWN, 10, 10, line));
+		detector.detect(createEvent(Event.Kinetic.MOVE_TO, 20, 20, line));
+		detector.detect(createEvent(Event.Kinetic.MOVE_TO, 20, 20, line));
+
+		console.log(eventBus.publish.mostRecentCall)
+		expect(eventBus.publish).not.toHaveBeenCalled();
+	});		
+
+	function createEvent(type, x, y, targetItem){
 		var options = {
 			bubbles: false,
 			cancelable: false,
@@ -84,6 +94,7 @@ describe("PaintingGestureDetector", function(){
 			options.screenX, options.screenY, options.clientX, options.clientY,
 			options.ctrlKey, options.altKey, options.shiftKey, options.metaKey,
 			options.button, options.relatedTarget || document.body.parentNode );
+		event.targetItem = targetItem;
 		return event;
 	}	
 });

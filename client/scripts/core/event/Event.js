@@ -9,14 +9,6 @@ Event.prototype.stringify = function() {
 	return this.name;
 };
 
-Event.Item = {
-	START_MOVING: "ITEM.START_MOVING",
-	FINISH_MOVING: "ITEM.FINISH_MOVING",
-	MOVE_TO: "ITEM.MOVE_TO",
-	SELECT: "ITEM.SELECT",
-	UNSELECT: "ITEM.UNSELECT"
-};
-
 Event.Page = {
 	START_DRAWING: "PAGE.START_DRAWING",
 	STOP_DRAWING: "PAGE.STOP_DRAWING",

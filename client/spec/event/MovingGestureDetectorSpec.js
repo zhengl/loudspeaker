@@ -1,25 +1,25 @@
-require(['MovingGestureDetector', 'EventBus', 'Event', 'Line'], function(MovingGestureDetector, EventBus, Event, Line){
+require(['MovingGestureDetector', 'EventBus', 'Event', 'Line', 'Point'], function(MovingGestureDetector, EventBus, Event, Line, Point){
 
 
 describe("MovingGestureDetector", function(){
 	var eventBus;
 	var detector;
+	var item;
 
 	beforeEach(function(){
 		eventBus = new EventBus();
 		eventBus.publish = jasmine.createSpy();
 		detector = new MovingGestureDetector(eventBus);
+		item = new Line([new Point(10, 10)]);
 	});
 
 	it("triggers START_MOVING after MOUSE_DOWN at an Item", function(){
-		var item = new Line();
-		detector.detect(createEvent(Event.Kinetic.MOUSE_DOWN, 10, 10, new Line()));
+		detector.detect(createEvent(Event.Kinetic.MOUSE_DOWN, 10, 10, item));
 
-		expect(eventBus.publish).toHaveBeenCalledWith(new Event(Event.Page.START_MOVING, [item, {x: 10, y: 10}]));
+		expect(eventBus.publish).toHaveBeenCalledWith(new Event(Event.Page.START_MOVING, [item, {x: 0, y: 0}]));
 	});
 
 	it("triggers MOVE_TO after MOUSE_DOWN, MOVE_TO at an Item", function(){
-		var item = new Line();
 		detector.detect(createEvent(Event.Kinetic.MOUSE_DOWN, 10, 10, item));
 		detector.detect(createEvent(Event.Kinetic.MOVE_TO, 20, 20));
 
@@ -27,7 +27,6 @@ describe("MovingGestureDetector", function(){
 	});
 
 	it("triggers FINISH_MOVING after MOUSE_DOWN, MOVE_TO and MOUSE_UP", function(){
-		var item = new Line();
 		detector.detect(createEvent(Event.Kinetic.MOUSE_DOWN, 10, 10, item));
 		detector.detect(createEvent(Event.Kinetic.MOVE_TO, 20, 20));
 		detector.detect(createEvent(Event.Kinetic.MOUSE_UP, 30, 30));

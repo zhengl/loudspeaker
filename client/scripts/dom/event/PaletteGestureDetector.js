@@ -19,11 +19,15 @@ PaletteGestureDetector.prototype = new GestureDetector();
 PaletteGestureDetector.prototype.constructor = PaletteGestureDetector;
 
 PaletteGestureDetector.prototype.startShowingPalette = function(event) {
-	var self = this;
-	this.longPressTimerId = window.setTimeout(function(){
-		self.eventBus.publish(new Event(Event.Page.START_SELECTING_COLOR, [new Point(event.pageX, event.pageY)]));
-		self.inform(this);
-	}, LONG_PRESS_INTERVAL);
+	if(undefined == event.targetItem) {		
+		var self = this;
+		this.longPressTimerId = window.setTimeout(function(){
+			self.eventBus.publish(new Event(Event.Page.START_SELECTING_COLOR, [new Point(event.pageX, event.pageY)]));
+			self.inform(this);
+		}, LONG_PRESS_INTERVAL);
+	} else {
+		this.rewind();
+	}
 };
 
 PaletteGestureDetector.prototype.stopShowingPalette = function(event) {

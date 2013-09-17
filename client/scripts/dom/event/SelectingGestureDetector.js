@@ -25,7 +25,6 @@ SelectingGestureDetector.prototype.select = function(event) {
 };
 
 SelectingGestureDetector.prototype.unselect = function(event) {
-	console.log(event)
 	if (undefined != event.targetItem) {
 		event.targetItem.unselect();
 		this.inform();

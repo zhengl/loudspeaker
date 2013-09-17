@@ -12,8 +12,8 @@ GestureDetector.prototype.detect = function(event) {
 	for(var i = 0; i < this.currentCandidateSteps.length; i++){
 		if(this.currentCandidateSteps[i].event == event.type) {
 			var currentCandidateStep = this.currentCandidateSteps[i];
-			currentCandidateStep.action.call(this, event);
 			this.currentCandidateSteps = currentCandidateStep.getNextSteps();
+			currentCandidateStep.action.call(this, event);
 		}
 	}
 };

@@ -7,7 +7,7 @@ function MoverEventHandler(){
 MoverEventHandler.prototype.handle = {};
 
 MoverEventHandler.prototype.handle[Event.Page.START_MOVING] = function(mover, event){
-	mover.startMoving(event.data[0]);
+	mover.startMoving(event.data[0], event.data[1]);
 };
 
 MoverEventHandler.prototype.handle[Event.Page.MOVE_TO] = function(mover, event){

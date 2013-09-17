@@ -10,7 +10,9 @@ KineticTexter.constructor = KineticTexter;
 KineticTexter.prototype.finishTexting = function(position) {
 	var item = this.getTextInput().flush();
 
-	item.enableEventHandling();
+	if(undefined != this.eventBus){
+		item.enableEventHandling(this.eventBus);	
+	}
 };
 
 return KineticTexter;

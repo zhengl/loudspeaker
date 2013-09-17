@@ -10,7 +10,9 @@ function KineticContext(container, width, height){
 		width: width,
 		height: height,
 	});
+	this.itemGroup = new Kinetic.Group();
 	this.layer = new Kinetic.Layer();
+	this.layer.add(this.itemGroup);
 	this.draftLayer = new Kinetic.Layer();
 	this.stage.add(this.draftLayer);
 	this.stage.add(this.layer);
@@ -45,7 +47,7 @@ KineticContext.prototype.addItem = function(item){
 		item.undraftize();
 	}
 	if(item.kineticShape){
-		item.getKineticShape().moveTo(this.layer);
+		item.getKineticShape().moveTo(this.itemGroup);
 		this.layer.draw();
 	}
 	this.draftLayer.draw();
@@ -80,10 +82,11 @@ KineticContext.prototype.addEventListeners = function(eventBus, events){
 
 	var interpreter = new MouseEventInterpreter(eventBus);
 	this.eventCatcher.moveToBottom();
-	this.eventCatcher.on(events.join(" "), function(event){
-		console.log(event.type)
+	this.eventCatcher.on(events.join(" "), function(){});
+	this.itemGroup.add(this.eventCatcher);
+	this.itemGroup.on(events.join(" "), function(event){
 		interpreter.interpret(event);
-	});
+	});	
 	this.layer.draw();
 };
 
@@ -93,9 +96,8 @@ KineticContext.prototype.disableEventHandling = function(){
 };
 
 KineticContext.prototype.removeEventListeners = function(eventBus, events){
-	this.eventCatcher.remove();
-
 	this.eventCatcher.off(events.join(" "));
+	this.itemGroup.off(events.join(" "));
 	this.layer.draw();
 };
 

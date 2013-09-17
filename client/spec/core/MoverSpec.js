@@ -41,17 +41,16 @@ describe("Mover", function(){
 			mover.enableEventHandling(eventBus);	
 		});
 
-		it("should move a line with events, Item.START_MOVING, Page.MOVE_TO, Item.STOP_MOVING after being selected", function() {
+		it("should move a line with events, Page.START_MOVING, Page.MOVE_TO, Page.STOP_MOVING", function() {
 			var line = new Line([new Point(0, 0), new Point(10, 10)])
 			context.addItem(line);
 			line.enableEventHandling(eventBus);
 
-			triggerSelectEvent(line);
 			triggerStartMovingEvent(line, 5, 5);
 			expectNoItem(mover);
 			expectOneDraftItem(mover);			
 			
-			triggerPageMoveToEvent(20, 20);
+			triggerMoveToEvent(20, 20);
 			expectNoItem(mover);
 			expectOneDraftItem(mover);
 			
@@ -63,103 +62,6 @@ describe("Mover", function(){
 			expect(line.getPosition()).toEqual({x: 15, y: 15});
 		});
 
-
-		it("should move lines with events, Item.START_MOVING, Page.MOVE_TO, Item.STOP_MOVING after being selected", function() {
-			var line = new Line([new Point(0, 0), new Point(10, 10)])
-			context.addItem(line);
-			line.enableEventHandling(eventBus);
-
-			var line2 = new Line([new Point(0, 0), new Point(10, 10)])
-			context.addItem(line2);
-
-			expect(mover.getContext().getItems().length).toEqual(2);
-						
-			triggerSelectEvent(line);
-			triggerStartMovingEvent(line, 5, 5);
-			expectOneItem(mover);
-			expectOneDraftItem(mover);			
-			
-			triggerPageMoveToEvent(20, 20);
-			expectOneItem(mover);
-			expectOneDraftItem(mover);
-			
-			triggerFinishMovingEvent(line);
-			expect(mover.getContext().getItems().length).toEqual(2);
-			expectNoDraftItem(mover);
-
-			item = mover.getContext().getItems()[1];
-			expect(item.getPosition()).toEqual({x: 15, y: 15});
-		});	
-
-		it("should move a line with events, Item.START_MOVING, Item.MOVE_TO, Item.STOP_MOVING after being selected", function() {
-			var line = new Line([new Point(0, 0), new Point(10, 10)])
-			context.addItem(line);
-			line.enableEventHandling(eventBus);
-
-			triggerSelectEvent(line);
-			triggerStartMovingEvent(line, 5, 5);
-			expectNoItem(mover);
-			expectOneDraftItem(mover);			
-			
-			triggerItemMoveToEvent(line, 20, 20);
-			expectNoItem(mover);
-			expectOneDraftItem(mover);
-			
-			item = mover.getContext().getDraftItems()[0];
-			expect(item.getPosition()).toEqual({x: 15, y: 15});			
-
-			triggerFinishMovingEvent(line);
-			expectOneItem(mover);
-			expectNoDraftItem(mover);
-			item = mover.getContext().getItems()[0];
-			expect(item.getPosition()).toEqual({x: 15, y: 15});
-		});
-
-		it("should move a text with events, Item.START_MOVING, Page.MOVE_TO, Item.STOP_MOVING after being selected", function() {
-			var text = new Text("Hello World");
-			text.setPosition(new Point(10, 10));
-			context.addItem(text);
-			text.enableEventHandling(eventBus);
-		
-			triggerSelectEvent(text);
-			triggerStartMovingEvent(text, 5, 5);
-			expectNoItem(mover);
-			expectOneDraftItem(mover);			
-			
-			triggerPageMoveToEvent(20, 20);
-			expectNoItem(mover);
-			expectOneDraftItem(mover);
-			
-			triggerFinishMovingEvent(text);
-			expectOneItem(mover);
-			expectNoDraftItem(mover);
-
-			item = mover.getContext().getItems()[0];
-			expect(item.getPosition()).toEqual({x: 15, y: 15});
-		});
-
-		it("should move a text with events, Item.START_MOVING, Item.MOVE_TO, Item.STOP_MOVING after being selected", function() {
-			var text = new Text("Hello World");
-			text.setPosition(new Point(10, 10));
-			context.addItem(text);
-			text.enableEventHandling(eventBus);
-
-			triggerSelectEvent(text);
-			triggerStartMovingEvent(text, 5, 5);
-			expectNoItem(mover);
-			expectOneDraftItem(mover);			
-			
-			triggerItemMoveToEvent(text, 20, 20);
-			expectNoItem(mover);
-			expectOneDraftItem(mover);
-			
-			triggerFinishMovingEvent(text);
-			expectOneItem(mover);
-			expectNoDraftItem(mover);
-
-			text = mover.getContext().getItems()[0];
-			expect(text.getPosition()).toEqual({x: 15, y: 15});
-		});	
 	});
 
 	function expectOneItem(mover){
@@ -178,30 +80,17 @@ describe("Mover", function(){
 		expect(mover.getContext().getDraftItems().length).toEqual(0);
 	}
 
-	function triggerSelectEvent(item){
-		eventBus.publish(new Event(Event.Item.SELECT, [item]));	
-	}
-	
-	function triggerUnselectEvent(item){
-		eventBus.publish(new Event(Event.Item.UNSELECT, [item]));	
-	}
-
 	function triggerStartMovingEvent(item, x, y){
-		eventBus.publish(new Event(Event.Item.START_MOVING, [item, new Point(x, y)]));
+		eventBus.publish(new Event(Event.Page.START_MOVING, [item, new Point(x, y)]));
 	}
 	
 	function triggerFinishMovingEvent(item){
-		eventBus.publish(new Event(Event.Item.FINISH_MOVING, [item]));
+		eventBus.publish(new Event(Event.Page.FINISH_MOVING, [item]));
 	}
 
-	function triggerPageMoveToEvent(x, y){
+	function triggerMoveToEvent(x, y){
 		eventBus.publish(new Event(Event.Page.MOVE_TO, [new Point(x, y)]));
 	}
-
-	function triggerItemMoveToEvent(item, x, y){
-		eventBus.publish(new Event(Event.Item.MOVE_TO, [item, new Point(x, y)]));
-	}
-
 });
 
 });

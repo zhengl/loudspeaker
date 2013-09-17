@@ -1,4 +1,4 @@
-define('PaintingGestureDetector', ['GestureDetector', 'GestureStep', 'Event', 'Point'], function(GestureDetector, GestureStep, Event, Point){
+define('PaintingGestureDetector', ['GestureDetector', 'GestureStep', 'Event', 'Point', 'Item'], function(GestureDetector, GestureStep, Event, Point, Item){
 
 
 function PaintingGestureDetector(eventBus, monitor){
@@ -25,6 +25,9 @@ PaintingGestureDetector.prototype = new GestureDetector();
 PaintingGestureDetector.prototype.constructor = PaintingGestureDetector;
 
 PaintingGestureDetector.prototype.readyToDraw = function(event) {
+	if (undefined != event.targetItem) {
+		this.rewind();
+	} 
 };
 
 PaintingGestureDetector.prototype.startDrawing = function(event) {

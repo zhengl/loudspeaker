@@ -52,11 +52,15 @@ KineticText.prototype.undraftize = function(){
 	return this;
 };
 
-KineticText.prototype.enableEventHandling = function(){
+KineticText.prototype.enableEventHandling = function(eventBus){
 	var self = this;
 	this.getKineticShape().on(Event.Kinetic.EVENTS.join(" "), function(event){
 		event.targetItem = self;
 	});
+
+	this.setEventHandler(this.getEventHandler());
+	this.eventBus = eventBus;
+	this.eventBus.addListener(this);	
 };
 
 return KineticText;

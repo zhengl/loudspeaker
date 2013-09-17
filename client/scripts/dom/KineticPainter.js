@@ -33,7 +33,9 @@ KineticPainter.prototype.endDraft = function(point){
 	this.context.addItem(this.draftItem);
 	this.context.clearDraftItems();
 
-	this.draftItem.enableEventHandling();	
+	if(undefined != this.eventBus){
+		this.draftItem.enableEventHandling(this.eventBus);	
+	}
 };
 
 return KineticPainter;

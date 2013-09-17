@@ -14,40 +14,6 @@ describe("Item", function(){
 		item.moveTo(newPosition);
 		expect(item.position).toEqual(newPosition);
 	});
-
-	describe("with event handling", function(){
-		it("should be selected and unselected with event SELECT and UNSELECT", function() {
-			eventBus = new EventBus();
-			item.enableEventHandling(eventBus);
-						
-			triggerSelectEvent(item);		
-			expect(item.isSelected).toBe(true);
-			
-			triggerUnselectEvent(item);			
-			expect(item.isSelected).toBe(false);
-		});
-
-		it("should have no reaction after disabling event handling", function(){
-			eventBus = new EventBus();
-			item.enableEventHandling(eventBus);
-			item.disableEventHandling();
-
-			triggerSelectEvent(item);		
-			expect(item.isSelected).toBe(false);
-			
-			triggerUnselectEvent(item);			
-			expect(item.isSelected).toBe(false);
-		});
-	});
-
-	function triggerSelectEvent(item){
-		eventBus.publish(new Event(Event.Item.SELECT, [item]));	
-	}
-	
-	function triggerUnselectEvent(item){
-		eventBus.publish(new Event(Event.Item.UNSELECT, [item]));	
-	}
-
 });
 
 

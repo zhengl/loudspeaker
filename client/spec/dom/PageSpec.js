@@ -78,11 +78,11 @@ describe('Page', function(){
 	}
 
 	function triggerStartMovingEvent(eventBus, item, x, y){
-		eventBus.publish(new Event(Event.Item.START_MOVING, [item, new Point(x, y)]));
+		eventBus.publish(new Event(Event.Page.START_MOVING, [item, new Point(x, y)]));
 	}
 	
 	function triggerFinishMovingEvent(eventBus, item){
-		eventBus.publish(new Event(Event.Item.FINISH_MOVING, [item]));
+		eventBus.publish(new Event(Event.Page.FINISH_MOVING, [item]));
 	}
 
 	function triggerPageMoveToEvent(eventBus, x, y){

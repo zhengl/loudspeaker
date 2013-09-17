@@ -12,7 +12,8 @@ Mover.prototype.getContext = function(){
 	return this.context;
 };
 
-Mover.prototype.startMoving = function(item) {
+Mover.prototype.startMoving = function(item, relativePosition) {
+	item.relativePosition = relativePosition;
 	this.context.addDraftItem(item);	
 	this.context.removeItem(item);
 	this.movingItem = item;
@@ -27,6 +28,7 @@ Mover.prototype.finishMoving = function() {
 	}
 		
 	this.context.clearDraftItems();
+	delete this.movingItem.relativePosition;
 };
 
 Mover.prototype.moveTo = function(point){
