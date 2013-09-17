@@ -7,15 +7,15 @@ function MoverEventHandler(){
 MoverEventHandler.prototype.handle = {};
 
 MoverEventHandler.prototype.handle[Event.Page.START_MOVING] = function(mover, event){
-	mover.startMoving(event.data[0], event.data[1]);
+	mover.startMoving(event.data.item, event.data.position);
 };
 
 MoverEventHandler.prototype.handle[Event.Page.MOVE_TO] = function(mover, event){
-	mover.moveTo(event.data[0]);
+	mover.moveTo(event.data.position);
 };
 
 MoverEventHandler.prototype.handle[Event.Page.FINISH_MOVING] = function(mover, event){
-	mover.finishMoving(event.data[0]);
+	mover.finishMoving(event.data.position);
 };
 
 return MoverEventHandler;

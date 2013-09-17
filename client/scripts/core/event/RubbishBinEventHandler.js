@@ -8,7 +8,7 @@ RubbishBinEventHandler.prototype.handle = {};
 
 
 RubbishBinEventHandler.prototype.handle[Event.Page.MOVE_TO] = function(rubbishBin, event){
-	if (rubbishBin.isInside(event.data[0])) {
+	if (rubbishBin.isInside(event.data.position)) {
 		rubbishBin.open();
 	} else {
 		rubbishBin.close();

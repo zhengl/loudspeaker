@@ -12,8 +12,6 @@ require.config({
 		
 			EventHandleable: "core/event/EventHandleable",
 		
-			ItemEventHandler: "core/event/ItemEventHandler",
-		
 			MoverEventHandler: "core/event/MoverEventHandler",
 		
 			PainterEventHandler: "core/event/PainterEventHandler",

@@ -22,18 +22,22 @@ MovingGestureDetector.prototype.constructor = MovingGestureDetector;
 MovingGestureDetector.prototype.startMoving = function(event) {
 	if (undefined != event.targetItem) {
 		var currentPosition = event.targetItem.getPosition();
-		this.eventBus.publish(new Event(Event.Page.START_MOVING, [event.targetItem, new Point(event.offsetX - currentPosition.x, event.offsetY - currentPosition.y)]));
+		var data = {
+			item: event.targetItem,
+			position: new Point(event.offsetX - currentPosition.x, event.offsetY - currentPosition.y),
+		}
+		this.eventBus.publish(new Event(Event.Page.START_MOVING, data));
 	} else {
 		this.rewind();
 	}
 };
 
 MovingGestureDetector.prototype.moveTo = function(event) {
-	this.eventBus.publish(new Event(Event.Page.MOVE_TO, [new Point(event.offsetX, event.offsetY)]));
+	this.eventBus.publish(new Event(Event.Page.MOVE_TO, { data: new Point(event.offsetX, event.offsetY) }));
 };
 
 MovingGestureDetector.prototype.finishMoving = function(event) {
-	this.eventBus.publish(new Event(Event.Page.FINISH_MOVING, [new Point(event.offsetX, event.offsetY)]));
+	this.eventBus.publish(new Event(Event.Page.FINISH_MOVING, { data: new Point(event.offsetX, event.offsetY) }));
 };
 
 return MovingGestureDetector;
