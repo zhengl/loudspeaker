@@ -14,14 +14,14 @@ Mover.prototype.getContext = function(){
 
 Mover.prototype.startMoving = function(item, relativePosition) {
 	item.relativePosition = relativePosition;
-	this.context.addDraftItem(item);	
 	this.context.removeItem(item);
+	this.context.addDraftItem(item);
 	this.movingItem = item;
 };
 
 Mover.prototype.finishMoving = function() {
 	if (this.rubbishBin && this.rubbishBin.isOpen) {
-		this.context.removeItem(this.movingItem);
+		this.movingItem.remove();
 		this.rubbishBin.close();
 	} else {
 		this.context.addItem(this.movingItem);

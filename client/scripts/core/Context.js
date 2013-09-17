@@ -29,6 +29,7 @@ Context.prototype.removeItem = function(item){
 			resultItems.push(this.items[i]);
 		}
 	}
+	item.setParent(undefined);
 	this.items = resultItems;
 };
 
@@ -37,11 +38,13 @@ Context.prototype.getDraftItems = function(){
 };
 
 Context.prototype.addItem = function(item){
-	this.items.push(item)
+	this.items.push(item);
+	item.setParent(this);
 };
 
 Context.prototype.addDraftItem = function(draftItem){
-	this.draftItems.push(draftItem)
+	this.draftItems.push(draftItem);
+	draftItem.setParent(this);
 };
 
 Context.prototype.clearDraftItems = function(){

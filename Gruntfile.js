@@ -62,7 +62,7 @@ module.exports = function(grunt){
 			},
 			tests: {
 				files: ['client/spec/**/*Spec.js', 'client/scripts/**/*.js'],
-				tasks: ['template', 'test'],
+				tasks: ['test'],
 				options: {
 					spawn: false,
 				},

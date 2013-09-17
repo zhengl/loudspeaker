@@ -36,6 +36,14 @@ Item.prototype.unselect = function(){
 	this.isSelected = false;
 };
 
+Item.prototype.remove = function() {
+	this.parent.removeItem(this);
+};
+
+Item.prototype.setParent = function(parent) {
+	this.parent = parent;
+};
+
 return Item;
 
 	

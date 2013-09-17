@@ -20,19 +20,13 @@ DOMNoteDnDDecorator.create = function(noteElementId, note, boardElementId, board
                 $("#wrapper").toggleClass("noteIsShown");
                 $("#modal-cover").toggleClass("noteIsShown");
 
-    //             var interpreter = new KineticMouseEventOnItemInterpreter(note);
-    //             note.element = noteNode.get(0);
-    //             noteNode.on([
-				// 	Event.Kinetic.MOUSE_OVER,
-				// 	Event.Kinetic.MOUSE_ENTER,
-				// 	Event.Kinetic.MOVE_TO,
-				// 	Event.Kinetic.MOUSE_DOWN,
-				// 	Event.Kinetic.MOUSE_UP,
-				// 	Event.Kinetic.MOUSE_OUT,
-				// 	Event.Kinetic.MOUSE_LEAVE,
-				// ].join(" "), function(event){
-				// 	interpreter.interpret(event, board.getEventBus());
-    //             });
+                note.element = noteNode.get(0);
+                noteNode.on(Event.Kinetic.EVENTS.join(" "), function(event){
+                	event.targetItem = note;
+                	event.offsetX = event.offsetX + note.getPosition().x;
+                	event.offsetY = event.offsetY + note.getPosition().y;
+					board.getContext().itemGroup.fire(event.type, event);
+                });
 		}
 	});
 }

@@ -55,13 +55,19 @@ Page.prototype.setMover = function(mover) {
 	this.mover = mover;
 };
 
-Page.prototype.appendPage = function(page) {
+Page.prototype.addItem = function(page) {
 	page.disableEventHandling();
-	this.getContext().getItems().push(page);
+	this.getContext().addItem(page);
 	page.setPosition(new Point(0, 0));
-	page.parent = this;
 
 	page.enableEventHandling(this.getEventBus());
+};
+
+Page.prototype.removeItem = function(page) {
+	this.getContext().removeItem(this);
+	if(this.element) {
+		this.element.parent.removeChild(this.element);
+	}
 };
 
 Page.prototype.disableEventHandling = function(page) {

@@ -28,7 +28,7 @@ describe('Page', function(){
 		expectNoItem(board);
 		expectNoDraftItem(board);
 
-		board.appendPage(note);
+		board.addItem(note);
 		drawALineOn(note, 10, 0, 10, 10);
 
 		expectOneItem(note);
@@ -44,7 +44,7 @@ describe('Page', function(){
 	});
 
 	it("should be movable after being appended", function(){
-		board.appendPage(note);
+		board.addItem(note);
 
 		triggerStartMovingEvent(board.getEventBus(), note, 0, 0);
 		triggerPageMoveToEvent(board.getEventBus(), 10, 10);
@@ -52,6 +52,13 @@ describe('Page', function(){
 
 		expect(note.getPosition()).toEqual({x: 10, y: 10});
 	});
+
+	it("should be removable after being appended", function(){
+		board.addItem(note);
+		note.remove();
+
+		expectNoItem(board);
+	});	
 
 	function addDiv(id, body){
 		var div = document.createElement('div');
