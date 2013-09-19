@@ -11,12 +11,14 @@ DOMRubbishBin.prototype = new RubbishBin();
 DOMRubbishBin.prototype.constructor = DOMRubbishBin;
 
 DOMRubbishBin.prototype.close = function() {
-	this.element.className = "rubbishbin-collapse";
+	$(this.element).addClass("rubbishbin-collapse");
+	$(this.element).removeClass("rubbishbin-expand");
 	this.isOpen = false;
 };
 
 DOMRubbishBin.prototype.open = function() {
-	this.element.className = "rubbishbin-expand";
+	$(this.element).addClass("rubbishbin-expand");
+	$(this.element).removeClass("rubbishbin-collapse");
 	this.isOpen = true;
 };
 

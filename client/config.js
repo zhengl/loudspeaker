@@ -54,6 +54,8 @@ require.config({
 		
 			MouseEventInterpreter: "dom/event/MouseEventInterpreter",
 		
+			MouseEventPreprocessor: "dom/event/MouseEventPreprocessor",
+		
 			MovingGestureDetector: "dom/event/MovingGestureDetector",
 		
 			PaintingGestureDetector: "dom/event/PaintingGestureDetector",

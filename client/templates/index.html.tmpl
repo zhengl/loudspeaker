@@ -9,23 +9,15 @@
   </style>
 </head>
 <body>
-  <button id="create-note" style="float: right;">Note</button>
-  <div id="palette" class="palette"></div>
-  <div id="note-palette" class="palette"></div>
-  <div id="wrapper">
-    <div id="cell">
-      <div id="board" class="board"></div>
-      <div id="rubbishbin"></div>
-      <div id="slot"></div>
-    </div>
+  <nav class="header"></nav>
+  <div class="main">
+    <div id="board" class="board"></div>
   </div>
-  <div id="modal">
+  <div class="modal">
     <div id="note-droppable-zone" class="droppable-zone"></div>
-    <div id="note" class="note note-off-board"></div>
-    <div id="note-rubbishbin"></div>
+    <div id="note" class="note"></div>
     <div id="note-draggable-zone" class="draggable-zone"></div>
   </div>
-  <div id="modal-cover"></div>
   <% if(debug){ %>
   <div id="debug">
     <table>
