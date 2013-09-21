@@ -18,6 +18,7 @@ SelectingGestureDetector.prototype.constructor = SelectingGestureDetector;
 SelectingGestureDetector.prototype.select = function(event) {
 	if (undefined != event.targetItem) {
 		event.targetItem.select();
+		console.log("select")
 		this.inform();
 	} else {
 		this.rewind();

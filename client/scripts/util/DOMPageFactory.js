@@ -1,21 +1,23 @@
-define("DOMPageFactory", ['Page', 'KineticContext', 'DOMPaletteFactory', 'KineticPainter', 'KineticTexter', 'KineticTextInput', 'Mover', 'DOMRubbishBin', 'EventBus', 'Point'], function(Page, KineticContext, DOMPaletteFactory, KineticPainter, KineticTexter, KineticTextInput, Mover, DOMRubbishBin, EventBus, Point){
+define("DOMPageFactory", ['Page', 'KineticContext', 'DOMPaletteFactory', 'KineticPainter', 'KineticTexter', 'KineticTextInput', 'Mover', 'DOMRubbishBin', 'EventBus', 'Point', 'MouseEventInterpreter'], function(Page, KineticContext, DOMPaletteFactory, KineticPainter, KineticTexter, KineticTextInput, Mover, DOMRubbishBin, EventBus, Point, MouseEventInterpreter){
 
 function DOMPageFactory(){
 
 }
 
-DOMPageFactory.create = function(pageId, pageWidth, pageHeight, paletteId, rubbishbinId, rubbishbinWidth, rubbishbinHeight){
+DOMPageFactory.create = function(pageId, pageWidth, pageHeight, paletteId, rubbishbinId, rubbishbinWidth, rubbishbinHeight, eventPreprocessor){
 	var page = new Page();
 
 	var eventBus = new EventBus();
 	page.setEventBus(eventBus);
 	
+	var interpreter = new MouseEventInterpreter(eventBus, eventPreprocessor);
+
 	var context = new KineticContext(pageId, pageWidth, pageHeight);
-	context.enableEventHandling(eventBus);
+	context.enableEventHandling(interpreter);
 	page.setContext(context);
 
 	var palette = DOMPaletteFactory.create(paletteId);
-	palette.enableEventHandling(eventBus);
+	palette.enableEventHandling(eventBus, interpreter);
 	page.setPalette(palette);
 
 	var painter = new KineticPainter(context, palette);

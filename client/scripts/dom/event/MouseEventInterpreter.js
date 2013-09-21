@@ -1,8 +1,9 @@
 define('MouseEventInterpreter', ['PaintingGestureDetector', 'TextingGestureDetector', 'PaletteGestureDetector', 'SelectingGestureDetector', 'MovingGestureDetector'], function(PaintingGestureDetector, TextingGestureDetector, PaletteGestureDetector, SelectingGestureDetector, MovingGestureDetector){
 
 
-function MouseEvextInterpreter(eventBus){
+function MouseEvextInterpreter(eventBus, eventPreprocessor){
 	this.eventBus = eventBus;
+	this.eventPreprocessor = eventPreprocessor;
 
 	this.detectors = [
 		new PaletteGestureDetector(eventBus, this),
@@ -15,8 +16,14 @@ function MouseEvextInterpreter(eventBus){
 }
 
 MouseEvextInterpreter.prototype.interpret = function(event){
+	var targetEvent = event;
+
+	if (undefined != this.eventPreprocessor) {
+		targetEvent = this.eventPreprocessor.process(event)
+	}
+
 	for (var i = 0; i < this.detectors.length; i++) {
-		this.detectors[i].detect(event);
+		this.detectors[i].detect(targetEvent);
 	}
 };
 

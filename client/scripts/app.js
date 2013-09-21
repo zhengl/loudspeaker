@@ -1,30 +1,39 @@
-define('app', ['DOMPageFactory', 'DOMNoteDnDDecorator', 'config', 'uuid', 'jquery', 'jquery-ui'], function(DOMPageFactory, DOMNoteDnDDecorator, config, UUID, $){
+define('app', ['DOMPageFactory', 'MouseEventPreprocessor', 'DOMNoteDnDDecorator', 'config', 'uuid', 'jquery', 'jquery-ui'], function(DOMPageFactory, MouseEventPreprocessor, DOMNoteDnDDecorator, config, UUID, $){
     var ratio = 16 / 9;
     var boardId = 'board';
     var paletteId = 'palette';
     var boardElement = $('#' + boardId);
 
-    var boardActualWidth = 1280;
-    var boardActualHeight = 720;
+    var boardActualWidth = 854;
+    var boardActualHeight = 480;
+
+    var boardStyleWidth;
+    var boardStyleHeight;
 
     var rubbishBinId = 'rubbishbin'
     var rubbishBinWidth = 100;
 
+    var eventPreprocessor;
+    var interpreter;
+
     function adjustBoardHeight() {
-        var boardStyleWidth = boardElement.width();
-        var boardStyleHeight = boardStyleWidth / ratio;
+        boardStyleWidth = boardElement.width();
+        boardStyleHeight = boardStyleWidth / ratio;
         boardElement.height(boardStyleHeight);
 
         $('.kineticjs-content').width(boardStyleWidth).height(boardStyleHeight);
         $('canvas').width(boardStyleWidth).height(boardStyleHeight);
     }
 
+    function onRepaint(){
+        adjustBoardHeight();
+        eventPreprocessor.setZoomPercentage(boardActualWidth / boardStyleWidth);
+    }
+
     return {
         start: function(){
-            adjustBoardHeight();
-            $( window ).resize(function() {
-              adjustBoardHeight();
-            });
+            eventPreprocessor = new MouseEventPreprocessor();
+
 
             var rubbishBinHeight = boardActualHeight;
 
@@ -41,12 +50,17 @@ define('app', ['DOMPageFactory', 'DOMNoteDnDDecorator', 'config', 'uuid', 'jquer
                 paletteId,
                 rubbishBinId, 
                 rubbishBinWidth,
-                rubbishBinHeight
+                rubbishBinHeight,
+                eventPreprocessor
             );
 
             rubbishbinElement.insertAfter(boardElement);
 
+            // onRepaint();
 
+            $( window ).resize(function() {
+              onRepaint();
+            });
             // $("#create-note").click(function(){
             //         $("#modal").toggleClass("noteIsShown");
             //         $("#wrapper").toggleClass("noteIsShown");

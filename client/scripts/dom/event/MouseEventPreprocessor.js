@@ -12,10 +12,10 @@ MouseEventPreprocessor.prototype.setZoomPercentage = function(percentage) {
 MouseEventPreprocessor.prototype.process = function(event) {
 	var offsetX = event.offsetX * this.zoomPercentage;
 	var offsetY = event.offsetY * this.zoomPercentage;
-	return createEvent(event.type, offsetX, offsetY);
+	return this.createEvent(event.type, offsetX, offsetY, event.targetItem);
 };
 
-MouseEventPreprocessor.prototype.createEvent = function(type, x, y){
+MouseEventPreprocessor.prototype.createEvent = function(type, x, y, targetItem){
 	var options = {
 		bubbles: false,
 		cancelable: false,
@@ -38,6 +38,7 @@ MouseEventPreprocessor.prototype.createEvent = function(type, x, y){
 		options.screenX, options.screenY, options.clientX, options.clientY,
 		options.ctrlKey, options.altKey, options.shiftKey, options.metaKey,
 		options.button, options.relatedTarget || document.body.parentNode );
+	event.targetItem = targetItem;
 	return event;
 }	
 
