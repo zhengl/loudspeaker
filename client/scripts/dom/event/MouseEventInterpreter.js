@@ -6,11 +6,11 @@ function MouseEvextInterpreter(eventBus, eventPreprocessor){
 	this.eventPreprocessor = eventPreprocessor;
 
 	this.detectors = [
+		new MovingGestureDetector(eventBus, this),
 		new PaletteGestureDetector(eventBus, this),
 		new PaintingGestureDetector(eventBus, this),
 		new TextingGestureDetector(eventBus, this),
 		new SelectingGestureDetector(eventBus, this),
-		new MovingGestureDetector(eventBus, this)
 	];
 
 }

@@ -112,6 +112,11 @@ KineticContext.prototype.refreshDraftItems = function(){
 	this.draftLayer.draw();
 };
 
+KineticContext.prototype.setScale = function(percentage){
+	this.stage.setScale(percentage);
+	this.stage.draw();
+};
+
 return KineticContext;
 
 

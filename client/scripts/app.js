@@ -1,4 +1,6 @@
 define('app', ['DOMPageFactory', 'MouseEventPreprocessor', 'DOMNoteDnDDecorator', 'config', 'uuid', 'jquery', 'jquery-ui'], function(DOMPageFactory, MouseEventPreprocessor, DOMNoteDnDDecorator, config, UUID, $){
+    var board;
+
     var ratio = 16 / 9;
     var boardId = 'board';
     var paletteId = 'palette';
@@ -16,24 +18,22 @@ define('app', ['DOMPageFactory', 'MouseEventPreprocessor', 'DOMNoteDnDDecorator'
     var eventPreprocessor;
     var interpreter;
 
-    function adjustBoardHeight() {
+    function adjustScale() {
         boardStyleWidth = boardElement.width();
         boardStyleHeight = boardStyleWidth / ratio;
-        boardElement.height(boardStyleHeight);
 
-        $('.kineticjs-content').width(boardStyleWidth).height(boardStyleHeight);
-        $('canvas').width(boardStyleWidth).height(boardStyleHeight);
+        board.getContext().setScale(boardStyleWidth / boardActualWidth);
     }
 
     function onRepaint(){
-        adjustBoardHeight();
+        adjustScale();
+        // eventPreprocessor.setZoomPercentage(boardStyleWidth / boardActualWidth);
         eventPreprocessor.setZoomPercentage(boardActualWidth / boardStyleWidth);
     }
 
     return {
         start: function(){
             eventPreprocessor = new MouseEventPreprocessor();
-
 
             var rubbishBinHeight = boardActualHeight;
 
@@ -43,7 +43,7 @@ define('app', ['DOMPageFactory', 'MouseEventPreprocessor', 'DOMNoteDnDDecorator'
             var paletteElement = $('<div id="' + paletteId + '" class="palette"></div>');
             paletteElement.appendTo($('body'));
 
-            var board = DOMPageFactory.create(
+            board = DOMPageFactory.create(
                 boardId, 
                 boardActualWidth, 
                 boardActualHeight,
