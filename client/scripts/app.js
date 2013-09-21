@@ -56,7 +56,7 @@ define('app', ['DOMPageFactory', 'MouseEventPreprocessor', 'DOMNoteDnDDecorator'
 
             rubbishbinElement.insertAfter(boardElement);
 
-            // onRepaint();
+            onRepaint();
 
             $( window ).resize(function() {
               onRepaint();
