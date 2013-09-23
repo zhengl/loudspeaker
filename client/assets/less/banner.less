@@ -1,0 +1,32 @@
+@logo-width: 150px;
+@logo-height: 150px;
+@logo-frame-color: #c0392b;
+@logo-frame-width: @logo-width * 0.1;
+@logo-hole-width: @logo-width * 0.3;
+@logo-hole-height: @logo-hole-width;
+
+.logo {
+	position: relative;
+	margin: 0 auto;
+	width: @logo-width;
+	height: @logo-width;
+	background-color: white;
+	border-radius: 50%;
+	border-style: solid;
+	border-width: @logo-frame-width;
+	border-color: @logo-frame-color;
+}
+
+.logo .hole {
+	position: absolute;
+	top: (@logo-height - @logo-hole-height) / 2;
+	left: (@logo-width - @logo-hole-width) / 2;
+	width: @logo-hole-width;
+	height: @logo-hole-height;
+	border-radius: 50%;
+	background-color: black;
+}
+
+.slogan {
+	#bs > .text-center;
+}
