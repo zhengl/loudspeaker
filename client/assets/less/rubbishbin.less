@@ -1,5 +1,8 @@
   .rubbishbin {
     #bs > .make-md-column(1);
+    padding: 0;
+    z-index: -1;
+    position: relative;
   }
 
   .rubbishbin-collapse
@@ -9,6 +12,7 @@
 
   .rubbishbin-expand
   {
+    margin-left: -(percentage((1 / 12)));
     background-color: red;
     -webkit-transition: all 0.2s ease-in-out;
   }

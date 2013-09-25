@@ -12,7 +12,7 @@ MouseEventPreprocessor.prototype.setZoomPercentage = function(percentage) {
 MouseEventPreprocessor.prototype.process = function(event) {
 	var offsetX = event.offsetX * this.zoomPercentage;
 	var offsetY = event.offsetY * this.zoomPercentage;
-	return this.createEvent(event.type, offsetX, offsetY, event.targetItem);
+	return this.createEvent(event.type, offsetX - document.body.scrollLeft, offsetY - document.body.scrollTop, event.targetItem);
 };
 
 MouseEventPreprocessor.prototype.createEvent = function(type, x, y, targetItem){

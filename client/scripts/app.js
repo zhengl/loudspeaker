@@ -5,9 +5,10 @@ define('app', ['DOMPageFactory', 'MouseEventPreprocessor', 'DOMNoteDnDDecorator'
     var boardId = 'board';
     var paletteId = 'palette';
     var boardElement = $('#' + boardId);
+    var rubbishbinElement;
 
-    var boardActualWidth = 854;
-    var boardActualHeight = 480;
+    var boardActualWidth = 1280;
+    var boardActualHeight = 720;
 
     var boardStyleWidth;
     var boardStyleHeight;
@@ -18,16 +19,17 @@ define('app', ['DOMPageFactory', 'MouseEventPreprocessor', 'DOMNoteDnDDecorator'
     var eventPreprocessor;
     var interpreter;
 
-    function adjustScale() {
+    function adjustBoardHeight() {
         boardStyleWidth = boardElement.width();
         boardStyleHeight = boardStyleWidth / ratio;
+        boardElement.height(boardStyleHeight);
 
         board.getContext().setScale(boardStyleWidth / boardActualWidth);
     }
 
     function onRepaint(){
-        adjustScale();
-        // eventPreprocessor.setZoomPercentage(boardStyleWidth / boardActualWidth);
+        adjustBoardHeight();
+        rubbishbinElement.height(boardStyleHeight);
         eventPreprocessor.setZoomPercentage(boardActualWidth / boardStyleWidth);
     }
 
@@ -37,7 +39,7 @@ define('app', ['DOMPageFactory', 'MouseEventPreprocessor', 'DOMNoteDnDDecorator'
 
             var rubbishBinHeight = boardActualHeight;
 
-            var rubbishbinElement = $('<div id="' + rubbishBinId + '" class="rubbishbin"></div>');
+            rubbishbinElement = $('<div id="' + rubbishBinId + '" class="rubbishbin"></div>');
             rubbishbinElement.appendTo($('body'));
 
             var paletteElement = $('<div id="' + paletteId + '" class="palette"></div>');
@@ -61,15 +63,10 @@ define('app', ['DOMPageFactory', 'MouseEventPreprocessor', 'DOMNoteDnDDecorator'
             $( window ).resize(function() {
               onRepaint();
             });
-            // $("#create-note").click(function(){
-            //         $("#modal").toggleClass("noteIsShown");
-            //         $("#wrapper").toggleClass("noteIsShown");
-            //         $("#modal-cover").toggleClass("noteIsShown");
-
-            //         var note = DOMPageFactory.create("note", 250, 250, "note-palette", "note-rubbishbin", 50, 250);
-            //         DOMNoteDnDDecorator.create("note", note, "board", board);
             
-            // });
+            $('.paneltrigger').click(function(){
+
+            });
             
             return board;   
         },
