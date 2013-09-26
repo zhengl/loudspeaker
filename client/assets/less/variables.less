@@ -1,7 +1,20 @@
-@screen-desktop: 992px;
+@screen-md: 992px;
+@board-max-width: 80%;
+@board-min-width: (@screen-md * 0.8);
 
-@grid-columns: 12;
+@panel-handle-max-width: (@board-min-width * 0.1);
+@panel-handle-min-height: (@board-min-width * 0.1);
+
+@panel-board-size-ratio: (1 / 3);
+@panel-right-expand-width: (@board-max-width * @panel-board-size-ratio);
+@panel-bottom-expand-height: (@board-min-width * @panel-board-size-ratio);
+
+@zindex-navbar: 1000;
+@navbar-height: 50px;
+@navbar-default-bg: #f8f8f8;
+@navbar-default-border: darken(@navbar-default-bg, 6.5%);
 
 @red: #E74C3C;
 @blue: #3498DB;
 @black: #34495E;
+

@@ -30,7 +30,8 @@ define('app', ['DOMPageFactory', 'MouseEventPreprocessor', 'DOMNoteDnDDecorator'
     }
 
     function adjustNoteHeight(){
-        noteElement.height(noteElement.width());
+        noteElement.width(boardElement.width() / 4);
+        noteElement.height(boardElement.width() / 4);
 
         //note.getContext().setScale(boardStyleWidth / boardActualWidth);
     }
@@ -77,9 +78,9 @@ define('app', ['DOMPageFactory', 'MouseEventPreprocessor', 'DOMNoteDnDDecorator'
               onRepaint();
             });
             
-            $('.panel-trigger').click(function(){
-                $('.panel').toggleClass('push-left');
-                $('.panel-trigger').toggleClass('push-left');
+            $('.panel-handle').click(function(){
+                $('.panel').toggleClass('expand');
+                $('.panel-trigger').toggleClass('expand');
                 adjustNoteHeight();
             });
             

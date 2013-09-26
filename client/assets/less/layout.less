@@ -1,14 +1,60 @@
 .nav {
+	.fixed-top;
+	z-index: @zindex-navbar;
+	min-height: @navbar-height;
+	border: 1px solid transparent;
 
+	background-color: @navbar-default-bg;
+  	border-color: @navbar-default-border;
+
+	// Prevent floats from breaking the navbar
+	.clearfix();
 }
 
-// .main {
-// 	width: 100%;
-// 	&.push-left {
-// 		margin-left: -(percentage(3 / 12));
-// 	}
-// }
 
+.panel-handle {
+	@media (min-width: @screen-md) {
+		.fixed-right;
+		width: @panel-handle-max-width;
+		&.expand {
+		}
+	}
+
+	@media (max-width: @screen-md) {
+		.fixed-bottom;
+		height: @panel-handle-min-height;
+	}
+}
+
+.panel {
+	display: table;
+	.items {
+		display: table-cell;
+		vertical-align: middle;
+		text-align: center;
+	}
+	@media (min-width: @screen-md) {
+		width: 0;
+		&.expand {
+			.fixed-right;
+			width: auto;
+			height: 100%;
+			padding: 30px;
+		}
+	}
+
+	@media (max-width: @screen-md) {
+		height: 0;
+		&.expand {
+			.fixed-bottom;
+			width: 100%;
+			padding: 10px;
+		}
+	}
+
+	overflow: hidden;
+	background-color: gray;
+}
 // .panel {
 // 	width: 0;
 // 	overflow: hidden;
@@ -21,8 +67,16 @@
 // }
 
 .board {
-	.make-column(8);
-	.make-column-offset(2);
+	@media (min-width: @screen-md) {
+		width: @board-max-width;
+	}
+	
+	@media (min-width: @board-min-width) and (max-width: @screen-md) {
+		width: @board-min-width;
+	}
+
+	width: 100%;
+	margin: 0 auto;
 	border: 1px solid;
 	overflow: hidden;
 }

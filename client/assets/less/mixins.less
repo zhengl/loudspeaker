@@ -4,6 +4,38 @@
 	right: 0;
 }
 
+.clearfix() {
+  &:before,
+  &:after {
+    content: " "; /* 1 */
+    display: table; /* 2 */
+  }
+  &:after {
+    clear: both;
+  }
+}
+
+.fixed-top {
+  position: fixed;
+  top: 0;
+  right: 0;    
+  left: 0;
+}
+
+.fixed-right {
+  position: fixed;
+  top: 0;
+  right: 0;    
+  bottom: 0;
+}
+
+.fixed-bottom {
+  position: fixed;
+  right: 0;    
+  bottom: 0;
+  left: 0;    
+}
+
 .make-column(@columns) {
   position: relative;
   // Prevent columns from collapsing when empty
