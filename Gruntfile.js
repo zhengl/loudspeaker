@@ -67,6 +67,13 @@ module.exports = function(grunt){
 				options: {
 					spawn: false,
 				},
+			},
+			template: {
+				files: ['client/templates/index.html.tmpl'],
+				tasks: ['template'],
+				options: {
+					spawn: false,
+				},				
 			}
 		},
 

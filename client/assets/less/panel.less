@@ -5,16 +5,19 @@
 	height: 100%;
 }
 
-.paneltrigger {
-	#bs > .btn;
-	#bs > .btn-default;
-	#bs > .btn-lg;
+.panel-trigger {
+	.btn;
+	.btn-default;
+	.btn-lg;
 	.fixed-to-right;
-	width: percentage(1/12);
+	width: percentage(0.5/12);
 	height: 100%;
+	&.push-left {
+		right: percentage(3/12);
+	}
 }
 
-.paneltrigger .right-arrow {
-	#bs > .glyphicon;
-	#bs > .glyphicon-chevron-right;
+.panel-trigger .right-arrow {
+	.glyphicon;
+	.glyphicon-chevron-right;
 }

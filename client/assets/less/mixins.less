@@ -3,3 +3,31 @@
 	top: 0;
 	right: 0;
 }
+
+.make-column(@columns) {
+  position: relative;
+  // Prevent columns from collapsing when empty
+  min-height: 1px;
+
+  // Calculate width based on number of columns available
+  @media (min-width: @screen-desktop) {
+    float: left;
+    width: percentage((@columns / @grid-columns));
+  }
+}
+
+.make-column-offset(@columns) {
+  @media (min-width: @screen-desktop) {
+    margin-left: percentage((@columns / @grid-columns));
+  }
+}
+.make-md-column-push(@columns) {
+  @media (min-width: @screen-desktop) {
+    left: percentage((@columns / @grid-columns));
+  }
+}
+.make-md-column-pull(@columns) {
+  @media (min-width: @screen-desktop) {
+    right: percentage((@columns / @grid-columns));
+  }
+}

@@ -1,29 +1,24 @@
 .palette {
-  border: 1px solid gray;
-  border-radius: 5px;
-  padding: 3px;
-  display: table;
-  z-index: 999;  
-}
-
-.palette button {
-  width: 2.5em;
-  height: 2.5em;
-  border: 0 none;
-  border-radius: 5px;
-  cursor: pointer;
-  margin: 2px;
-  display: table-cell;
-}
-
-.palette_red {
-  background-color: #E74C3C;    
-}
-
-.palette_blue {
-  background-color: #3498DB;    
-}
-
-.palette_black {
-  background-color: #34495E; 
+	a {
+		min-width: 50px;
+		min-height: 50px;
+		&.palette-red {
+	  		background-color: @red;
+	  		&:hover {
+	  			background-color: @red;
+	  		}
+	  	}
+	  	&.palette-blue {
+	  		background-color: @blue;
+	  		&:hover {
+	  			background-color: @blue;
+	  		}
+	  	}
+	  	&.palette-black {
+	  		background-color: @black;
+	  		&:hover {
+	  			background-color: @black;
+	  		}
+	  	}
+	}
 }

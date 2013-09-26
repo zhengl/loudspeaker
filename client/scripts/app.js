@@ -1,10 +1,12 @@
-define('app', ['DOMPageFactory', 'MouseEventPreprocessor', 'DOMNoteDnDDecorator', 'config', 'uuid', 'jquery', 'jquery-ui'], function(DOMPageFactory, MouseEventPreprocessor, DOMNoteDnDDecorator, config, UUID, $){
+define('app', ['DOMPageFactory', 'MouseEventPreprocessor', 'DOMNoteDnDDecorator', 'config', 'uuid', 'jquery', 'jquery-ui', 'bootstrap'], function(DOMPageFactory, MouseEventPreprocessor, DOMNoteDnDDecorator, config, UUID, $){
     var board;
 
     var ratio = 16 / 9;
     var boardId = 'board';
+    var noteId = 'note';
     var paletteId = 'palette';
     var boardElement = $('#' + boardId);
+    var noteElement = $('#' + noteId);
     var rubbishbinElement;
 
     var boardActualWidth = 1280;
@@ -27,9 +29,20 @@ define('app', ['DOMPageFactory', 'MouseEventPreprocessor', 'DOMNoteDnDDecorator'
         board.getContext().setScale(boardStyleWidth / boardActualWidth);
     }
 
+    function adjustNoteHeight(){
+        noteElement.height(noteElement.width());
+
+        //note.getContext().setScale(boardStyleWidth / boardActualWidth);
+    }
+
+    function adjustRubbishBinHeight(){
+        rubbishbinElement.height(boardStyleHeight);
+    }
+
     function onRepaint(){
         adjustBoardHeight();
-        rubbishbinElement.height(boardStyleHeight);
+        adjustRubbishBinHeight();
+        adjustNoteHeight();
         eventPreprocessor.setZoomPercentage(boardActualWidth / boardStyleWidth);
     }
 
@@ -64,11 +77,13 @@ define('app', ['DOMPageFactory', 'MouseEventPreprocessor', 'DOMNoteDnDDecorator'
               onRepaint();
             });
             
-            $('.paneltrigger').click(function(){
-
+            $('.panel-trigger').click(function(){
+                $('.panel').toggleClass('push-left');
+                $('.panel-trigger').toggleClass('push-left');
+                adjustNoteHeight();
             });
             
-            return board;   
+            return board;
         },
     }; 
 });
