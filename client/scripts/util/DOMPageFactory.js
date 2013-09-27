@@ -1,4 +1,4 @@
-define("DOMPageFactory", ['Page', 'KineticContext', 'DOMPaletteFactory', 'KineticPainter', 'KineticTexter', 'KineticTextInput', 'Mover', 'DOMRubbishBin', 'EventBus', 'Point', 'MouseEventInterpreter'], function(Page, KineticContext, DOMPaletteFactory, KineticPainter, KineticTexter, KineticTextInput, Mover, DOMRubbishBin, EventBus, Point, MouseEventInterpreter){
+define("DOMPageFactory", ['Page', 'KineticContext', 'DOMPaletteFactory', 'KineticPainter', 'KineticTexter', 'KineticTextInput', 'Mover', 'DOMRubbishBin', 'EventBus', 'Point', 'MouseEventInterpreter', 'PaintingGestureDetector', 'TextingGestureDetector', 'PaletteGestureDetector', 'SelectingGestureDetector', 'MovingGestureDetector'], function(Page, KineticContext, DOMPaletteFactory, KineticPainter, KineticTexter, KineticTextInput, Mover, DOMRubbishBin, EventBus, Point, MouseEventInterpreter, PaintingGestureDetector, TextingGestureDetector, PaletteGestureDetector, SelectingGestureDetector, MovingGestureDetector){
 
 function DOMPageFactory(){
 
@@ -10,7 +10,13 @@ DOMPageFactory.create = function(pageId, pageWidth, pageHeight, paletteId, rubbi
 	var eventBus = new EventBus();
 	page.setEventBus(eventBus);
 	
-	var interpreter = new MouseEventInterpreter(eventBus, eventPreprocessor);
+	var interpreter = new MouseEventInterpreter(eventBus, [
+			PaintingGestureDetector,
+			TextingGestureDetector,
+			// PaletteGestureDetector,
+			// SelectingGestureDetector,
+			MovingGestureDetector
+			], eventPreprocessor);
 
 	var context = new KineticContext(pageId, pageWidth, pageHeight);
 	context.enableEventHandling(interpreter);
