@@ -14,13 +14,15 @@
   </header>
   <div class="main">
     <div id="board" class="board"></div>
-    <button class="panel-handle">
-      <span class="right-arrow"></span>
-    </button>
     <div class="panel">
-      <div class="items">
-        <div id="note" class="note"></div>
+      <div class="panel-handle palette">
+        <a class="palette-black"></a>
+        <a class="palette-blue"></a>
+        <a class="arrow"><span class="icon"></span></a>
+        <a class="palette-red"></a>
+        <a class="palette-green"></a>
       </div>
+      <div id="note" class="note"></div>
     </div>
   </div>
   <% if(debug){ %>

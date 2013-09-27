@@ -78,7 +78,7 @@ define('app', ['DOMPageFactory', 'MouseEventPreprocessor', 'DOMNoteDnDDecorator'
               onRepaint();
             });
             
-            $('.panel-handle').click(function(){
+            $('.panel-handle .arrow').click(function(){
                 $('.panel').toggleClass('expand');
                 $('.panel-trigger').toggleClass('expand');
                 adjustNoteHeight();

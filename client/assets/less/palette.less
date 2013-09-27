@@ -1,24 +1,28 @@
 .palette {
 	a {
-		min-width: 50px;
-		min-height: 50px;
 		&.palette-red {
 	  		background-color: @red;
 	  		&:hover {
-	  			background-color: @red;
+	  			background-color: darken(@red, 10%);
 	  		}
 	  	}
 	  	&.palette-blue {
 	  		background-color: @blue;
 	  		&:hover {
-	  			background-color: @blue;
+	  			background-color: darken(@blue, 10%);
 	  		}
 	  	}
 	  	&.palette-black {
 	  		background-color: @black;
 	  		&:hover {
-	  			background-color: @black;
+	  			background-color: darken(@black, 10%);
 	  		}
 	  	}
+	  	&.palette-green {
+	  		background-color: @green;
+	  		&:hover {
+	  			background-color: darken(@green, 10%);
+	  		}
+	  	}	  	
 	}
 }
