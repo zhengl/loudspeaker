@@ -98,4 +98,12 @@ function createEvent(type, x, y, target){
 		options.button, options.relatedTarget || document.body.parentNode );
 	event.targetItem = target;
 	return event;
-}			
+}
+
+function fireEvent( target, type, event ) {
+	if ( target.dispatchEvent ) {
+		target.dispatchEvent( event );
+	} else if ( target.fireEvent ) {
+		target.fireEvent( "on" + type, event );
+	}
+}		

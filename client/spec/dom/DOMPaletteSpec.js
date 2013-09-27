@@ -1,4 +1,4 @@
-require(['DOMPalette'], function(DOMPalette){
+require(['DOMPalette', 'jquery'], function(DOMPalette, $){
 
 
 describe('DOMPalette', function(){
@@ -7,20 +7,26 @@ describe('DOMPalette', function(){
 	beforeEach(function(){
 	});
 
-	it("add color button", function(){
+	it("clicks a to select color", function(){
 		var body = document.getElementsByTagName('body')[0];
 		var palette = document.createElement('div');
-		palette.id = "palette";
-		body.appendChild(palette);		
+		
+		var paletteRed = document.createElement('a');
+		paletteRed.className = "palette-color palette_red";
+		paletteRed.style.backgroundColor = 'red';
+		palette.appendChild(paletteRed);
 
-		palette = new DOMPalette("palette");
-		palette.addColorButton('red');
-		palette.show();
-		expect(palette.isHidden()).toBe(false);
-		expect(palette.hasColorButton('red')).toBe(true);
+		var paletteBlack = document.createElement('a');
+		paletteBlack.className = "palette-color palette-black";
+		paletteBlack.style.backgroundColor = 'black';
+		palette.appendChild(paletteBlack);
 
-		palette.getColorButton('red').click();
-		expect(palette.isHidden()).toBe(true);
+		body.appendChild(palette);
+
+		palette = new DOMPalette(palette);
+		$(paletteRed).trigger('click');
+
+		expect(palette.getColor()).toEqual('rgb(255, 0, 0)');		
 	});
 });
 
