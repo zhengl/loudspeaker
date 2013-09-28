@@ -1,5 +1,6 @@
 define('app', ['DOMPageFactory', 'MouseEventPreprocessor', 'DOMNoteDnDDecorator', 'config', 'uuid', 'jquery', 'jquery-ui', 'bootstrap'], function(DOMPageFactory, MouseEventPreprocessor, DOMNoteDnDDecorator, config, UUID, $){
     var board;
+    var note;
 
     var ratio = 16 / 9;
     var boardId = 'board';
@@ -7,6 +8,10 @@ define('app', ['DOMPageFactory', 'MouseEventPreprocessor', 'DOMNoteDnDDecorator'
     var boardElement = $('#' + boardId);
     var noteElement = $('#' + noteId);
     var rubbishbinElement;
+    var noteRubbishbinElement;
+
+    var noteActualWidth = 320;
+    var noteActualHeight = 320;
 
     var boardActualWidth = 1280;
     var boardActualHeight = 720;
@@ -16,6 +21,11 @@ define('app', ['DOMPageFactory', 'MouseEventPreprocessor', 'DOMNoteDnDDecorator'
 
     var rubbishBinId = 'rubbishbin'
     var rubbishBinWidth = 100;
+    var rubbishBinHeight = boardActualHeight;
+
+    var noteRubbishBinId = 'note-rubbishbin'
+    var noteRubbishBinWidth = 20;
+    var noteRubbishBinHeight = noteActualHeight;
 
     var eventPreprocessor;
     var interpreter;
@@ -29,30 +39,34 @@ define('app', ['DOMPageFactory', 'MouseEventPreprocessor', 'DOMNoteDnDDecorator'
     }
 
     function adjustNoteHeight(){
-        noteElement.width(boardElement.width() / 4);
-        noteElement.height(boardElement.width() / 4);
+        noteStyleWidth = boardElement.width() / 4;
+        noteElement.width(noteStyleWidth);
+        noteElement.height(noteStyleWidth);
 
-        //note.getContext().setScale(boardStyleWidth / boardActualWidth);
+        note.getContext().setScale(noteStyleWidth / noteActualWidth);
     }
 
-    function adjustRubbishBinHeight(){
+    function adjustBoardRubbishBinHeight(){
         rubbishbinElement.height(boardStyleHeight);
     }
 
     function onRepaint(){
         adjustBoardHeight();
-        adjustRubbishBinHeight();
+        adjustBoardRubbishBinHeight();
         adjustNoteHeight();
-        eventPreprocessor.setZoomPercentage(boardActualWidth / boardStyleWidth);
+        boardEventPreprocessor.setZoomPercentage(boardActualWidth / boardStyleWidth);
+        noteEventPreprocessor.setZoomPercentage(noteActualWidth / noteStyleWidth);
     }
 
     return {
         start: function(){
-            eventPreprocessor = new MouseEventPreprocessor();
-
-            var rubbishBinHeight = boardActualHeight;
+            boardEventPreprocessor = new MouseEventPreprocessor();
+            noteEventPreprocessor = new MouseEventPreprocessor();
 
             rubbishbinElement = $('<div id="' + rubbishBinId + '" class="rubbishbin"></div>');
+            rubbishbinElement.appendTo($('body'));
+
+            noteRubbishbinElement = $('<div id="' + noteRubbishBinId + '" class="rubbishbin"></div>');
             rubbishbinElement.appendTo($('body'));
 
             var paletteElement = $('.palette');
@@ -65,10 +79,22 @@ define('app', ['DOMPageFactory', 'MouseEventPreprocessor', 'DOMNoteDnDDecorator'
                 rubbishBinId, 
                 rubbishBinWidth,
                 rubbishBinHeight,
-                eventPreprocessor
+                boardEventPreprocessor
             );
 
+            note = DOMPageFactory.create(
+                noteId, 
+                noteActualWidth, 
+                noteActualHeight,
+                paletteElement,
+                noteRubbishBinId, 
+                noteRubbishBinWidth,
+                noteRubbishBinHeight,
+                noteEventPreprocessor
+            );            
+
             rubbishbinElement.insertAfter(boardElement);
+            noteRubbishbinElement.insertAfter(noteElement);
 
             onRepaint();
 

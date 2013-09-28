@@ -24,7 +24,6 @@ describe('Page', function(){
 		addDiv("rubbishbin", body);
 
 		addDiv("note", body);
-		addDiv("note-palette", body);
 		addDiv("note-rubbishbin", body);
 
 		board = DOMPageFactory.create("board", 100, 100, palette, "rubbishbin", 10, 50);
