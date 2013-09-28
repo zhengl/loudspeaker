@@ -1,10 +1,10 @@
-define("DOMPageFactory", ['Page', 'KineticContext', 'DOMPaletteFactory', 'KineticPainter', 'KineticTexter', 'KineticTextInput', 'Mover', 'DOMRubbishBin', 'EventBus', 'Point', 'MouseEventInterpreter', 'PaintingGestureDetector', 'TextingGestureDetector', 'PaletteGestureDetector', 'SelectingGestureDetector', 'MovingGestureDetector'], function(Page, KineticContext, DOMPaletteFactory, KineticPainter, KineticTexter, KineticTextInput, Mover, DOMRubbishBin, EventBus, Point, MouseEventInterpreter, PaintingGestureDetector, TextingGestureDetector, PaletteGestureDetector, SelectingGestureDetector, MovingGestureDetector){
+define("DOMPageFactory", ['Page', 'KineticContext', 'DOMPalette', 'KineticPainter', 'KineticTexter', 'KineticTextInput', 'Mover', 'DOMRubbishBin', 'EventBus', 'Point', 'MouseEventInterpreter', 'PaintingGestureDetector', 'TextingGestureDetector', 'PaletteGestureDetector', 'SelectingGestureDetector', 'MovingGestureDetector'], function(Page, KineticContext, DOMPalette, KineticPainter, KineticTexter, KineticTextInput, Mover, DOMRubbishBin, EventBus, Point, MouseEventInterpreter, PaintingGestureDetector, TextingGestureDetector, PaletteGestureDetector, SelectingGestureDetector, MovingGestureDetector){
 
 function DOMPageFactory(){
 
 }
 
-DOMPageFactory.create = function(pageId, pageWidth, pageHeight, paletteId, rubbishbinId, rubbishbinWidth, rubbishbinHeight, eventPreprocessor){
+DOMPageFactory.create = function(pageId, pageWidth, pageHeight, palette, rubbishbinId, rubbishbinWidth, rubbishbinHeight, eventPreprocessor){
 	var page = new Page();
 
 	var eventBus = new EventBus();
@@ -13,8 +13,6 @@ DOMPageFactory.create = function(pageId, pageWidth, pageHeight, paletteId, rubbi
 	var interpreter = new MouseEventInterpreter(eventBus, [
 			PaintingGestureDetector,
 			TextingGestureDetector,
-			// PaletteGestureDetector,
-			// SelectingGestureDetector,
 			MovingGestureDetector
 			], eventPreprocessor);
 
@@ -22,7 +20,7 @@ DOMPageFactory.create = function(pageId, pageWidth, pageHeight, paletteId, rubbi
 	context.enableEventHandling(interpreter);
 	page.setContext(context);
 
-	var palette = DOMPaletteFactory.create(paletteId);
+	var palette = new DOMPalette(palette);
 	palette.enableEventHandling(eventBus, interpreter);
 	page.setPalette(palette);
 

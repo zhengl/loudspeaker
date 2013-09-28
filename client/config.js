@@ -88,8 +88,6 @@ require.config({
 		
 			DOMPageFactory: "util/DOMPageFactory",
 		
-			DOMPaletteFactory: "util/DOMPaletteFactory",
-		
 			MousePositionHelper: "util/MousePositionHelper",
 		
 			Serializer: "util/Serializer",

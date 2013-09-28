@@ -8,15 +8,27 @@ describe('Page', function(){
 	beforeEach(function(){
 		var body = document.getElementsByTagName('body')[0];
 		addDiv("board", body);
-		addDiv("palette", body);
+
+		var palette = document.createElement('div');
+		
+		var paletteRed = document.createElement('a');
+		paletteRed.className = "palette-color palette_red";
+		paletteRed.style.backgroundColor = 'red';
+		palette.appendChild(paletteRed);
+
+		var paletteBlack = document.createElement('a');
+		paletteBlack.className = "palette-color palette-black";
+		paletteBlack.style.backgroundColor = 'black';
+		palette.appendChild(paletteBlack);
+		
 		addDiv("rubbishbin", body);
 
 		addDiv("note", body);
 		addDiv("note-palette", body);
 		addDiv("note-rubbishbin", body);
 
-		board = DOMPageFactory.create("board", 100, 100, "palette", "rubbishbin", 10, 50);
-		note = DOMPageFactory.create("note", 50, 50, "note-palette", "note-rubbishbin", 1, 10);
+		board = DOMPageFactory.create("board", 100, 100, palette, "rubbishbin", 10, 50);
+		note = DOMPageFactory.create("note", 50, 50, palette, "note-rubbishbin", 1, 10);
 	});
 
 

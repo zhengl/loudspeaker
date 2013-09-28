@@ -4,7 +4,6 @@ define('app', ['DOMPageFactory', 'MouseEventPreprocessor', 'DOMNoteDnDDecorator'
     var ratio = 16 / 9;
     var boardId = 'board';
     var noteId = 'note';
-    var paletteId = 'palette';
     var boardElement = $('#' + boardId);
     var noteElement = $('#' + noteId);
     var rubbishbinElement;
@@ -56,14 +55,13 @@ define('app', ['DOMPageFactory', 'MouseEventPreprocessor', 'DOMNoteDnDDecorator'
             rubbishbinElement = $('<div id="' + rubbishBinId + '" class="rubbishbin"></div>');
             rubbishbinElement.appendTo($('body'));
 
-            var paletteElement = $('<div id="' + paletteId + '" class="palette"></div>');
-            paletteElement.appendTo($('body'));
+            var paletteElement = $('.palette');
 
             board = DOMPageFactory.create(
                 boardId, 
                 boardActualWidth, 
                 boardActualHeight,
-                paletteId,
+                paletteElement,
                 rubbishBinId, 
                 rubbishBinWidth,
                 rubbishBinHeight,
