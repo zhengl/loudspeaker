@@ -1,4 +1,4 @@
-define('app', ['DOMPageFactory', 'MouseEventPreprocessor', 'DOMNoteDnDDecorator', 'config', 'uuid', 'jquery', 'jquery-ui', 'bootstrap'], function(DOMPageFactory, MouseEventPreprocessor, DOMNoteDnDDecorator, config, UUID, $){
+define('app', ['DOMBoardFactory', 'DOMNoteFactory', 'MouseEventPreprocessor', 'DOMNoteDnDDecorator', 'config', 'uuid', 'jquery', 'jquery-ui', 'bootstrap'], function(DOMBoardFactory, DOMNoteFactory, MouseEventPreprocessor, DOMNoteDnDDecorator, config, UUID, $){
     var board;
     var note;
 
@@ -50,10 +50,15 @@ define('app', ['DOMPageFactory', 'MouseEventPreprocessor', 'DOMNoteDnDDecorator'
         rubbishbinElement.height(boardStyleHeight);
     }
 
+    function adjustNoteRubbishBinHeight(){
+        noteRubbishbinElement.height(noteStyleWidth);
+    }
+
     function onRepaint(){
         adjustBoardHeight();
         adjustBoardRubbishBinHeight();
         adjustNoteHeight();
+        adjustNoteRubbishBinHeight();
         boardEventPreprocessor.setZoomPercentage(boardActualWidth / boardStyleWidth);
         noteEventPreprocessor.setZoomPercentage(noteActualWidth / noteStyleWidth);
     }
@@ -67,12 +72,12 @@ define('app', ['DOMPageFactory', 'MouseEventPreprocessor', 'DOMNoteDnDDecorator'
             rubbishbinElement.appendTo($('body'));
 
             noteRubbishbinElement = $('<div id="' + noteRubbishBinId + '" class="rubbishbin"></div>');
-            rubbishbinElement.appendTo($('body'));
+            noteRubbishbinElement.appendTo($('body'));
 
             var paletteElement = $('.palette');
 
-            board = DOMPageFactory.create(
-                boardId, 
+            board = DOMBoardFactory.create(
+                boardElement[0], 
                 boardActualWidth, 
                 boardActualHeight,
                 paletteElement,
@@ -82,8 +87,8 @@ define('app', ['DOMPageFactory', 'MouseEventPreprocessor', 'DOMNoteDnDDecorator'
                 boardEventPreprocessor
             );
 
-            note = DOMPageFactory.create(
-                noteId, 
+            note = DOMNoteFactory.create(
+                noteElement[0], 
                 noteActualWidth, 
                 noteActualHeight,
                 paletteElement,
@@ -93,8 +98,8 @@ define('app', ['DOMPageFactory', 'MouseEventPreprocessor', 'DOMNoteDnDDecorator'
                 noteEventPreprocessor
             );            
 
-            rubbishbinElement.insertAfter(boardElement);
-            noteRubbishbinElement.insertAfter(noteElement);
+            rubbishbinElement.appendTo(boardElement);
+            noteRubbishbinElement.appendTo(noteElement);
 
             onRepaint();
 

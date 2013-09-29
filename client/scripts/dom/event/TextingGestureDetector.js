@@ -1,4 +1,4 @@
-define('TextingGestureDetector', ['GestureDetector', 'GestureStep', 'Event', 'Point'], function(GestureDetector, GestureStep, Event, Point){
+define('TextingGestureDetector', ['GestureDetector', 'GestureStep', 'Event', 'Point', 'Page'], function(GestureDetector, GestureStep, Event, Point, Page){
 
 
 function TextingGestureDetector(eventBus, monitor){
@@ -21,7 +21,7 @@ TextingGestureDetector.prototype = new GestureDetector();
 TextingGestureDetector.prototype.constructor = TextingGestureDetector;
 
 TextingGestureDetector.prototype.readyToText = function(event) {
-	if (undefined == event.targetItem){
+	if (event.targetItem instanceof Page){
 		this.click++;
 		var self = this;
 		this.doubleClickTimerId = window.setTimeout(function(){

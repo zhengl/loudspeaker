@@ -42,6 +42,8 @@ require.config({
 		
 			TextInput: "core/TextInput",
 		
+			Board: "dom/Board",
+		
 			DOMPalette: "dom/DOMPalette",
 		
 			DOMRubbishBin: "dom/DOMRubbishBin",
@@ -80,13 +82,17 @@ require.config({
 		
 			KineticTextInput: "dom/KineticTextInput",
 		
+			Note: "dom/Note",
+		
 			Page: "dom/Page",
 		
 			Debugger: "util/Debugger",
 		
+			DOMBoardFactory: "util/DOMBoardFactory",
+		
 			DOMNoteDnDDecorator: "util/DOMNoteDnDDecorator",
 		
-			DOMPageFactory: "util/DOMPageFactory",
+			DOMNoteFactory: "util/DOMNoteFactory",
 		
 			MousePositionHelper: "util/MousePositionHelper",
 		

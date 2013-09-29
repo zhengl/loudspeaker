@@ -87,6 +87,9 @@ KineticContext.prototype.addEventListeners = function(events){
 	this.itemGroup.add(this.eventCatcher);
 	var self = this;
 	this.itemGroup.on(events.join(" "), function(event){
+		if (undefined == event.targetItem) {
+			event.targetItem = self.getPage();
+		}
 		self.interpreter.interpret(event);
 	});	
 	this.layer.draw();
@@ -115,6 +118,14 @@ KineticContext.prototype.refreshDraftItems = function(){
 KineticContext.prototype.setScale = function(percentage){
 	this.stage.setScale(percentage);
 	this.stage.draw();
+};
+
+KineticContext.prototype.setPage = function(page) {
+	this.page = page;
+};
+
+KineticContext.prototype.getPage = function() {
+	return this.page;
 };
 
 return KineticContext;

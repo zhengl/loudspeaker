@@ -7,6 +7,14 @@ function Page(){
 Page.prototype = new Item();
 Page.prototype.constructor = Page;
 
+Page.prototype.setElement = function(element) {
+	this.element = element;
+};
+
+Page.prototype.getElement = function() {
+	return this.element;
+};
+
 Page.prototype.getContext = function() {
 	return this.context;
 };

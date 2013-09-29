@@ -12,32 +12,55 @@ Mover.prototype.getContext = function(){
 	return this.context;
 };
 
+Mover.prototype.setMovables = function(movables) {
+	this.movables = movables;
+};
+
 Mover.prototype.startMoving = function(item, relativePosition) {
-	item.relativePosition = relativePosition;
-	this.context.removeItem(item);
-	this.context.addDraftItem(item);
-	this.movingItem = item;
+	if(this.isInMovables(item)) {
+		item.relativePosition = relativePosition;
+		this.context.removeItem(item);
+		this.context.addDraftItem(item);
+		this.movingItem = item;
+	}
+};
+
+Mover.prototype.isInMovables = function(item) {
+	if (undefined == this.movables) {
+		return true;
+	}
+
+	for(var i = 0; i < this.movables.length; i++) {
+		if (item instanceof this.movables[i]) {
+			return true;
+		}
+	}
+	return false;
 };
 
 Mover.prototype.finishMoving = function() {
-	if (this.rubbishBin && this.rubbishBin.isOpen) {
-		this.movingItem.remove();
-		this.rubbishBin.close();
-	} else {
-		this.context.addItem(this.movingItem);
+	if(undefined != this.movingItem) {
+		if (this.rubbishBin && this.rubbishBin.isOpen) {
+			this.movingItem.remove();
+			this.rubbishBin.close();
+		} else {
+			this.context.addItem(this.movingItem);
+		}
+			
+		this.context.clearDraftItems();
+		delete this.movingItem.relativePosition;
 	}
-		
-	this.context.clearDraftItems();
-	delete this.movingItem.relativePosition;
 };
 
 Mover.prototype.moveTo = function(point){
-	var item = this.movingItem;
-	var newX = point.x - (item.relativePosition ? item.relativePosition.x : 0);
-	var newY = point.y - (item.relativePosition ? item.relativePosition.y : 0);
-	var newPosition = new Point(newX, newY);
+	if(undefined != this.movingItem) {
+		var item = this.movingItem;
+		var newX = point.x - (item.relativePosition ? item.relativePosition.x : 0);
+		var newY = point.y - (item.relativePosition ? item.relativePosition.y : 0);
+		var newPosition = new Point(newX, newY);
 
-	item.moveTo(newPosition);
+		item.moveTo(newPosition);
+	}
 };
 
 Mover.prototype.setRubbishBin = function(rubbishBin){

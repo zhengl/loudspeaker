@@ -1,39 +1,15 @@
-  .rubbishbin {
-    .make-md-column(1);
-    padding: 0;
-    z-index: -1;
-    position: relative;
+.rubbishbin {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 10%;
+  padding: 0;
+  z-index: -1;
+  -webkit-transition: all 0.2s ease-in-out;   
+  &.collapse {
+    background-color: white;
   }
-
-  .rubbishbin-collapse
-  {
-    -webkit-transition: all 0.2s ease-in-out;
-  }
-
-  .rubbishbin-expand
-  {
-    margin-left: -(percentage((1 / 12)));
+  &.expand {
     background-color: red;
-    -webkit-transition: all 0.2s ease-in-out;
   }
-
-  #modal .rubbishbin-collapse
-  {
-    position: absolute;
-    right: 0px;
-    bottom: 0px;
-    width: 0px;
-    height: 250px;
-    -webkit-transition: all 0.2s ease-in-out;
-  }
-
-  #modal .rubbishbin-expand
-  {
-    position: absolute;
-    right: 0px;
-    bottom: 0px;
-    width: 20px;
-    height: 250px;
-    background-color: red;
-    -webkit-transition: all 0.2s ease-in-out;
-  }
+}

@@ -1,4 +1,4 @@
-require(['DOMPageFactory', 'Event', 'Point'], function(DOMPageFactory, Event, Point){
+require(['DOMBoardFactory', 'DOMNoteFactory', 'Event', 'Point'], function(DOMBoardFactory, DOMNoteFactory, Event, Point){
 
 
 describe('Page', function(){
@@ -7,7 +7,7 @@ describe('Page', function(){
 
 	beforeEach(function(){
 		var body = document.getElementsByTagName('body')[0];
-		addDiv("board", body);
+		var boardElement = addDiv("board", body);
 
 		var palette = document.createElement('div');
 		
@@ -23,13 +23,12 @@ describe('Page', function(){
 		
 		addDiv("rubbishbin", body);
 
-		addDiv("note", body);
+		var noteElement = addDiv("note", body);
 		addDiv("note-rubbishbin", body);
 
-		board = DOMPageFactory.create("board", 100, 100, palette, "rubbishbin", 10, 50);
-		note = DOMPageFactory.create("note", 50, 50, palette, "note-rubbishbin", 1, 10);
+		board = DOMBoardFactory.create(boardElement, 100, 100, palette, "rubbishbin", 10, 50);
+		note = DOMNoteFactory.create(noteElement, 50, 50, palette, "note-rubbishbin", 1, 10);
 	});
-
 
 	it("appends another page", function(){
 		drawALineOn(note, 0, 0, 20, 0);
@@ -54,7 +53,7 @@ describe('Page', function(){
 		expectNoDraftItem(board);
 	});
 
-	it("should be movable after being appended", function(){
+	it("should be movable after being appended as a note", function(){
 		board.addItem(note);
 
 		triggerStartMovingEvent(board.getEventBus(), note, 0, 0);
@@ -69,12 +68,32 @@ describe('Page', function(){
 		note.remove();
 
 		expectNoItem(board);
-	});	
+	});
+
+	it("should not be movable as a board", function(){
+		triggerStartMovingEvent(board.getEventBus(), board, 0, 0);
+		triggerMoveToEvent(board.getEventBus(), 10, 10);
+		triggerFinishMovingEvent(board.getEventBus());
+
+		expect(board.getPosition()).not.toEqual({x: 10, y: 10});
+	});
+
+	it("should be movable as a note", function(){
+		triggerStartMovingEvent(note.getEventBus(), note, 0, 0);
+		triggerMoveToEvent(note.getEventBus(), 10, 10);
+		triggerFinishMovingEvent(note.getEventBus());
+
+		expect(note.getPosition()).toEqual({x: 10, y: 10});
+		expect(note.getElement().style.position).toEqual('fixed');
+		expect(note.getElement().style.top).toEqual('10px');
+		expect(note.getElement().style.left).toEqual('10px');
+	});
 
 	function addDiv(id, body){
 		var div = document.createElement('div');
 		div.id = id;
 		body.appendChild(div);
+		return div;
 	}
 
 	function drawALineOn(page, x1, y1, x2, y2){

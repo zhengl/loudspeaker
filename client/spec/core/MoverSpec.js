@@ -19,6 +19,18 @@ describe("Mover", function(){
 		expect(line.getPosition()).toEqual({x: 20, y:20});
 	});
 
+	it("should not move a line when only set Text in movables", function(){
+		mover.setMovables([Text]);
+
+		var line = new Line([new Point(0, 0), new Point(10, 10)])
+		context.addItem(line);
+
+		mover.startMoving(line);
+		mover.moveTo(new Point(20, 20));
+		mover.finishMoving();
+		expect(line.getPosition()).toEqual({x: 0, y:0});
+	});
+
 	it("should be able to set removal zone", function(){
 		var line = new Line([new Point(0, 0), new Point(10, 10)])
 		context.addItem(line);

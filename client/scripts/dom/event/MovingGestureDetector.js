@@ -31,6 +31,7 @@ MovingGestureDetector.prototype.startMoving = function(event) {
 		this.hoveringTimerId = window.setTimeout(function(){
 			self.isMoving = true;
 			self.eventBus.publish(new Event(Event.Page.START_MOVING, data));
+			self.inform(self);
 		}, HOVERING_INTERVAL);
 	} else {
 		this.rewind();
@@ -40,6 +41,7 @@ MovingGestureDetector.prototype.startMoving = function(event) {
 MovingGestureDetector.prototype.moveTo = function(event) {
 	if (this.isMoving) {
 		this.eventBus.publish(new Event(Event.Page.MOVE_TO, { position: new Point(event.offsetX, event.offsetY) }));
+		this.inform(this);
 	} else {
 		window.clearTimeout(this.hoveringTimerId);
 		this.rewind();
@@ -49,6 +51,7 @@ MovingGestureDetector.prototype.moveTo = function(event) {
 MovingGestureDetector.prototype.finishMoving = function(event) {
 	this.isMoving = false;
 	this.eventBus.publish(new Event(Event.Page.FINISH_MOVING, { position: new Point(event.offsetX, event.offsetY) }));
+	this.inform(this);
 };
 
 return MovingGestureDetector;
