@@ -56,24 +56,15 @@ module.exports = function(grunt){
 		watch: {
 			styles: {
 				files: ['client/assets/**/*.less'],
-				tasks: ['less'],
-				options: {
-					spawn: false,
-				},
+				tasks: ['less']
 			},
 			tests: {
 				files: ['client/spec/**/*Spec.js', 'client/scripts/**/*.js'],
-				tasks: ['test'],
-				options: {
-					spawn: false,
-				},
+				tasks: ['test']
 			},
 			template: {
 				files: ['client/templates/index.html.tmpl'],
-				tasks: ['template'],
-				options: {
-					spawn: false,
-				},				
+				tasks: ['template']
 			}
 		},
 

@@ -9,7 +9,6 @@ Note.prototype.constructor = Note;
 
 Note.prototype.moveTo = function(point){
 	this.position = point;
-	console.log(this.element);
 	if (this.element) {
 	    this.element.style.position = "fixed";
 	    this.element.style.left = point.x + "px";

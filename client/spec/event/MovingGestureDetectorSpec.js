@@ -1,10 +1,13 @@
-require(['MovingGestureDetector', 'EventBus', 'Event', 'Line', 'Point'], function(MovingGestureDetector, EventBus, Event, Line, Point){
+require(['MovingGestureDetector', 'EventBus', 'Event', 'Line', 'Point', 'Note'], function(MovingGestureDetector, EventBus, Event, Line, Point, Note){
 
 
 describe("MovingGestureDetector", function(){
 	var eventBus;
 	var detector;
 	var item;
+
+	var board;
+	var note;
 
 	beforeEach(function(){
 		eventBus = new EventBus();

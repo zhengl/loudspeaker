@@ -60,6 +60,10 @@ require.config({
 		
 			MovingGestureDetector: "dom/event/MovingGestureDetector",
 		
+			NoteDraggerEventHandler: "dom/event/NoteDraggerEventHandler",
+		
+			NoteDraggingGestureDetector: "dom/event/NoteDraggingGestureDetector",
+		
 			PaintingGestureDetector: "dom/event/PaintingGestureDetector",
 		
 			PaletteGestureDetector: "dom/event/PaletteGestureDetector",
@@ -83,6 +87,8 @@ require.config({
 			KineticTextInput: "dom/KineticTextInput",
 		
 			Note: "dom/Note",
+		
+			NoteDragger: "dom/NoteDragger",
 		
 			Page: "dom/Page",
 		
