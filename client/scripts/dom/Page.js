@@ -65,8 +65,10 @@ Page.prototype.setMover = function(mover) {
 
 Page.prototype.addItem = function(page) {
 	page.disableEventHandling();
-	this.getContext().addItem(page);
-	page.setPosition(new Point(0, 0));
+	if(this.getContext()) {
+		this.getContext().addItem(page);
+	}
+	// page.setPosition(new Point(0, 0));
 };
 
 Page.prototype.remove = function(page) {
@@ -76,12 +78,22 @@ Page.prototype.remove = function(page) {
 	}
 };
 
-Page.prototype.disableEventHandling = function(page) {
-	this.getContext().disableEventHandling();
-	this.getMover().disableEventHandling();
-	this.getTexter().disableEventHandling();
-	this.getPainter().disableEventHandling();
-	this.getPalette().disableEventHandling();
+Page.prototype.disableEventHandling = function() {
+	if(this.getContext()) {
+		this.getContext().disableEventHandling();
+	}
+	if(this.getMover()) {
+		this.getMover().disableEventHandling();
+	}
+	if(this.getTexter()) {
+		this.getTexter().disableEventHandling();
+	}
+	if(this.getPainter()) {
+		this.getPainter().disableEventHandling();
+	}
+	if(this.getPalette()) {
+		this.getPalette().disableEventHandling();
+	}
 };
 
 Page.prototype.moveTo = function(point){

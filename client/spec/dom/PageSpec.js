@@ -84,7 +84,6 @@ describe('Page', function(){
 		triggerFinishMovingEvent(note.getEventBus());
 
 		expect(note.getPosition()).toEqual({x: 10, y: 10});
-		expect(note.getElement().style.position).toEqual('fixed');
 		expect(note.getElement().style.top).toEqual('10px');
 		expect(note.getElement().style.left).toEqual('10px');
 	});
