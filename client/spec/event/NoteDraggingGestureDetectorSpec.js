@@ -24,7 +24,7 @@ describe("NoteDraggingGestureDetector", function(){
 		detector.detect(createEvent(Event.Kinetic.MOUSE_DOWN, 10, 10, note));
 		jasmine.Clock.tick(501);
 
-		expect(eventBus.publish).toHaveBeenCalledWith(new Event(Event.Note.START_DRAGGING, { item: note }));
+		expect(eventBus.publish).toHaveBeenCalledWith(new Event(Event.Note.START_DRAGGING, { item: note, position: {x: 10, y: 10} }));
 	});
 
 	it("triggers MOVE_TO after long press and MOVE_TO on note", function(){
