@@ -17,13 +17,14 @@ NoteDragger.prototype.startDragging = function(note, relativePosition) {
 	note.relativePosition = relativePosition;
 
 	var noteElement = note.getElement();
+	this.originalParent = noteElement.parentNode;
 	var position = noteElement.getBoundingClientRect();
 	this.draggingNote.moveTo(new Point(position.left, position.top));
 	document.body.appendChild(noteElement);
 
 	var self = this;
 	document.body.onmousemove = function(event){
-		self.eventBus.publish(new Event(Event.Note.MOVE_TO, { position: new Point(event.offsetX, event.offsetY) }));
+		self.eventBus.publish(new Event(Event.Note.MOVE_TO, { position: new Point(event.pageX, event.pageY) }));
 	}
 
 	document.body.onmouseup = function(event){
@@ -46,6 +47,7 @@ NoteDragger.prototype.finishDragging = function() {
 		this.droppable.addItem(this.draggingNote);
 	} else {
 		var noteElement = this.draggingNote.getElement();
+		this.originalParent.appendChild(noteElement);
 		noteElement.style.position = "static";
 		noteElement.style.left = "auto";
 		noteElement.style.top = "auto";
@@ -61,9 +63,11 @@ NoteDragger.prototype.isDroppedInDroppable = function() {
 
 	var droppableRect = this.droppable.getElement().getBoundingClientRect();
 	var draggablePosition = this.draggingNote.getPosition();
+	console.log(droppableRect);
+	console.log(draggablePosition)
 
-	return draggablePosition.x > droppableRect.left && draggablePosition.x < droppableRect.right
-		&& draggablePosition.y > droppableRect.top && draggablePosition.x < droppableRect.bottom;
+	return draggablePosition.x > droppableRect.left + document.body.scrollLeft && draggablePosition.x < droppableRect.right + document.body.scrollLeft
+		&& draggablePosition.y > droppableRect.top + document.body.scrollTop && draggablePosition.y < droppableRect.bottom + document.body.scrollTop;
 };
 
 return NoteDragger;

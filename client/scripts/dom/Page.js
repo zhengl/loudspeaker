@@ -64,11 +64,12 @@ Page.prototype.setMover = function(mover) {
 };
 
 Page.prototype.addItem = function(page) {
+	console.log("append")
+	this.getElement().appendChild(page.getElement());
 	page.disableEventHandling();
 	if(this.getContext()) {
 		this.getContext().addItem(page);
 	}
-	// page.setPosition(new Point(0, 0));
 };
 
 Page.prototype.remove = function(page) {

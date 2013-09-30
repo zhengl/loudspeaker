@@ -95,7 +95,8 @@ define('app', ['DOMBoardFactory', 'DOMNoteFactory', 'MouseEventPreprocessor', 'D
                 noteRubbishBinId, 
                 noteRubbishBinWidth,
                 noteRubbishBinHeight,
-                noteEventPreprocessor
+                noteEventPreprocessor,
+                board
             );            
 
             rubbishbinElement.appendTo(boardElement);

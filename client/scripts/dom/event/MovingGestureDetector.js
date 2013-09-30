@@ -21,27 +21,18 @@ MovingGestureDetector.prototype.constructor = MovingGestureDetector;
 HOVERING_INTERVAL = 500;
 
 MovingGestureDetector.prototype.startMoving = function(event) {
-	if (undefined != event.targetItem) {
-		if (event.targetItem instanceof Note) {
-			var self = this;
-			this.hoveringTimerId = window.setTimeout(function(){
-				self.eventBus.publish(new Event(Event.Note.ENABLE_DND, {draggable: event.targetItem}));
-				self.inform(self);
-				self.rewind();
-			}, HOVERING_INTERVAL);			
-		} else {
-			var currentPosition = event.targetItem.getPosition();
-			var data = {
-				item: event.targetItem,
-				position: new Point(event.offsetX - currentPosition.x, event.offsetY - currentPosition.y),
-			}
-			var self = this;
-			this.hoveringTimerId = window.setTimeout(function(){
-				self.isMoving = true;
-				self.eventBus.publish(new Event(Event.Page.START_MOVING, data));
-				self.inform(self);
-			}, HOVERING_INTERVAL);
+	if (undefined != event.targetItem && !(event.targetItem instanceof Note)) {
+		var currentPosition = event.targetItem.getPosition();
+		var data = {
+			item: event.targetItem,
+			position: new Point(event.offsetX - currentPosition.x, event.offsetY - currentPosition.y),
 		}
+		var self = this;
+		this.hoveringTimerId = window.setTimeout(function(){
+			self.isMoving = true;
+			self.eventBus.publish(new Event(Event.Page.START_MOVING, data));
+			self.inform(self);
+		}, HOVERING_INTERVAL);
 	} else {
 		this.rewind();
 	}

@@ -1,10 +1,10 @@
-define("DOMNoteFactory", ['Page', 'KineticContext', 'DOMPalette', 'KineticPainter', 'KineticTexter', 'KineticTextInput', 'Mover', 'DOMRubbishBin', 'EventBus', 'Line', 'Text', 'Point', 'Note', 'MouseEventInterpreter', 'PaintingGestureDetector', 'TextingGestureDetector', 'MovingGestureDetector', 'NoteDragger'], function(Page, KineticContext, DOMPalette, KineticPainter, KineticTexter, KineticTextInput, Mover, DOMRubbishBin, EventBus, Line, Text, Point, Note, MouseEventInterpreter, PaintingGestureDetector, TextingGestureDetector, MovingGestureDetector, NoteDragger){
+define("DOMNoteFactory", ['Page', 'KineticContext', 'DOMPalette', 'KineticPainter', 'KineticTexter', 'KineticTextInput', 'Mover', 'DOMRubbishBin', 'EventBus', 'Line', 'Text', 'Point', 'Note', 'MouseEventInterpreter', 'PaintingGestureDetector', 'TextingGestureDetector', 'MovingGestureDetector', 'NoteDraggingGestureDetector', 'NoteDragger'], function(Page, KineticContext, DOMPalette, KineticPainter, KineticTexter, KineticTextInput, Mover, DOMRubbishBin, EventBus, Line, Text, Point, Note, MouseEventInterpreter, PaintingGestureDetector, TextingGestureDetector, MovingGestureDetector, NoteDraggingGestureDetector, NoteDragger){
 
 function DOMNoteFactory(){
 
 }
 
-DOMNoteFactory.create = function(pageElement, pageWidth, pageHeight, palette, rubbishbinId, rubbishbinWidth, rubbishbinHeight, eventPreprocessor){
+DOMNoteFactory.create = function(pageElement, pageWidth, pageHeight, palette, rubbishbinId, rubbishbinWidth, rubbishbinHeight, eventPreprocessor, board){
 	var note = new Note();
 	note.setPosition(new Point(0, 0));
 
@@ -16,7 +16,8 @@ DOMNoteFactory.create = function(pageElement, pageWidth, pageHeight, palette, ru
 	var interpreter = new MouseEventInterpreter(eventBus, [
 			PaintingGestureDetector,
 			TextingGestureDetector,
-			MovingGestureDetector
+			MovingGestureDetector,
+			NoteDraggingGestureDetector
 			], eventPreprocessor);
 
 	var context = new KineticContext(pageElement.id, pageWidth, pageHeight);
@@ -50,6 +51,7 @@ DOMNoteFactory.create = function(pageElement, pageWidth, pageHeight, palette, ru
 
 	var dragger = new NoteDragger();
 	dragger.enableEventHandling(eventBus);
+	dragger.setDroppable(board);
 
 	return note;
 }
