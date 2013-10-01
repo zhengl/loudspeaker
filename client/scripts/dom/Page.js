@@ -64,11 +64,16 @@ Page.prototype.setMover = function(mover) {
 };
 
 Page.prototype.addItem = function(page) {
-	console.log("append")
-	this.getElement().appendChild(page.getElement());
-	page.disableEventHandling();
+	if(this.getElement() && page.getElement()) {
+		this.getElement().appendChild(page.getElement());
+	}
 	if(this.getContext()) {
 		this.getContext().addItem(page);
+		if(page.getContext()) {
+			page.getContext().propagateEventTo(this.getContext().eventCatcher);
+		}
+	} else {
+		page.setParent(this);
 	}
 };
 
@@ -91,9 +96,6 @@ Page.prototype.disableEventHandling = function() {
 	}
 	if(this.getPainter()) {
 		this.getPainter().disableEventHandling();
-	}
-	if(this.getPalette()) {
-		this.getPalette().disableEventHandling();
 	}
 };
 

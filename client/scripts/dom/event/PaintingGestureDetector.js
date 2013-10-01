@@ -25,7 +25,7 @@ PaintingGestureDetector.prototype = new GestureDetector();
 PaintingGestureDetector.prototype.constructor = PaintingGestureDetector;
 
 PaintingGestureDetector.prototype.readyToDraw = function(event) {
-	if (!(event.targetItem instanceof Page)) {
+	if (event.targetItem.hasParent()) {
 		this.rewind();
 	} 
 };

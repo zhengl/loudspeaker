@@ -128,6 +128,21 @@ KineticContext.prototype.getPage = function() {
 	return this.page;
 };
 
+KineticContext.prototype.getInterpreter = function() {
+	return this.interpreter;
+};
+
+KineticContext.prototype.propagateEventTo = function(eventCatcher) {
+	var self = this;
+	this.eventCatcher.on(Event.Kinetic.EVENTS.join(" "), function(event){
+		var bubble = true;
+		if (undefined == event.targetItem) {
+			event.targetItem = self.getPage();
+		}
+		eventCatcher.fire(event.type, event, bubble);
+	});
+};
+
 return KineticContext;
 
 

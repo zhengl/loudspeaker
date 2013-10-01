@@ -21,7 +21,7 @@ MovingGestureDetector.prototype.constructor = MovingGestureDetector;
 HOVERING_INTERVAL = 500;
 
 MovingGestureDetector.prototype.startMoving = function(event) {
-	if (undefined != event.targetItem && !(event.targetItem instanceof Note)) {
+	if (undefined != event.targetItem) {
 		var currentPosition = event.targetItem.getPosition();
 		var data = {
 			item: event.targetItem,

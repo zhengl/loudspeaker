@@ -41,6 +41,14 @@ Item.prototype.setParent = function(parent) {
 	this.parent = parent;
 };
 
+Item.prototype.getParent = function() {
+	return this.parent;
+};
+
+Item.prototype.hasParent = function() {
+	return undefined != this.parent;
+};
+
 return Item;
 
 	

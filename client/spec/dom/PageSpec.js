@@ -39,6 +39,7 @@ describe('Page', function(){
 		expectNoDraftItem(board);
 
 		board.addItem(note);
+		note.disableEventHandling();
 		drawALineOn(note, 10, 0, 10, 10);
 
 		expectOneItem(note);

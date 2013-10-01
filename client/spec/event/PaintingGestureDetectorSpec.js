@@ -65,6 +65,7 @@ describe("PaintingGestureDetector", function(){
 
 	it("triggers nothing MOUSE_DOWN, MOVE_TO, MOVE_TO on item", function(){
 		var line = new Line();
+		line.setParent(page);
 		detector.detect(createEvent(Event.Kinetic.MOUSE_DOWN, 10, 10, line));
 		detector.detect(createEvent(Event.Kinetic.MOVE_TO, 20, 20, line));
 		detector.detect(createEvent(Event.Kinetic.MOVE_TO, 20, 20, line));

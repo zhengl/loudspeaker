@@ -1,4 +1,4 @@
-define('MouseEventPreprocessor', function(){
+define('MouseEventPreprocessor', ['Note'], function(Note){
 
 
 function MouseEventPreprocessor(){
@@ -10,8 +10,18 @@ MouseEventPreprocessor.prototype.setZoomPercentage = function(percentage) {
 };
 
 MouseEventPreprocessor.prototype.process = function(event) {
-	var offsetX = event.offsetX * this.zoomPercentage;
-	var offsetY = event.offsetY * this.zoomPercentage;
+	var originalOffset = { x: event.offsetX, y: event.offsetY };
+
+	if (event.targetItem instanceof Note && event.targetItem.hasParent()) {
+		var parentRect = event.targetItem.getParent().getPage().getElement().getBoundingClientRect();
+		var childRect = event.targetItem.getElement().getBoundingClientRect();
+		originalOffset.x = childRect.left - parentRect.left + event.offsetX;
+		originalOffset.y = childRect.top - parentRect.top + event.offsetY;
+	}
+
+	var offsetX = originalOffset.x * this.zoomPercentage;
+	var offsetY = originalOffset.y * this.zoomPercentage;
+	
 	return this.createEvent(event.type, offsetX - document.body.scrollLeft, offsetY - document.body.scrollTop, event.targetItem);
 };
 

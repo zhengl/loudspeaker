@@ -79,8 +79,8 @@ describe('NoteDragger', function(){
 			dragger.dragTo(new Point(40, 40));
 			dragger.finishDragging();
 
-			expect(noteElement.style.top).toEqual("30px");
-			expect(noteElement.style.left).toEqual("30px");
+			expect(noteElement.style.top).toEqual("20px");
+			expect(noteElement.style.left).toEqual("10px");
 		});
 
 		it("reverts when not dropped on a droppable", function(){

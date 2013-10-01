@@ -1,4 +1,4 @@
-define("NoteDragger", ['EventHandleable', 'NoteDraggerEventHandler', 'Event', 'Point'], function(EventHandleable, NoteDraggerEventHandler, Event, Point){
+define("NoteDragger", ['EventHandleable', 'NoteDraggerEventHandler', 'Event', 'Point', 'MovingGestureDetector'], function(EventHandleable, NoteDraggerEventHandler, Event, Point, MovingGestureDetector){
 	
 
 function NoteDragger(){
@@ -44,6 +44,11 @@ NoteDragger.prototype.dragTo = function(point) {
 
 NoteDragger.prototype.finishDragging = function() {
 	if (this.isDroppedInDroppable()) {
+		this.draggingNote.disableEventHandling();
+		var droppableRect = this.droppable.getElement().getBoundingClientRect();
+		var newLeft = this.draggingNote.getPosition().x - (droppableRect.left + document.body.scrollLeft);
+		var newTop = this.draggingNote.getPosition().y - (droppableRect.top + document.body.scrollTop);	
+		this.draggingNote.moveTo(new Point(newLeft, newTop));
 		this.droppable.addItem(this.draggingNote);
 	} else {
 		var noteElement = this.draggingNote.getElement();
@@ -63,8 +68,6 @@ NoteDragger.prototype.isDroppedInDroppable = function() {
 
 	var droppableRect = this.droppable.getElement().getBoundingClientRect();
 	var draggablePosition = this.draggingNote.getPosition();
-	console.log(droppableRect);
-	console.log(draggablePosition)
 
 	return draggablePosition.x > droppableRect.left + document.body.scrollLeft && draggablePosition.x < droppableRect.right + document.body.scrollLeft
 		&& draggablePosition.y > droppableRect.top + document.body.scrollTop && draggablePosition.y < droppableRect.bottom + document.body.scrollTop;
