@@ -25,7 +25,7 @@ MovingGestureDetector.prototype.startMoving = function(event) {
 		var currentPosition = event.targetItem.getPosition();
 		var data = {
 			item: event.targetItem,
-			position: new Point(event.offsetX - currentPosition.x, event.offsetY - currentPosition.y),
+			position: new Point(event.canvasX - currentPosition.x, event.canvasY - currentPosition.y),
 		}
 		var self = this;
 		this.hoveringTimerId = window.setTimeout(function(){
@@ -40,7 +40,7 @@ MovingGestureDetector.prototype.startMoving = function(event) {
 
 MovingGestureDetector.prototype.moveTo = function(event) {
 	if (this.isMoving) {
-		this.eventBus.publish(new Event(Event.Page.MOVE_TO, { position: new Point(event.offsetX, event.offsetY) }));
+		this.eventBus.publish(new Event(Event.Page.MOVE_TO, { position: new Point(event.canvasX, event.canvasY) }));
 		this.inform(this);
 	} else {
 		window.clearTimeout(this.hoveringTimerId);
@@ -50,7 +50,7 @@ MovingGestureDetector.prototype.moveTo = function(event) {
 
 MovingGestureDetector.prototype.finishMoving = function(event) {
 	this.isMoving = false;
-	this.eventBus.publish(new Event(Event.Page.FINISH_MOVING, { position: new Point(event.offsetX, event.offsetY) }));
+	this.eventBus.publish(new Event(Event.Page.FINISH_MOVING, { position: new Point(event.canvasX, event.canvasY) }));
 	this.inform(this);
 };
 

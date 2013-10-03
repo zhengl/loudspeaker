@@ -20,6 +20,7 @@ KineticTextInput.prototype.setColor = function(color){
 };
 
 KineticTextInput.prototype.initializeCursor = function(context){
+	this.removeCursor();
 	this.cursor = new KineticCursor(context);
 };
 

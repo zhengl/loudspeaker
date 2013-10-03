@@ -31,17 +31,17 @@ PaintingGestureDetector.prototype.readyToDraw = function(event) {
 };
 
 PaintingGestureDetector.prototype.startDrawing = function(event) {
-	this.eventBus.publish(new Event(Event.Page.START_DRAWING, { position: new Point(event.offsetX, event.offsetY) }));
+	this.eventBus.publish(new Event(Event.Page.START_DRAWING, { position: new Point(event.canvasX, event.canvasY) }));
 	this.inform(this);
 };
 
 PaintingGestureDetector.prototype.drawTo = function(event){
-	this.eventBus.publish(new Event(Event.Page.DRAW_TO, { position: new Point(event.offsetX, event.offsetY) }));
+	this.eventBus.publish(new Event(Event.Page.DRAW_TO, { position: new Point(event.canvasX, event.canvasY) }));
 	this.inform(this);
 };
 
 PaintingGestureDetector.prototype.finishDrawing = function(event){
-	this.eventBus.publish(new Event(Event.Page.FINISH_DRAWING, { position: new Point(event.offsetX, event.offsetY) }));
+	this.eventBus.publish(new Event(Event.Page.FINISH_DRAWING, { position: new Point(event.canvasX, event.canvasY) }));
 	this.inform(this);
 };
 

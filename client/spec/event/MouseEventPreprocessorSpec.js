@@ -10,10 +10,10 @@ describe('MouseEventPreprocessor', function(){
 
 	it("zooms event offset", function(){
 		preprocessor.setZoomPercentage(0.9);
-		var event = preprocessor.process(createEvent("mousedown", 100, 50));
+		var event = preprocessor.process(createEvent("mousedown", null, null, null, 100, 50));
 
-		expect(event.offsetX).toEqual(90);
-		expect(event.offsetY).toEqual(45);
+		expect(event.canvasX).toEqual(90);
+		expect(event.canvasY).toEqual(45);
 	});
 
 	it("recalculates event offset for notes on board", function(){
@@ -41,7 +41,7 @@ describe('MouseEventPreprocessor', function(){
 		
 		board.addItem(note);
 
-		var event = preprocessor.process(createEvent("mousedown", 10, 10, note));
+		var event = preprocessor.process(createEvent("mousedown", null, null, note, 10, 10));
 		expect(event.offsetX).toEqual(60);
 		expect(event.offsetY).toEqual(60);	
 	});

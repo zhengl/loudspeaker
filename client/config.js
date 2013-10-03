@@ -66,8 +66,6 @@ require.config({
 		
 			PaintingGestureDetector: "dom/event/PaintingGestureDetector",
 		
-			PaletteGestureDetector: "dom/event/PaletteGestureDetector",
-		
 			SelectingGestureDetector: "dom/event/SelectingGestureDetector",
 		
 			TextingGestureDetector: "dom/event/TextingGestureDetector",

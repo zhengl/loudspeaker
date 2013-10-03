@@ -37,7 +37,7 @@ TextingGestureDetector.prototype.startTexting = function(event) {
 	if (this.click == DOUBLE_CLICK) {
 		this.click = 0;
 		window.clearTimeout(this.doubleClickTimerId);
-		this.eventBus.publish(new Event(Event.Page.START_TEXTING, { position: new Point(event.offsetX, event.offsetY) }));
+		this.eventBus.publish(new Event(Event.Page.START_TEXTING, { position: new Point(event.canvasX, event.canvasY) }));
 		this.inform(this);
 	}
 };

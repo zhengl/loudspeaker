@@ -10,22 +10,30 @@ MouseEventPreprocessor.prototype.setZoomPercentage = function(percentage) {
 };
 
 MouseEventPreprocessor.prototype.process = function(event) {
-	var originalOffset = { x: event.offsetX, y: event.offsetY };
+	var canvasX;
+	var canvasY;
 
 	if (event.targetItem instanceof Note && event.targetItem.hasParent()) {
 		var parentRect = event.targetItem.getParent().getPage().getElement().getBoundingClientRect();
 		var childRect = event.targetItem.getElement().getBoundingClientRect();
-		originalOffset.x = childRect.left - parentRect.left + event.offsetX;
-		originalOffset.y = childRect.top - parentRect.top + event.offsetY;
+		canvasX = childRect.left - parentRect.left + event.offsetX;
+		canvasY = childRect.top - parentRect.top + event.offsetY;
+	} else {
+		canvasX = event.offsetX * this.zoomPercentage - document.body.scrollLeft;
+		canvasY = event.offsetY * this.zoomPercentage - document.body.scrollTop;
 	}
-
-	var offsetX = originalOffset.x * this.zoomPercentage;
-	var offsetY = originalOffset.y * this.zoomPercentage;
 	
-	return this.createEvent(event.type, offsetX - document.body.scrollLeft, offsetY - document.body.scrollTop, event.targetItem);
+	return this.createEvent(
+			event.type, 
+			canvasX, 
+			canvasY, 
+			event.targetItem,
+			event.offsetX,
+			event.offsetY
+		);
 };
 
-MouseEventPreprocessor.prototype.createEvent = function(type, x, y, targetItem){
+MouseEventPreprocessor.prototype.createEvent = function(type, canvasX, canvasY, targetItem, offsetX, offsetY){
 	var options = {
 		bubbles: false,
 		cancelable: false,
@@ -33,8 +41,8 @@ MouseEventPreprocessor.prototype.createEvent = function(type, x, y, targetItem){
 		detail: 0,
 		screenX: 0,
 		screenY: 0,
-		clientX: x,
-		clientY: y,
+		clientX: offsetX,
+		clientY: offsetY,
 		ctrlKey: false,
 		altKey: false,
 		shiftKey: false,
@@ -48,6 +56,8 @@ MouseEventPreprocessor.prototype.createEvent = function(type, x, y, targetItem){
 		options.screenX, options.screenY, options.clientX, options.clientY,
 		options.ctrlKey, options.altKey, options.shiftKey, options.metaKey,
 		options.button, options.relatedTarget || document.body.parentNode );
+	event.canvasX = canvasX;
+	event.canvasY = canvasY;
 	event.targetItem = targetItem;
 	return event;
 }	

@@ -73,7 +73,7 @@ function triggerStartTextingEvent(eventBus, x, y){
 	eventBus.publish(new Event(Event.Page.START_TEXTING, { position: {x: x, y: y} }));
 }
 
-function createEvent(type, x, y, target){
+function createEvent(type, canvasX, canvasY, target, offsetX, offsetY){
 	var options = {
 		bubbles: false,
 		cancelable: false,
@@ -81,8 +81,8 @@ function createEvent(type, x, y, target){
 		detail: 0,
 		screenX: 0,
 		screenY: 0,
-		clientX: x,
-		clientY: y,
+		clientX: offsetX,
+		clientY: offsetY,
 		ctrlKey: false,
 		altKey: false,
 		shiftKey: false,
@@ -96,6 +96,8 @@ function createEvent(type, x, y, target){
 		options.screenX, options.screenY, options.clientX, options.clientY,
 		options.ctrlKey, options.altKey, options.shiftKey, options.metaKey,
 		options.button, options.relatedTarget || document.body.parentNode );
+	event.canvasX = canvasX;
+	event.canvasY = canvasY;
 	event.targetItem = target;
 	return event;
 }
