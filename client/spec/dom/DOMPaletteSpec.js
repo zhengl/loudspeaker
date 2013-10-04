@@ -1,4 +1,4 @@
-require(['DOMPalette', 'jquery'], function(DOMPalette, $){
+require(['DOMPalette'], function(DOMPalette){
 
 
 describe('DOMPalette', function(){
@@ -9,24 +9,25 @@ describe('DOMPalette', function(){
 
 	it("clicks a to select color", function(){
 		var body = document.getElementsByTagName('body')[0];
-		var palette = document.createElement('div');
+		var paletteElement = document.createElement('div');
 		
 		var paletteRed = document.createElement('a');
 		paletteRed.className = "palette-color palette_red";
 		paletteRed.style.backgroundColor = 'red';
-		palette.appendChild(paletteRed);
+		paletteElement.appendChild(paletteRed);
 
 		var paletteBlack = document.createElement('a');
 		paletteBlack.className = "palette-color palette-black";
 		paletteBlack.style.backgroundColor = 'black';
-		palette.appendChild(paletteBlack);
+		paletteElement.appendChild(paletteBlack);
 
-		body.appendChild(palette);
+		body.appendChild(paletteElement);
 
 		palette = new DOMPalette(palette);
-		$(paletteRed).trigger('click');
+		var event = createEvent('click');
+		fireEvent(paletteRed, 'click', event);
 
-		expect(palette.getColor()).toEqual('rgb(255, 0, 0)');		
+		expect(palette.getColor()).toEqual('red');		
 	});
 });
 

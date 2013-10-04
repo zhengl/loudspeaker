@@ -94,8 +94,6 @@ require.config({
 		
 			DOMBoardFactory: "util/DOMBoardFactory",
 		
-			DOMNoteDnDDecorator: "util/DOMNoteDnDDecorator",
-		
 			DOMNoteFactory: "util/DOMNoteFactory",
 		
 			MousePositionHelper: "util/MousePositionHelper",
@@ -104,20 +102,13 @@ require.config({
 		
 			Unserializer: "util/Unserializer",
 		
-		"jquery": '../../lib/jquery/jquery-1.9.1',
-		"jquery-ui": '../../lib/jquery/jquery-ui',
-		"domReady": '../../lib/domReady/domReady',
 		"Kinetic": '../../lib/kinetic/kinetic-v4.6.0',
 		"uuid": '../../lib/uuid/uuid',
-		"bootstrap": '../../lib/bootstrap/bootstrap.min'
 	},
 	urlArgs: "bust=" + (new Date()).getTime(),
 	shim: {
 			'uuid': {
 				exports: 'UUID',
 			},
-			'bootstrap': {
-				exports: 'bootstrap',
-			}
 	}
 });

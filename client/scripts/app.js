@@ -1,12 +1,12 @@
-define('app', ['DOMBoardFactory', 'DOMNoteFactory', 'MouseEventPreprocessor', 'DOMNoteDnDDecorator', 'config', 'uuid', 'jquery', 'jquery-ui', 'bootstrap'], function(DOMBoardFactory, DOMNoteFactory, MouseEventPreprocessor, DOMNoteDnDDecorator, config, UUID, $){
+define('app', ['DOMBoardFactory', 'DOMNoteFactory', 'MouseEventPreprocessor', 'config', 'uuid'], function(DOMBoardFactory, DOMNoteFactory, MouseEventPreprocessor, config, UUID){
     var board;
     var note;
 
     var ratio = 16 / 9;
     var boardId = 'board';
     var noteId = 'note';
-    var boardElement = $('#' + boardId);
-    var noteElement = $('#' + noteId);
+    var boardElement = document.getElementById(boardId);
+    var noteElement = document.getElementById(noteId);
     var rubbishbinElement;
     var noteRubbishbinElement;
 
@@ -31,27 +31,27 @@ define('app', ['DOMBoardFactory', 'DOMNoteFactory', 'MouseEventPreprocessor', 'D
     var interpreter;
 
     function adjustBoardHeight() {
-        boardStyleWidth = boardElement.width();
+        boardStyleWidth = boardElement.offsetWidth;
         boardStyleHeight = boardStyleWidth / ratio;
-        boardElement.height(boardStyleHeight);
+        boardElement.style.height = boardStyleHeight + "px";
 
         board.getContext().setScale(boardStyleWidth / boardActualWidth);
     }
 
     function adjustNoteHeight(){
-        noteStyleWidth = boardElement.width() / 4;
-        noteElement.width(noteStyleWidth);
-        noteElement.height(noteStyleWidth);
+        noteStyleWidth = boardElement.offsetWidth / 4;
+        noteElement.style.width = noteStyleWidth + "px";
+        noteElement.style.height = noteStyleWidth + "px";
 
         note.getContext().setScale(noteStyleWidth / noteActualWidth);
     }
 
     function adjustBoardRubbishBinHeight(){
-        rubbishbinElement.height(boardStyleHeight);
+        rubbishbinElement.style.height = boardStyleHeight + "px";
     }
 
     function adjustNoteRubbishBinHeight(){
-        noteRubbishbinElement.height(noteStyleWidth);
+        noteRubbishbinElement.style.height = noteStyleWidth + "px";
     }
 
     function onRepaint(){
@@ -63,21 +63,50 @@ define('app', ['DOMBoardFactory', 'DOMNoteFactory', 'MouseEventPreprocessor', 'D
         noteEventPreprocessor.setZoomPercentage(noteActualWidth / noteStyleWidth);
     }
 
+    function hasClass(ele, cls) {
+        return ele.className.match(new RegExp('(\\s|^)'+cls+'(\\s|$)'));
+    }
+
+    function addClass(ele, cls) {
+        if (!hasClass(ele,cls)) {
+            ele.className += " "+cls;
+        }
+    }
+
+    function removeClass(ele, cls) {
+        if (hasClass(ele,cls)) {
+            var reg = new RegExp('(\\s|^)'+cls+'(\\s|$)');
+            ele.className=ele.className.replace(reg,' ');
+        }
+    }
+
+    function toggleClass(ele, cls) {
+        if (hasClass(ele,cls)) {
+            removeClass(ele, cls);
+        } else {
+            addClass(ele, cls);
+        }
+    }
+
     return {
         start: function(){
             boardEventPreprocessor = new MouseEventPreprocessor();
             noteEventPreprocessor = new MouseEventPreprocessor();
 
-            rubbishbinElement = $('<div id="' + rubbishBinId + '" class="rubbishbin"></div>');
-            rubbishbinElement.appendTo($('body'));
+            rubbishbinElement = document.createElement("div");
+            rubbishbinElement.id = rubbishBinId;
+            rubbishbinElement.className = "rubbishbin";
+            document.body.appendChild(rubbishbinElement);
 
-            noteRubbishbinElement = $('<div id="' + noteRubbishBinId + '" class="rubbishbin"></div>');
-            noteRubbishbinElement.appendTo($('body'));
+            noteRubbishbinElement = document.createElement("div");
+            noteRubbishbinElement.id = noteRubbishBinId;
+            noteRubbishbinElement.className = "rubbishbin";
+            document.body.appendChild(noteRubbishbinElement);            
 
-            var paletteElement = $('.palette');
+            var paletteElement = document.querySelector(".palette");
 
             board = DOMBoardFactory.create(
-                boardElement[0], 
+                boardElement, 
                 boardActualWidth, 
                 boardActualHeight,
                 paletteElement,
@@ -88,7 +117,7 @@ define('app', ['DOMBoardFactory', 'DOMNoteFactory', 'MouseEventPreprocessor', 'D
             );
 
             note = DOMNoteFactory.create(
-                noteElement[0], 
+                noteElement, 
                 noteActualWidth, 
                 noteActualHeight,
                 paletteElement,
@@ -99,20 +128,18 @@ define('app', ['DOMBoardFactory', 'DOMNoteFactory', 'MouseEventPreprocessor', 'D
                 board
             );            
 
-            rubbishbinElement.appendTo(boardElement);
-            noteRubbishbinElement.appendTo(noteElement);
+            boardElement.appendChild(rubbishbinElement);
+            noteElement.appendChild(noteRubbishbinElement);
 
             onRepaint();
 
-            $( window ).resize(function() {
+            window.onresize = function(){
               onRepaint();
-            });
+            };
             
-            $('.panel-handle .arrow').click(function(){
-                $('.panel').toggleClass('expand');
-                $('.panel-trigger').toggleClass('expand');
-                adjustNoteHeight();
-            });
+            document.querySelector('.panel-handle .arrow').onclick = function(){
+                toggleClass(document.querySelector('.panel'), 'expand');
+            }
             
             return board;
         },

@@ -1,4 +1,4 @@
-require(['DOMRubbishBin', 'Point', 'jquery'], function(DOMRubbishBin, Point, $){
+require(['DOMRubbishBin', 'Point'], function(DOMRubbishBin, Point){
 
 describe("DOMRubbishBin", function(){
 	it("should cover a point", function(){

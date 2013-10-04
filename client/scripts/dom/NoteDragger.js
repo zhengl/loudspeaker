@@ -19,7 +19,6 @@ NoteDragger.prototype.startDragging = function(note, relativePosition) {
 	var noteElement = note.getElement();
 	this.originalParent = noteElement.parentNode;
 	var position = noteElement.getBoundingClientRect();
-	console.log(position.left + " " + position.top)
 	this.draggingNote.moveTo(new Point(position.left, position.top));
 	document.body.appendChild(noteElement);
 
@@ -29,7 +28,7 @@ NoteDragger.prototype.startDragging = function(note, relativePosition) {
 	}
 
 	document.body.onmouseup = function(event){
-		self.eventBus.publish(new Event(Event.Note.FINISH_DRAGGING, { position: new Point(event.offsetX, event.offsetY) }));
+		self.eventBus.publish(new Event(Event.Note.FINISH_DRAGGING));
 	}	
 };
 
@@ -37,8 +36,6 @@ NoteDragger.prototype.dragTo = function(point) {
 	if(undefined != this.draggingNote) {
 		var note = this.draggingNote;
 		var noteElement = note.getElement();
-	console.log(point)
-	console.log(note.relativePosition)
 		var newLeft = point.x - note.relativePosition.x;
 		var newTop = point.y - note.relativePosition.y;
 		this.draggingNote.moveTo(new Point(newLeft, newTop));
