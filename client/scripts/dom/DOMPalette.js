@@ -9,7 +9,8 @@ function DOMPalette(element) {
 	var self = this;
 	for(var i = 0; i < colors.length; i++) {
 		colors[i].onclick = function(){
-			self.setColor(this.style.backgroundColor);
+			var style = window.getComputedStyle(this);
+			self.setColor(style.backgroundColor);
 		}
 	}
 }

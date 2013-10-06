@@ -15,6 +15,10 @@ KineticTextInput.prototype.show = function(){
     this.element.focus();
 };
 
+KineticTextInput.prototype.hide = function(){
+    this.element.blur();
+};
+
 KineticTextInput.prototype.setColor = function(color){
 	this.text.setColor(color);
 };

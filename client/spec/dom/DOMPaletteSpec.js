@@ -27,7 +27,7 @@ describe('DOMPalette', function(){
 		var event = createEvent('click');
 		fireEvent(paletteRed, 'click', event);
 
-		expect(palette.getColor()).toEqual('red');		
+		expect(palette.getColor()).toEqual('rgb(255, 0, 0)');		
 	});
 });
 

@@ -7,12 +7,15 @@ function PaintingGestureDetector(eventBus, monitor){
 
 	var readyToDrawStep1 = new GestureStep(Event.Kinetic.MOUSE_DOWN, this.readyToDraw);
 	var readyToDrawStep2 = new GestureStep(Event.Kinetic.MOVE_TO, this.readyToDraw);
+	var stopDrawingStep = new GestureStep(Event.Kinetic.MOUSE_UP, this.stopDrawing);
 	var startDrawingStep = new GestureStep(Event.Kinetic.MOVE_TO, this.startDrawing);
 	var drawToStep = new GestureStep(Event.Kinetic.MOVE_TO, this.drawTo);
 	var finishDrawingStep = new GestureStep(Event.Kinetic.MOUSE_UP, this.finishDrawing);
 
 	readyToDrawStep1.addNextStep(readyToDrawStep2);
+	readyToDrawStep1.addNextStep(stopDrawingStep);
 	readyToDrawStep2.addNextStep(startDrawingStep);
+	readyToDrawStep2.addNextStep(stopDrawingStep);
 	startDrawingStep.addNextStep(drawToStep);
 	startDrawingStep.addNextStep(finishDrawingStep);
 	drawToStep.addNextStep(drawToStep);
@@ -28,6 +31,10 @@ PaintingGestureDetector.prototype.readyToDraw = function(event) {
 	if (event.targetItem.hasParent()) {
 		this.rewind();
 	} 
+};
+
+PaintingGestureDetector.prototype.stopDrawing = function(event) {
+	this.rewind();
 };
 
 PaintingGestureDetector.prototype.startDrawing = function(event) {

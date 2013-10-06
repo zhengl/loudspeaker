@@ -49,7 +49,16 @@ describe("PaintingGestureDetector", function(){
 		detector.detect(createEvent(Event.Kinetic.MOVE_TO, 30, 30, page));
 
 		expect(eventBus.publish).not.toHaveBeenCalled();
-	});				
+	});
+
+	it("triggers nothing after MOUSE_DOWN, MOUSE_UP, MOVE_TO", function(){
+		detector.detect(createEvent(Event.Kinetic.MOUSE_DOWN, 10, 10, page));
+		detector.detect(createEvent(Event.Kinetic.MOUSE_UP, 10, 10, page));
+		detector.detect(createEvent(Event.Kinetic.MOVE_TO, 10, 10, page));
+		detector.detect(createEvent(Event.Kinetic.MOVE_TO, 10, 10, page));
+
+		expect(eventBus.publish).not.toHaveBeenCalled();
+	});	
 
 	it("triggers START_DRAWING after MOUSE_DOWN, MOVE_TO, MOVE_TO, MOUSE_UP and MOUSE_DOWN", function(){
 		detector.detect(createEvent(Event.Kinetic.MOUSE_DOWN, 10, 10, page));

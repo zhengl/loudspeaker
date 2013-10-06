@@ -8,6 +8,7 @@ KineticTexter.prototype = new Texter();
 KineticTexter.constructor = KineticTexter;
 
 KineticTexter.prototype.finishTexting = function(position) {
+	this.getTextInput().hide();
 	var item = this.getTextInput().flush();
 
 	item.enableEventHandling();	

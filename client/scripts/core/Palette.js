@@ -1,11 +1,8 @@
-define('Palette', ['EventHandleable', 'PaletteEventHandler'], function(EventHandleable, PaletteEventHandler){
+define('Palette', function(){
 
 
 function Palette(){
 }
-
-Palette.prototype = new EventHandleable(new PaletteEventHandler());
-Palette.prototype.constructor = Palette;
 
 Palette.prototype.setPosition = function(point){
 	this.position = point;

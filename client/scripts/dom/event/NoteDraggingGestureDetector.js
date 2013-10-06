@@ -24,7 +24,7 @@ NoteDraggingGestureDetector.prototype.startDragging = function(event) {
 	if (event.targetItem instanceof Note) {
 		var self = this;
 		this.hoveringTimerId = window.setTimeout(function(){
-			self.eventBus.publish(new Event(Event.Note.START_DRAGGING, {item: event.targetItem, position: new Point(event.offsetX, event.offsetY) }));
+			self.eventBus.publish(new Event(Event.Note.START_DRAGGING, {item: event.targetItem, position: new Point(event.canvasX, event.canvasY) }));
 			self.isMoving = true;
 			self.inform(self);
 		}, HOVERING_INTERVAL);		
@@ -45,7 +45,7 @@ NoteDraggingGestureDetector.prototype.moveTo = function(event) {
 
 NoteDraggingGestureDetector.prototype.finishDragging = function(event) {
 	if(this.isMoving) {
-		this.eventBus.publish(new Event(Event.Note.FINISH_DRAGGING, { position: new Point(event.offsetX, event.offsetY) }));
+		this.eventBus.publish(new Event(Event.Note.FINISH_DRAGGING));
 		this.inform(this);
 	} else {
 		this.rewind();

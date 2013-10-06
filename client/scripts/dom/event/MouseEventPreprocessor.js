@@ -10,18 +10,21 @@ MouseEventPreprocessor.prototype.setZoomPercentage = function(percentage) {
 };
 
 MouseEventPreprocessor.prototype.process = function(event) {
-	var canvasX;
-	var canvasY;
+	var offsetX;
+	var offsetY;
 
 	if (event.targetItem instanceof Note && event.targetItem.hasParent()) {
 		var parentRect = event.targetItem.getParent().getPage().getElement().getBoundingClientRect();
 		var childRect = event.targetItem.getElement().getBoundingClientRect();
-		canvasX = childRect.left - parentRect.left + event.offsetX;
-		canvasY = childRect.top - parentRect.top + event.offsetY;
+		offsetX = childRect.left - parentRect.left + event.offsetX;
+		offsetY = childRect.top - parentRect.top + event.offsetY;
 	} else {
-		canvasX = event.offsetX * this.zoomPercentage - document.body.scrollLeft;
-		canvasY = event.offsetY * this.zoomPercentage - document.body.scrollTop;
+		offsetX = event.offsetX - document.body.scrollLeft;
+		offsetY = event.offsetY - document.body.scrollTop;
 	}
+
+	var canvasX = offsetX * this.zoomPercentage;
+	var canvasY = offsetY * this.zoomPercentage;
 	
 	return this.createEvent(
 			event.type, 

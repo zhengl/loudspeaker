@@ -1,4 +1,4 @@
-define("DOMNoteFactory", ['Page', 'KineticContext', 'DOMPalette', 'KineticPainter', 'KineticTexter', 'KineticTextInput', 'Mover', 'DOMRubbishBin', 'EventBus', 'Line', 'Text', 'Point', 'Note', 'MouseEventInterpreter', 'PaintingGestureDetector', 'TextingGestureDetector', 'MovingGestureDetector', 'NoteDraggingGestureDetector', 'NoteDragger'], function(Page, KineticContext, DOMPalette, KineticPainter, KineticTexter, KineticTextInput, Mover, DOMRubbishBin, EventBus, Line, Text, Point, Note, MouseEventInterpreter, PaintingGestureDetector, TextingGestureDetector, MovingGestureDetector, NoteDraggingGestureDetector, NoteDragger){
+define("DOMNoteFactory", ['Page', 'KineticContext', 'KineticPainter', 'KineticTexter', 'KineticTextInput', 'Mover', 'DOMRubbishBin', 'EventBus', 'Line', 'Text', 'Point', 'Note', 'MouseEventInterpreter', 'PaintingGestureDetector', 'TextingGestureDetector', 'MovingGestureDetector', 'NoteDraggingGestureDetector'], function(Page, KineticContext, KineticPainter, KineticTexter, KineticTextInput, Mover, DOMRubbishBin, EventBus, Line, Text, Point, Note, MouseEventInterpreter, PaintingGestureDetector, TextingGestureDetector, MovingGestureDetector, NoteDraggingGestureDetector){
 
 function DOMNoteFactory(){
 
@@ -25,8 +25,6 @@ DOMNoteFactory.create = function(pageElement, pageWidth, pageHeight, palette, ru
 	note.setContext(context);
 	context.setPage(note);
 
-	var palette = new DOMPalette(palette);
-	palette.enableEventHandling(eventBus, interpreter);
 	note.setPalette(palette);
 
 	var painter = new KineticPainter(context, palette);
@@ -48,10 +46,6 @@ DOMNoteFactory.create = function(pageElement, pageWidth, pageHeight, palette, ru
 	var rubbishbin = new DOMRubbishBin(new Point(pageWidth - rubbishbinWidth, 0), new Point(pageWidth, rubbishbinHeight), rubbishbinId);
 	rubbishbin.enableEventHandling(eventBus);
 	mover.setRubbishBin(rubbishbin);
-
-	var dragger = new NoteDragger();
-	dragger.enableEventHandling(eventBus);
-	dragger.setDroppable(board);
 
 	return note;
 }

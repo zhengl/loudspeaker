@@ -1,11 +1,15 @@
 define('Page', ['Item', 'Point'], function(Item, Point){
 
 function Page(){
-	
+	this.zoomPercentage = 1;
 }
 
 Page.prototype = new Item();
 Page.prototype.constructor = Page;
+
+Page.prototype.setZoomPercentage = function(percentage) {
+	this.zoomPercentage = percentage
+};
 
 Page.prototype.setElement = function(element) {
 	this.element = element;
@@ -103,8 +107,8 @@ Page.prototype.moveTo = function(point){
 	this.position = point;
 	if (this.element) {
 	    this.element.style.position = "absolute";
-	    this.element.style.left = point.x + "px";
-		this.element.style.top = point.y + "px";
+	    this.element.style.left = point.x / this.zoomPercentage + "px";
+		this.element.style.top = point.y /this.zoomPercentage + "px";
 	}
 };
 

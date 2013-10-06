@@ -1,4 +1,4 @@
-require(['DOMBoardFactory', 'DOMNoteFactory', 'Event', 'Point'], function(DOMBoardFactory, DOMNoteFactory, Event, Point){
+require(['DOMBoardFactory', 'DOMNoteFactory', 'DOMPalette', 'Event', 'Point'], function(DOMBoardFactory, DOMNoteFactory, DOMPalette, Event, Point){
 
 
 describe('Page', function(){
@@ -9,17 +9,18 @@ describe('Page', function(){
 		var body = document.getElementsByTagName('body')[0];
 		var boardElement = addDiv("board", body);
 
-		var palette = document.createElement('div');
+		var paletteElement = document.createElement('div');
 		
 		var paletteRed = document.createElement('a');
 		paletteRed.className = "palette-color palette_red";
 		paletteRed.style.backgroundColor = 'red';
-		palette.appendChild(paletteRed);
+		paletteElement.appendChild(paletteRed);
 
 		var paletteBlack = document.createElement('a');
 		paletteBlack.className = "palette-color palette-black";
 		paletteBlack.style.backgroundColor = 'black';
-		palette.appendChild(paletteBlack);
+		paletteElement.appendChild(paletteBlack);
+		var palette = new DOMPalette(paletteElement);
 		
 		addDiv("rubbishbin", body);
 
