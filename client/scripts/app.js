@@ -1,4 +1,4 @@
-define('app', ['DOMBoardFactory', 'DOMNoteFactory', 'MouseEventPreprocessor', 'DOMPalette', 'NoteDragger', 'config', 'uuid'], function(DOMBoardFactory, DOMNoteFactory, MouseEventPreprocessor, DOMPalette, NoteDragger, config, UUID){
+define('app', ['DOMBoardFactory', 'DOMNoteFactory', 'MouseEventPreprocessor', 'DOMPalette', 'Note', 'NoteDragger', 'config', 'uuid'], function(DOMBoardFactory, DOMNoteFactory, MouseEventPreprocessor, DOMPalette, Note, NoteDragger, config, UUID){
     var board;
     var note;
 
@@ -43,9 +43,9 @@ define('app', ['DOMBoardFactory', 'DOMNoteFactory', 'MouseEventPreprocessor', 'D
         board.getContext().setScale(boardStyleWidth / boardActualWidth);
     }
 
-    function adjustNote(){
+    function adjustNote(zoom){
         adjustNoteHeight();
-        adjustNotePosition();
+        adjustNotePosition(zoom);
     }
 
     function adjustNoteHeight(){
@@ -56,11 +56,13 @@ define('app', ['DOMBoardFactory', 'DOMNoteFactory', 'MouseEventPreprocessor', 'D
         note.getContext().setScale(noteStyleWidth / noteActualWidth);
     }
 
-    function adjustNotePosition(){
+    function adjustNotePosition(zoom){
         var items = board.getContext().getItems();
-        for(var i = 0; i < items; i++) {
-            if(items instanceof Note){
-                dragger.dragTo(items[i].getPosition());
+
+        for(var i = 0; i < items.length; i++) {
+            if(items[i] instanceof Note){
+                items[i].setZoomPercentage(zoom)
+                items[i].moveTo(items[i].getPosition());
             }
         }
     }    
@@ -74,14 +76,14 @@ define('app', ['DOMBoardFactory', 'DOMNoteFactory', 'MouseEventPreprocessor', 'D
     }
 
     function onRepaint(){
-        adjustBoardHeight();
-        adjustBoardRubbishBinHeight();
-        adjustNote();
-        adjustNoteRubbishBinHeight();
         var zoom = boardActualWidth / boardStyleWidth;
         boardEventPreprocessor.setZoomPercentage(zoom);
         noteEventPreprocessor.setZoomPercentage(zoom);
         dragger.setZoomPercentage(zoom);
+        adjustBoardHeight();
+        adjustBoardRubbishBinHeight();
+        adjustNote(zoom);
+        adjustNoteRubbishBinHeight();
     }
 
     function hasClass(ele, cls) {
