@@ -1,4 +1,4 @@
-define('app', ['DOMBoardFactory', 'DOMNoteFactory', 'MouseEventPreprocessor', 'DOMPalette', 'Note', 'NoteDragger', 'config', 'uuid'], function(DOMBoardFactory, DOMNoteFactory, MouseEventPreprocessor, DOMPalette, Note, NoteDragger, config, UUID){
+define('app', ['DOMBoardFactory', 'DOMNoteFactory', 'MouseEventPreprocessor', 'DOMPalette', 'Note', 'NoteDragger', 'NoteSupplier', 'PanelTrigger', 'config', 'uuid'], function(DOMBoardFactory, DOMNoteFactory, MouseEventPreprocessor, DOMPalette, Note, NoteDragger, NoteSupplier, PanelTrigger, config, UUID){
     var board;
     var note;
 
@@ -34,6 +34,7 @@ define('app', ['DOMBoardFactory', 'DOMNoteFactory', 'MouseEventPreprocessor', 'D
     var eventPreprocessor;
     var interpreter;
     var dragger;
+    var trigger;
 
     function adjustBoardHeight() {
         boardStyleWidth = boardElement.offsetWidth;
@@ -86,31 +87,6 @@ define('app', ['DOMBoardFactory', 'DOMNoteFactory', 'MouseEventPreprocessor', 'D
         adjustNoteRubbishBinHeight();
     }
 
-    function hasClass(ele, cls) {
-        return ele.className.match(new RegExp('(\\s|^)'+cls+'(\\s|$)'));
-    }
-
-    function addClass(ele, cls) {
-        if (!hasClass(ele,cls)) {
-            ele.className += " "+cls;
-        }
-    }
-
-    function removeClass(ele, cls) {
-        if (hasClass(ele,cls)) {
-            var reg = new RegExp('(\\s|^)'+cls+'(\\s|$)');
-            ele.className=ele.className.replace(reg,' ');
-        }
-    }
-
-    function toggleClass(ele, cls) {
-        if (hasClass(ele,cls)) {
-            removeClass(ele, cls);
-        } else {
-            addClass(ele, cls);
-        }
-    }
-
     return {
         start: function(){
             boardEventPreprocessor = new MouseEventPreprocessor();
@@ -128,6 +104,7 @@ define('app', ['DOMBoardFactory', 'DOMNoteFactory', 'MouseEventPreprocessor', 'D
 
             var paletteElement = document.querySelector(".palette");
             var palette = new DOMPalette(paletteElement);
+            
 
             board = DOMBoardFactory.create(
                 boardElement, 
@@ -152,23 +129,30 @@ define('app', ['DOMBoardFactory', 'DOMNoteFactory', 'MouseEventPreprocessor', 'D
                 board
             );
 
+            boardElement.appendChild(rubbishbinElement);
+            noteElement.appendChild(noteRubbishbinElement);
+
             dragger = new NoteDragger();
             dragger.enableEventHandling(note.getEventBus());
             dragger.setDroppable(board);
 
-            boardElement.appendChild(rubbishbinElement);
-            noteElement.appendChild(noteRubbishbinElement);
+            var panel = document.querySelector('.panel');
+            trigger = new PanelTrigger(panel);
+            trigger.enableEventHandling(note.getEventBus());
+
+            var noteStack = document.getElementById("note-stack");
+            supplier = new NoteSupplier(noteStack);
+            supplier.enableEventHandling(note.getEventBus());
 
             onRepaint();
 
             window.onresize = function(){
               onRepaint();
             };
-            
-            document.querySelector('.panel-handle .arrow').onclick = function(){
-                toggleClass(document.querySelector('.panel'), 'expand');
-            }
 
+            document.querySelector('.panel-handle .arrow').onclick = function(){
+                trigger.togglePanel();
+            }
             
             return board;
         },

@@ -64,7 +64,11 @@ require.config({
 		
 			NoteDraggingGestureDetector: "dom/event/NoteDraggingGestureDetector",
 		
+			NoteSupplierEventHandler: "dom/event/NoteSupplierEventHandler",
+		
 			PaintingGestureDetector: "dom/event/PaintingGestureDetector",
+		
+			PanelTriggerEventHandler: "dom/event/PanelTriggerEventHandler",
 		
 			SelectingGestureDetector: "dom/event/SelectingGestureDetector",
 		
@@ -88,7 +92,13 @@ require.config({
 		
 			NoteDragger: "dom/NoteDragger",
 		
+			NoteSupplier: "dom/NoteSupplier",
+		
 			Page: "dom/Page",
+		
+			PanelTrigger: "dom/PanelTrigger",
+		
+			CssHelper: "util/CssHelper",
 		
 			Debugger: "util/Debugger",
 		

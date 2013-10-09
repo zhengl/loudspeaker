@@ -19,6 +19,12 @@ Event.Page = {
 	FINISH_TEXTING: "PAGE.FINISH_TEXTING",
 };
 
+Event.Note = {
+	START_DRAGGING: "NOTE.START_DRAGGING",
+	MOVE_TO: "NOTE.MOVE_TO",
+	FINISH_DRAGGING: "NOTE.FINISH_DRAGGING",
+};
+
 function createText(){
 	var text = new Text("Hello World!");
 	text.setPosition({x: 10, y: 20});
@@ -73,6 +79,14 @@ function triggerStartTextingEvent(eventBus, x, y){
 	eventBus.publish(new Event(Event.Page.START_TEXTING, { position: {x: x, y: y} }));
 }
 
+function triggerStartDraggingEvent(eventBus, x, y){
+	eventBus.publish(new Event(Event.Note.START_DRAGGING, { position: {x: x, y: y} }));
+}
+
+function triggerFinishDraggingEvent(eventBus, x, y){
+	eventBus.publish(new Event(Event.Note.FINISH_DRAGGING, { position: {x: x, y: y} }));
+}
+
 function createEvent(type, canvasX, canvasY, target, offsetX, offsetY){
 	var options = {
 		bubbles: false,
@@ -108,4 +122,4 @@ function fireEvent( target, type, event ) {
 	} else if ( target.fireEvent ) {
 		target.fireEvent( "on" + type, event );
 	}
-}		
+}
