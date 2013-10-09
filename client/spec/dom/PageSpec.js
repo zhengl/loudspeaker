@@ -40,16 +40,15 @@ describe('Page', function(){
 		expectNoDraftItem(board);
 
 		board.addItem(note);
-		note.disableEventHandling();
 		drawALineOn(note, 10, 0, 10, 10);
 
-		expectOneItem(note);
+		expect(note.getContext().getItems().length).toEqual(2);
 		expectNoDraftItem(note);
 		expectOneItem(board);
 		expectNoDraftItem(board);
 
 		drawALineOn(board, 20, 20, 30, 30);
-		expectOneItem(note);
+		expect(note.getContext().getItems().length).toEqual(2);
 		expectNoDraftItem(note);
 		expect(board.getContext().getItems().length).toEqual(2);
 		expectNoDraftItem(board);

@@ -1,17 +1,21 @@
 define('MouseEventInterpreter', function(){
 
 
-function MouseEvextInterpreter(eventBus, detectors, eventPreprocessor){
-	this.eventBus = eventBus;
+function MouseEvextInterpreter(eventPreprocessor){
 	this.eventPreprocessor = eventPreprocessor;
-
-	this.setDetectors(eventBus, detectors);
+	this.detectors = [];
 }
 
-MouseEvextInterpreter.prototype.setDetectors = function(eventBus, detectors) {
-	this.detectors = [];
-	for (var i = 0; i < detectors.length; i++) {
-		this.detectors.push(new detectors[i](eventBus, this));
+MouseEvextInterpreter.prototype.addDetector = function(detector) {
+	this.detectors.push(detector);
+};
+
+MouseEvextInterpreter.prototype.removeDetector = function(detectorClass) {
+	for(var i = 0; i < this.detectors.length; i++) {
+		if(this.detectors[i] instanceof detectorClass) {
+			this.detectors.splice(i, 1);
+			break;
+		}
 	}
 };
 

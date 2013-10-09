@@ -10,11 +10,10 @@ describe('MouseEventInterpreter', function(){
 		eventBus.publish = jasmine.createSpy();
 		page = new Page();
 		page.setPosition({x: 0, y: 0});
-		interpreter = new MouseEventInterpreter(eventBus, [
-			PaintingGestureDetector,
-			TextingGestureDetector,
-			MovingGestureDetector
-			]);
+		interpreter = new MouseEventInterpreter();
+		interpreter.addDetector(new PaintingGestureDetector(eventBus, interpreter));
+		interpreter.addDetector(new TextingGestureDetector(eventBus, interpreter));
+		interpreter.addDetector(new MovingGestureDetector(eventBus, interpreter));
 		jasmine.Clock.useMock();
 	});
 
@@ -31,6 +30,11 @@ describe('MouseEventInterpreter', function(){
 		interpreter.interpret(createEvent(Event.Kinetic.MOUSE_DOWN, 10, 10, page));
 
 		expect(eventBus.publish).toHaveBeenCalledWith(new Event(Event.Page.START_TEXTING, { position: {x: 10, y: 10} }));
+	});
+
+	it("remove a detector by class", function(){
+		interpreter.removeDetector(MovingGestureDetector);
+		expect(interpreter.detectors.length).toEqual(2);
 	});
 
 });

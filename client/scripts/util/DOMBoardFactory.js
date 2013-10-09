@@ -4,7 +4,7 @@ function DOMBoardFactory(){
 
 }
 
-DOMBoardFactory.create = function(pageElement, pageWidth, pageHeight, palette, rubbishbinId, rubbishbinWidth, rubbishbinHeight, eventPreprocessor){
+DOMBoardFactory.create = function(pageElement, pageWidth, pageHeight, palette, rubbishbinId, rubbishbinWidth, rubbishbinHeight, eventPreprocessor, globalEventBus){
 	var board = new Board();
 	board.setPosition(new Point(0, 0));
 
@@ -13,11 +13,10 @@ DOMBoardFactory.create = function(pageElement, pageWidth, pageHeight, palette, r
 	var eventBus = new EventBus();
 	board.setEventBus(eventBus);
 	
-	var interpreter = new MouseEventInterpreter(eventBus, [
-			PaintingGestureDetector,
-			TextingGestureDetector,
-			MovingGestureDetector
-			], eventPreprocessor);
+	var interpreter = new MouseEventInterpreter(eventPreprocessor);
+	interpreter.addDetector(new PaintingGestureDetector(eventBus, interpreter));
+	interpreter.addDetector(new TextingGestureDetector(eventBus, interpreter));
+	interpreter.addDetector(new MovingGestureDetector(eventBus, interpreter));
 
 	var context = new KineticContext(pageElement.id, pageWidth, pageHeight);
 	context.enableEventHandling(interpreter);

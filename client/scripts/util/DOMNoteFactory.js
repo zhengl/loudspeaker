@@ -4,7 +4,7 @@ function DOMNoteFactory(){
 
 }
 
-DOMNoteFactory.create = function(pageElement, pageWidth, pageHeight, palette, rubbishbinId, rubbishbinWidth, rubbishbinHeight, eventPreprocessor, board){
+DOMNoteFactory.create = function(pageElement, pageWidth, pageHeight, palette, rubbishbinId, rubbishbinWidth, rubbishbinHeight, eventPreprocessor, globalEventBus){
 	var note = new Note();
 	note.setPosition(new Point(0, 0));
 
@@ -12,13 +12,12 @@ DOMNoteFactory.create = function(pageElement, pageWidth, pageHeight, palette, ru
 
 	var eventBus = new EventBus();
 	note.setEventBus(eventBus);
-	
-	var interpreter = new MouseEventInterpreter(eventBus, [
-			PaintingGestureDetector,
-			TextingGestureDetector,
-			MovingGestureDetector,
-			NoteDraggingGestureDetector
-			], eventPreprocessor);
+
+	var interpreter = new MouseEventInterpreter(eventPreprocessor);
+	interpreter.addDetector(new PaintingGestureDetector(eventBus, interpreter));
+	interpreter.addDetector(new TextingGestureDetector(eventBus, interpreter));
+	interpreter.addDetector(new MovingGestureDetector(eventBus, interpreter));
+	interpreter.addDetector(new NoteDraggingGestureDetector(globalEventBus, interpreter));
 
 	var context = new KineticContext(pageElement.id, pageWidth, pageHeight);
 	context.enableEventHandling(interpreter);

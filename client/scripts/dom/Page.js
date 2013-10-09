@@ -73,9 +73,6 @@ Page.prototype.addItem = function(page) {
 	}
 	if(this.getContext()) {
 		this.getContext().addItem(page);
-		if(page.getContext()) {
-			page.getContext().propagateEventTo(this.getContext().eventCatcher);
-		}
 	} else {
 		page.setParent(this);
 	}
@@ -85,21 +82,6 @@ Page.prototype.remove = function(page) {
 	this.parent.removeItem(this);
 	if(this.element) {
 		this.element.parentNode.removeChild(this.element);
-	}
-};
-
-Page.prototype.disableEventHandling = function() {
-	if(this.getContext()) {
-		this.getContext().disableEventHandling();
-	}
-	if(this.getMover()) {
-		this.getMover().disableEventHandling();
-	}
-	if(this.getTexter()) {
-		this.getTexter().disableEventHandling();
-	}
-	if(this.getPainter()) {
-		this.getPainter().disableEventHandling();
 	}
 };
 

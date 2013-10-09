@@ -1,4 +1,4 @@
-define('app', ['DOMBoardFactory', 'DOMNoteFactory', 'MouseEventPreprocessor', 'DOMPalette', 'Note', 'NoteDragger', 'NoteSupplier', 'PanelTrigger', 'config', 'uuid'], function(DOMBoardFactory, DOMNoteFactory, MouseEventPreprocessor, DOMPalette, Note, NoteDragger, NoteSupplier, PanelTrigger, config, UUID){
+define('app', ['DOMBoardFactory', 'DOMNoteFactory', 'MouseEventPreprocessor', 'DOMPalette', 'Note', 'NoteDragger', 'NoteSupplier', 'PanelTrigger', 'EventBus', 'config', 'uuid'], function(DOMBoardFactory, DOMNoteFactory, MouseEventPreprocessor, DOMPalette, Note, NoteDragger, NoteSupplier, PanelTrigger, EventBus, config, UUID){
     var board;
     var note;
 
@@ -31,6 +31,7 @@ define('app', ['DOMBoardFactory', 'DOMNoteFactory', 'MouseEventPreprocessor', 'D
     var noteRubbishBinWidth = 20;
     var noteRubbishBinHeight = noteActualHeight;
 
+    var globalEventBus;
     var eventPreprocessor;
     var interpreter;
     var dragger;
@@ -105,6 +106,7 @@ define('app', ['DOMBoardFactory', 'DOMNoteFactory', 'MouseEventPreprocessor', 'D
             var paletteElement = document.querySelector(".palette");
             var palette = new DOMPalette(paletteElement);
             
+            globalEventBus = new EventBus();
 
             board = DOMBoardFactory.create(
                 boardElement, 
@@ -114,7 +116,8 @@ define('app', ['DOMBoardFactory', 'DOMNoteFactory', 'MouseEventPreprocessor', 'D
                 rubbishBinId, 
                 rubbishBinWidth,
                 rubbishBinHeight,
-                boardEventPreprocessor
+                boardEventPreprocessor,
+                globalEventBus
             );
 
             note = DOMNoteFactory.create(
@@ -126,23 +129,23 @@ define('app', ['DOMBoardFactory', 'DOMNoteFactory', 'MouseEventPreprocessor', 'D
                 noteRubbishBinWidth,
                 noteRubbishBinHeight,
                 noteEventPreprocessor,
-                board
+                globalEventBus
             );
 
             boardElement.appendChild(rubbishbinElement);
             noteElement.appendChild(noteRubbishbinElement);
 
             dragger = new NoteDragger();
-            dragger.enableEventHandling(note.getEventBus());
+            dragger.enableEventHandling(globalEventBus);
             dragger.setDroppable(board);
 
             var panel = document.querySelector('.panel');
             trigger = new PanelTrigger(panel);
-            trigger.enableEventHandling(note.getEventBus());
+            trigger.enableEventHandling(globalEventBus);
 
             var noteStack = document.getElementById("note-stack");
             supplier = new NoteSupplier(noteStack);
-            supplier.enableEventHandling(note.getEventBus());
+            supplier.enableEventHandling(globalEventBus);
 
             onRepaint();
 
