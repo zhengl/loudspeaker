@@ -8,7 +8,11 @@ require.config({
 		
 			Event: "core/event/Event",
 		
+			EventBridge: "core/event/EventBridge",
+		
 			EventBus: "core/event/EventBus",
+		
+			EventFilter: "core/event/EventFilter",
 		
 			EventHandleable: "core/event/EventHandleable",
 		
