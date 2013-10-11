@@ -67,34 +67,6 @@ Page.prototype.setMover = function(mover) {
 	this.mover = mover;
 };
 
-Page.prototype.addItem = function(page) {
-	if(this.getElement() && page.getElement()) {
-		this.getElement().appendChild(page.getElement());
-	}
-	if(this.getContext()) {
-		this.getContext().addItem(page);
-	} else {
-		page.setParent(this);
-	}
-};
-
-Page.prototype.remove = function(page) {
-	this.parent.removeItem(this);
-	if(this.element) {
-		this.element.parentNode.removeChild(this.element);
-	}
-};
-
-Page.prototype.moveTo = function(point){
-	this.position = point;
-	if (this.element) {
-	    this.element.style.position = "absolute";
-	    this.element.style.left = point.x / this.zoomPercentage + "px";
-		this.element.style.top = point.y /this.zoomPercentage + "px";
-	}
-};
-
-
 return Page;
 
 });

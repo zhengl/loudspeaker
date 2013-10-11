@@ -39,7 +39,7 @@ DOMNoteFactory.create = function(pageElement, pageWidth, pageHeight, palette, ru
 
 	var mover = new Mover(context);
 	mover.enableEventHandling(eventBus);
-	mover.setMovables([Line, Text, Note]);
+	mover.setMovables([Line, Text]);
 	note.setMover(mover);
 
 	var rubbishbin = new DOMRubbishBin(new Point(pageWidth - rubbishbinWidth, 0), new Point(pageWidth, rubbishbinHeight), rubbishbinId);

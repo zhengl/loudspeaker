@@ -1,4 +1,4 @@
-require(['DOMBoardFactory', 'DOMNoteFactory', 'DOMPalette', 'Event', 'Point'], function(DOMBoardFactory, DOMNoteFactory, DOMPalette, Event, Point){
+require(['DOMBoardFactory', 'DOMNoteFactory', 'DOMPalette', 'Event', 'Point', 'MouseEventPreprocessor'], function(DOMBoardFactory, DOMNoteFactory, DOMPalette, Event, Point, MouseEventPreprocessor){
 
 
 describe('Page', function(){
@@ -27,8 +27,9 @@ describe('Page', function(){
 		var noteElement = addDiv("note", body);
 		addDiv("note-rubbishbin", body);
 
-		board = DOMBoardFactory.create(boardElement, 100, 100, palette, "rubbishbin", 10, 50);
-		note = DOMNoteFactory.create(noteElement, 50, 50, palette, "note-rubbishbin", 1, 10);
+		var preprocessor = new MouseEventPreprocessor();
+		board = DOMBoardFactory.create(boardElement, 100, 100, palette, "rubbishbin", 10, 50, preprocessor);
+		note = DOMNoteFactory.create(noteElement, 50, 50, palette, "note-rubbishbin", 1, 10, preprocessor);
 	});
 
 	it("appends another page", function(){
@@ -57,9 +58,9 @@ describe('Page', function(){
 	it("should be movable after being appended as a note", function(){
 		board.addItem(note);
 
-		triggerStartMovingEvent(board.getEventBus(), note, 0, 0);
-		triggerMoveToEvent(board.getEventBus(), 10, 10);
-		triggerFinishMovingEvent(board.getEventBus());
+		triggerStartMovingEvent(note.getEventBus(), note, 0, 0);
+		triggerMoveToEvent(note.getEventBus(), 10, 10);
+		triggerFinishMovingEvent(note.getEventBus());
 
 		expect(note.getPosition()).toEqual({x: 10, y: 10});
 	});
@@ -77,16 +78,6 @@ describe('Page', function(){
 		triggerFinishMovingEvent(board.getEventBus());
 
 		expect(board.getPosition()).not.toEqual({x: 10, y: 10});
-	});
-
-	it("should be movable as a note", function(){
-		triggerStartMovingEvent(note.getEventBus(), note, 0, 0);
-		triggerMoveToEvent(note.getEventBus(), 10, 10);
-		triggerFinishMovingEvent(note.getEventBus());
-
-		expect(note.getPosition()).toEqual({x: 10, y: 10});
-		expect(note.getElement().style.top).toEqual('10px');
-		expect(note.getElement().style.left).toEqual('10px');
 	});
 
 	function addDiv(id, body){
