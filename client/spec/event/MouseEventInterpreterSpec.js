@@ -1,4 +1,4 @@
-require(['MouseEventInterpreter', 'EventBus', 'Event', 'PaintingGestureDetector', 'TextingGestureDetector', 'MovingGestureDetector', 'Page'], function(MouseEventInterpreter, EventBus, Event, PaintingGestureDetector, TextingGestureDetector, MovingGestureDetector, Page){
+require(['MouseEventInterpreter', 'EventBus', 'Event', 'PaintingGestureDetector', 'TextingGestureDetector', 'MovingGestureDetector', 'Page', 'Context'], function(MouseEventInterpreter, EventBus, Event, PaintingGestureDetector, TextingGestureDetector, MovingGestureDetector, Page, Context){
 
 describe('MouseEventInterpreter', function(){
 	var interpreter;
@@ -9,6 +9,7 @@ describe('MouseEventInterpreter', function(){
 		eventBus = new EventBus();
 		eventBus.publish = jasmine.createSpy();
 		page = new Page();
+		page.setContext(new Context())
 		page.setPosition({x: 0, y: 0});
 		interpreter = new MouseEventInterpreter();
 		interpreter.addDetector(new PaintingGestureDetector(eventBus, interpreter));

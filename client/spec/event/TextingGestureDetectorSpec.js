@@ -1,4 +1,4 @@
-require(['TextingGestureDetector', 'EventBus', 'Event', 'Line', 'Page'], function(TextingGestureDetector, EventBus, Event, Line, Page){
+require(['TextingGestureDetector', 'EventBus', 'Event', 'Line', 'Page', 'Context'], function(TextingGestureDetector, EventBus, Event, Line, Page, Context){
 
 
 describe("TextingGestureDetector", function(){
@@ -11,6 +11,7 @@ describe("TextingGestureDetector", function(){
 		eventBus.publish = jasmine.createSpy();
 		detector = new TextingGestureDetector(eventBus);
 		page = new Page();
+		page.setContext(new Context());
 		jasmine.Clock.useMock();
 	});
 
@@ -24,7 +25,6 @@ describe("TextingGestureDetector", function(){
 
 	it("triggers nothing after MOUSE_DOWN, MOVE_TO and MOUSE_DOWN at item", function(){
 		var line = new Line()
-		line.setParent(page);
 		detector.detect(createEvent(Event.Kinetic.MOUSE_DOWN, 10, 10, line));
 		jasmine.Clock.tick(100);
 		detector.detect(createEvent(Event.Kinetic.MOUSE_DOWN, 10, 10, line));

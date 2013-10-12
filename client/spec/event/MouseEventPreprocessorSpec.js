@@ -42,8 +42,8 @@ describe('MouseEventPreprocessor', function(){
 		board.addItem(note);
 
 		var event = preprocessor.process(createEvent("mousedown", null, null, note, 10, 10));
-		expect(event.canvasX).toEqual(60);
-		expect(event.canvasY).toEqual(60);	
+		expect(event.canvasX).toEqual(10);
+		expect(event.canvasY).toEqual(10);	
 	});
 });
 

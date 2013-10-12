@@ -54,7 +54,7 @@ describe("MovingGestureDetector", function(){
 		detector.detect(createEvent(Event.Kinetic.MOUSE_UP, 30, 30));
 
 		expect(eventBus.publish).toHaveBeenCalledWith(new Event(Event.Page.FINISH_MOVING, { position: {x: 30, y: 30} }));
-	});		
+	});
 });
 
 });

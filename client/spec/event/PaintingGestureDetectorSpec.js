@@ -1,4 +1,4 @@
-require(['PaintingGestureDetector', 'EventBus', 'Event', 'Line', 'Page'], function(PaintingGestureDetector, EventBus, Event, Line, Page){
+require(['PaintingGestureDetector', 'EventBus', 'Event', 'Line', 'Page', 'Context'], function(PaintingGestureDetector, EventBus, Event, Line, Page, Context){
 
 
 describe("PaintingGestureDetector", function(){
@@ -11,6 +11,7 @@ describe("PaintingGestureDetector", function(){
 		eventBus.publish = jasmine.createSpy();
 		detector = new PaintingGestureDetector(eventBus);
 		page = new Page();
+		page.setContext(new Context);
 	});
 
 	it("triggers START_DRAWING after MOUSE_DOWN, MOVE_TO and MOVE_TO", function(){
@@ -72,15 +73,14 @@ describe("PaintingGestureDetector", function(){
 		expect(eventBus.publish).toHaveBeenCalledWith(new Event(Event.Page.START_DRAWING, { position: {x: 50, y: 50} }));
 	});
 
-	it("triggers nothing MOUSE_DOWN, MOVE_TO, MOVE_TO on item", function(){
+	it("triggers nothing MOUSE_DOWN, MOVE_TO, MOVE_TO on item with no context", function(){
 		var line = new Line();
-		line.setParent(page);
 		detector.detect(createEvent(Event.Kinetic.MOUSE_DOWN, 10, 10, line));
 		detector.detect(createEvent(Event.Kinetic.MOVE_TO, 20, 20, line));
 		detector.detect(createEvent(Event.Kinetic.MOVE_TO, 20, 20, line));
 
 		expect(eventBus.publish).not.toHaveBeenCalled();
-	});	
+	});
 });
 
 

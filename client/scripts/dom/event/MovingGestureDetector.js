@@ -23,9 +23,18 @@ HOVERING_INTERVAL = 500;
 MovingGestureDetector.prototype.startMoving = function(event) {
 	if (undefined != event.targetItem) {
 		var currentPosition = event.targetItem.getPosition();
+		var position;
+		
+		if(event.targetItem instanceof Note && event.targetItem.hasParent()) {
+			var canvasPosition = this.getCanvasPositionForNote(event);
+			position = new Point(canvasPosition.x - currentPosition.x, canvasPosition.y - currentPosition.y);
+		} else {
+			position = new Point(event.canvasX - currentPosition.x, event.canvasY - currentPosition.y);
+		}
+
 		var data = {
 			item: event.targetItem,
-			position: new Point(event.canvasX - currentPosition.x, event.canvasY - currentPosition.y),
+			position: position,
 		}
 		var self = this;
 		this.hoveringTimerId = window.setTimeout(function(){
@@ -40,7 +49,16 @@ MovingGestureDetector.prototype.startMoving = function(event) {
 
 MovingGestureDetector.prototype.moveTo = function(event) {
 	if (this.isMoving) {
-		this.eventBus.publish(new Event(Event.Page.MOVE_TO, { position: new Point(event.canvasX, event.canvasY) }));
+		var position;
+
+		if(event.targetItem instanceof Note && event.targetItem.hasParent()) {
+			var canvasPosition = this.getCanvasPositionForNote(event);
+			position = new Point(canvasPosition.x, canvasPosition.y);
+		} else {
+			position = new Point(event.canvasX, event.canvasY);
+		}
+
+		this.eventBus.publish(new Event(Event.Page.MOVE_TO, { position: position }));
 		this.inform(this);
 	} else {
 		window.clearTimeout(this.hoveringTimerId);
@@ -52,6 +70,16 @@ MovingGestureDetector.prototype.finishMoving = function(event) {
 	this.isMoving = false;
 	this.eventBus.publish(new Event(Event.Page.FINISH_MOVING, { position: new Point(event.canvasX, event.canvasY) }));
 	this.inform(this);
+};
+
+MovingGestureDetector.prototype.getCanvasPositionForNote = function(event) {
+	var parentRect = event.targetItem.getParent().getPage().getElement().getBoundingClientRect();
+	var childRect = event.targetItem.getElement().getBoundingClientRect();
+	var offsetX = childRect.left - parentRect.left + event.offsetX;
+	var offsetY = childRect.top - parentRect.top + event.offsetY;
+	var canvasX = offsetX * event.targetItem.zoomPercentage;
+	var canvasY = offsetY * event.targetItem.zoomPercentage;
+	return new Point(canvasX , canvasY);
 };
 
 return MovingGestureDetector;

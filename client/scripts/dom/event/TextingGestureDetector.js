@@ -21,7 +21,7 @@ TextingGestureDetector.prototype = new GestureDetector();
 TextingGestureDetector.prototype.constructor = TextingGestureDetector;
 
 TextingGestureDetector.prototype.readyToText = function(event) {
-	if (!event.targetItem.hasParent()){
+	if (event.targetItem.context){
 		this.click++;
 		var self = this;
 		this.doubleClickTimerId = window.setTimeout(function(){
