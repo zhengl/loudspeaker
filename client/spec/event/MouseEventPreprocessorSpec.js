@@ -1,4 +1,4 @@
-require(['MouseEventPreprocessor', 'Note', 'Board', 'KineticContext'], function(MouseEventPreprocessor, Note, Board, KineticContext){
+require(['MouseEventPreprocessor', 'Note', 'Board', 'KineticContext', 'Point'], function(MouseEventPreprocessor, Note, Board, KineticContext, Point){
 
 
 describe('MouseEventPreprocessor', function(){
@@ -20,10 +20,8 @@ describe('MouseEventPreprocessor', function(){
 		var note = new Note();
 
 		var noteElement = document.createElement("div");
-		noteElement.style.position = "absolute";
-		noteElement.style.left = "50px";
-		noteElement.style.top = "50px";
 		note.setElement(noteElement);
+		note.setPosition(new Point(50, 50));
 
 		var board = new Board();
 		var boardElement = document.createElement("div");

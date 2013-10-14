@@ -52,11 +52,11 @@ function triggerStartMovingEvent(eventBus, item, x, y){
 }
 
 function triggerFinishMovingEvent(eventBus, item){
-	eventBus.publish(new Event(Event.Page.FINISH_MOVING));
+	eventBus.publish(new Event(Event.Page.FINISH_MOVING, { item: item }));
 }
 
-function triggerMoveToEvent(eventBus, x, y){
-	eventBus.publish(new Event(Event.Page.MOVE_TO, { position: {x: x, y: y} }));
+function triggerMoveToEvent(eventBus, item, x, y){
+	eventBus.publish(new Event(Event.Page.MOVE_TO, { item: item, position: {x: x, y: y} }));
 }
 
 function triggerDrawToEvent(eventBus, x, y){

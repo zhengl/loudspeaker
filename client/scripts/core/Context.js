@@ -29,7 +29,7 @@ Context.prototype.removeItem = function(item){
 			resultItems.push(this.items[i]);
 		}
 	}
-	item.setParent(undefined);
+	// item.setParent(undefined);
 	this.items = resultItems;
 };
 

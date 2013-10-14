@@ -16,8 +16,8 @@ DOMNoteFactory.create = function(pageElement, pageWidth, pageHeight, palette, ru
 	var interpreter = new MouseEventInterpreter(eventPreprocessor);
 	interpreter.addDetector(new PaintingGestureDetector(eventBus, interpreter));
 	interpreter.addDetector(new TextingGestureDetector(eventBus, interpreter));
-	interpreter.addDetector(new MovingGestureDetector(eventBus, interpreter));
 	interpreter.addDetector(new NoteDraggingGestureDetector(globalEventBus, interpreter));
+	interpreter.addDetector(new MovingGestureDetector(eventBus, interpreter));
 
 	var context = new KineticContext(pageElement.id, pageWidth, pageHeight);
 	context.enableEventHandling(interpreter);

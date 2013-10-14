@@ -68,6 +68,8 @@ require.config({
 		
 			NoteDraggingGestureDetector: "dom/event/NoteDraggingGestureDetector",
 		
+			NoteEventTransformer: "dom/event/NoteEventTransformer",
+		
 			NoteSupplierEventHandler: "dom/event/NoteSupplierEventHandler",
 		
 			PaintingGestureDetector: "dom/event/PaintingGestureDetector",

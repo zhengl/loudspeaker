@@ -67,6 +67,10 @@ Page.prototype.setMover = function(mover) {
 	this.mover = mover;
 };
 
+Page.prototype.removeItem = function(item) {
+	this.getContext().removeItem(item);
+};
+
 return Page;
 
 });

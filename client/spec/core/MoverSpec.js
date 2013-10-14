@@ -63,7 +63,7 @@ describe("Mover", function(){
 			expectNoItem(mover);
 			expectOneDraftItem(mover);			
 			
-			triggerMoveToEvent(eventBus, 20, 20);
+			triggerMoveToEvent(eventBus, line, 20, 20);
 			expectNoItem(mover);
 			expectOneDraftItem(mover);
 			

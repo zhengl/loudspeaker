@@ -43,7 +43,6 @@ KineticContext.prototype.getLastDraftItem = function(){
 
 KineticContext.prototype.addItem = function(item){
 	this.items.push(item);
-	item.setParent(this);
 	if(item.undraftize){
 		item.undraftize();
 	}
@@ -56,7 +55,6 @@ KineticContext.prototype.addItem = function(item){
 
 KineticContext.prototype.addDraftItem = function(item){
 	this.draftItems.push(item);
-	item.setParent(this);
 	if(item.draftize){
 		item.draftize();
 	}

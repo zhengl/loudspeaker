@@ -8,6 +8,9 @@ describe('Page', function(){
 	beforeEach(function(){
 		var body = document.getElementsByTagName('body')[0];
 		var boardElement = addDiv("board", body);
+		boardElement.style.position = "absolute";
+		boardElement.style.top = '0';
+		boardElement.style.left = '0';
 
 		var paletteElement = document.createElement('div');
 		
@@ -59,7 +62,7 @@ describe('Page', function(){
 		board.addItem(note);
 
 		triggerStartMovingEvent(note.getEventBus(), note, 0, 0);
-		triggerMoveToEvent(note.getEventBus(), 10, 10);
+		triggerMoveToEvent(note.getEventBus(), note, 10, 10);
 		triggerFinishMovingEvent(note.getEventBus());
 
 		expect(note.getPosition()).toEqual({x: 10, y: 10});
@@ -74,7 +77,7 @@ describe('Page', function(){
 
 	it("should not be movable as a board", function(){
 		triggerStartMovingEvent(board.getEventBus(), board, 0, 0);
-		triggerMoveToEvent(board.getEventBus(), 10, 10);
+		triggerMoveToEvent(board.getEventBus(), board, 10, 10);
 		triggerFinishMovingEvent(board.getEventBus());
 
 		expect(board.getPosition()).not.toEqual({x: 10, y: 10});

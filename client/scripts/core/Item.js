@@ -34,7 +34,9 @@ Item.prototype.unselect = function(){
 };
 
 Item.prototype.remove = function() {
-	this.parent.removeItem(this);
+	if(this.parent) {
+		this.parent.removeItem(this);
+	}
 };
 
 Item.prototype.setParent = function(parent) {

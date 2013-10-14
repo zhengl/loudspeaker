@@ -1,4 +1,4 @@
-require(['MouseEventInterpreter', 'EventBus', 'Event', 'PaintingGestureDetector', 'TextingGestureDetector', 'MovingGestureDetector', 'Page', 'Context'], function(MouseEventInterpreter, EventBus, Event, PaintingGestureDetector, TextingGestureDetector, MovingGestureDetector, Page, Context){
+require(['MouseEventInterpreter', 'EventBus', 'Event', 'PaintingGestureDetector', 'TextingGestureDetector', 'MovingGestureDetector', 'NoteDraggingGestureDetector', 'Page', 'Context', 'Note'], function(MouseEventInterpreter, EventBus, Event, PaintingGestureDetector, TextingGestureDetector, MovingGestureDetector, NoteDraggingGestureDetector, Page, Context, Note){
 
 describe('MouseEventInterpreter', function(){
 	var interpreter;
@@ -14,6 +14,7 @@ describe('MouseEventInterpreter', function(){
 		interpreter = new MouseEventInterpreter();
 		interpreter.addDetector(new PaintingGestureDetector(eventBus, interpreter));
 		interpreter.addDetector(new TextingGestureDetector(eventBus, interpreter));
+		interpreter.addDetector(new NoteDraggingGestureDetector(eventBus, interpreter));
 		interpreter.addDetector(new MovingGestureDetector(eventBus, interpreter));
 		jasmine.Clock.useMock();
 	});
@@ -33,9 +34,18 @@ describe('MouseEventInterpreter', function(){
 		expect(eventBus.publish).toHaveBeenCalledWith(new Event(Event.Page.START_TEXTING, { position: {x: 10, y: 10} }));
 	});
 
+	it("triggers START_DRAGGING after long press", function(){
+		var note = new Note();
+		interpreter.interpret(createEvent(Event.Kinetic.MOUSE_DOWN, 10, 10, note));
+		jasmine.Clock.tick(501);
+
+		expect(eventBus.publish).toHaveBeenCalledWith(new Event(Event.Note.START_DRAGGING, { item: note, position: {x: 10, y: 10} }));
+		// expect(eventBus.publish).not.toHaveBeenCalledWith(new Event(Event.Page.START_MOVING, { item: note, position: {x: 10, y: 10} }));
+	});
+
 	it("remove a detector by class", function(){
 		interpreter.removeDetector(MovingGestureDetector);
-		expect(interpreter.detectors.length).toEqual(2);
+		expect(interpreter.detectors.length).toEqual(3);
 	});
 
 });

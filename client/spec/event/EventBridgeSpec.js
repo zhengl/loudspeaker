@@ -15,12 +15,12 @@ describe('EventBridge', function(){
 	});
 
 	it("should route events", function(){
-		triggerMoveToEvent(from, 0, 0);
+		triggerMoveToEvent(from, null, 0, 0);
 
 		expect(to.publish).toHaveBeenCalled();
 	});
 
-	it("should filter events", function(){
+	it("should filter events with filter", function(){
 		var filter = new EventFilter();
 		filter.accept(function(event){
 			if(event.name == Event.Page.MOVE_TO) {
@@ -35,7 +35,7 @@ describe('EventBridge', function(){
 		triggerStopDrawingEvent(from);
 		expect(to.publish).not.toHaveBeenCalled();
 
-		triggerMoveToEvent(from, 0, 0);
+		triggerMoveToEvent(from, null, 0, 0);
 		expect(to.publish).toHaveBeenCalled();
 	});
 });

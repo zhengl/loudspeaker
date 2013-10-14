@@ -18,16 +18,17 @@ function NoteDraggingGestureDetector(eventBus, monitor){
 NoteDraggingGestureDetector.prototype = new GestureDetector();
 NoteDraggingGestureDetector.prototype.constructor = NoteDraggingGestureDetector;
 
-HOVERING_INTERVAL = 500;
+DRAGGING_INTERVAL = 500;
 
 NoteDraggingGestureDetector.prototype.startDragging = function(event) {
 	if (event.targetItem instanceof Note) {
 		var self = this;
-		this.hoveringTimerId = window.setTimeout(function(){
+		this.draggingTimerId = window.setTimeout(function(){
 			self.eventBus.publish(new Event(Event.Note.START_DRAGGING, {item: event.targetItem, position: new Point(event.canvasX, event.canvasY) }));
 			self.isMoving = true;
 			self.inform(self);
-		}, HOVERING_INTERVAL);		
+		}, DRAGGING_INTERVAL);
+		console.log("dragging: " + this.draggingTimerId)		
 	}  else {
 		this.rewind();
 	}
@@ -38,7 +39,6 @@ NoteDraggingGestureDetector.prototype.moveTo = function(event) {
 		this.eventBus.publish(new Event(Event.Note.MOVE_TO, { position: new Point(event.pageX, event.pageY) }));
 		this.inform(this);
 	} else {
-		window.clearTimeout(this.hoveringTimerId);
 		this.rewind();
 	}
 };
@@ -50,6 +50,12 @@ NoteDraggingGestureDetector.prototype.finishDragging = function(event) {
 	} else {
 		this.rewind();
 	}
+};
+
+NoteDraggingGestureDetector.prototype.rewind = function() {
+	console.log("rewind dragging: " + this.draggingTimerId)
+	this.currentCandidateSteps = this.rootSteps;
+	window.clearTimeout(this.draggingTimerId);
 };
 
 return NoteDraggingGestureDetector;
