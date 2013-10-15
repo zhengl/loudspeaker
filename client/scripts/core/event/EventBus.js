@@ -1,8 +1,8 @@
-define('EventBus', function(){
+define("EventBus", function(){
 
 
 function EventBus(){
-	this.listeners = new Array();
+	this.listeners = [];
 }
 
 EventBus.prototype.addListener = function(listener){
@@ -10,7 +10,7 @@ EventBus.prototype.addListener = function(listener){
 };
 
 EventBus.prototype.removeListener = function(listener){
-	var resultListeners = new Array();
+	var resultListeners = [];
 	for(var i = 0; i < this.listeners.length; i++){
 		if(listener != this.listeners[i]) {
 			resultListeners.push(this.listeners[i]);
@@ -27,7 +27,7 @@ EventBus.prototype.publish = function(event){
 	for (var index in this.listeners) {
 		this.listeners[index].notify(event);
 	}
-}
+};
 
 return EventBus;
 

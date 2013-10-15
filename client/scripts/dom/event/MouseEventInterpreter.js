@@ -22,8 +22,8 @@ MouseEvextInterpreter.prototype.removeDetector = function(detectorClass) {
 MouseEvextInterpreter.prototype.interpret = function(event){
 	var targetEvent = event;
 
-	if (undefined != this.eventPreprocessor) {
-		targetEvent = this.eventPreprocessor.process(event)
+	if (undefined !== this.eventPreprocessor) {
+		targetEvent = this.eventPreprocessor.process(event);
 	}
 
 	for (var i = 0; i < this.detectors.length; i++) {

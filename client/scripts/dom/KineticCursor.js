@@ -15,10 +15,10 @@ function KineticCursor(context){
     var total = 0;
     var period = 500;
     var anim = new Kinetic.Animation(function(frame) {
-    	if (frame.time > period + total) {
-        	self.kineticShape.setOpacity(self.kineticShape.getOpacity() == 1 ? '0' : '1');
-    		total += period;
-    	}
+        if (frame.time > period + total) {
+            self.kineticShape.setOpacity(self.kineticShape.getOpacity() == 1 ? '0' : '1');
+            total += period;
+        }
     }, context.layer);
 
     anim.start();
@@ -28,7 +28,7 @@ KineticCursor.prototype.setPosition = function(point){
     this.kineticShape.setPosition(point.x, point.y);
 };
 
-KineticCursor.prototype.destroy = function(point){
+KineticCursor.prototype.destroy = function(){
     this.kineticShape.destroy();
 };
 

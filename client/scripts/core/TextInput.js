@@ -7,7 +7,7 @@ function TextInput(context){
 
 TextInput.prototype.getContext = function(){
 	return this.context;
-}
+};
 
 TextInput.prototype.write = function(text) {
 	this.text = text;
@@ -18,7 +18,7 @@ TextInput.prototype.write = function(text) {
 TextInput.prototype.append = function(text) {
 	var item;
 
-	if (undefined == this.text) {
+	if (undefined === this.text) {
 		item = this.write(text);
 	} else {
 		this.text.setValue(this.text.getValue() + text.getValue());
@@ -29,7 +29,7 @@ TextInput.prototype.append = function(text) {
 TextInput.prototype.flush = function() {
 	this.context.clearDraftItems();
 	this.context.addItem(this.getText());
-	this.getText().setValue("");
+	this.getText().setValue('');
 };
 
 TextInput.prototype.getText = function() {

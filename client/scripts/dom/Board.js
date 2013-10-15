@@ -23,10 +23,10 @@ Board.prototype.addItem = function(page) {
 		bridge.bridge(page.getEventBus(), this.getEventBus());
 		var filter = new EventFilter();
 		filter.accept(function(event){
-			if(event.data.item instanceof Note && 
+			if(event.data.item instanceof Note &&
 				(event.name == Event.Page.START_MOVING ||
-				 event.name == Event.Page.MOVE_TO ||
-				 event.name == Event.Page.FINISH_MOVING)) {
+				event.name == Event.Page.MOVE_TO ||
+				event.name == Event.Page.FINISH_MOVING)) {
 				return true;
 			} else {
 				return false;

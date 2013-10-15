@@ -16,18 +16,18 @@ Debugger.prototype.notify = function(event) {
 	this.previousEvent = event;
 
 	var items = this.context.layer.getChildren();
-	var itemsHtml = "";
+	var itemsHtml = '';
 	for(var i = 0; i < items.length; i++){
 		if(items[i].toJSON().indexOf('Rect') == -1) {
-			itemsHtml += "<li>" + items[i].toJSON() + "</li>";
+			itemsHtml += '<li>' + items[i].toJSON() + '</li>';
 		}
 	}
 	$('#debugger-items').html(itemsHtml);
 
 	var draftItems = this.context.draftLayer.getChildren();
-	var draftItemsHtml = "";
-	for(var i = 0; i < draftItems.length; i++){
-		draftItemsHtml += "<li>" + draftItems[i].toJSON() + "</li>";
+	var draftItemsHtml = '';
+	for(var j = 0; j < draftItems.length; j++){
+		draftItemsHtml += '<li>' + draftItems[j].toJSON() + '</li>';
 	}
 	$('#debugger-draft-items').html(draftItemsHtml);
 };

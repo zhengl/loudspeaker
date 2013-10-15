@@ -2,7 +2,7 @@ define('Line', ['Item', 'Point'], function(Item, Point){
 
 
 function Line(points, color){
-	this.points = points ? points : [];
+	this.points = points || [];
 	this.color = color;
 }
 
@@ -10,7 +10,7 @@ Line.prototype = new Item();
 Line.prototype.constructor = Line;
 
 Line.prototype.getPosition = function(){
-	if (undefined == this.position) {
+	if (undefined === this.position) {
 		var minX = this.points[0].x;
 		var minY = this.points[0].y;
 		
@@ -45,6 +45,10 @@ Line.prototype.getColor = function() {
 	return this.color;
 };
 
+Line.prototype.setPoints = function(points){
+	this.points = points;
+};
+
 Line.prototype.getPoints = function(){
 	return this.points;
 };
@@ -52,7 +56,7 @@ Line.prototype.getPoints = function(){
 Line.prototype.serialize = function() {
 	return {
 		uuid: this.getUUID(),
-		type: "line",
+		type: 'line',
 		color: this.color,
 		points: this.points,
 		position: this.position,

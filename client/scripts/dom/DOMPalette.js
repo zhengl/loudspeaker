@@ -7,11 +7,13 @@ function DOMPalette(element) {
 	var colors = document.querySelectorAll('.palette-color');
 	
 	var self = this;
+	var setBackgroundColorAsColor = function(){
+		var style = window.getComputedStyle(this);
+		self.setColor(style.backgroundColor);
+	};
+
 	for(var i = 0; i < colors.length; i++) {
-		colors[i].onclick = function(){
-			var style = window.getComputedStyle(this);
-			self.setColor(style.backgroundColor);
-		}
+		colors[i].onclick = setBackgroundColorAsColor;
 	}
 }
 

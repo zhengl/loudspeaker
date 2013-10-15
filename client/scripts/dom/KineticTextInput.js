@@ -3,7 +3,7 @@ define('KineticTextInput', ['Point', 'KineticText', 'TextInput', 'KineticCursor'
 
 function KineticTextInput(context){
 	this.context = context;
-    this.text = new KineticText("");
+    this.text = new KineticText('');
 	this.initializeDOMElement(this.context);
 }
 
@@ -34,13 +34,13 @@ KineticTextInput.prototype.initializeDOMElement = function(context){
 };
 
 KineticTextInput.prototype.createDOMElement = function() {
-	var element = document.createElement("input");
-   	element.type = "text";
-    element.style.background = "transparent";
-    element.style.border = "none";
-    element.style.position = "absolute";
-    element.style.left = "-1000px";
-	element.style.top = "0px";
+	var element = document.createElement('input');
+	element.type = 'text';
+    element.style.background = 'transparent';
+    element.style.border = 'none';
+    element.style.position = 'absolute';
+    element.style.left = '-1000px';
+	element.style.top = '0px';
 	return element;
 };
 
@@ -48,7 +48,7 @@ KineticTextInput.prototype.adjustCursor = function() {
 	var textPosition = this.getText().getPosition();
 	var textWidth = this.context.getLastDraftItem().getKineticShape().getWidth();
 	this.cursor.setPosition(new Point(
-		textPosition.x + textWidth + 2, 
+		textPosition.x + textWidth + 2,
 		textPosition.y
 		));
 };
@@ -57,17 +57,17 @@ KineticTextInput.prototype.enableEventHandling = function(eventBus) {
 	var self = this;
 	this.eventBus = eventBus;
     this.element.onkeydown = function(event){
-    	if(event.keyCode == 13) { // when press Enter
-	        eventBus.publish(
+		if(event.keyCode == 13) { // when press Enter
+			eventBus.publish(
 				new Event(Event.Page.FINISH_TEXTING)
-	        	);
-	    } else {
-	    	window.setTimeout(function(){
-	    		self.text.setValue(self.element.value);
-	    		self.write(self.getText());
-	    		self.adjustCursor();
-	    	}, 1);
-	    }
+			);
+		} else {
+			window.setTimeout(function(){
+				self.text.setValue(self.element.value);
+				self.write(self.getText());
+				self.adjustCursor();
+			}, 1);
+		}
     };
 };
 
@@ -95,7 +95,7 @@ KineticTextInput.prototype.draftToContext = function(value, point){
 	this.context.clearDraftItems();
 	this.context.addDraftItem(this.getText());
 	return this.getText();
-}
+};
 
 KineticTextInput.prototype.flush = function() {
 	this.remove();
@@ -105,8 +105,8 @@ KineticTextInput.prototype.flush = function() {
 	kineticItem.setPosition(this.getText().getPosition());
 	kineticItem.setColor(this.getText().getColor());
 
-	this.getText().setValue("");
-	this.element.value = "";
+	this.getText().setValue('');
+	this.element.value = '';
 	this.context.addItem(kineticItem);
 	return kineticItem;
 };
@@ -118,7 +118,7 @@ KineticTextInput.prototype.setPosition = function(point){
 };
 
 KineticTextInput.prototype.removeCursor = function(){
-	if(undefined != this.cursor){
+	if(undefined !== this.cursor){
 		this.cursor.destroy();
 	}
 };

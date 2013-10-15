@@ -36,7 +36,7 @@ Painter.prototype.draftTo = function(point){
 };
 
 Painter.prototype.endDraft = function(point){
-	this.draftTo(point);	
+	this.draftTo(point);
 	this.context.addItem(this.draftItem);
 	this.context.clearDraftItems();
 };
@@ -50,11 +50,11 @@ Painter.prototype.showPalette = function(point){
 	this.palette.show();
 };
 
-Painter.prototype.hidePalette = function(point){
+Painter.prototype.hidePalette = function(){
 	this.palette.hide();
 };
 
-Painter.prototype.getPalette = function(point){
+Painter.prototype.getPalette = function(){
 	return this.palette;
 };
 

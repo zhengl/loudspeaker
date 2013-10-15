@@ -27,7 +27,7 @@ GestureDetector.prototype.rewind = function() {
 };
 
 GestureDetector.prototype.inform = function() {
-	if(undefined != this.monitor) {
+	if(undefined !== this.monitor) {
 		this.monitor.inform(this);
 	}
 };

@@ -22,13 +22,14 @@ describe('EventBridge', function(){
 
 	it("should filter events with filter", function(){
 		var filter = new EventFilter();
-		filter.accept(function(event){
+		var filterMoveTo = function(event){
 			if(event.name == Event.Page.MOVE_TO) {
 				return true;
 			} else {
-				false;
+				return false;
 			}
-		});
+		};
+		filter.accept(filterMoveTo);
 
 		bridge.setFilter(filter);
 

@@ -1,6 +1,6 @@
 require(['Mover', 'RubbishBin', 'Context', 'Line', 'Text', 'Point', 'EventBus', 'Event'], function(Mover, RubbishBin, Context, Line, Text, Point, EventBus, Event){
 
-describe("Mover", function(){
+describe('Mover', function(){
 	var mover;
 	var context;
 
@@ -9,8 +9,8 @@ describe("Mover", function(){
 		mover = new Mover(context);
 	});
 
-	it("should move a line", function(){
-		var line = new Line([new Point(0, 0), new Point(10, 10)])
+	it('should move a line', function(){
+		var line = new Line([new Point(0, 0), new Point(10, 10)]);
 		context.addItem(line);
 
 		mover.startMoving(line);
@@ -19,10 +19,10 @@ describe("Mover", function(){
 		expect(line.getPosition()).toEqual({x: 20, y:20});
 	});
 
-	it("should not move a line when only set Text in movables", function(){
+	it('should not move a line when only set Text in movables', function(){
 		mover.setMovables([Text]);
 
-		var line = new Line([new Point(0, 0), new Point(10, 10)])
+		var line = new Line([new Point(0, 0), new Point(10, 10)]);
 		context.addItem(line);
 
 		mover.startMoving(line);
@@ -31,8 +31,8 @@ describe("Mover", function(){
 		expect(line.getPosition()).toEqual({x: 0, y:0});
 	});
 
-	it("should be able to set removal zone", function(){
-		var line = new Line([new Point(0, 0), new Point(10, 10)])
+	it('should be able to set removal zone', function(){
+		var line = new Line([new Point(0, 0), new Point(10, 10)]);
 		context.addItem(line);
 
 		expect(context.getItems().length).toEqual(1);
@@ -47,7 +47,7 @@ describe("Mover", function(){
 		expect(context.getItems().length).toEqual(0);
 	});
 
-	describe("with event handling", function(){
+	describe('with event handling', function(){
 		var eventBus;
 
 		beforeEach(function(){
@@ -55,8 +55,8 @@ describe("Mover", function(){
 			mover.enableEventHandling(eventBus);	
 		});
 
-		it("should move a line with events, Page.START_MOVING, Page.MOVE_TO, Page.STOP_MOVING", function() {
-			var line = new Line([new Point(0, 0), new Point(10, 10)])
+		it('should move a line with events, Page.START_MOVING, Page.MOVE_TO, Page.STOP_MOVING', function() {
+			var line = new Line([new Point(0, 0), new Point(10, 10)]);
 			context.addItem(line);
 
 			triggerStartMovingEvent(eventBus, line, 5, 5);

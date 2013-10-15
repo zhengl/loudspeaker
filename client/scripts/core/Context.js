@@ -2,8 +2,8 @@ define('Context', function(){
 
 
 function Context(){
-	this.items = new Array();
-	this.draftItems = new Array();
+	this.items = [];
+	this.draftItems = [];
 }
 
 Context.prototype.getUUID = function(){
@@ -23,7 +23,7 @@ Context.prototype.getItems = function(){
 };
 
 Context.prototype.removeItem = function(item){
-	var resultItems = new Array();
+	var resultItems = [];
 	for(var i = 0; i < this.items.length; i++){
 		if(item != this.items[i]) {
 			resultItems.push(this.items[i]);

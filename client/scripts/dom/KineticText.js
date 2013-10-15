@@ -52,9 +52,9 @@ KineticText.prototype.undraftize = function(){
 	return this;
 };
 
-KineticText.prototype.enableEventHandling = function(eventBus){
+KineticText.prototype.enableEventHandling = function(){
 	var self = this;
-	this.getKineticShape().on(Event.Kinetic.EVENTS.join(" "), function(event){
+	this.getKineticShape().on(Event.Kinetic.EVENTS.join(' '), function(event){
 		event.targetItem = self;
 	});
 };

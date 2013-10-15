@@ -22,7 +22,7 @@ Palette.prototype.setColor = function(color){
 	this.color = color;
 };
 
-Palette.prototype.getColor = function(color){
+Palette.prototype.getColor = function(){
 	return this.color || 'black';
 };
 

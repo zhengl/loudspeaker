@@ -3,11 +3,10 @@ define('KineticLine', ['Kinetic', 'Line', 'Point', 'Event'], function(Kinetic, L
 
 function KineticLine(points, color){
 	Line.call(this, points);
-	
-	this.setColor(color || KineticLine.defaultStroke);
 
+	this.setColor(color || KineticLine.defaultStroke);
 	this.kineticShape = new Kinetic.Line({
-		points: KineticLine.flatternPoints(points),
+		points: KineticLine.flatternPoints(this.points),
 		strokeWidth: KineticLine.defaultStrokeWidth,
 		stroke: this.getColor(),
 		lineCap: 'round',
@@ -78,17 +77,17 @@ KineticLine.prototype.getPoints = function(){
 };
 
 KineticLine.flatternPoints = function(points){
-	var linePoints = new Array();
-	for(var index in points){
-		linePoints.push(points[index].x);
-		linePoints.push(points[index].y);
+	var linePoints = [];
+	for(var i = 0; i < points.length; i++){
+		linePoints.push(points[i].x);
+		linePoints.push(points[i].y);
 	}
 	return linePoints;
 };
 
 KineticLine.prototype.enableEventHandling = function(){
 	var self = this;
-	this.getKineticShape().on(Event.Kinetic.EVENTS.join(" "), function(event){
+	this.getKineticShape().on(Event.Kinetic.EVENTS.join(' '), function(event){
 		event.targetItem = self;
 	});
 };

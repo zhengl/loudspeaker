@@ -2,7 +2,7 @@ define("NoteDragger", ['EventHandleable', 'NoteDraggerEventHandler', 'Event', 'P
 	
 
 function NoteDragger(){
-	this.zoomPercentage = 1;	
+	this.zoomPercentage = 1;
 }
 
 NoteDragger.prototype = new EventHandleable(new NoteDraggerEventHandler());
@@ -13,7 +13,7 @@ NoteDragger.prototype.setDroppable = function(item) {
 };
 
 NoteDragger.prototype.setZoomPercentage = function(percentage) {
-	this.zoomPercentage = percentage
+	this.zoomPercentage = percentage;
 };
 
 NoteDragger.prototype.startDragging = function(note, relativePosition) {
@@ -30,15 +30,15 @@ NoteDragger.prototype.startDragging = function(note, relativePosition) {
 	var self = this;
 	document.body.onmousemove = function(event){
 		self.eventBus.publish(new Event(Event.Note.MOVE_TO, { position: new Point(event.clientX, event.clientY) }));
-	}
+	};
 
-	document.body.onmouseup = function(event){
+	document.body.onmouseup = function(){
 		self.eventBus.publish(new Event(Event.Note.FINISH_DRAGGING));
-	}	
+	};
 };
 
 NoteDragger.prototype.dragTo = function(point) {
-	if(undefined != this.draggingNote) {
+	if(undefined !== this.draggingNote) {
 		var note = this.draggingNote;
 		var newLeft = point.x * this.zoomPercentage - note.relativePosition.x;
 		var newTop = point.y * this.zoomPercentage - note.relativePosition.y;
@@ -54,7 +54,7 @@ NoteDragger.prototype.finishDragging = function() {
 
 		var droppableRect = this.droppable.getElement().getBoundingClientRect();
 		var newLeft = this.draggingNote.getPosition().x - (droppableRect.left + document.body.scrollLeft) * this.zoomPercentage;
-		var newTop = this.draggingNote.getPosition().y - (droppableRect.top + document.body.scrollTop) * this.zoomPercentage;	
+		var newTop = this.draggingNote.getPosition().y - (droppableRect.top + document.body.scrollTop) * this.zoomPercentage;
 		this.droppable.addItem(this.draggingNote);
 		this.draggingNote.moveTo(new Point(newLeft, newTop));
 	} else {
@@ -69,7 +69,7 @@ NoteDragger.prototype.finishDragging = function() {
 };
 
 NoteDragger.prototype.isDroppedInDroppable = function() {
-	if(undefined == this.droppable) {
+	if(undefined === this.droppable) {
 		return false;
 	}
 
@@ -77,8 +77,8 @@ NoteDragger.prototype.isDroppedInDroppable = function() {
 	var draggableRelativePosition = this.draggingNote.getPosition();
 	var draggableAbsolutePosition = { x: draggableRelativePosition.x / this.zoomPercentage, y: draggableRelativePosition.y / this.zoomPercentage };
 
-	return draggableAbsolutePosition.x > droppableRect.left + document.body.scrollLeft && draggableAbsolutePosition.x < droppableRect.right + document.body.scrollLeft
-		&& draggableAbsolutePosition.y > droppableRect.top + document.body.scrollTop && draggableAbsolutePosition.y < droppableRect.bottom + document.body.scrollTop;
+	return draggableAbsolutePosition.x > droppableRect.left + document.body.scrollLeft && draggableAbsolutePosition.x < droppableRect.right + document.body.scrollLeft &&
+	draggableAbsolutePosition.y > droppableRect.top + document.body.scrollTop && draggableAbsolutePosition.y < droppableRect.bottom + document.body.scrollTop;
 };
 
 return NoteDragger;

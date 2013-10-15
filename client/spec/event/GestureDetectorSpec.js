@@ -29,7 +29,7 @@ describe("GestureDetector", function(){
 		detector.detect(createEvent(Event.Kinetic.MOUSE_DOWN));
 
 		expect(action1).toHaveBeenCalled();
-		expect(action2).toHaveBeenCalled(); 		
+		expect(action2).toHaveBeenCalled(); 
 	});
 
 	it("reacts to cyclic step", function(){

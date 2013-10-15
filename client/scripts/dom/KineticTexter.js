@@ -7,11 +7,11 @@ function KineticTexter(palette, textInput){
 KineticTexter.prototype = new Texter();
 KineticTexter.constructor = KineticTexter;
 
-KineticTexter.prototype.finishTexting = function(position) {
+KineticTexter.prototype.finishTexting = function() {
 	this.getTextInput().hide();
 	var item = this.getTextInput().flush();
 
-	item.enableEventHandling();	
+	item.enableEventHandling();
 };
 
 return KineticTexter;

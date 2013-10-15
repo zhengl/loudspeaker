@@ -48,7 +48,7 @@ Item.prototype.getParent = function() {
 };
 
 Item.prototype.hasParent = function() {
-	return undefined != this.parent;
+	return undefined !== this.parent;
 };
 
 return Item;

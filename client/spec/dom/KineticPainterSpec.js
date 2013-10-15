@@ -27,7 +27,7 @@ describe("KineticPainter", function(){
 	it("should have no item after drafting a line", function(){
 		var line = createLine(0, 0, 10, 10);
 		var item = painter.draft(line);
-		expect(item instanceof KineticLine).toBeTruthy()
+		expect(item instanceof KineticLine).toBeTruthy();
 	});
 
 	it("should DRAW a line with steps", function(){

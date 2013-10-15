@@ -18,14 +18,14 @@ function MovingGestureDetector(eventBus, monitor){
 MovingGestureDetector.prototype = new GestureDetector();
 MovingGestureDetector.prototype.constructor = MovingGestureDetector;
 
-MOVING_INTERVAL = 500;
+var MOVING_INTERVAL = 500;
 
 MovingGestureDetector.prototype.startMoving = function(event) {
 	var currentPosition = event.targetItem.getPosition() || new Point(0, 0);
 	var data = {
 		item: event.targetItem,
 		position: new Point(event.canvasX - currentPosition.x, event.canvasY - currentPosition.y),
-	}
+	};
 	var self = this;
 	this.movingTimerId = window.setTimeout(function(){
 		self.isMoving = true;

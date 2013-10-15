@@ -26,7 +26,7 @@ Mover.prototype.startMoving = function(item, relativePosition) {
 };
 
 Mover.prototype.isInMovables = function(item) {
-	if (undefined == this.movables) {
+	if (undefined === this.movables) {
 		return true;
 	}
 
@@ -39,7 +39,7 @@ Mover.prototype.isInMovables = function(item) {
 };
 
 Mover.prototype.finishMoving = function() {
-	if(undefined != this.movingItem) {
+	if(undefined !== this.movingItem) {
 		if (this.rubbishBin && this.rubbishBin.isOpen) {
 			this.movingItem.remove();
 			this.rubbishBin.close();
@@ -53,7 +53,7 @@ Mover.prototype.finishMoving = function() {
 };
 
 Mover.prototype.moveTo = function(point){
-	if(undefined != this.movingItem) {
+	if(undefined !== this.movingItem) {
 		var item = this.movingItem;
 		var newX = point.x - (item.relativePosition ? item.relativePosition.x : 0);
 		var newY = point.y - (item.relativePosition ? item.relativePosition.y : 0);

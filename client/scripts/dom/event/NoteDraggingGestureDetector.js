@@ -18,7 +18,7 @@ function NoteDraggingGestureDetector(eventBus, monitor){
 NoteDraggingGestureDetector.prototype = new GestureDetector();
 NoteDraggingGestureDetector.prototype.constructor = NoteDraggingGestureDetector;
 
-DRAGGING_INTERVAL = 500;
+var DRAGGING_INTERVAL = 500;
 
 NoteDraggingGestureDetector.prototype.startDragging = function(event) {
 	if (event.targetItem instanceof Note) {
@@ -42,7 +42,7 @@ NoteDraggingGestureDetector.prototype.moveTo = function(event) {
 	}
 };
 
-NoteDraggingGestureDetector.prototype.finishDragging = function(event) {
+NoteDraggingGestureDetector.prototype.finishDragging = function() {
 	if(this.isMoving) {
 		this.eventBus.publish(new Event(Event.Note.FINISH_DRAGGING));
 		this.inform(this);

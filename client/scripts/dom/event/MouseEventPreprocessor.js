@@ -17,9 +17,9 @@ MouseEventPreprocessor.prototype.process = function(event) {
 	var canvasY = offsetY * this.zoomPercentage;
 	
 	return this.createEvent(
-			event.type, 
-			canvasX, 
-			canvasY, 
+			event.type,
+			canvasX,
+			canvasY,
 			event.targetItem,
 			event.offsetX,
 			event.offsetY
@@ -53,7 +53,7 @@ MouseEventPreprocessor.prototype.createEvent = function(type, canvasX, canvasY, 
 	event.canvasY = canvasY;
 	event.targetItem = targetItem;
 	return event;
-}	
+};
 
 return MouseEventPreprocessor;
 

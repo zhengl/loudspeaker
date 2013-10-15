@@ -16,7 +16,7 @@ SelectingGestureDetector.prototype = new GestureDetector();
 SelectingGestureDetector.prototype.constructor = SelectingGestureDetector;
 
 SelectingGestureDetector.prototype.select = function(event) {
-	if (undefined != event.targetItem) {
+	if (undefined !== event.targetItem) {
 		event.targetItem.select();
 		this.inform();
 	} else {
@@ -25,7 +25,7 @@ SelectingGestureDetector.prototype.select = function(event) {
 };
 
 SelectingGestureDetector.prototype.unselect = function(event) {
-	if (undefined != event.targetItem) {
+	if (undefined !== event.targetItem) {
 		event.targetItem.unselect();
 		this.inform();
 	}

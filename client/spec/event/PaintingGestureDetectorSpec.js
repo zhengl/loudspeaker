@@ -11,7 +11,7 @@ describe("PaintingGestureDetector", function(){
 		eventBus.publish = jasmine.createSpy();
 		detector = new PaintingGestureDetector(eventBus);
 		page = new Page();
-		page.setContext(new Context);
+		page.setContext(new Context());
 	});
 
 	it("triggers START_DRAWING after MOUSE_DOWN, MOVE_TO and MOVE_TO", function(){

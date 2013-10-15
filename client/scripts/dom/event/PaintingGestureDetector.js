@@ -30,10 +30,10 @@ PaintingGestureDetector.prototype.constructor = PaintingGestureDetector;
 PaintingGestureDetector.prototype.readyToDraw = function(event) {
 	if (!event.targetItem.context) {
 		this.rewind();
-	} 
+	}
 };
 
-PaintingGestureDetector.prototype.stopDrawing = function(event) {
+PaintingGestureDetector.prototype.stopDrawing = function() {
 	this.rewind();
 };
 

@@ -80,21 +80,21 @@ KineticContext.prototype.addEventListeners = function(events){
 	this.layer.add(this.eventCatcher);
 
 	this.eventCatcher.moveToBottom();
-	this.eventCatcher.on(events.join(" "), function(){});
+	this.eventCatcher.on(events.join(' '), function(){});
 	this.itemGroup.add(this.eventCatcher);
 	var self = this;
-	this.itemGroup.on(events.join(" "), function(event){
-		if (undefined == event.targetItem) {
+	this.itemGroup.on(events.join(' '), function(event){
+		if (undefined === event.targetItem) {
 			event.targetItem = self.getPage();
 		}
 		self.interpreter.interpret(event);
-	});	
+	});
 	this.layer.draw();
 };
 
 KineticContext.prototype.removeEventListeners = function(eventBus, events){
-	this.eventCatcher.off(events.join(" "));
-	this.itemGroup.off(events.join(" "));
+	this.eventCatcher.off(events.join(' '));
+	this.itemGroup.off(events.join(' '));
 	this.layer.draw();
 };
 

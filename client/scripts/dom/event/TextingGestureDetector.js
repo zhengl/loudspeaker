@@ -4,7 +4,6 @@ define('TextingGestureDetector', ['GestureDetector', 'GestureStep', 'Event', 'Po
 function TextingGestureDetector(eventBus, monitor){
 	this.eventBus = eventBus;
 	this.click = 0;
-	this.doubleClickTimerId;
 
 	var readyToTextStep = new GestureStep(Event.Kinetic.MOUSE_DOWN, this.readyToText);
 	var startTextingStep = new GestureStep(Event.Kinetic.MOUSE_DOWN, this.startTexting);
@@ -14,8 +13,8 @@ function TextingGestureDetector(eventBus, monitor){
 	GestureDetector.call(this, readyToTextStep, monitor);
 }
 
-DOUBLE_CLICK = 2;
-DOUBLE_CLICK_INTERVAL = 200;
+var DOUBLE_CLICK = 2;
+var DOUBLE_CLICK_INTERVAL = 200;
 
 TextingGestureDetector.prototype = new GestureDetector();
 TextingGestureDetector.prototype.constructor = TextingGestureDetector;

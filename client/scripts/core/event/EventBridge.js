@@ -21,10 +21,10 @@ EventBridge.prototype.setTransformer = function(transformer) {
 
 EventBridge.prototype.notify = function(event) {
 
-	if(undefined == this.filter) {
+	if(undefined === this.filter) {
 		this.to.publish(event);
 	} else if (this.filter.accept(event)) {
-		if(undefined != this.transformer) {
+		if(undefined !== this.transformer) {
 			event = this.transformer.transform(event);
 		}
 		this.to.publish(event);

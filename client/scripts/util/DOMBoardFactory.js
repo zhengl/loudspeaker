@@ -1,10 +1,10 @@
-define("DOMBoardFactory", ['Page', 'KineticContext', 'KineticPainter', 'KineticTexter', 'KineticTextInput', 'Mover', 'DOMRubbishBin', 'EventBus', 'Line', 'Text', 'Point', 'Note', 'Board', 'MouseEventInterpreter', 'PaintingGestureDetector', 'TextingGestureDetector', 'MovingGestureDetector'], function(Page, KineticContext, KineticPainter, KineticTexter, KineticTextInput, Mover, DOMRubbishBin, EventBus, Line, Text, Point, Note, Board, MouseEventInterpreter, PaintingGestureDetector, TextingGestureDetector, MovingGestureDetector){
+define('DOMBoardFactory', ['Page', 'KineticContext', 'KineticPainter', 'KineticTexter', 'KineticTextInput', 'Mover', 'DOMRubbishBin', 'EventBus', 'Line', 'Text', 'Point', 'Note', 'Board', 'MouseEventInterpreter', 'PaintingGestureDetector', 'TextingGestureDetector', 'MovingGestureDetector'], function(Page, KineticContext, KineticPainter, KineticTexter, KineticTextInput, Mover, DOMRubbishBin, EventBus, Line, Text, Point, Note, Board, MouseEventInterpreter, PaintingGestureDetector, TextingGestureDetector, MovingGestureDetector){
 
 function DOMBoardFactory(){
 
 }
 
-DOMBoardFactory.create = function(pageElement, pageWidth, pageHeight, palette, rubbishbinId, rubbishbinWidth, rubbishbinHeight, eventPreprocessor, globalEventBus){
+DOMBoardFactory.create = function(pageElement, pageWidth, pageHeight, palette, rubbishbinId, rubbishbinWidth, rubbishbinHeight, eventPreprocessor){
 	var board = new Board();
 	board.setPosition(new Point(0, 0));
 
@@ -46,7 +46,7 @@ DOMBoardFactory.create = function(pageElement, pageWidth, pageHeight, palette, r
 	mover.setRubbishBin(rubbishbin);
 
 	return board;
-}
+};
 
 return DOMBoardFactory;
 	

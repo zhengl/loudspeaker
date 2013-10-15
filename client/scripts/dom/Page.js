@@ -8,7 +8,7 @@ Page.prototype = new Item();
 Page.prototype.constructor = Page;
 
 Page.prototype.setZoomPercentage = function(percentage) {
-	this.zoomPercentage = percentage
+	this.zoomPercentage = percentage;
 };
 
 Page.prototype.setElement = function(element) {

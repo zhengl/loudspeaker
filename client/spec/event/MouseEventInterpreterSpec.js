@@ -9,7 +9,7 @@ describe('MouseEventInterpreter', function(){
 		eventBus = new EventBus();
 		eventBus.publish = jasmine.createSpy();
 		page = new Page();
-		page.setContext(new Context())
+		page.setContext(new Context());
 		page.setPosition({x: 0, y: 0});
 		interpreter = new MouseEventInterpreter();
 		interpreter.addDetector(new PaintingGestureDetector(eventBus, interpreter));

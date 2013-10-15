@@ -29,11 +29,11 @@ KineticPainter.prototype.startDraft = function(point){
 };
 
 KineticPainter.prototype.endDraft = function(point){
-	this.draftTo(point);	
+	this.draftTo(point);
 	this.context.addItem(this.draftItem);
 	this.context.clearDraftItems();
 
-	this.draftItem.enableEventHandling();	
+	this.draftItem.enableEventHandling();
 };
 
 return KineticPainter;

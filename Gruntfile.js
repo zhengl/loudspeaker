@@ -1,7 +1,7 @@
 module.exports = function(grunt){
 	var dependencies = [];
-	grunt.file.recurse("client/scripts", function(abspath, rootdir, subdir, filename){
-		var basename = filename.replace(".js", "");
+	grunt.file.recurse('client/scripts', function(abspath, rootdir, subdir, filename){
+		var basename = filename.replace('.js', '');
 		if (subdir){
 			dependencies.push(basename + ': "' + subdir + '/' + basename + '",');
 		} else {
@@ -15,13 +15,17 @@ module.exports = function(grunt){
 		requirejs: {
 			dev: {
 				options: {
-					baseUrl: "client/scripts",
-					mainConfigFile: "client/config.js",
-					out: "client/main.min.js",
-					optimize: "none",
-					name: "../main"
+					baseUrl: 'client/scripts',
+					mainConfigFile: 'client/config.js',
+					out: 'client/main.min.js',
+					optimize: 'none',
+					name: '../main'
 				}
 			}
+		},
+
+		jshint: {
+			files: ['Gruntfile.js', 'client/scripts/**/*.js', 'client/spec/**/*.js'],
 		},
 
 		jasmine: {
@@ -32,12 +36,12 @@ module.exports = function(grunt){
 				keepRunner: true,
 				template: require('grunt-template-jasmine-requirejs'),
 				templateOptions: {
-         			requireConfigFile: 'client/config.js',
-         			requireConfig: {
-         				baseUrl: "client/scripts",
-         				urlArgs: "bust=" + Math.random()
-         			}
-        		}
+				requireConfigFile: 'client/config.js',
+				requireConfig: {
+						baseUrl: 'client/scripts',
+						urlArgs: 'bust=' + Math.random()
+					}
+				}
 			}
 		},
 
@@ -48,7 +52,7 @@ module.exports = function(grunt){
 		less: {
             dev: {
                 files: {
-                    "./client/styles/main.css": "./client/assets/less/main.less",
+                    './client/styles/main.css': './client/assets/less/main.less',
                 }
             }
         },
@@ -72,24 +76,24 @@ module.exports = function(grunt){
 			dev: {
 				files: [
 					{
-						src: "client/templates/index.html.tmpl",
-						dest: "client/index.html",
+						src: 'client/templates/index.html.tmpl',
+						dest: 'client/index.html',
 						data: {
-							main: "main",
+							main: 'main',
 							debug: false
 						}
 					},
 					{
-						src: "client/templates/index.html.tmpl",
-						dest: "client/debug.html",
+						src: 'client/templates/index.html.tmpl',
+						dest: 'client/debug.html',
 						data: {
-							main: "debug",
+							main: 'debug',
 							debug: true
 						}
 					},					
 					{
-						src: "client/templates/config.js.tmpl",
-						dest: "client/config.js",
+						src: 'client/templates/config.js.tmpl',
+						dest: 'client/config.js',
 						data: {
 							paths: dependencies
 						}
@@ -98,7 +102,7 @@ module.exports = function(grunt){
 			},
 		},
 
-        clean: ["./client/styles", "./client/index.html", "./client/main.min.js", "./client/config.js"]
+        clean: ['./client/styles', './client/index.html', './client/main.min.js', './client/config.js']
 	});
 
 	grunt.loadNpmTasks('grunt-contrib-jasmine');
@@ -107,14 +111,15 @@ module.exports = function(grunt){
 	grunt.loadNpmTasks('grunt-contrib-clean');
 	grunt.loadNpmTasks('grunt-contrib-requirejs');
 	grunt.loadNpmTasks('grunt-contrib-watch');
+	grunt.loadNpmTasks('grunt-contrib-jshint');
 
-	grunt.registerTask('compile', ['template', 'less'])
-	grunt.registerTask('test', ['template', 'jasmine', 'jasmine_node']);
+	grunt.registerTask('compile', ['template', 'less']);
+	grunt.registerTask('test', ['template', 'jasmine', 'jasmine_node', 'jshint']);
 	grunt.registerTask('default', ['compile', 'test']);
-	grunt.registerMultiTask('template', 'aaa', function(){
+	grunt.registerMultiTask('template', '', function(){
 		var files = this.data.files;
 		for(var i = 0; i < files.length; i++) {
-			grunt.log.writeln("Generate " + files[i].dest);
+			grunt.log.writeln('Generate ' + files[i].dest);
 			var template = grunt.file.read(files[i].src);
 			grunt.file.write(files[i].dest, grunt.template.process(template, {data: files[i].data}));
 		}

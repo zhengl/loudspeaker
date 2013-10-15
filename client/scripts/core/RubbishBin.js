@@ -10,8 +10,8 @@ RubbishBin.prototype = new EventHandleable(new RubbishBinEventHandler());
 RubbishBin.prototype.constructor = RubbishBin;
 
 RubbishBin.prototype.isInside = function(point) {
-	return point.x > this.leftTop.x && point.x < this.rightBottom.x
-	&& point.y > this.leftTop.y && point.y < this.rightBottom.y
+	return point.x > this.leftTop.x && point.x < this.rightBottom.x &&
+	point.y > this.leftTop.y && point.y < this.rightBottom.y;
 };
 
 RubbishBin.prototype.open = function() {

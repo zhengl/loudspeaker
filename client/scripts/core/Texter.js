@@ -11,7 +11,7 @@ Texter.prototype.constructor = Texter;
 
 Texter.prototype.getContext = function(){
 	return this.textInput.getContext();
-}
+};
 
 Texter.prototype.startTexting = function(position) {
 	this.textInput.show();
@@ -19,7 +19,7 @@ Texter.prototype.startTexting = function(position) {
 	this.textInput.setPosition(position);
 };
 
-Texter.prototype.finishTexting = function(position) {
+Texter.prototype.finishTexting = function() {
 	this.textInput.hide();
 	this.textInput.flush();
 };
@@ -45,7 +45,7 @@ Texter.prototype.draft = function(text){
 	this.textInput.hide();
 };
 
-Texter.prototype.clear = function(text){
+Texter.prototype.clear = function(){
 	this.textInput.hide();
 };
 

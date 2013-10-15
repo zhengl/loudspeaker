@@ -24,7 +24,7 @@ describe("TextingGestureDetector", function(){
 	});
 
 	it("triggers nothing after MOUSE_DOWN, MOVE_TO and MOUSE_DOWN at item", function(){
-		var line = new Line()
+		var line = new Line();
 		detector.detect(createEvent(Event.Kinetic.MOUSE_DOWN, 10, 10, line));
 		jasmine.Clock.tick(100);
 		detector.detect(createEvent(Event.Kinetic.MOUSE_DOWN, 10, 10, line));

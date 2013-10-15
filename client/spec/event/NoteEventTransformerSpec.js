@@ -19,7 +19,7 @@ describe('NoteEventTransformer', function(){
 
 		var noteElement = document.createElement('div');
 		note.setElement(noteElement);
-		note.moveTo(new Point(10, 10))
+		note.moveTo(new Point(10, 10));
 
 		document.body.appendChild(boardElement);
 
