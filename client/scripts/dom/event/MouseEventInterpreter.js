@@ -32,7 +32,6 @@ MouseEvextInterpreter.prototype.interpret = function(event){
 };
 
 MouseEvextInterpreter.prototype.inform = function(detector) {
-	console.log(detector)
 	for (var i = 0; i < this.detectors.length; i++) {
 		if (detector !== this.detectors[i]) {
 			this.detectors[i].rewind();

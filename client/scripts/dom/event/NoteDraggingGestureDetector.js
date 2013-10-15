@@ -28,7 +28,6 @@ NoteDraggingGestureDetector.prototype.startDragging = function(event) {
 			self.isMoving = true;
 			self.inform(self);
 		}, DRAGGING_INTERVAL);
-		console.log("dragging: " + this.draggingTimerId)		
 	}  else {
 		this.rewind();
 	}
@@ -53,7 +52,6 @@ NoteDraggingGestureDetector.prototype.finishDragging = function(event) {
 };
 
 NoteDraggingGestureDetector.prototype.rewind = function() {
-	console.log("rewind dragging: " + this.draggingTimerId)
 	this.currentCandidateSteps = this.rootSteps;
 	window.clearTimeout(this.draggingTimerId);
 };

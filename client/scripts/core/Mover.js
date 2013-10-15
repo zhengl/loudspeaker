@@ -48,7 +48,7 @@ Mover.prototype.finishMoving = function() {
 		}
 			
 		this.context.clearDraftItems();
-		delete this.movingItem.relativePosition;
+		delete this.movingItem;
 	}
 };
 

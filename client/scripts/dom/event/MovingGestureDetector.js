@@ -32,7 +32,6 @@ MovingGestureDetector.prototype.startMoving = function(event) {
 		self.eventBus.publish(new Event(Event.Page.START_MOVING, data));
 		self.inform(self);
 	}, MOVING_INTERVAL);
-	console.log("moving: " + this.movingTimerId)
 };
 
 MovingGestureDetector.prototype.moveTo = function(event) {
@@ -51,7 +50,6 @@ MovingGestureDetector.prototype.finishMoving = function(event) {
 };
 
 MovingGestureDetector.prototype.rewind = function() {
-	console.log("rewind moving: " + this.movingTimerId)
 	window.clearTimeout(this.movingTimerId);
 	this.currentCandidateSteps = this.rootSteps;
 };
