@@ -41,6 +41,7 @@ KineticTextInput.prototype.createDOMElement = function() {
     element.style.position = 'absolute';
     element.style.left = '-1000px';
 	element.style.top = '0px';
+	element.style.display = 'hidden';
 	return element;
 };
 

@@ -14,17 +14,15 @@ require.config({
 		
 			EventFilter: "core/event/EventFilter",
 		
-			EventHandleable: "core/event/EventHandleable",
+			EventHandleable: "core/event/handler/EventHandleable",
 		
-			MoverEventHandler: "core/event/MoverEventHandler",
+			MoverEventHandler: "core/event/handler/MoverEventHandler",
 		
-			PainterEventHandler: "core/event/PainterEventHandler",
+			PainterEventHandler: "core/event/handler/PainterEventHandler",
 		
-			PaletteEventHandler: "core/event/PaletteEventHandler",
+			RubbishBinEventHandler: "core/event/handler/RubbishBinEventHandler",
 		
-			RubbishBinEventHandler: "core/event/RubbishBinEventHandler",
-		
-			TexterEventHandler: "core/event/TexterEventHandler",
+			TexterEventHandler: "core/event/handler/TexterEventHandler",
 		
 			Item: "core/Item",
 		
@@ -52,33 +50,33 @@ require.config({
 		
 			DOMRubbishBin: "dom/DOMRubbishBin",
 		
-			GestureDetector: "dom/event/GestureDetector",
+			GestureDetector: "dom/event/gesture/GestureDetector",
 		
-			GestureStep: "dom/event/GestureStep",
+			GestureStep: "dom/event/gesture/GestureStep",
 		
-			KineticEvent: "dom/event/KineticEvent",
+			MovingGestureDetector: "dom/event/gesture/MovingGestureDetector",
+		
+			NoteDraggingGestureDetector: "dom/event/gesture/NoteDraggingGestureDetector",
+		
+			PaintingGestureDetector: "dom/event/gesture/PaintingGestureDetector",
+		
+			TextingGestureDetector: "dom/event/gesture/TextingGestureDetector",
+		
+			NoteDraggerEventHandler: "dom/event/handler/NoteDraggerEventHandler",
+		
+			NoteSupplierEventHandler: "dom/event/handler/NoteSupplierEventHandler",
+		
+			PanelTriggerEventHandler: "dom/event/handler/PanelTriggerEventHandler",
+		
+			MouseEvent: "dom/event/MouseEvent",
 		
 			MouseEventInterpreter: "dom/event/MouseEventInterpreter",
 		
 			MouseEventPreprocessor: "dom/event/MouseEventPreprocessor",
 		
-			MovingGestureDetector: "dom/event/MovingGestureDetector",
-		
-			NoteDraggerEventHandler: "dom/event/NoteDraggerEventHandler",
-		
-			NoteDraggingGestureDetector: "dom/event/NoteDraggingGestureDetector",
+			MovingEventFilter: "dom/event/MovingEventFilter",
 		
 			NoteEventTransformer: "dom/event/NoteEventTransformer",
-		
-			NoteSupplierEventHandler: "dom/event/NoteSupplierEventHandler",
-		
-			PaintingGestureDetector: "dom/event/PaintingGestureDetector",
-		
-			PanelTriggerEventHandler: "dom/event/PanelTriggerEventHandler",
-		
-			SelectingGestureDetector: "dom/event/SelectingGestureDetector",
-		
-			TextingGestureDetector: "dom/event/TextingGestureDetector",
 		
 			KineticContext: "dom/KineticContext",
 		

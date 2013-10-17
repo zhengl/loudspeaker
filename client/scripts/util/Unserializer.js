@@ -1,4 +1,4 @@
-define('Unserializer', ['Line', 'Text'], function(Line, Text){
+define('Unserializer', ['Line', 'Text', 'Note'], function(Line, Text, Note){
 
 
 function Unserializer(){
@@ -16,6 +16,9 @@ Unserializer.prototype.process = function(context, json) {
 			break;
 			case 'text':
 				item = Text.unserialize(items[i]);
+			break;
+			case 'note':
+				item = Note.unserialize(items[i]);
 			break;
 		}
 		context.addItem(item);

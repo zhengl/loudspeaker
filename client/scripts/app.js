@@ -104,7 +104,7 @@ define('app', ['DOMBoardFactory', 'DOMNoteFactory', 'MouseEventPreprocessor', 'D
             document.body.appendChild(noteRubbishbinElement);
 
             var paletteElement = document.querySelector('.palette');
-            var palette = new DOMPalette(paletteElement);
+            var palette = new DOMPalette(paletteElement, 'palette-color');
             
             globalEventBus = new EventBus();
 

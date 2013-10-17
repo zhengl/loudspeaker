@@ -6,7 +6,7 @@ describe("Painter", function(){
 	var eventBus;
 
 	beforeEach(function(){
-		painter = new Painter(new Context(), new Palette());
+		painter = new Painter(Line, new Context(), new Palette());
 	});
 
 	it("should return a Line after drawing a line", function() {
@@ -54,11 +54,6 @@ describe("Painter", function(){
 		expectNoDraftItem(painter);
 		expectOneItem(painter);	
 		expect(line.getColor()).toEqual('red');
-	});
-
-	it("shows pallete", function(){
-		painter.showPalette(new Point(20, 20));
-		expect(painter.getPalette().getPosition()).toEqual({x: 20, y: 20});
 	});
 
 	describe('with event handling', function(){

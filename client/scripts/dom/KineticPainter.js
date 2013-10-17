@@ -1,31 +1,22 @@
-define('KineticPainter', ['Painter', 'KineticLine', 'Context'], function(Painter, KineticLine, Context){
+define('KineticPainter', ['Painter'], function(Painter){
 
-function KineticPainter(context, palette){
-	Painter.call(this, context, palette);
+function KineticPainter(lineClass, context, palette){	
+	Painter.call(this, lineClass, context, palette);
 }
 
 KineticPainter.prototype = new Painter();
 KineticPainter.constructor = KineticPainter;
 
 KineticPainter.prototype.draw = function(item) {
-	var kineticItem = new KineticLine(item.points);
+	var kineticItem = new this.lineClass(item.points);
 	kineticItem.setColor(item.getColor());
 	this.context.addItem(kineticItem);
-	return kineticItem;
 };
 
 KineticPainter.prototype.draft = function(item) {
-	var kineticItem = new KineticLine(item.points);
+	var kineticItem = new this.lineClass(item.points);
 	kineticItem.setColor(item.getColor());
 	this.context.addDraftItem(kineticItem);
-	return kineticItem;
-};
-
-KineticPainter.prototype.startDraft = function(point){
-	this.draftItem = new KineticLine();
-	this.draftItem.update(point);
-	this.draftItem.setColor(this.palette.getColor());
-	this.context.addDraftItem(this.draftItem);
 };
 
 KineticPainter.prototype.endDraft = function(point){

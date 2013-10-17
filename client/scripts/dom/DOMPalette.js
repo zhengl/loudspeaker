@@ -1,10 +1,10 @@
 define('DOMPalette', ['Palette'], function(Palette){
 
 
-function DOMPalette(element) {
+function DOMPalette(element, cls) {
 	this.element = element;
 	
-	var colors = document.querySelectorAll('.palette-color');
+	var colors = document.querySelectorAll('.' + cls);
 	
 	var self = this;
 	var setBackgroundColorAsColor = function(){

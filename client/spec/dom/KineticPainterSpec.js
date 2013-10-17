@@ -15,18 +15,20 @@ describe("KineticPainter", function(){
 
 		body.appendChild(board);
 		body.appendChild(palette);
-		painter = new KineticPainter(new KineticContext('board', 50, 50), new DOMPalette('palette'));
+		painter = new KineticPainter(KineticLine, new KineticContext('board', 50, 50), new DOMPalette('palette'));
 	});
 
 	it("should return a Line after drawing a line", function() {
 		var line = createLine(0, 0, 10, 10);
-		var item = painter.draw(line);
+		painter.draw(line);
+		var item = painter.getContext().getItems()[0];
 		expect(item instanceof KineticLine).toBeTruthy();
 	});
 
 	it("should have no item after drafting a line", function(){
 		var line = createLine(0, 0, 10, 10);
-		var item = painter.draft(line);
+		painter.draft(line);
+		var item = painter.getContext().getDraftItems()[0];
 		expect(item instanceof KineticLine).toBeTruthy();
 	});
 

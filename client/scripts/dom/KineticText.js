@@ -1,4 +1,4 @@
-define('KineticText', ['Kinetic', 'Text', 'Event'], function(Kinetic, Text, Event){
+define('KineticText', ['Kinetic', 'Text', 'MouseEvent'], function(Kinetic, Text, Event){
 
 
 function KineticText(text){
@@ -54,7 +54,7 @@ KineticText.prototype.undraftize = function(){
 
 KineticText.prototype.enableEventHandling = function(){
 	var self = this;
-	this.getKineticShape().on(Event.Kinetic.EVENTS.join(' '), function(event){
+	this.getKineticShape().on(Event.Mouse.EVENTS.join(' '), function(event){
 		event.targetItem = self;
 	});
 };

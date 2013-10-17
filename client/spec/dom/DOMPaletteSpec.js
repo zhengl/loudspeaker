@@ -23,7 +23,7 @@ describe('DOMPalette', function(){
 
 		body.appendChild(paletteElement);
 
-		palette = new DOMPalette(palette);
+		palette = new DOMPalette(palette, 'palette-color');
 		var event = createEvent('click');
 		fireEvent(paletteRed, 'click', event);
 

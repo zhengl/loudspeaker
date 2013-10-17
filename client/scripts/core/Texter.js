@@ -45,10 +45,6 @@ Texter.prototype.draft = function(text){
 	this.textInput.hide();
 };
 
-Texter.prototype.clear = function(){
-	this.textInput.hide();
-};
-
 return Texter;
 
 

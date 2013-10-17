@@ -10,13 +10,11 @@ EventBus.prototype.addListener = function(listener){
 };
 
 EventBus.prototype.removeListener = function(listener){
-	var resultListeners = [];
 	for(var i = 0; i < this.listeners.length; i++){
-		if(listener != this.listeners[i]) {
-			resultListeners.push(this.listeners[i]);
+		if(listener === this.listeners[i]) {
+			this.listeners[i].splice(i, 1);
 		}
 	}
-	this.listeners = resultListeners;
 };
 
 EventBus.prototype.publish = function(event){

@@ -23,6 +23,21 @@ Note.prototype.remove = function() {
 	}
 };
 
+Note.prototype.serialize = function() {
+	return {
+		uuid: this.getUUID(),
+		type: 'note',
+		position: this.position,
+	};
+};
+
+Note.unserialize = function(json){
+	var note = new Note();
+	note.setUUID(json.uuid);
+	note.setPosition(json.position);
+	return note;
+};
+
 
 return Note;
 

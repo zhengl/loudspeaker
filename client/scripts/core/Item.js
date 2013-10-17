@@ -25,14 +25,6 @@ Item.prototype.moveTo = function(newPosition){
 	this.position = newPosition;
 };
 
-Item.prototype.select = function(){
-	this.isSelected = true;
-};
-
-Item.prototype.unselect = function(){
-	this.isSelected = false;
-};
-
 Item.prototype.remove = function() {
 	if(this.parent) {
 		this.parent.removeItem(this);
@@ -45,10 +37,6 @@ Item.prototype.setParent = function(parent) {
 
 Item.prototype.getParent = function() {
 	return this.parent;
-};
-
-Item.prototype.hasParent = function() {
-	return undefined !== this.parent;
 };
 
 return Item;

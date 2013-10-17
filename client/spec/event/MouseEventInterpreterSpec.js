@@ -20,23 +20,23 @@ describe('MouseEventInterpreter', function(){
 	});
 
 	it("triggers START_DRAWING after MOUSE_DOWN and MOVE_TO", function(){
-		interpreter.interpret(createEvent(Event.Kinetic.MOUSE_DOWN, 10, 10, page));
-		interpreter.interpret(createEvent(Event.Kinetic.MOVE_TO, 20, 20, page));
-		interpreter.interpret(createEvent(Event.Kinetic.MOVE_TO, 20, 20, page));
+		interpreter.interpret(createEvent(Event.Mouse.MOUSE_DOWN, 10, 10, page));
+		interpreter.interpret(createEvent(Event.Mouse.MOVE_TO, 20, 20, page));
+		interpreter.interpret(createEvent(Event.Mouse.MOVE_TO, 20, 20, page));
 
 		expect(eventBus.publish).toHaveBeenCalledWith(new Event(Event.Page.START_DRAWING, { position: {x: 20, y: 20} }));
 	});
 
 	it("triggers START_TEXTING after MOUSE_DOWN and MOUSE_DOWN", function(){
-		interpreter.interpret(createEvent(Event.Kinetic.MOUSE_DOWN, 10, 10, page));
-		interpreter.interpret(createEvent(Event.Kinetic.MOUSE_DOWN, 10, 10, page));
+		interpreter.interpret(createEvent(Event.Mouse.MOUSE_DOWN, 10, 10, page));
+		interpreter.interpret(createEvent(Event.Mouse.MOUSE_DOWN, 10, 10, page));
 
 		expect(eventBus.publish).toHaveBeenCalledWith(new Event(Event.Page.START_TEXTING, { position: {x: 10, y: 10} }));
 	});
 
 	it("triggers START_DRAGGING after long press", function(){
 		var note = new Note();
-		interpreter.interpret(createEvent(Event.Kinetic.MOUSE_DOWN, 10, 10, note));
+		interpreter.interpret(createEvent(Event.Mouse.MOUSE_DOWN, 10, 10, note));
 		jasmine.Clock.tick(501);
 
 		expect(eventBus.publish).toHaveBeenCalledWith(new Event(Event.Note.START_DRAGGING, { item: note, position: {x: 10, y: 10} }));

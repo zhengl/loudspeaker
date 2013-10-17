@@ -5,10 +5,6 @@ function Event(name, data){
 	this.data = data;
 }
 
-Event.prototype.stringify = function() {
-	return this.name;
-};
-
 Event.Page = {
 	START_DRAWING: 'PAGE.START_DRAWING',
 	STOP_DRAWING: 'PAGE.STOP_DRAWING',

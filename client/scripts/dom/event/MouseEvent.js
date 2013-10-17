@@ -1,6 +1,6 @@
-define('KineticEvent', ['Event'], function(Event){
+define('MouseEvent', ['Event'], function(Event){
 
-Event.Kinetic = {
+Event.Mouse = {
 	MOVE_TO: 'mousemove',
 	MOUSE_DOWN: 'mousedown',
 	MOUSE_UP: 'mouseup',
@@ -9,11 +9,11 @@ Event.Kinetic = {
 };
 
 var events = [];
-for(var key in Event.Kinetic) {
-    events.push(Event.Kinetic[key]);
+for(var key in Event.Mouse) {
+    events.push(Event.Mouse[key]);
 }
 
-Event.Kinetic.EVENTS = events;
+Event.Mouse.EVENTS = events;
 
 return Event;
 

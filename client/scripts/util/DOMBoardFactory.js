@@ -1,4 +1,4 @@
-define('DOMBoardFactory', ['Page', 'KineticContext', 'KineticPainter', 'KineticTexter', 'KineticTextInput', 'Mover', 'DOMRubbishBin', 'EventBus', 'Line', 'Text', 'Point', 'Note', 'Board', 'MouseEventInterpreter', 'PaintingGestureDetector', 'TextingGestureDetector', 'MovingGestureDetector'], function(Page, KineticContext, KineticPainter, KineticTexter, KineticTextInput, Mover, DOMRubbishBin, EventBus, Line, Text, Point, Note, Board, MouseEventInterpreter, PaintingGestureDetector, TextingGestureDetector, MovingGestureDetector){
+define('DOMBoardFactory', ['Page', 'KineticContext', 'KineticPainter', 'KineticTexter', 'KineticTextInput', 'Mover', 'DOMRubbishBin', 'EventBus', 'Line', 'Text', 'Point', 'Note', 'Board', 'MouseEventInterpreter', 'PaintingGestureDetector', 'TextingGestureDetector', 'MovingGestureDetector', 'KineticLine'], function(Page, KineticContext, KineticPainter, KineticTexter, KineticTextInput, Mover, DOMRubbishBin, EventBus, Line, Text, Point, Note, Board, MouseEventInterpreter, PaintingGestureDetector, TextingGestureDetector, MovingGestureDetector, KineticLine){
 
 function DOMBoardFactory(){
 
@@ -25,7 +25,7 @@ DOMBoardFactory.create = function(pageElement, pageWidth, pageHeight, palette, r
 
 	board.setPalette(palette);
 
-	var painter = new KineticPainter(context, palette);
+	var painter = new KineticPainter(KineticLine, context, palette);
 	painter.enableEventHandling(eventBus);
 	board.setPainter(painter);
 

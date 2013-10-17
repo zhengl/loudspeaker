@@ -5,8 +5,8 @@ function TextingGestureDetector(eventBus, monitor){
 	this.eventBus = eventBus;
 	this.click = 0;
 
-	var readyToTextStep = new GestureStep(Event.Kinetic.MOUSE_DOWN, this.readyToText);
-	var startTextingStep = new GestureStep(Event.Kinetic.MOUSE_DOWN, this.startTexting);
+	var readyToTextStep = new GestureStep(Event.Mouse.MOUSE_DOWN, this.readyToText);
+	var startTextingStep = new GestureStep(Event.Mouse.MOUSE_DOWN, this.startTexting);
 
 	readyToTextStep.addNextStep(startTextingStep);
 	startTextingStep.addNextStep(readyToTextStep);

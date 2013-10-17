@@ -1,4 +1,4 @@
-define('KineticContext', ['Context', 'Kinetic','KineticEvent', 'MouseEventInterpreter'], function(Context, Kinetic, Event, MouseEventInterpreter){
+define('KineticContext', ['Context', 'Kinetic','MouseEvent', 'MouseEventInterpreter'], function(Context, Kinetic, Event, MouseEventInterpreter){
 
 
 function KineticContext(container, width, height){
@@ -22,23 +22,10 @@ function KineticContext(container, width, height){
 KineticContext.prototype = new Context();
 KineticContext.constructor = KineticContext;
 
-KineticContext.prototype.getItems = function(){
-	return this.items;
-};
-
-KineticContext.prototype.getDraftItems = function(){
-	return this.draftItems;
-};
-
 KineticContext.prototype.clearDraftItems = function(){
 	this.draftItems = [];
 	this.draftLayer.removeChildren();
 	this.draftLayer.draw();
-};
-
-KineticContext.prototype.getLastDraftItem = function(){
-	var draftItems = this.getDraftItems();
-	return draftItems[draftItems.length - 1];
 };
 
 KineticContext.prototype.addItem = function(item){
@@ -67,7 +54,7 @@ KineticContext.prototype.addDraftItem = function(item){
 
 KineticContext.prototype.enableEventHandling = function(interpreter){
 	this.interpreter = interpreter;
-	this.addEventListeners(Event.Kinetic.EVENTS);
+	this.addEventListeners(Event.Mouse.EVENTS);
 };
 
 KineticContext.prototype.addEventListeners = function(events){

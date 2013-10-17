@@ -1,4 +1,4 @@
-define('KineticLine', ['Kinetic', 'Line', 'Point', 'Event'], function(Kinetic, Line, Point, Event){
+define('KineticLine', ['Kinetic', 'Line', 'Point', 'MouseEvent'], function(Kinetic, Line, Point, Event){
 
 
 function KineticLine(points, color){
@@ -87,7 +87,7 @@ KineticLine.flatternPoints = function(points){
 
 KineticLine.prototype.enableEventHandling = function(){
 	var self = this;
-	this.getKineticShape().on(Event.Kinetic.EVENTS.join(' '), function(event){
+	this.getKineticShape().on(Event.Mouse.EVENTS.join(' '), function(event){
 		event.targetItem = self;
 	});
 };

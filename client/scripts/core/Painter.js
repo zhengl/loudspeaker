@@ -1,7 +1,8 @@
-define('Painter', ['EventHandleable', 'Line', 'PainterEventHandler', 'Context'], function(EventHandleable, Line, PainterEventHandler, Context){
+define('Painter', ['EventHandleable', 'PainterEventHandler', 'Context'], function(EventHandleable, PainterEventHandler, Context){
 
 
-function Painter(context, palette){
+function Painter(lineClass, context, palette){
+	this.lineClass = lineClass;
 	this.context = context;
 	this.palette = palette;
 }
@@ -23,7 +24,7 @@ Painter.prototype.draft = function(item){
 };
 
 Painter.prototype.startDraft = function(point){
-	this.draftItem = new Line();
+	this.draftItem = new this.lineClass();
 	this.draftItem.update(point);
 	this.draftItem.setColor(this.palette.getColor());
 	this.context.addDraftItem(this.draftItem);
@@ -43,15 +44,6 @@ Painter.prototype.endDraft = function(point){
 
 Painter.prototype.stopDrawing = function(){
 	this.context.clearDraftItems();
-};
-
-Painter.prototype.showPalette = function(point){
-	this.palette.setPosition(point);
-	this.palette.show();
-};
-
-Painter.prototype.hidePalette = function(){
-	this.palette.hide();
 };
 
 Painter.prototype.getPalette = function(){

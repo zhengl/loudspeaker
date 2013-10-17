@@ -4,9 +4,9 @@ define('NoteDraggingGestureDetector', ['GestureDetector', 'GestureStep', 'Event'
 function NoteDraggingGestureDetector(eventBus, monitor){
 	this.eventBus = eventBus;
 
-	var startDraggingStep = new GestureStep(Event.Kinetic.MOUSE_DOWN, this.startDragging);
-	var moveToStep = new GestureStep(Event.Kinetic.MOVE_TO, this.moveTo);
-	var finishDraggingStep = new GestureStep(Event.Kinetic.MOUSE_UP, this.finishDragging);
+	var startDraggingStep = new GestureStep(Event.Mouse.MOUSE_DOWN, this.startDragging);
+	var moveToStep = new GestureStep(Event.Mouse.MOVE_TO, this.moveTo);
+	var finishDraggingStep = new GestureStep(Event.Mouse.MOUSE_UP, this.finishDragging);
 
 	startDraggingStep.addNextStep(moveToStep);
 	moveToStep.addNextStep(moveToStep);

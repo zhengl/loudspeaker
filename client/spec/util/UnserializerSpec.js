@@ -1,4 +1,4 @@
-require(['Unserializer', 'Context', 'Line', 'Text', 'Point'], function(Unserializer, Context, Line, Text, Point){
+require(['Unserializer', 'Context', 'Line', 'Text', 'Point', 'Note'], function(Unserializer, Context, Line, Text, Point, Note){
 
 
 describe('Unserializer', function(){
@@ -22,12 +22,17 @@ describe('Unserializer', function(){
 					content: 'Hello World!',
 					position: {x: 20, y: 20},
 				},
+				{
+					uuid: '00000000-0000-0000-0000-000000000003',
+					type: 'note',
+					position: {x: 20, y: 20},
+				},				
 				]
 		});
 
 		var items = context.getItems();
 		expect(context.getUUID()).toEqual('00000000-0000-0000-0001-000000000000');
-		expect(items.length).toEqual(2);
+		expect(items.length).toEqual(3);
 
 		var line = items[0];
 		expect(line instanceof Line).toBe(true);
@@ -42,7 +47,12 @@ describe('Unserializer', function(){
 		expect(text.getValue()).toEqual('Hello World!');
 		expect(text.getColor()).toEqual('blue');
 		expect(text.getPosition()).toEqual({x: 20, y: 20});
-	});	
+
+		var note = items[2];
+		expect(note instanceof Note).toBe(true);
+		expect(note.getUUID()).toEqual('00000000-0000-0000-0000-000000000003');
+		expect(note.getPosition()).toEqual({x: 20, y: 20});		
+	});
 });
 
 

@@ -25,17 +25,15 @@ Mover.prototype.startMoving = function(item, relativePosition) {
 	}
 };
 
-Mover.prototype.isInMovables = function(item) {
-	if (undefined === this.movables) {
-		return true;
-	}
+Mover.prototype.moveTo = function(point){
+	if(undefined !== this.movingItem) {
+		var item = this.movingItem;
+		var newX = point.x - (item.relativePosition ? item.relativePosition.x : 0);
+		var newY = point.y - (item.relativePosition ? item.relativePosition.y : 0);
+		var newPosition = new Point(newX, newY);
 
-	for(var i = 0; i < this.movables.length; i++) {
-		if (item instanceof this.movables[i]) {
-			return true;
-		}
+		item.moveTo(newPosition);
 	}
-	return false;
 };
 
 Mover.prototype.finishMoving = function() {
@@ -52,15 +50,17 @@ Mover.prototype.finishMoving = function() {
 	}
 };
 
-Mover.prototype.moveTo = function(point){
-	if(undefined !== this.movingItem) {
-		var item = this.movingItem;
-		var newX = point.x - (item.relativePosition ? item.relativePosition.x : 0);
-		var newY = point.y - (item.relativePosition ? item.relativePosition.y : 0);
-		var newPosition = new Point(newX, newY);
-
-		item.moveTo(newPosition);
+Mover.prototype.isInMovables = function(item) {
+	if (undefined === this.movables) {
+		return true;
 	}
+
+	for(var i = 0; i < this.movables.length; i++) {
+		if (item instanceof this.movables[i]) {
+			return true;
+		}
+	}
+	return false;
 };
 
 Mover.prototype.setRubbishBin = function(rubbishBin){

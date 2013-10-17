@@ -20,12 +20,9 @@ NoteDragger.prototype.startDragging = function(note, relativePosition) {
 	this.draggingNote = note;
 	this.draggingNote.setZoomPercentage(this.zoomPercentage);
 	this.draggingNote.relativePosition = relativePosition;
-
-	var noteElement = this.draggingNote.getElement();
-	this.originalParent = noteElement.parentNode;
-	var position = noteElement.getBoundingClientRect();
-	this.draggingNote.moveTo(new Point(position.left * this.zoomPercentage, position.top * this.zoomPercentage));
-	document.body.appendChild(noteElement);
+	this.originalParent = this.draggingNote.getElement().parentNode;
+	
+	this.appendToBody();
 
 	var self = this;
 	document.body.onmousemove = function(event){
@@ -36,6 +33,7 @@ NoteDragger.prototype.startDragging = function(note, relativePosition) {
 		self.eventBus.publish(new Event(Event.Note.FINISH_DRAGGING));
 	};
 };
+
 
 NoteDragger.prototype.dragTo = function(point) {
 	if(undefined !== this.draggingNote) {
@@ -52,17 +50,9 @@ NoteDragger.prototype.finishDragging = function() {
 			this.draggingNote.getContext().interpreter.removeDetector(NoteDraggingGestureDetector);
 		}
 
-		var droppableRect = this.droppable.getElement().getBoundingClientRect();
-		var newLeft = this.draggingNote.getPosition().x - (droppableRect.left + document.body.scrollLeft) * this.zoomPercentage;
-		var newTop = this.draggingNote.getPosition().y - (droppableRect.top + document.body.scrollTop) * this.zoomPercentage;
-		this.droppable.addItem(this.draggingNote);
-		this.draggingNote.moveTo(new Point(newLeft, newTop));
+		this.appendToDroppable();
 	} else {
-		var noteElement = this.draggingNote.getElement();
-		this.originalParent.appendChild(noteElement);
-		noteElement.style.position = "static";
-		noteElement.style.left = "auto";
-		noteElement.style.top = "auto";
+		this.appendToOriginalParent();
 	}
 	document.body.onmousemove = null;
 	document.body.onmouseup = null;
@@ -79,6 +69,29 @@ NoteDragger.prototype.isDroppedInDroppable = function() {
 
 	return draggableAbsolutePosition.x > droppableRect.left + document.body.scrollLeft && draggableAbsolutePosition.x < droppableRect.right + document.body.scrollLeft &&
 	draggableAbsolutePosition.y > droppableRect.top + document.body.scrollTop && draggableAbsolutePosition.y < droppableRect.bottom + document.body.scrollTop;
+};
+
+NoteDragger.prototype.appendToOriginalParent = function() {
+	var noteElement = this.draggingNote.getElement();
+	this.originalParent.appendChild(noteElement);
+	noteElement.style.position = "static";
+	noteElement.style.left = "auto";
+	noteElement.style.top = "auto";
+};
+
+NoteDragger.prototype.appendToDroppable = function() {
+	var droppableRect = this.droppable.getElement().getBoundingClientRect();
+	var newLeft = this.draggingNote.getPosition().x - (droppableRect.left + document.body.scrollLeft) * this.zoomPercentage;
+	var newTop = this.draggingNote.getPosition().y - (droppableRect.top + document.body.scrollTop) * this.zoomPercentage;
+	this.droppable.addItem(this.draggingNote);
+	this.draggingNote.moveTo(new Point(newLeft, newTop));
+};
+
+NoteDragger.prototype.appendToBody = function() {
+	var noteElement = this.draggingNote.getElement();
+	var position = noteElement.getBoundingClientRect();
+	this.draggingNote.moveTo(new Point(position.left * this.zoomPercentage, position.top * this.zoomPercentage));
+	document.body.appendChild(noteElement);
 };
 
 return NoteDragger;
