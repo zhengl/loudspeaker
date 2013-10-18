@@ -32,6 +32,7 @@ Painter.prototype.startDraft = function(point){
 
 Painter.prototype.draftTo = function(point){
 	this.draftItem.update(point);
+	this.context.clearDraftItems();
 	this.context.addDraftItem(this.draftItem);
 };
 
