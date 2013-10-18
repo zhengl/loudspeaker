@@ -53,6 +53,16 @@ describe("KineticPainter", function(){
 		expect(line.getColor()).toEqual('red');
 	});
 
+	it("should DRAW lines with steps", function(){
+		for(var i = 1; i <= 10; i++){
+			var offset = i * 13;
+			painter.startDraft(new Point(0 + offset, 0));
+			painter.draftTo(new Point(0 + offset, 10));
+			painter.endDraft(new Point(0 + offset, 30));
+			expect(painter.getContext().getItems().length).toEqual(i);		
+		}
+	});	
+
 		
 	function createLine(x1, y1, x2, y2) {
 		return new Line([new Point(x1, y1), new Point(x2, y2)]);

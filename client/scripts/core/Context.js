@@ -44,9 +44,6 @@ Context.prototype.addDraftItem = function(draftItem){
 };
 
 Context.prototype.clearDraftItems = function(){
-	for(var i = 0; i < this.draftItems.length; i++){
-		this.draftItems[i].remove();
-	}
 	this.draftItems = [];
 };
 
