@@ -39,7 +39,7 @@ Mover.prototype.moveTo = function(point){
 Mover.prototype.finishMoving = function() {
 	if(undefined !== this.movingItem) {
 		if (this.rubbishBin && this.rubbishBin.isOpen) {
-			this.movingItem.remove();
+			this.context.removeItem(this.movingItem);
 			this.rubbishBin.close();
 		} else {
 			this.context.addItem(this.movingItem);

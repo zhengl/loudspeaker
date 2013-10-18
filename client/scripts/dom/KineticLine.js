@@ -41,7 +41,9 @@ KineticLine.prototype.addDraftTo = function(context) {
 };
 
 KineticLine.prototype.remove = function() {
+	var layer = this.getKineticShape().getLayer();
 	this.getKineticShape().remove();
+	layer.draw();
 };
 
 KineticLine.prototype.getPosition = function(){

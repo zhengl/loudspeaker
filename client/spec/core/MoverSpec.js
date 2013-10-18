@@ -19,7 +19,7 @@ describe('Mover', function(){
 		expect(line.getPosition()).toEqual({x: 20, y:20});
 	});
 
-	it('should not move a line when only set Text in movables', function(){
+	it('should not move a line with only Text in movables', function(){
 		mover.setMovables([Text]);
 
 		var line = new Line([new Point(0, 0), new Point(10, 10)]);
@@ -44,7 +44,8 @@ describe('Mover', function(){
 		mover.startMoving(line);
 		mover.moveTo(new Point(45, 10));
 		mover.finishMoving();
-		expect(context.getItems().length).toEqual(0);
+		expectNoItem(mover);
+		expectNoDraftItem(mover);
 	});
 
 	describe('with event handling', function(){
