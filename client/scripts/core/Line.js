@@ -63,13 +63,6 @@ Line.prototype.serialize = function() {
 	};
 };
 
-Line.unserialize = function(json){
-	var line = new Line(json.points, json.color);
-	line.setUUID(json.uuid);
-	line.setPosition(json.position);
-	return line;
-};
-
 return Line;
 
 

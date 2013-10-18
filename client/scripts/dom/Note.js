@@ -39,19 +39,6 @@ Note.prototype.serialize = function() {
 	};
 };
 
-Note.unserialize = function(json){
-	var note = new Note();
-	note.setUUID(json.uuid);
-
-	var noteElement = document.createElement('div');
-	noteElement.id = 'note-' + note.getUUID();
-	noteElement.className = 'note';
-	note.setElement(noteElement);
-	note.moveTo(json.position);
-	return note;
-};
-
-
 return Note;
 
 });

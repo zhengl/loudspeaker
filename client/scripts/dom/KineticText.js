@@ -30,7 +30,9 @@ KineticText.prototype.addDraftTo = function(context) {
 };
 
 KineticText.prototype.remove = function() {
+	var layer = this.getKineticShape().getLayer();
 	this.getKineticShape().remove();
+	layer.draw();
 };
 
 KineticText.prototype.setColor = function(color){

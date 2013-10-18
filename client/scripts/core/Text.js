@@ -43,13 +43,6 @@ Text.prototype.serialize = function() {
 	};
 };
 
-Text.unserialize = function(json){
-	var text = new Text(json.content, json.color);
-	text.setUUID(json.uuid);
-	text.setPosition(json.position);
-	return text;
-};
-
 return Text;
 
 

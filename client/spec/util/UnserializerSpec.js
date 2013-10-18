@@ -3,11 +3,9 @@ require(['Unserializer', 'Context', 'Line', 'Text', 'Point', 'Note', 'Board', 'K
 
 describe('Unserializer', function(){
 	it('unserializes context', function(){
-		var board = new Board();
 		var context = new Context();
-		board.setContext(context);
 		var unserializer = new Unserializer();
-		unserializer.process(board, {
+		unserializer.process(context, {
 			uuid: '00000000-0000-0000-0001-000000000000',
 			items: [
 				{
@@ -67,7 +65,7 @@ describe('Unserializer', function(){
 		context.setPage(board);
 
 		var unserializer = new Unserializer();
-		unserializer.process(board, {
+		unserializer.process(context, {
 			uuid: '00000000-0000-0000-0001-000000000000',
 			items: [
 				{
@@ -105,17 +103,17 @@ describe('Unserializer', function(){
 		items = note.getContext().getItems();
 		var line = items[0];
 		expect(line instanceof Line).toBe(true);
-		// expect(line.getUUID()).toEqual('00000000-0000-0000-0000-000000000001');
-		// expect(line.getColor()).toEqual('black');
-		// expect(line.getPosition()).toEqual({x: 10, y: 10});
-		// expect(line.getPoints()).toEqual([{x: 0, y: 0}, {x: 1, y: 1}, {x: 2, y: 2}]);
+		expect(line.getUUID()).toEqual('00000000-0000-0000-0000-000000000001');
+		expect(line.getColor()).toEqual('black');
+		expect(line.getPosition()).toEqual({x: 10, y: 10});
+		expect(line.getPoints()).toEqual([{x: 0, y: 0}, {x: 1, y: 1}, {x: 2, y: 2}]);
 
-		// var text = items[1];
-		// expect(text instanceof Text).toBe(true);
-		// expect(text.getUUID()).toEqual('00000000-0000-0000-0000-000000000002');
-		// expect(text.getValue()).toEqual('Hello World!');
-		// expect(text.getColor()).toEqual('blue');
-		// expect(text.getPosition()).toEqual({x: 20, y: 20});
+		var text = items[1];
+		expect(text instanceof Text).toBe(true);
+		expect(text.getUUID()).toEqual('00000000-0000-0000-0000-000000000002');
+		expect(text.getValue()).toEqual('Hello World!');
+		expect(text.getColor()).toEqual('blue');
+		expect(text.getPosition()).toEqual({x: 20, y: 20});
 	});
 });
 
