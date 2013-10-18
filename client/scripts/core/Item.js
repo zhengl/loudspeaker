@@ -26,9 +26,16 @@ Item.prototype.moveTo = function(newPosition){
 };
 
 Item.prototype.remove = function() {
-	if(this.parent) {
-		this.parent.removeItem(this);
-	}
+};
+
+Item.prototype.addTo = function(context) {
+	context.getItems().push(this);
+	this.setParent(context);
+};
+
+Item.prototype.addDraftTo = function(context) {
+	context.getDraftItems().push(this);
+	this.setParent(context);
 };
 
 Item.prototype.setParent = function(parent) {

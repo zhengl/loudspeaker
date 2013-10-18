@@ -23,14 +23,12 @@ Context.prototype.getItems = function(){
 };
 
 Context.prototype.removeItem = function(item){
-	var resultItems = [];
+	item.remove();
 	for(var i = 0; i < this.items.length; i++){
-		if(item != this.items[i]) {
-			resultItems.push(this.items[i]);
+		if(item === this.items[i]) {
+			this.items.splice(i, 1);
 		}
 	}
-	// item.setParent(undefined);
-	this.items = resultItems;
 };
 
 Context.prototype.getDraftItems = function(){
@@ -38,16 +36,17 @@ Context.prototype.getDraftItems = function(){
 };
 
 Context.prototype.addItem = function(item){
-	this.items.push(item);
-	item.setParent(this);
+	item.addTo(this);
 };
 
 Context.prototype.addDraftItem = function(draftItem){
-	this.draftItems.push(draftItem);
-	draftItem.setParent(this);
+	draftItem.addDraftTo(this);
 };
 
 Context.prototype.clearDraftItems = function(){
+	for(var i = 0; i < this.draftItems.length; i++){
+		this.draftItems[i].remove();
+	}
 	this.draftItems = [];
 };
 

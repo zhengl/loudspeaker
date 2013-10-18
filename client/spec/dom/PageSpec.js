@@ -70,7 +70,7 @@ describe('Page', function(){
 
 	it("should be removable after being appended", function(){
 		board.addItem(note);
-		note.remove();
+		board.getContext().removeItem(note);
 
 		expectNoItem(board);
 	});

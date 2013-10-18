@@ -13,6 +13,26 @@ function KineticText(text){
 KineticText.prototype = new Text();
 KineticText.prototype.constructor = KineticText;
 
+KineticText.prototype.addTo = function(context) {
+	this.undraftize();
+	context.getItems().push(this);
+	this.getKineticShape().moveTo(context.getItemGroup());
+	context.getLayer().draw();
+	context.getDraftLayer().draw();
+};
+
+KineticText.prototype.addDraftTo = function(context) {
+	this.draftize();
+	context.getDraftItems().push(this);
+	this.getKineticShape().moveTo(context.getDraftLayer());
+	context.getLayer().draw();
+	context.getDraftLayer().draw();
+};
+
+KineticText.prototype.remove = function() {
+	this.getKineticShape().remove();
+};
+
 KineticText.prototype.setColor = function(color){
 	this.getKineticShape().setFill(color);
 };

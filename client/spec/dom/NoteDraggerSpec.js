@@ -1,4 +1,4 @@
-require(['NoteDragger', 'Note', 'Point', 'Board'], function(NoteDragger, Note, Point, Board){
+require(['NoteDragger', 'Note', 'Point', 'Board', 'Context'], function(NoteDragger, Note, Point, Board, Context){
 
 
 describe('NoteDragger', function(){
@@ -68,7 +68,10 @@ describe('NoteDragger', function(){
 			boardElement.style.width = "40px";
 			boardElement.style.height = "50px";
 			board.setElement(boardElement);
-			dragger.setDroppable(board);			
+			dragger.setDroppable(board);
+
+			var context = new Context();
+			board.setContext(context);		
 
 			document.body.appendChild(boardElement);
 

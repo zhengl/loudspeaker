@@ -1,4 +1,4 @@
-define('Note', ['Page'], function(Page){
+define('Note', ['Page', 'KineticContext'], function(Page, KineticContext){
 
 function Note(){
 	
@@ -6,6 +6,15 @@ function Note(){
 
 Note.prototype = new Page();
 Note.prototype.constructor = Note;
+
+Note.prototype.addTo = function(context) {
+	if(context instanceof KineticContext && this.getElement()){
+		context.getElement().parentNode.insertBefore(this.getElement(), context.getElement());
+	}
+	context.getItems().push(this);
+	this.setParent(context);
+	this.moveTo(this.getPosition());
+};
 
 Note.prototype.moveTo = function(point){
 	this.position = point;
@@ -17,7 +26,6 @@ Note.prototype.moveTo = function(point){
 };
 
 Note.prototype.remove = function() {
-	this.parent.removeItem(this);
 	if(this.element) {
 		this.element.parentNode.removeChild(this.element);
 	}
@@ -34,7 +42,12 @@ Note.prototype.serialize = function() {
 Note.unserialize = function(json){
 	var note = new Note();
 	note.setUUID(json.uuid);
-	note.setPosition(json.position);
+
+	var noteElement = document.createElement('div');
+	noteElement.id = 'note-' + note.getUUID();
+	noteElement.className = 'note';
+	note.setElement(noteElement);
+	note.moveTo(json.position);
 	return note;
 };
 

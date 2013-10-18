@@ -8,7 +8,7 @@ NoteEventTransformer.prototype.transform = function(event) {
 	var note = event.data.item;
 	var position = event.data.position;
 
-	var parentRect = note.getParent().getElement().getBoundingClientRect();
+	var parentRect = note.getParent().getPage().getElement().getBoundingClientRect();
 	var childRect = note.getElement().getBoundingClientRect();
 
 	var x = (childRect.left - parentRect.left) * note.zoomPercentage + position.x;

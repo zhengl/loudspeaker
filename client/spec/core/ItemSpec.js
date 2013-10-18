@@ -18,7 +18,7 @@ describe('Item', function(){
 	it('should be removable', function(){
 		var context = new Context();
 		context.addItem(item);
-		item.remove();
+		context.removeItem(item);
 
 		expect(context.getItems().length).toEqual(0);
 	});

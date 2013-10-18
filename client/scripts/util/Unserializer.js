@@ -5,23 +5,25 @@ function Unserializer(){
 	
 }
 
-Unserializer.prototype.process = function(context, json) {
-	context.setUUID(json.uuid);
+Unserializer.prototype.process = function(page, json) {
+	page.getContext().setUUID(json.uuid);
 	var items = json.items;
 	for(var i = 0; i < items.length; i++){
 		var item;
 		switch(items[i].type) {
 			case 'line':
 				item = Line.unserialize(items[i]);
+				page.getContext().addItem(item);
 			break;
 			case 'text':
 				item = Text.unserialize(items[i]);
+				page.getContext().addItem(item);
 			break;
 			case 'note':
 				item = Note.unserialize(items[i]);
+				page.addItem(item);
 			break;
 		}
-		context.addItem(item);
 	}
 };
 

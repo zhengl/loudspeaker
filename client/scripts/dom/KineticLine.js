@@ -24,6 +24,26 @@ KineticLine.draftDashArray = [10, 15];
 KineticLine.prototype = new Line();
 KineticLine.prototype.constructor = KineticLine;
 
+KineticLine.prototype.addTo = function(context) {
+	this.undraftize();
+	context.getItems().push(this);
+	this.getKineticShape().moveTo(context.getItemGroup());
+	context.getLayer().draw();
+	context.getDraftLayer().draw();
+};
+
+KineticLine.prototype.addDraftTo = function(context) {
+	this.draftize();
+	context.getDraftItems().push(this);
+	this.getKineticShape().moveTo(context.getDraftLayer());
+	context.getLayer().draw();
+	context.getDraftLayer().draw();
+};
+
+KineticLine.prototype.remove = function() {
+	this.getKineticShape().remove();
+};
+
 KineticLine.prototype.getPosition = function(){
 	var points = this.getPoints();
 	var minX = points[0].x;

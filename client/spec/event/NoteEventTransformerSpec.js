@@ -1,4 +1,4 @@
-require(['NoteEventTransformer', 'Event', 'Board', 'Note', 'Point'], function(NoteEventTransformer, Event, Board, Note, Point){
+require(['NoteEventTransformer', 'Event', 'Board', 'Note', 'Point', 'KineticContext'], function(NoteEventTransformer, Event, Board, Note, Point, KineticContext){
 
 
 describe('NoteEventTransformer', function(){
@@ -9,13 +9,18 @@ describe('NoteEventTransformer', function(){
 	beforeEach(function(){
 		transformer = new NoteEventTransformer();
 		note = new Note();
-		board = new Board();	
+		board = new Board();
 
 		var boardElement = document.createElement('div');
 		boardElement.style.position = "absolute";
 		boardElement.style.top = '0';
 		boardElement.style.left = '0';
+		boardElement.id = 'board';
 		board.setElement(boardElement);
+
+		var context = new KineticContext(boardElement, 50, 50);
+		board.setContext(context);
+		context.setPage(board);
 
 		var noteElement = document.createElement('div');
 		note.setElement(noteElement);
