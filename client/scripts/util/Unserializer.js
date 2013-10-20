@@ -1,8 +1,10 @@
-define('Unserializer', ['Line', 'Text', 'Note', 'DOMNoteFactory', 'KineticContext'], function(Line, Text, Note, DOMNoteFactory, KineticContext){
+define('Unserializer', ['Line', 'Text', 'Note','LineUnserializer', 'TextUnserializer', 'NoteUnserializer'], function(Line, Text, Note, LineUnserializer, TextUnserializer, NoteUnserializer){
 
 
 function Unserializer(){
-	
+	this.lineUnserializer = new LineUnserializer();
+	this.textUnserializer = new TextUnserializer();
+	this.noteUnserializer = new NoteUnserializer();
 }
 
 Unserializer.prototype.process = function(context, json) {
@@ -17,56 +19,12 @@ Unserializer.prototype.process = function(context, json) {
 Unserializer.prototype.unserializeItem = function(json, context) {
 	switch(json.type) {
 		case 'line':
-			return this.unserializeLine(json);
+			return this.lineUnserializer.process(json);
 		case 'text':
-			return this.unserializeText(json);
+			return this.textUnserializer.process(json);
 		case 'note':
-			return this.unserializeNote(json, context);
+			return this.noteUnserializer.process(json, context);
 	}
-};
-
-Unserializer.prototype.unserializeLine = function(json) {
-	var line = new Line(json.points, json.color);
-	line.setUUID(json.uuid);
-	line.setPosition(json.position);
-	return line;
-};
-
-Unserializer.prototype.unserializeText = function(json) {
-	var text = new Text(json.content, json.color);
-	text.setUUID(json.uuid);
-	text.setPosition(json.position);
-	return text;
-};
-
-Unserializer.prototype.unserializeNote = function(json, context) {
-	var note = new Note();
-	note.setUUID(json.uuid);
-
-	var noteElement = document.createElement('div');
-	noteElement.id = 'note-' + note.getUUID();
-	noteElement.className = 'note';
-
-    noteRubbishbinElement = document.createElement('div');
-    noteRubbishbinElement.id = 'note-rubbishbin' + note.getUUID();
-    noteRubbishbinElement.className = 'rubbishbin';	
-
-    if(context instanceof KineticContext) {
-		note = DOMNoteFactory.create(
-			noteElement,
-			1280 / 6,
-			1280 / 6,
-			context.getPage().getPalette(),
-			noteRubbishbinElement.id,
-			100,
-			20,
-			context.getPage().getEventPreprocessor()
-		);
-	}
-
-	note.moveTo(json.position);
-
-	return note;
 };
 
 return Unserializer;

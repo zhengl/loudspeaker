@@ -110,9 +110,15 @@ require.config({
 		
 			DOMNoteFactory: "util/DOMNoteFactory",
 		
+			LineUnserializer: "util/LineUnserializer",
+		
 			MousePositionHelper: "util/MousePositionHelper",
 		
+			NoteUnserializer: "util/NoteUnserializer",
+		
 			Serializer: "util/Serializer",
+		
+			TextUnserializer: "util/TextUnserializer",
 		
 			Unserializer: "util/Unserializer",
 		
