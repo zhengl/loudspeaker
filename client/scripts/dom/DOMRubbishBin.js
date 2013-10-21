@@ -1,9 +1,9 @@
 define('DOMRubbishBin', ['RubbishBin'], function(RubbishBin){
 
 
-function DOMRubbishBin(leftTop, rightBottom, elementId){
+function DOMRubbishBin(leftTop, rightBottom, element){
 	RubbishBin.call(this, leftTop, rightBottom);
-	this.element = document.getElementById(elementId);
+	this.element = element;
 	this.close();
 }
 

@@ -102,19 +102,21 @@ require.config({
 		
 			PanelTrigger: "dom/PanelTrigger",
 		
+			BoardFactory: "util/BoardFactory",
+		
 			CssHelper: "util/CssHelper",
 		
 			Debugger: "util/Debugger",
-		
-			DOMBoardFactory: "util/DOMBoardFactory",
-		
-			DOMNoteFactory: "util/DOMNoteFactory",
 		
 			LineUnserializer: "util/LineUnserializer",
 		
 			MousePositionHelper: "util/MousePositionHelper",
 		
+			NoteFactory: "util/NoteFactory",
+		
 			NoteUnserializer: "util/NoteUnserializer",
+		
+			PageFactory: "util/PageFactory",
 		
 			Serializer: "util/Serializer",
 		

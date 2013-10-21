@@ -1,4 +1,4 @@
-define('app', ['DOMBoardFactory', 'DOMNoteFactory', 'MouseEventPreprocessor', 'DOMPalette', 'Note', 'NoteDragger', 'NoteSupplier', 'PanelTrigger', 'EventBus', 'config', 'uuid'], function(DOMBoardFactory, DOMNoteFactory, MouseEventPreprocessor, DOMPalette, Note, NoteDragger, NoteSupplier, PanelTrigger, EventBus, config, UUID){
+define('app', ['BoardFactory', 'NoteFactory', 'MouseEventPreprocessor', 'DOMPalette', 'Note', 'NoteDragger', 'NoteSupplier', 'PanelTrigger', 'EventBus', 'config', 'uuid'], function(BoardFactory, NoteFactory, MouseEventPreprocessor, DOMPalette, Note, NoteDragger, NoteSupplier, PanelTrigger, EventBus, config, UUID){
     var board;
     var note;
 
@@ -108,7 +108,7 @@ define('app', ['DOMBoardFactory', 'DOMNoteFactory', 'MouseEventPreprocessor', 'D
             
             globalEventBus = new EventBus();
 
-            board = DOMBoardFactory.create(
+            board = BoardFactory.create(
                 boardElement,
                 boardActualWidth,
                 boardActualHeight,
@@ -120,7 +120,7 @@ define('app', ['DOMBoardFactory', 'DOMNoteFactory', 'MouseEventPreprocessor', 'D
                 globalEventBus
             );
 
-            note = DOMNoteFactory.create(
+            note = NoteFactory.create(
                 noteElement,
                 noteActualWidth,
                 noteActualHeight,

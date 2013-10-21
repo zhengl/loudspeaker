@@ -67,6 +67,10 @@ Mover.prototype.setRubbishBin = function(rubbishBin){
 	this.rubbishBin = rubbishBin;
 };
 
+Mover.prototype.getRubbishBin = function(){
+	return this.rubbishBin;
+};
+
 return Mover;
 
 

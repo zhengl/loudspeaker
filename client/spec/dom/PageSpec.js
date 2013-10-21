@@ -1,4 +1,4 @@
-require(['DOMBoardFactory', 'DOMNoteFactory', 'DOMPalette', 'Event', 'Point', 'MouseEventPreprocessor'], function(DOMBoardFactory, DOMNoteFactory, DOMPalette, Event, Point, MouseEventPreprocessor){
+require(['BoardFactory', 'NoteFactory', 'DOMPalette', 'Event', 'Point', 'MouseEventPreprocessor'], function(BoardFactory, NoteFactory, DOMPalette, Event, Point, MouseEventPreprocessor){
 
 
 describe('Page', function(){
@@ -25,14 +25,40 @@ describe('Page', function(){
 		paletteElement.appendChild(paletteBlack);
 		var palette = new DOMPalette(paletteElement);
 		
-		addDiv("rubbishbin", body);
+		var rubbishBinElement = document.createElement('div');
+		var noteRubbishBinElement = document.createElement('div');
 
 		var noteElement = addDiv("note", body);
-		addDiv("note-rubbishbin", body);
 
 		var preprocessor = new MouseEventPreprocessor();
-		board = DOMBoardFactory.create(boardElement, 100, 100, palette, "rubbishbin", 10, 50, preprocessor);
-		note = DOMNoteFactory.create(noteElement, 50, 50, palette, "note-rubbishbin", 1, 10, preprocessor);
+		var options = {
+			width: 100,
+			height: 100,
+			palette: palette,
+			eventPreprocessor: preprocessor,
+			rubbishbin: {
+				element: rubbishBinElement,
+				width: 10,
+				height: 50,
+			}
+		};
+
+		var noteOptions = {
+			width: 50,
+			height: 50,
+			palette: palette,
+			eventPreprocessor: preprocessor,
+			rubbishbin: {
+				element: noteRubbishBinElement,
+				width: 1,
+				height: 10,
+			}
+		};
+		var boardFactory = new BoardFactory();
+		board = boardFactory.create(boardElement, options);
+
+		var noteFactory = new NoteFactory();
+		note = noteFactory.create(noteElement, noteOptions);
 	});
 
 	it("appends another page", function(){

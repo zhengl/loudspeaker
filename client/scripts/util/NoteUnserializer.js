@@ -1,4 +1,4 @@
-define('NoteSerializer', ['Note', 'DOMNoteFactory', 'KineticContext'], function(Note, DOMNoteFactory, KineticContext){
+define('NoteSerializer', ['Note', 'NoteFactory', 'KineticContext'], function(Note, NoteFactory, KineticContext){
 	
 function NoteSerializer(){
 
@@ -16,7 +16,7 @@ NoteSerializer.prototype.process = function(json) {
     noteRubbishbinElement.id = 'note-rubbishbin' + note.getUUID();
     noteRubbishbinElement.className = 'rubbishbin';	
 
-	note = DOMNoteFactory.create(
+	note = NoteFactory.create(
 		noteElement,
 		1280 / 6,
 		1280 / 6,
