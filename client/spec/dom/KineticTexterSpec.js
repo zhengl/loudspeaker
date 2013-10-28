@@ -4,17 +4,18 @@ require(['KineticTexter', 'KineticContext', 'DOMPalette', 'Point', 'Text', 'Kine
 describe("KineticTexter", function(){
 	var texter;
 	var eventBus;
+	var board;
+	var palette;
 
 	beforeEach(function(){
-		var body = document.getElementsByTagName('body')[0];
-		var board = document.createElement('div');
+		board = document.createElement('div');
 		board.id = "board";
 
-		var palette = document.createElement('div');
+		palette = document.createElement('div');
 		palette.id = "palette";
 
-		body.appendChild(board);
-		body.appendChild(palette);
+		document.body.appendChild(board);
+		document.body.appendChild(palette);
 		texter = new KineticTexter(new DOMPalette('palette'), new KineticTextInput(new KineticContext('board', 50, 50)));
 		texter.palette.setColor('red');
 	});
@@ -33,6 +34,11 @@ describe("KineticTexter", function(){
 		var item = texter.getContext().getDraftItems()[0];
 		expect(item instanceof KineticText).toBeTruthy();
 		expect(texter.getContext().getItems().length).toEqual(0);
+	});
+
+	afterEach(function(){
+		document.body.removeChild(board);
+		document.body.removeChild(palette);		
 	});
 
 		

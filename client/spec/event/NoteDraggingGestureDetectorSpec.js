@@ -5,12 +5,13 @@ describe("NoteDraggingGestureDetector", function(){
 	var eventBus;
 	var detector;
 	var item;
+	var draggable;
 
 	var note;
 
 	beforeEach(function(){
 		note = new Note();
-		var draggable = document.createElement('div');
+		draggable = document.createElement('div');
 		note.setElement(draggable);
 		document.body.appendChild(draggable);
 		
@@ -50,7 +51,11 @@ describe("NoteDraggingGestureDetector", function(){
 		detector.detect(createEvent(Event.Mouse.MOUSE_UP, null, null, note, 10, 10));
 
 		expect(eventBus.publish).toHaveBeenCalledWith(new Event(Event.Note.FINISH_DRAGGING));
-	});	
+	});
+
+	afterEach(function(){
+		draggable.parentNode.removeChild(draggable);
+	});
 
 });
 

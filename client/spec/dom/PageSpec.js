@@ -1,34 +1,25 @@
-require(['BoardFactory', 'NoteFactory', 'DOMPalette', 'Event', 'Point', 'MouseEventPreprocessor'], function(BoardFactory, NoteFactory, DOMPalette, Event, Point, MouseEventPreprocessor){
+require(['BoardFactory', 'NoteFactory', 'Palette', 'Event', 'Point', 'MouseEventPreprocessor'], function(BoardFactory, NoteFactory, Palette, Event, Point, MouseEventPreprocessor){
 
 
 describe('Page', function(){
 	var baord;
 	var note;
+	var boardElement;
+	var noteElement;
 
 	beforeEach(function(){
-		var body = document.getElementsByTagName('body')[0];
-		var boardElement = addDiv("board", body);
+		boardElement = document.createElement('div');
+		boardElement.id = 'board';
 		boardElement.style.position = "absolute";
 		boardElement.style.top = '0';
 		boardElement.style.left = '0';
+		document.body.appendChild(boardElement);
 
-		var paletteElement = document.createElement('div');
+		var palette = new Palette();
 		
-		var paletteRed = document.createElement('a');
-		paletteRed.className = "palette-color palette_red";
-		paletteRed.style.backgroundColor = 'red';
-		paletteElement.appendChild(paletteRed);
-
-		var paletteBlack = document.createElement('a');
-		paletteBlack.className = "palette-color palette-black";
-		paletteBlack.style.backgroundColor = 'black';
-		paletteElement.appendChild(paletteBlack);
-		var palette = new DOMPalette(paletteElement);
-		
-		var rubbishBinElement = document.createElement('div');
-		var noteRubbishBinElement = document.createElement('div');
-
-		var noteElement = addDiv("note", body);
+		noteElement = document.createElement('div');
+		noteElement.id = 'note';
+		document.body.appendChild(noteElement);
 
 		var preprocessor = new MouseEventPreprocessor();
 		var options = {
@@ -36,11 +27,6 @@ describe('Page', function(){
 			height: 100,
 			palette: palette,
 			eventPreprocessor: preprocessor,
-			rubbishbin: {
-				element: rubbishBinElement,
-				width: 10,
-				height: 50,
-			}
 		};
 
 		var noteOptions = {
@@ -48,11 +34,6 @@ describe('Page', function(){
 			height: 50,
 			palette: palette,
 			eventPreprocessor: preprocessor,
-			rubbishbin: {
-				element: noteRubbishBinElement,
-				width: 1,
-				height: 10,
-			}
 		};
 		var boardFactory = new BoardFactory();
 		board = boardFactory.create(boardElement, options);
@@ -70,6 +51,7 @@ describe('Page', function(){
 		expectNoDraftItem(board);
 
 		board.addItem(note);
+		expect(board.getElement().firstChild).toBe(note.getElement());
 		drawALineOn(note, 10, 0, 10, 10);
 
 		expect(note.getContext().getItems().length).toEqual(2);
@@ -107,6 +89,11 @@ describe('Page', function(){
 		triggerFinishMovingEvent(board.getEventBus());
 
 		expect(board.getPosition()).not.toEqual({x: 10, y: 10});
+	});
+
+	afterEach(function(){
+		if(noteElement.parentNode) noteElement.parentNode.removeChild(noteElement);
+		document.body.removeChild(boardElement);
 	});
 
 	function addDiv(id, body){

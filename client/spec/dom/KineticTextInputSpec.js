@@ -3,13 +3,13 @@ require(['KineticTextInput', 'KineticContext', 'Text', 'Point', 'KineticText'], 
 
 describe("KineticTextInput", function(){
 	var textInput;
+	var board;
 
 	beforeEach(function(){
-		var body = document.getElementsByTagName('body')[0];
-		var board = document.createElement('div');
+		board = document.createElement('div');
 		board.id = "board";
 
-		body.appendChild(board);
+		document.body.appendChild(board);
 
 		var context = new KineticContext('board', 50, 50);
 		textInput = new KineticTextInput(context);
@@ -26,6 +26,10 @@ describe("KineticTextInput", function(){
 		item = textInput.getContext().getItems()[0];
 		expect(item instanceof KineticText).toBeTruthy();
 		expect(item.getValue()).toBe("Hello World!");
+	});
+
+	afterEach(function(){
+		document.body.removeChild(board);
 	});
 });
 

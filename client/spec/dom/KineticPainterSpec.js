@@ -4,17 +4,18 @@ require(['KineticPainter', 'KineticContext', 'DOMPalette', 'Point', 'Line', 'Kin
 describe("KineticPainter", function(){
 	var painter;
 	var eventBus;
+	var board;
+	var palette;
 
 	beforeEach(function(){
-		var body = document.getElementsByTagName('body')[0];
-		var board = document.createElement('div');
+		board = document.createElement('div');
 		board.id = "board";
 
-		var palette = document.createElement('div');
+		palette = document.createElement('div');
 		palette.id = "palette";
 
-		body.appendChild(board);
-		body.appendChild(palette);
+		document.body.appendChild(board);
+		document.body.appendChild(palette);
 		painter = new KineticPainter(KineticLine, new KineticContext('board', 50, 50), new DOMPalette('palette'));
 	});
 
@@ -61,7 +62,12 @@ describe("KineticPainter", function(){
 			painter.endDraft(new Point(0 + offset, 30));
 			expect(painter.getContext().getItems().length).toEqual(i);		
 		}
-	});	
+	});
+
+	afterEach(function(){
+		document.body.removeChild(board);
+		document.body.removeChild(palette);
+	});
 
 		
 	function createLine(x1, y1, x2, y2) {

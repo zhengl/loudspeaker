@@ -6,12 +6,14 @@ describe('NoteEventTransformer', function(){
 	var board;
 	var note;
 
+	var boardElement
+
 	beforeEach(function(){
 		transformer = new NoteEventTransformer();
 		note = new Note();
 		board = new Board();
 
-		var boardElement = document.createElement('div');
+		boardElement = document.createElement('div');
 		boardElement.style.position = "absolute";
 		boardElement.style.top = '0';
 		boardElement.style.left = '0';
@@ -45,6 +47,10 @@ describe('NoteEventTransformer', function(){
 		expect(transformedEvent.data.position.x).toEqual(30);
 		expect(transformedEvent.data.position.y).toEqual(30);
 	});	
+
+	afterEach(function(){
+		document.body.removeChild(boardElement);
+	});
 });
 
 

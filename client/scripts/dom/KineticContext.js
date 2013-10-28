@@ -61,6 +61,7 @@ KineticContext.prototype.addEventListeners = function(events){
 		if (undefined === event.targetItem) {
 			event.targetItem = self.getPage();
 		}
+		console.log(event.targetItem)
 		self.interpreter.interpret(event);
 	});
 	this.layer.draw();

@@ -5,12 +5,13 @@ describe('NoteDragger', function(){
 	var dragger;
 	var note;
 	var noteElement;
+	var panel;
 
 	beforeEach(function(){
 		dragger = new NoteDragger();
 		note = new Note();
 
-		var panel = document.createElement('div');
+		panel = document.createElement('div');
 		panel.style.position = "fixed";
 		panel.style.top = "100px";
 		panel.style.left = "200px";
@@ -57,11 +58,17 @@ describe('NoteDragger', function(){
 		expect(noteElement.style.left).toEqual("20px");
 	});
 
+	afterEach(function(){
+		noteElement.parentNode.removeChild(noteElement);
+		document.body.removeChild(panel);
+	});
 
 	describe("with droppable", function(){
+		var boardElement;
+
 		beforeEach(function(){
 			var board = new Board();
-			var boardElement = document.createElement("div");
+			boardElement = document.createElement("div");
 			boardElement.style.position = "fixed";
 			boardElement.style.top = "10px";
 			boardElement.style.left = "20px";
@@ -94,6 +101,10 @@ describe('NoteDragger', function(){
 			expect(noteElement.style.position).toEqual("static");
 			expect(noteElement.style.top).toEqual("auto");
 			expect(noteElement.style.left).toEqual("auto");
+		});
+
+		afterEach(function(){
+			document.body.removeChild(boardElement);
 		});
 	});
 
