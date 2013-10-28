@@ -6,7 +6,7 @@ describe('NoteEventTransformer', function(){
 	var board;
 	var note;
 
-	var boardElement
+	var boardElement;
 
 	beforeEach(function(){
 		transformer = new NoteEventTransformer();

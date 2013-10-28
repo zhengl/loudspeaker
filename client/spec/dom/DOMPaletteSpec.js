@@ -4,7 +4,7 @@ require(['DOMPalette'], function(DOMPalette){
 describe('DOMPalette', function(){
 	var palette;
 	var paletteElement;
-	var paletteRed
+	var paletteRed;
 
 	beforeEach(function(){
 		paletteElement = document.createElement('div');
