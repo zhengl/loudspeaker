@@ -130,6 +130,11 @@ module.exports = function(grunt){
 			},
 		},
 
+		server: {
+			start: {},
+			stop: {}
+		},
+
         clean: ['<%= client.styles.folder %>', '<%= client.index %>', '<%= client.styles.mainMin %>', '<%= client.config %>']
 	});
 
@@ -142,14 +147,24 @@ module.exports = function(grunt){
 	grunt.loadNpmTasks('grunt-contrib-jshint');
 
 	grunt.registerTask('compile', ['template', 'less']);
+	grunt.registerTask('unit-test', ['template', 'jasmine']);
+	grunt.registerTask('functional-test', ['server:start', 'jasmine_node', 'server:stop']);
 	grunt.registerTask('test', ['template', 'jasmine', 'jasmine_node', 'jshint']);
 	grunt.registerTask('default', ['compile', 'test']);
-	grunt.registerMultiTask('template', '', function(){
+	grunt.registerMultiTask('template', 'Generate files from templates', function(){
 		var files = this.data.files;
 		for(var i = 0; i < files.length; i++) {
 			grunt.log.writeln('Generate ' + files[i].dest);
 			var template = grunt.file.read(files[i].src);
 			grunt.file.write(files[i].dest, grunt.template.process(template, {data: files[i].data}));
+		}
+	});
+	grunt.registerMultiTask('server', 'Start or stop server', function(){
+		var server = require('./server/main');
+		if(this.target == 'start') {
+			server.start();
+		} else if (this.target == 'stop') {
+			server.stop();
 		}
 	});
 };
