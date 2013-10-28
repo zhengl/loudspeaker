@@ -1,5 +1,5 @@
 require.config({
-	baseUrl: "scripts",
+	baseUrl: "/scripts",
 	paths: {
 		
 			app: "app",
@@ -124,8 +124,8 @@ require.config({
 		
 			Unserializer: "util/Unserializer",
 		
-		"Kinetic": '../../lib/kinetic/kinetic-v4.6.0',
-		"uuid": '../../lib/uuid/uuid',
+		"Kinetic": '/lib/kinetic/kinetic-v4.6.0',
+		"uuid": '/lib/uuid/uuid',
 	},
 	urlArgs: "bust=" + (new Date()).getTime(),
 	shim: {

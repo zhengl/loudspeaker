@@ -25,7 +25,7 @@ MouseEvextInterpreter.prototype.interpret = function(event){
 	if (undefined !== this.eventPreprocessor) {
 		targetEvent = this.eventPreprocessor.process(event);
 	}
-
+	
 	for (var i = 0; i < this.detectors.length; i++) {
 		this.detectors[i].detect(targetEvent);
 	}

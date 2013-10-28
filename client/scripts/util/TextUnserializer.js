@@ -1,4 +1,4 @@
-define('TextSerializer', ['Text'], function(Text){
+define('TextUnserializer', ['Text'], function(Text){
 	
 function TextSerializer(){
 

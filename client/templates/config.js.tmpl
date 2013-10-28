@@ -1,11 +1,11 @@
 require.config({
-	baseUrl: "scripts",
+	baseUrl: "/scripts",
 	paths: {
 		<% paths.forEach(function(path){ %>
 			<%= path %>
 		<% }); %>
-		"Kinetic": '../../lib/kinetic/kinetic-v4.6.0',
-		"uuid": '../../lib/uuid/uuid',
+		"Kinetic": '/lib/kinetic/kinetic-v4.6.0',
+		"uuid": '/lib/uuid/uuid',
 	},
 	urlArgs: "bust=" + (new Date()).getTime(),
 	shim: {

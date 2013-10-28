@@ -1,4 +1,4 @@
-define('MouseEventPreprocessor', ['Note'], function(Note){
+define('MouseEventPreprocessor', ['Note', 'MousePositionHelper'], function(Note, MousePositionHelper){
 
 
 function MouseEventPreprocessor(){
@@ -10,12 +10,13 @@ MouseEventPreprocessor.prototype.setZoomPercentage = function(percentage) {
 };
 
 MouseEventPreprocessor.prototype.process = function(event) {
-	var offsetX = event.offsetX - document.body.scrollLeft;
-	var offsetY = event.offsetY - document.body.scrollTop;
+	var offset = MousePositionHelper.getOffset(event);
+	var offsetX = offset.x - document.body.scrollLeft;
+	var offsetY = offset.y - document.body.scrollTop;
 
 	var canvasX = offsetX * this.zoomPercentage;
 	var canvasY = offsetY * this.zoomPercentage;
-	
+
 	return this.createEvent(
 			event.type,
 			canvasX,

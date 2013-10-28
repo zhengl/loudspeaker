@@ -5,14 +5,15 @@ var fixture = require('./fixture/boards');
 var newBoard = require('./fixture/newBoard')
 var util = require('util');
 
-beforeEach(function(){
-	repository.populate(fixture);
-	server.start(8080, repository);
-});
 
 describe("Server", function(){
 	var baseUrl = "http://localhost:8080";
 	var boardsUrl = baseUrl + "/boards";
+
+	beforeEach(function(){
+		repository.populate(fixture);
+		server.start(8080, repository);
+	});
 
 	it("runs", function(done){
 		request.get(baseUrl, function(error, response, body){
@@ -56,8 +57,9 @@ describe("Server", function(){
 			}
 		);		
 	});
+	
+	afterEach(function(){
+		server.stop();
+	});
 });
 
-afterEach(function(){
-	server.stop();
-});

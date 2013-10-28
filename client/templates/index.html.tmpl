@@ -3,15 +3,15 @@
 <head>
   <title>Loudspeaker - Social Creativity</title>
   <meta charset="utf-8">
-  <script data-main="<%= main %>" src="../lib/require/require.js"></script>
+  <script data-main="<%= main %>" src="/lib/require/require.js"></script>
   <link rel="stylesheet" type="text/css" href="styles/main.css" />
   <style>
   </style>
 </head>
 <body>
-  <header class="header">
+<!--   <header class="header">
     <nav class="nav"></nav>
-  </header>
+  </header> -->
   <div class="main">
     <div id="board" class="board"></div>
     <div class="panel">
@@ -27,31 +27,5 @@
       </div>
     </div>
   </div>
-  <% if(debug){ %>
-  <div id="debug">
-    <table>
-      <tr>
-        <td>previous event: </td>
-        <td id="debugger-previous-event"></td>
-      </tr>
-      <tr>
-        <td >current event: </td>
-        <td id="debugger-current-event"></td>
-      </tr>
-      <tr>
-        <td>items: </td>
-        <td>
-          <ul id="debugger-items"></ul>
-        </td>
-      </tr>
-      <tr>
-        <td>draft items: </td>
-        <td>
-          <ul id="debugger-draft-items"></ul>
-        </td>
-      </tr>
-    </table>
-  </div>
-  <% } %>
 </body>
 </html>

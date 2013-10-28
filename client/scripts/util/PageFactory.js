@@ -7,7 +7,7 @@ function PageFactory(){
 PageFactory.prototype.create = function(element, options){
 	var page = new this.pageClass();
 	page.setElement(element);
-	page.moveTo(new Point(0, 0));
+	page.setPosition(new Point(0, 0));
 
 	var eventBus = this.createEventBus();
 	page.setEventBus(eventBus);

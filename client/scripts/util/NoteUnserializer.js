@@ -1,10 +1,10 @@
-define('NoteSerializer', ['Note', 'NoteFactory', 'KineticContext'], function(Note, NoteFactory, KineticContext){
+define('NoteUnserializer', ['Note', 'NoteFactory', 'KineticContext'], function(Note, NoteFactory, KineticContext){
 	
 function NoteSerializer(){
 
 }
 
-NoteSerializer.prototype.process = function(json) {
+NoteSerializer.prototype.process = function(json, context) {
 	var note = new Note();
 	note.setUUID(json.uuid);
 
@@ -16,16 +16,18 @@ NoteSerializer.prototype.process = function(json) {
     noteRubbishbinElement.id = 'note-rubbishbin' + note.getUUID();
     noteRubbishbinElement.className = 'rubbishbin';	
 
-	note = NoteFactory.create(
-		noteElement,
-		1280 / 6,
-		1280 / 6,
-		context.getPage().getPalette(),
-		noteRubbishbinElement.id,
-		100,
-		20,
-		context.getPage().getEventPreprocessor()
-	);
+    if (context instanceof KineticContext){
+		note = NoteFactory.create(
+			noteElement,
+			1280 / 6,
+			1280 / 6,
+			context.getPage().getPalette(),
+			noteRubbishbinElement.id,
+			100,
+			20,
+			context.getPage().getEventPreprocessor()
+		);
+	}
 
 	note.moveTo(json.position);
 

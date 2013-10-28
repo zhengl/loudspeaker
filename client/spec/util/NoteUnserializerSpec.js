@@ -1,4 +1,4 @@
-require(['NoteUnserializer','Note'], function(NoteUnserializer, Note){
+require(['NoteUnserializer', 'Note'], function(NoteUnserializer, Note){
 
 
 describe('NoteUnserializer', function(){

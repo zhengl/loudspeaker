@@ -11,12 +11,46 @@ module.exports = function(grunt){
 
 	grunt.initConfig({
 		pkg: grunt.file.readJSON('package.json'),
+		client: {
+			folder: 'client',
+			scripts: {
+				folder: '<%= client.folder %>/scripts',
+				all: '<%= client.scripts.folder %>/**/*.js'
+			},
+			spec: {
+				folder: '<%= client.folder %>/spec',
+				all: '<%= client.spec.folder %>/**/*.js',
+				allSpec: '<%= client.spec.folder %>/**/*Spec.js',
+				helper: '<%= client.spec.folder %>/helper.js'
+			},
+			styles: {
+				folder: '<%= client.folder %>/styles',
+				main: '<%= client.styles.folder %>/main.css',
+				mainMin: '<%= client.styles.folder %>/main.min.css'
+			},
+			assets: {
+				folder: '<%= client.folder %>/assets',
+				less: {
+					folder: '<%= client.assets.folder %>/less',
+					main: '<%= client.assets.less.folder %>/main.less',
+					all: '<%= client.assets.less.folder %>/**/*.less',
+				}
+			},
+			templates: {
+				folder: '<%= client.folder %>/templates',
+				all: '<%= client.templates.folder %>/*.tmpl',
+				index: '<%= client.templates.folder %>/index.html.tmpl',
+				config: '<%= client.templates.folder %>/config.js.tmpl'
+			},
+			config: '<%= client.folder %>/config.js',
+			index: '<%= client.folder %>/index.html'
+		},
 
 		requirejs: {
 			dev: {
 				options: {
-					baseUrl: 'client/scripts',
-					mainConfigFile: 'client/config.js',
+					baseUrl: '<%= client.scriptsFolder %>',
+					mainConfigFile: '<%= client.config %>',
 					out: 'client/main.min.js',
 					optimize: 'none',
 					name: '../main'
@@ -25,21 +59,24 @@ module.exports = function(grunt){
 		},
 
 		jshint: {
-			files: ['Gruntfile.js', 'client/scripts/**/*.js', 'client/spec/**/*.js'],
+			files: ['Gruntfile.js', '<%= client.scripts.all %>', '<%= client.spec.all %>'],
 		},
 
 		jasmine: {
-			src: 'client/scripts/*/*.js',
+			src: '<%= client.scripts.all %>',
 			options: {
-				specs: 'client/spec/**/*Spec.js',
-				helpers: 'client/spec/helper.js',
+				specs: '<%= client.spec.allSpec %>',
+				helpers: '<%= client.spec.helper %>',
 				keepRunner: true,
 				template: require('grunt-template-jasmine-requirejs'),
 				templateOptions: {
-				requireConfigFile: 'client/config.js',
 				requireConfig: {
-						baseUrl: 'client/scripts',
-						urlArgs: 'bust=' + Math.random()
+						baseUrl: '<% client.scripts.folder %>',
+						urlArgs: 'bust=' + Math.random(),
+						paths: {
+							"Kinetic": 'lib/kinetic/kinetic-v4.6.0',
+							"uuid": 'lib/uuid/uuid',
+						},
 					}
 				}
 			}
@@ -52,22 +89,22 @@ module.exports = function(grunt){
 		less: {
             dev: {
                 files: {
-                    './client/styles/main.css': './client/assets/less/main.less',
+                    '<%= client.styles.main %>': '<%= client.assets.less.main %>',
                 }
             }
         },
 
 		watch: {
 			styles: {
-				files: ['client/assets/**/*.less'],
+				files: ['<%= client.assets.less.all %>'],
 				tasks: ['less']
 			},
 			tests: {
-				files: ['client/spec/**/*Spec.js', 'client/scripts/**/*.js'],
+				files: ['<%= client.spec.all %>', '<%= client.scripts.all %>'],
 				tasks: ['test']
 			},
 			template: {
-				files: ['client/templates/index.html.tmpl'],
+				files: ['<%= client.templates.all %>'],
 				tasks: ['template']
 			}
 		},
@@ -76,24 +113,15 @@ module.exports = function(grunt){
 			dev: {
 				files: [
 					{
-						src: 'client/templates/index.html.tmpl',
-						dest: 'client/index.html',
+						src: '<%= client.templates.index %>',
+						dest: '<%= client.index %>',
 						data: {
 							main: 'main',
-							debug: false
 						}
-					},
+					},				
 					{
-						src: 'client/templates/index.html.tmpl',
-						dest: 'client/debug.html',
-						data: {
-							main: 'debug',
-							debug: true
-						}
-					},					
-					{
-						src: 'client/templates/config.js.tmpl',
-						dest: 'client/config.js',
+						src: '<%= client.templates.config %>',
+						dest: '<%= client.config %>',
 						data: {
 							paths: dependencies
 						}
@@ -102,7 +130,7 @@ module.exports = function(grunt){
 			},
 		},
 
-        clean: ['./client/styles', './client/index.html', './client/main.min.js', './client/config.js']
+        clean: ['<%= client.styles.folder %>', '<%= client.index %>', '<%= client.styles.mainMin %>', '<%= client.config %>']
 	});
 
 	grunt.loadNpmTasks('grunt-contrib-jasmine');
