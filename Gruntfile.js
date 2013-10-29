@@ -160,9 +160,13 @@ module.exports = function(grunt){
 		}
 	});
 	grunt.registerMultiTask('server', 'Start or stop server', function(){
-		var server = require('./server/main');
+		var server = require('./server/server');
+		var repository = require('./server/spec/fakeDB');
+		var fixture = require('./server/spec/fixture/boards');
+
 		if(this.target == 'start') {
-			server.start();
+			repository.populate(fixture);
+			server.start(8080, repository);
 		} else if (this.target == 'stop') {
 			server.stop();
 		}

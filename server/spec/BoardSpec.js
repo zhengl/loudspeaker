@@ -1,30 +1,117 @@
-// var server = require('../server');
+var webdriver = require('selenium-webdriver');
+var fs = require('fs');
+jasmine.getEnv().defaultTimeoutInterval = 10000;
 
+describe('Board', function(){
+	var driver;
 
-// describe('Board', function(){
-// 	beforeEach(function(){
-// 		console.log("ccc");
-// 		startServer();
-// 		// openSession();
-// 	});
+	beforeEach(function(){
+		buildDriver();
+		openSession();
+	});
 
-// 	it("draws lines", function(){
-// 		// drawALine();
-// 		// expectALineOnTheCanvas();
-// 	});
+	it("draws a line", function(){
+		drawALine();
+		expectALineOnTheCanvas();
+	});
 
-// 	afterEach(function(){
-// 		console.log("ddd")
-// 		// closeSession();
-// 		stopServer();
-// 	});
+	it("writes a text", function(){
+		writeAText();
+		expectATextOnTheCanvas();
+	});
 
-// 	function startServer(){
-// 		server.start(8080);
-// 	}
+	it("moves a line", function(){
+		drawALine();
+		moveTheLine();
+		expectAMovedLineOnTheCanvas();
+	});
 
-// 	function stopServer(){
-// 		server.stop();
-// 	}
-// });
+	afterEach(function(done){
+		closeSession(done);
+	});	
+});
 
+function buildDriver(){
+	driver = new webdriver.Builder()
+		.usingServer('http://localhost:4444/wd/hub')
+		.withCapabilities(webdriver.Capabilities.chrome())
+		.build();
+}
+
+function openSession(){
+	driver.manage().window().setSize(800, 600);
+	driver.get('http://localhost:8080');
+	driver.wait(function(){
+		return driver.findElement(webdriver.By.tagName('body')).isDisplayed();
+	}, 5000);
+}
+
+function closeSession(done){
+	driver.quit().then(function(){
+		done();
+	});
+}
+
+function drawALine(){
+	var board = driver.findElement(webdriver.By.id('board'));
+
+	driver.actions()
+		.mouseMove(board, { x: 1, y: 1 })
+		.mouseDown()
+		.mouseMove({ x: 0, y: 0 })
+		.mouseMove({ x: 0, y: 0 })
+		.mouseMove({ x: 100, y: 100 })
+		.mouseUp()
+		.perform();
+}
+
+function moveTheLine(){
+	var board = driver.findElement(webdriver.By.id('board'));
+
+	driver.actions()
+		.mouseMove(board, { x: 50, y: 50 })
+		.mouseDown()
+		.perform();
+	
+	driver.sleep(550);
+
+	driver.actions()
+		.mouseMove(board, { x: 100, y: 50 })
+		.mouseUp()
+		.perform();
+}
+
+function writeAText(){
+	var board = driver.findElement(webdriver.By.id('board'));
+
+	new webdriver.ActionSequence(driver)
+		.mouseMove(board, { x: 10, y: 10 })
+		.mouseDown()
+		.mouseUp()
+		.mouseDown()
+		.mouseUp()
+		.sendKeys('Hello World!')
+		.sendKeys(webdriver.Key.ENTER)
+		.perform();
+}
+
+function expectCanvastoEqualDataURLInFile(expected){
+	driver.executeScript('return document.querySelectorAll("#board canvas")[1].toDataURL()').then(function(dataUrl){
+		fs.readFile(__dirname + '/fixture/' + expected , "utf-8", function(err, expectedDataUrl){
+			fs.writeFile('url.txt', dataUrl)
+			expect(dataUrl).toEqual(expectedDataUrl);
+		})
+	});
+}
+
+function expectALineOnTheCanvas(){
+	expectCanvastoEqualDataURLInFile('line.data');
+}
+
+function expectATextOnTheCanvas(){
+	expectCanvastoEqualDataURLInFile('text.data');
+}
+
+function expectAMovedLineOnTheCanvas(){
+	expectCanvastoEqualDataURLInFile('movedLine.data');
+}
