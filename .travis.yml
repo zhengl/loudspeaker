@@ -6,6 +6,6 @@ before_script:
 
 addons:
   sauce_connect:
-    username: loylizh
+    username: "loylizh"
     access_key: 
-      secure: CKPiCAcM09XoeIysQKTMQf4YinR6lOFcGy4PO/A+GqtBlaSPqPoJQoqQlkF48BY2BToaJ5NAt7CXe2JbhicsIPPmcEbb2FwQOxqqWD1nSxRO+rmWZT6Q4mSYBhPnXuy4F4o3srIERpuS2SksmEg5hvdqHGNbc3P2PX/Z+0gFsSY=
+      secure: "CKPiCAcM09XoeIysQKTMQf4YinR6lOFcGy4PO/A+GqtBlaSPqPoJQoqQlkF48BY2BToaJ5NAt7CXe2JbhicsIPPmcEbb2FwQOxqqWD1nSxRO+rmWZT6Q4mSYBhPnXuy4F4o3srIERpuS2SksmEg5hvdqHGNbc3P2PX/Z+0gFsSY="
