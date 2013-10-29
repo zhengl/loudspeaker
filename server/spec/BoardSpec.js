@@ -33,7 +33,7 @@ describe('Board', function(){
 
 function buildDriver(){
 	driver = new webdriver.Builder()
-		.usingServer('http://localhost:4444/wd/hub')
+		.usingServer('http://localhost:4445/wd/hub')
 		.withCapabilities(webdriver.Capabilities.chrome())
 		.build();
 }
@@ -98,7 +98,7 @@ function writeAText(){
 function expectCanvastoEqualDataURLInFile(expected){
 	driver.executeScript('return document.querySelectorAll("#board canvas")[1].toDataURL()').then(function(dataUrl){
 		fs.readFile(__dirname + '/fixture/' + expected , "utf-8", function(err, expectedDataUrl){
-			fs.writeFile('url.txt', dataUrl)
+			// fs.writeFile('url.txt', dataUrl)
 			expect(dataUrl).toEqual(expectedDataUrl);
 		})
 	});
