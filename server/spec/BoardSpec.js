@@ -34,7 +34,11 @@ describe('Board', function(){
 function buildDriver(){
 	driver = new webdriver.Builder()
 		.usingServer('http://localhost:4445/wd/hub')
-		.withCapabilities(webdriver.Capabilities.chrome())
+		.withCapabilities(
+			webdriver.Capabilities.chrome()
+				.set('username', process.env.SAUCE_USERNAME)
+				.set('access-key', process.env.SAUCE_ACCESS_KEY)
+			)
 		.build();
 }
 
