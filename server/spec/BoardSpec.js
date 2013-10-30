@@ -37,7 +37,7 @@ function buildDriver(){
 		.withCapabilities(
 			webdriver.Capabilities.chrome()
 				.set('username', process.env.SAUCE_USERNAME)
-				.set('access-key', process.env.SAUCE_ACCESS_KEY)
+				.set('accessKey', process.env.SAUCE_ACCESS_KEY)
 			)
 		.build();
 }
