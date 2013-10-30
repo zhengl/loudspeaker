@@ -47,13 +47,17 @@ module.exports = function(grunt){
 		},
 
 		requirejs: {
-			dev: {
+			compile: {
 				options: {
-					baseUrl: '<%= client.scriptsFolder %>',
+					baseUrl: '<%= client.scripts.folder %>',
 					mainConfigFile: '<%= client.config %>',
-					out: 'client/main.min.js',
-					optimize: 'none',
-					name: '../main'
+					name: '../main',
+					preserveLicenseComments: false,
+					paths: {
+							"Kinetic": '../../lib/kinetic/kinetic-v4.6.0',
+							"uuid": '../../lib/uuid/uuid',
+					},
+					out: 'client/main.min.js'
 				}
 			}
 		},
@@ -87,12 +91,15 @@ module.exports = function(grunt){
 		},
 
 		less: {
-            dev: {
-                files: {
-                    '<%= client.styles.main %>': '<%= client.assets.less.main %>',
-                }
-            }
-        },
+			dev: {
+				options: {
+					cleancss: true            
+				},
+				files: {
+					'<%= client.styles.main %>': '<%= client.assets.less.main %>',
+				}
+			}
+		},
 
 		watch: {
 			styles: {
@@ -111,14 +118,7 @@ module.exports = function(grunt){
 
 		template: {
 			dev: {
-				files: [
-					{
-						src: '<%= client.templates.index %>',
-						dest: '<%= client.index %>',
-						data: {
-							main: 'main',
-						}
-					},				
+				files: [			
 					{
 						src: '<%= client.templates.config %>',
 						dest: '<%= client.config %>',
@@ -135,7 +135,7 @@ module.exports = function(grunt){
 			stop: {}
 		},
 
-        clean: ['<%= client.styles.folder %>', '<%= client.index %>', '<%= client.styles.mainMin %>', '<%= client.config %>']
+        clean: ['<%= client.styles.folder %>', '<%= client.styles.mainMin %>', '<%= client.config %>']
 	});
 
 	grunt.loadNpmTasks('grunt-contrib-jasmine');
@@ -146,11 +146,11 @@ module.exports = function(grunt){
 	grunt.loadNpmTasks('grunt-contrib-watch');
 	grunt.loadNpmTasks('grunt-contrib-jshint');
 
-	grunt.registerTask('compile', ['template', 'less']);
-	grunt.registerTask('unit-test', ['template', 'jasmine']);
-	grunt.registerTask('functional-test', ['server:start', 'jasmine_node', 'server:stop']);
-	grunt.registerTask('test', ['jshint', 'unit-test', 'functional-test']);
-	grunt.registerTask('default', ['compile', 'test']);
+	grunt.registerTask('compile', ['template', 'less', 'requirejs']);
+	grunt.registerTask('unit-test', ['jasmine']);
+	grunt.registerTask('functional-test', ['compile', 'server:start', 'jasmine_node', 'server:stop']);
+	grunt.registerTask('test', ['unit-test', 'functional-test']);
+	grunt.registerTask('default', ['jshint', 'test']);
 	grunt.registerMultiTask('template', 'Generate files from templates', function(){
 		var files = this.data.files;
 		for(var i = 0; i < files.length; i++) {

@@ -1,6 +1,6 @@
 var webdriver = require('selenium-webdriver');
 var fs = require('fs');
-jasmine.getEnv().defaultTimeoutInterval = 10000;
+jasmine.getEnv().defaultTimeoutInterval = 30000;
 
 describe('Board', function(){
 	var driver;
@@ -38,6 +38,8 @@ function buildDriver(){
 			webdriver.Capabilities.chrome()
 				.set('username', process.env.SAUCE_USERNAME)
 				.set('accessKey', process.env.SAUCE_ACCESS_KEY)
+				.set('tunnel-identifier', process.env.TRAVIS_JOB_NUMBER)
+				.set('build', process.env.TRAVIS_BUILD_NUMBER)
 			)
 		.build();
 }
