@@ -168,7 +168,10 @@ define('app', ['BoardFactory', 'NoteFactory', 'MouseEventPreprocessor', 'DOMPale
 
             document.body.style.visibility = 'visible';
             
-            return board;
+            return {
+                board: board,
+                note: note
+            };
         },
     };
 });

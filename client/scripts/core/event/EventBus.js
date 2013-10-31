@@ -21,7 +21,7 @@ EventBus.prototype.publish = function(event){
 	if (!event){
 		return;
 	}
-	console.log(event);
+
 	for (var index in this.listeners) {
 		this.listeners[index].notify(event);
 	}

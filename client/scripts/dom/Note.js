@@ -9,9 +9,18 @@ Note.prototype.constructor = Note;
 
 Note.prototype.addTo = function(context) {
 	if(context instanceof KineticContext && this.getElement()){
-		context.getElement().insertBefore(this.getElement(), context.getElement().firstChild);
+		context.getElement().appendChild(this.getElement());
 	}
 	context.getItems().push(this);
+	this.setParent(context);
+	this.moveTo(this.getPosition());
+};
+
+Note.prototype.addDraftTo = function(context) {
+	if(context instanceof KineticContext && this.getElement()){
+		context.getElement().appendChild(this.getElement());
+	}
+	context.getDraftItems().push(this);
 	this.setParent(context);
 	this.moveTo(this.getPosition());
 };

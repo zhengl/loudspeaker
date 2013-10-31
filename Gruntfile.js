@@ -47,7 +47,7 @@ module.exports = function(grunt){
 		},
 
 		requirejs: {
-			compile: {
+			main: {
 				options: {
 					baseUrl: '<%= client.scripts.folder %>',
 					mainConfigFile: '<%= client.config %>',
@@ -58,6 +58,19 @@ module.exports = function(grunt){
 							"uuid": '../../lib/uuid/uuid',
 					},
 					out: 'client/main.min.js'
+				}
+			},
+			debug: {
+				options: {
+					baseUrl: '<%= client.scripts.folder %>',
+					mainConfigFile: '<%= client.config %>',
+					name: '../debug',
+					optimize: 'none',
+					paths: {
+							"Kinetic": '../../lib/kinetic/kinetic-v4.6.0',
+							"uuid": '../../lib/uuid/uuid',
+					},
+					out: 'client/debug.min.js'
 				}
 			}
 		},
@@ -96,19 +109,23 @@ module.exports = function(grunt){
 					cleancss: true            
 				},
 				files: {
-					'<%= client.styles.main %>': '<%= client.assets.less.main %>',
+				'<%= client.styles.main %>': '<%= client.assets.less.main %>',
 				}
 			}
 		},
 
 		watch: {
+			scripts: {
+				files: ['<%= client.scripts.all %>'],
+				tasks: ['compile']				
+			},
 			styles: {
 				files: ['<%= client.assets.less.all %>'],
 				tasks: ['less']
 			},
 			tests: {
 				files: ['<%= client.spec.all %>', '<%= client.scripts.all %>'],
-				tasks: ['test']
+				tasks: ['unit-test']
 			},
 			template: {
 				files: ['<%= client.templates.all %>'],
@@ -146,7 +163,7 @@ module.exports = function(grunt){
 	grunt.loadNpmTasks('grunt-contrib-watch');
 	grunt.loadNpmTasks('grunt-contrib-jshint');
 
-	grunt.registerTask('compile', ['template', 'less', 'requirejs']);
+	grunt.registerTask('compile', ['template', 'less', 'requirejs:debug']);
 	grunt.registerTask('unit-test', ['jasmine']);
 	grunt.registerTask('functional-test', ['compile', 'server:start', 'jasmine_node', 'server:stop']);
 	grunt.registerTask('test', ['unit-test', 'functional-test']);

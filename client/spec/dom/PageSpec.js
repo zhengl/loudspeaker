@@ -51,7 +51,7 @@ describe('Page', function(){
 		expectNoDraftItem(board);
 
 		board.addItem(note);
-		expect(board.getElement().firstChild).toBe(note.getElement());
+		expect(board.getElement().lastChild).toBe(note.getElement());
 		drawALineOn(note, 10, 0, 10, 10);
 
 		expect(note.getContext().getItems().length).toEqual(2);
@@ -74,6 +74,7 @@ describe('Page', function(){
 		triggerFinishMovingEvent(note.getEventBus());
 
 		expect(note.getPosition()).toEqual({x: 10, y: 10});
+		// expect(board.getElement().lastChild).toBe(note.getElement());
 	});
 
 	it("should be removable after being appended", function(){
