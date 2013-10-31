@@ -13,7 +13,7 @@ Debugger.prototype.adhereTo = function(page) {
 };
 
 Debugger.prototype.notify = function(event) {
-	console.debug(event)
+	console.debug(event);
 };
 
 return Debugger;

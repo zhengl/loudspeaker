@@ -109,37 +109,40 @@ define('app', ['BoardFactory', 'NoteFactory', 'MouseEventPreprocessor', 'DOMPale
             globalEventBus = new EventBus();
 
             var boardFactory = new BoardFactory();
-            board = boardFactory.create(
-                boardElement,
-                {
-                    width: boardActualWidth,
-                    height: boardActualHeight,
-                    palette: palette,
-                    rubbishbin: {
-                        element: rubbishbinElement,
-                        width: rubbishBinWidth,
-                        height: rubbishBinHeight,
-                    },
-                    eventPreprocessor: boardEventPreprocessor,
-                    globalEventBus: globalEventBus
-                }
-            );
+            var boardOptions = 
+            {
+                element: boardElement,
+                width: boardActualWidth,
+                height: boardActualHeight,
+                palette: palette,
+                rubbishbin: {
+                    element: rubbishbinElement,
+                    width: rubbishBinWidth,
+                    height: rubbishBinHeight,
+                },
+                eventPreprocessor: boardEventPreprocessor,
+                globalEventBus: globalEventBus
+            };
+            boardFactory.setOptions(boardOptions);
+            board = boardFactory.create();
 
             var noteFactory = new NoteFactory();
-            note = noteFactory.create(
-                noteElement, {
-                    width: noteActualWidth,
-                    height: noteActualHeight,
-                    palette: palette,
-                    rubbishbin: {
-                        element: rubbishbinElement,
-                        width: noteRubbishBinWidth,
-                        height: noteRubbishBinHeight,
-                    },
-                    eventPreprocessor: noteEventPreprocessor,
-                    globalEventBus: globalEventBus
-                }
-            );
+            var noteOptions = 
+            {
+                element: noteElement,
+                width: noteActualWidth,
+                height: noteActualHeight,
+                palette: palette,
+                rubbishbin: {
+                    element: rubbishbinElement,
+                    width: noteRubbishBinWidth,
+                    height: noteRubbishBinHeight,
+                },
+                eventPreprocessor: noteEventPreprocessor,
+                globalEventBus: globalEventBus
+            };
+            noteFactory.setOptions(noteOptions);
+            note = noteFactory.create();
 
             boardElement.appendChild(rubbishbinElement);
             noteElement.appendChild(noteRubbishbinElement);
@@ -157,7 +160,7 @@ define('app', ['BoardFactory', 'NoteFactory', 'MouseEventPreprocessor', 'DOMPale
             };
 
             var noteStack = document.getElementById('note-stack');
-            var supplier = new NoteSupplier(noteStack);
+            var supplier = new NoteSupplier(noteStack, noteFactory);
             supplier.enableEventHandling(globalEventBus);
 
             onRepaint();

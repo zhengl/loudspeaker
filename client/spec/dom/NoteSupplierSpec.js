@@ -1,4 +1,4 @@
-require(['NoteSupplier', 'EventBus'], function(NoteSupplier, EventBus){
+require(['NoteSupplier', 'EventBus', 'NoteFactory'], function(NoteSupplier, EventBus, NoteFactory){
 
 
 describe("NoteSupplier", function(){
@@ -7,8 +7,16 @@ describe("NoteSupplier", function(){
 	var eventBus;
 
 	beforeEach(function(){
+		var options = {
+			width: 50,
+			height: 50,
+		};
+
+		var noteFactory = new NoteFactory();
+		noteFactory.setOptions(options);
+
 		noteStack = document.createElement('div');
-		supplier = new NoteSupplier(noteStack);
+		supplier = new NoteSupplier(noteStack, noteFactory);
 		document.body.appendChild(noteStack);
 		eventBus = new EventBus();
 		supplier.enableEventHandling(eventBus);
@@ -26,6 +34,7 @@ describe("NoteSupplier", function(){
 
 		expect(noteStack.children[0].className).toEqual("note");
 		expect(noteStack.children.length).toEqual(1);
+		expect(noteStack.children[0].children.length).toBeGreaterThan(1);
 	});
 
 	it("should not add note when there is note on stack", function(){

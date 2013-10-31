@@ -15,11 +15,13 @@ describe('PageFactory', function(){
 
 	it('creates a basic page', function(){
 		var options = {
+			element: pageElement,
 			height: 50,
 			width: 50,
 		};
 
-		var page = factory.create(pageElement, options);
+		factory.setOptions(options);
+		var page = factory.create();
 
 		expect(page.getElement()).toBe(pageElement);
 		expect(page.getContext() instanceof KineticContext).toBeTruthy();
@@ -32,6 +34,7 @@ describe('PageFactory', function(){
 		rubbishBinElement = document.createElement('div');
 
 		var options = {
+			element: pageElement,
 			height: 50,
 			width: 50,
 			rubbishbin: {
@@ -41,7 +44,8 @@ describe('PageFactory', function(){
 			}
 		};
 
-		var page = factory.create(pageElement, options);
+		factory.setOptions(options);
+		var page = factory.create();
 
 		expect(page.getMover().getRubbishBin() instanceof DOMRubbishBin).toBeTruthy();
 		expect(pageElement.lastChild).toBe(rubbishBinElement);

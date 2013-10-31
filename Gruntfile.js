@@ -166,7 +166,7 @@ module.exports = function(grunt){
 	grunt.registerTask('compile', ['template', 'less', 'requirejs:debug']);
 	grunt.registerTask('unit-test', ['jasmine']);
 	grunt.registerTask('functional-test', ['compile', 'server:start', 'jasmine_node', 'server:stop']);
-	grunt.registerTask('test', ['unit-test', 'functional-test']);
+	grunt.registerTask('test', ['unit-test']);
 	grunt.registerTask('default', ['jshint', 'test']);
 	grunt.registerMultiTask('template', 'Generate files from templates', function(){
 		var files = this.data.files;

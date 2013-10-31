@@ -1,35 +1,44 @@
 define('PageFactory', ['Page', 'KineticContext', 'KineticPainter', 'KineticTexter', 'KineticTextInput', 'Mover', 'DOMRubbishBin', 'EventBus', 'Point', 'MouseEventInterpreter', 'PaintingGestureDetector', 'TextingGestureDetector', 'MovingGestureDetector', 'KineticLine'], function(Page, KineticContext, KineticPainter, KineticTexter, KineticTextInput, Mover, DOMRubbishBin, EventBus, Point, MouseEventInterpreter, PaintingGestureDetector, TextingGestureDetector, MovingGestureDetector, KineticLine){
 
-function PageFactory(){
+function PageFactory(options){
 	this.pageClass = Page;
+	this.options = options;
 }
 
-PageFactory.prototype.create = function(element, options){
+PageFactory.prototype.create = function(){
 	var page = new this.pageClass();
-	page.setElement(element);
+	page.setElement(this.options.element);
 	page.setPosition(new Point(0, 0));
 
 	var eventBus = this.createEventBus();
 	page.setEventBus(eventBus);
 
-	page.setPalette(options.palette);
+	page.setPalette(this.options.palette);
 	
-	var interpreter = this.createInterpreter(eventBus, options.eventPreprocessor, options.globalEventBus);
+	var interpreter = this.createInterpreter(eventBus, this.options.eventPreprocessor, this.options.globalEventBus);
 
-	var context = this.createContext(element, options.width, options.height, interpreter);
+	var context = this.createContext(this.options.element, this.options.width, this.options.height, interpreter);
 	page.setContext(context);
 	context.setPage(page);
 
-	var painter = this.createPainter(context, options.palette, eventBus);
+	var painter = this.createPainter(context, this.options.palette, eventBus);
 	page.setPainter(painter);
 
-	var texter = this.createTexter(context, options.palette, eventBus);
+	var texter = this.createTexter(context, this.options.palette, eventBus);
 	page.setTexter(texter);
 
-	var mover = this.createMover(context, eventBus, options.rubbishbin, options.width, options.height, element);
+	var mover = this.createMover(context, eventBus, this.options.rubbishbin, this.options.width, this.options.height, this.options.element);
 	page.setMover(mover);
 
 	return page;
+};
+
+PageFactory.prototype.setOptions = function(options) {
+	this.options = options;
+};
+
+PageFactory.prototype.setElement = function(element) {
+	this.options.element = element;
 };
 
 PageFactory.prototype.getMovables = function() {

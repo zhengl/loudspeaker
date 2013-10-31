@@ -23,6 +23,7 @@ describe('Page', function(){
 
 		var preprocessor = new MouseEventPreprocessor();
 		var options = {
+			element: boardElement,
 			width: 100,
 			height: 100,
 			palette: palette,
@@ -30,16 +31,19 @@ describe('Page', function(){
 		};
 
 		var noteOptions = {
+			element: noteElement,
 			width: 50,
 			height: 50,
 			palette: palette,
 			eventPreprocessor: preprocessor,
 		};
 		var boardFactory = new BoardFactory();
-		board = boardFactory.create(boardElement, options);
+		boardFactory.setOptions(options);
+		board = boardFactory.create();
 
 		var noteFactory = new NoteFactory();
-		note = noteFactory.create(noteElement, noteOptions);
+		noteFactory.setOptions(noteOptions);
+		note = noteFactory.create();
 	});
 
 	it("appends another page", function(){
