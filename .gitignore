@@ -5,3 +5,4 @@ styles/
 debug.min.js
 main.min.js
 config.js
+sauce_connect.log

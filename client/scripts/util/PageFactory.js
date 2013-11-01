@@ -33,7 +33,12 @@ PageFactory.prototype.create = function(){
 	var mover = this.createMover(context, eventBus, this.options.rubbishbin, this.options.width, this.options.height, this.options.element);
 	page.setMover(mover);
 
+	this.takeAddtionalAction(page);
+
 	return page;
+};
+
+PageFactory.prototype.takeAddtionalAction = function() {
 };
 
 PageFactory.prototype.adjustHeightOnResize = function(element, ratio) {

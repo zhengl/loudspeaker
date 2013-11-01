@@ -26,6 +26,7 @@ describe('Page', function(){
 			element: boardElement,
 			width: 100,
 			height: 100,
+			ratio: 16 / 9,
 			palette: palette,
 			eventPreprocessor: preprocessor,
 		};
@@ -34,6 +35,7 @@ describe('Page', function(){
 			element: noteElement,
 			width: 50,
 			height: 50,
+			ratio: 1,
 			palette: palette,
 			eventPreprocessor: preprocessor,
 		};
@@ -78,7 +80,25 @@ describe('Page', function(){
 		triggerFinishMovingEvent(note.getEventBus());
 
 		expect(note.getPosition()).toEqual({x: 10, y: 10});
-		// expect(board.getElement().lastChild).toBe(note.getElement());
+		expect(board.getElement().lastChild).toBe(note.getElement());
+	});
+
+	it("should not relocate after window resize as a note", function(){
+		board.addItem(note);
+		note.moveTo(new Point(10, 20));
+
+		noteElement.style.width = "100px";
+		fireResizeEvent();
+
+		expect(noteElement.style.left).toEqual('20px');
+		expect(noteElement.style.top).toEqual('40px');
+	});
+
+	it("should relocate after window resize as a note being appended to a board", function(){
+		fireResizeEvent();
+
+		expect(noteElement.style.left).toEqual('');
+		expect(noteElement.style.top).toEqual('');
 	});
 
 	it("should be removable after being appended", function(){

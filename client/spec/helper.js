@@ -123,3 +123,9 @@ function fireEvent( target, type, event ) {
 		target.fireEvent( "on" + type, event );
 	}
 }
+
+function fireResizeEvent() {
+	var evt = document.createEvent('UIEvents');
+	evt.initUIEvent('resize', true, false,window,0);
+	fireEvent(window, null, evt);	
+}

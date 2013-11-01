@@ -37,57 +37,6 @@ define('app', ['BoardFactory', 'NoteFactory', 'MouseEventPreprocessor', 'DOMPale
     var dragger;
     var trigger;
 
-    function adjustBoardHeight() {
-        boardStyleWidth = boardElement.offsetWidth;
-        boardStyleHeight = boardStyleWidth / ratio;
-        boardElement.style.height = boardStyleHeight + 'px';
-
-        board.getContext().setScale(boardStyleWidth / boardActualWidth);
-    }
-
-    function adjustNote(zoom){
-        adjustNoteHeight();
-        adjustNotePosition(zoom);
-    }
-
-    function adjustNoteHeight(){
-        noteStyleWidth = boardElement.offsetWidth / boardAndNoteSizeRatio;
-        noteElement.style.width = noteStyleWidth + 'px';
-        noteElement.style.height = noteStyleWidth + 'px';
-
-        note.getContext().setScale(noteStyleWidth / noteActualWidth);
-    }
-
-    function adjustNotePosition(zoom){
-        var items = board.getContext().getItems();
-
-        for(var i = 0; i < items.length; i++) {
-            if(items[i] instanceof Note){
-                items[i].setZoomPercentage(zoom);
-                items[i].moveTo(items[i].getPosition());
-            }
-        }
-    }
-
-    function adjustBoardRubbishBinHeight(){
-        rubbishbinElement.style.height = boardStyleHeight + 'px';
-    }
-
-    function adjustNoteRubbishBinHeight(){
-        noteRubbishbinElement.style.height = noteStyleWidth + 'px';
-    }
-
-    function onRepaint(){
-        adjustBoardHeight();
-        adjustBoardRubbishBinHeight();
-        var zoom = boardActualWidth / boardStyleWidth;
-        boardEventPreprocessor.setZoomPercentage(zoom);
-        noteEventPreprocessor.setZoomPercentage(zoom);
-        dragger.setZoomPercentage(zoom);
-        adjustNote(zoom);
-        adjustNoteRubbishBinHeight();
-    }
-
     return {
         start: function(){
             boardEventPreprocessor = new MouseEventPreprocessor();
@@ -114,6 +63,7 @@ define('app', ['BoardFactory', 'NoteFactory', 'MouseEventPreprocessor', 'DOMPale
                 element: boardElement,
                 width: boardActualWidth,
                 height: boardActualHeight,
+                ratio: ratio,
                 palette: palette,
                 rubbishbin: {
                     element: rubbishbinElement,
@@ -132,6 +82,7 @@ define('app', ['BoardFactory', 'NoteFactory', 'MouseEventPreprocessor', 'DOMPale
                 element: noteElement,
                 width: noteActualWidth,
                 height: noteActualHeight,
+                ratio: 1,
                 palette: palette,
                 rubbishbin: {
                     element: rubbishbinElement,
@@ -162,12 +113,6 @@ define('app', ['BoardFactory', 'NoteFactory', 'MouseEventPreprocessor', 'DOMPale
             var noteStack = document.getElementById('note-stack');
             var supplier = new NoteSupplier(noteStack, noteFactory);
             supplier.enableEventHandling(globalEventBus);
-
-            onRepaint();
-
-            window.onresize = function(){
-              onRepaint();
-            };
 
             document.body.style.visibility = 'visible';
             

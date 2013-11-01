@@ -17,6 +17,20 @@ NoteFactory.prototype.createInterpreter = function(eventBus, eventPreprocessor, 
 	return interpreter;
 };
 
+NoteFactory.prototype.takeAddtionalAction = function(note) {
+	this.adjustPosition(note);
+};
+
+NoteFactory.prototype.adjustPosition = function(note) {
+	var self = this;
+	window.addEventListener('resize', function() {
+		if(undefined != note.getParent()){
+			note.setZoomPercentage(self.options.width / self.options.element.offsetWidth);
+			note.moveTo(note.getPosition());
+		}
+	});
+};
+
 NoteFactory.prototype.getMovables = function() {
 	return [Line, Text];
 };

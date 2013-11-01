@@ -33,9 +33,7 @@ describe('PageFactory', function(){
 	});
 
 	it('adjusts height when window resizes', function(){
-		var evt = document.createEvent('UIEvents');
-		evt.initUIEvent('resize', true, false,window,0);
-		fireEvent(window, null, evt);
+		fireResizeEvent();
 
 		var width = page.getElement().offsetWidth;
 		var height = parseInt(page.getElement().style.height, 10);
@@ -43,9 +41,7 @@ describe('PageFactory', function(){
 	});
 
 	it('adjusts scale of context when window resizes', function(){
-		var evt = document.createEvent('UIEvents');
-		evt.initUIEvent('resize', true, false,window,0);
-		fireEvent(window, null, evt);
+		fireResizeEvent();
 
 		var width = page.getElement().offsetWidth;
 		expect(page.getContext().getScale().x).toEqual(width/50);
