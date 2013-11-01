@@ -163,7 +163,7 @@ module.exports = function(grunt){
 	grunt.loadNpmTasks('grunt-contrib-watch');
 	grunt.loadNpmTasks('grunt-contrib-jshint');
 
-	grunt.registerTask('compile', ['template', 'less', 'requirejs:debug']);
+	grunt.registerTask('compile', ['template', 'less', 'requirejs:main']);
 	grunt.registerTask('unit-test', ['jasmine']);
 	grunt.registerTask('functional-test', ['compile', 'server:start', 'jasmine_node', 'server:stop']);
 	grunt.registerTask('test', ['unit-test']);

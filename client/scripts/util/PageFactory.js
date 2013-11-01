@@ -8,6 +8,8 @@ function PageFactory(options){
 PageFactory.prototype.create = function(){
 	var page = new this.pageClass();
 	page.setElement(this.options.element);
+	this.adjustHeightOnResize(this.options.element, this.options.ratio);
+
 	page.setPosition(new Point(0, 0));
 
 	var eventBus = this.createEventBus();
@@ -20,6 +22,7 @@ PageFactory.prototype.create = function(){
 	var context = this.createContext(this.options.element, this.options.width, this.options.height, interpreter);
 	page.setContext(context);
 	context.setPage(page);
+	this.adjustContextScale(context, this.options.element.offsetWidth, this.options.width);
 
 	var painter = this.createPainter(context, this.options.palette, eventBus);
 	page.setPainter(painter);
@@ -31,6 +34,21 @@ PageFactory.prototype.create = function(){
 	page.setMover(mover);
 
 	return page;
+};
+
+PageFactory.prototype.adjustHeightOnResize = function(element, ratio) {
+	window.addEventListener('resize', function(){
+		var styleWidth = element.offsetWidth;
+		var styleHeight = styleWidth / ratio;
+		element.style.height = styleHeight + 'px';
+	});
+};
+
+PageFactory.prototype.adjustContextScale = function(context, styleWidth, actualWidth) {
+	window.addEventListener('resize', function(){
+		context.setScale(styleWidth / actualWidth);
+	});	
+
 };
 
 PageFactory.prototype.setOptions = function(options) {

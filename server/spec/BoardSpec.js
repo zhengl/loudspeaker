@@ -1,11 +1,15 @@
 var webdriver = require('selenium-webdriver');
 var fs = require('fs');
+var matchers = require('./matchers');
 jasmine.getEnv().defaultTimeoutInterval = 30000;
 
 describe('Board', function(){
 	var driver;
 
 	beforeEach(function(){
+		this.addMatchers({
+			toEqualDataUrlWithTolerance: matchers.toEqualDataUrlWithTolerance
+		});
 		buildDriver();
 		openSession();
 	});
@@ -15,20 +19,16 @@ describe('Board', function(){
 		expectALineOnTheCanvas();
 	});
 
-	xit("writes a text", function(){
+	it("writes a text", function(){
 		writeAText();
 		expectATextOnTheCanvas();
 	});
 
-	xit("moves a line", function(){
+	it("moves a line", function(){
 		drawALine();
 		moveTheLine();
 		expectAMovedLineOnTheCanvas();
 	});
-
-	// it("opens the panel", function(){
-		
-	// })
 
 	afterEach(function(done){
 		closeSession(done);
@@ -37,8 +37,8 @@ describe('Board', function(){
 
 function buildDriver(){
 	var caps = new webdriver.Capabilities()
-		.set('browserName', 'firefox')
-		// .set('platform', 'Windows 7')
+		.set('browserName', 'chrome')
+		.set('platform', 'WINDOWS')
 		.set('name', 'Loudspeaker')
 		.set('username', process.env.SAUCE_USERNAME)
 		.set('accessKey', process.env.SAUCE_ACCESS_KEY)
@@ -52,8 +52,8 @@ function buildDriver(){
 }
 
 function openSession(){
-	// driver.manage().window().setSize(800, 600);
-	driver.get('http://localhost:8080/debug.html');
+	driver.manage().window().setSize(800, 600);
+	driver.get('http://localhost:8080');
 	driver.wait(function(){
 		return driver.findElement(webdriver.By.tagName('body')).isDisplayed();
 	}, 5000);
@@ -111,18 +111,13 @@ function writeAText(){
 function expectCanvastoEqualDataURLInFile(expected){
 	driver.executeScript('return document.querySelectorAll("#board canvas")[1].toDataURL()').then(function(dataUrl){
 		fs.readFile(__dirname + '/fixture/' + expected , "utf-8", function(err, expectedDataUrl){
-			// fs.writeFile('url.txt', dataUrl)
-			expect(dataUrl).toEqual(expectedDataUrl);
+			expect(dataUrl).toEqualDataUrlWithTolerance(expectedDataUrl, 0.15);
 		})
 	});
 }
 
 function expectALineOnTheCanvas(){
-	driver.manage().logs().get('browser').then(function(logs){
-		console.log(arguments)
-		console.log(logs);
-	});
-	// expectCanvastoEqualDataURLInFile('line.data');
+	expectCanvastoEqualDataURLInFile('line.data');
 }
 
 function expectATextOnTheCanvas(){

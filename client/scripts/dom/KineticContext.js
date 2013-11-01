@@ -77,6 +77,10 @@ KineticContext.prototype.setScale = function(percentage){
 	this.stage.draw();
 };
 
+KineticContext.prototype.getScale = function() {
+	return this.stage.getScale();
+};
+
 KineticContext.prototype.setPage = function(page) {
 	this.page = page;
 };
