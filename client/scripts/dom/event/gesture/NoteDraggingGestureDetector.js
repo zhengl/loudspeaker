@@ -27,6 +27,14 @@ NoteDraggingGestureDetector.prototype.startDragging = function(event) {
 			self.eventBus.publish(new Event(Event.Note.START_DRAGGING, {item: event.targetItem, position: new Point(event.canvasX, event.canvasY) }));
 			self.isMoving = true;
 			self.inform(self);
+
+			document.body.onmousemove = function(event){
+				self.eventBus.publish(new Event(Event.Note.MOVE_TO, { position: new Point(event.clientX, event.clientY) }));
+			};
+
+			document.body.onmouseup = function(){
+				self.eventBus.publish(new Event(Event.Note.FINISH_DRAGGING));
+			};
 		}, DRAGGING_INTERVAL);
 	}  else {
 		this.rewind();
@@ -35,7 +43,7 @@ NoteDraggingGestureDetector.prototype.startDragging = function(event) {
 
 NoteDraggingGestureDetector.prototype.moveTo = function(event) {
 	if(this.isMoving) {
-		this.eventBus.publish(new Event(Event.Note.MOVE_TO, { position: new Point(event.pageX, event.pageY) }));
+		this.eventBus.publish(new Event(Event.Note.MOVE_TO, { position: new Point(event.clientX, event.clientY) }));
 		this.inform(this);
 	} else {
 		this.rewind();
@@ -46,6 +54,9 @@ NoteDraggingGestureDetector.prototype.finishDragging = function() {
 	if(this.isMoving) {
 		this.eventBus.publish(new Event(Event.Note.FINISH_DRAGGING));
 		this.inform(this);
+
+		document.body.onmousemove = null;
+		document.body.onmouseup = null;
 	} else {
 		this.rewind();
 	}
@@ -54,6 +65,8 @@ NoteDraggingGestureDetector.prototype.finishDragging = function() {
 NoteDraggingGestureDetector.prototype.rewind = function() {
 	this.currentCandidateSteps = this.rootSteps;
 	window.clearTimeout(this.draggingTimerId);
+	document.body.onmousemove = null;
+	document.body.onmouseup = null;
 };
 
 return NoteDraggingGestureDetector;

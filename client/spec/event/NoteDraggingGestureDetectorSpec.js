@@ -36,12 +36,14 @@ describe("NoteDraggingGestureDetector", function(){
 		expect(eventBus.publish).toHaveBeenCalledWith(new Event(Event.Note.MOVE_TO, { position: {x: 10, y: 10} }));
 	});
 
-	it("triggers MOVE_TO after long press and MOVE_TO on document", function(){
+	it("triggers MOVE_TO after long press and MOVE_TO on body", function(){
 		detector.detect(createEvent(Event.Mouse.MOUSE_DOWN, 10, 10, note));
 		jasmine.Clock.tick(501);
-		detector.detect(createEvent(Event.Mouse.MOVE_TO, null, null, note, 10, 10));
+		var event = createEvent(Event.Mouse.MOVE_TO, null, null, note, 10, 10);
+		fireEvent(document.body, 'mousemove', event);
 
 		expect(eventBus.publish).toHaveBeenCalledWith(new Event(Event.Note.MOVE_TO, { position: {x: 10, y: 10} }));
+		detector.rewind();
 	});
 
 	it("triggers FINISH_DRAGGING after long press and MOVE_TO, and MOUSE_UP on note", function(){

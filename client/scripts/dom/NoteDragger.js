@@ -23,15 +23,6 @@ NoteDragger.prototype.startDragging = function(note, relativePosition) {
 	this.originalParent = this.draggingNote.getElement().parentNode;
 	
 	this.appendToBody();
-
-	var self = this;
-	document.body.onmousemove = function(event){
-		self.eventBus.publish(new Event(Event.Note.MOVE_TO, { position: new Point(event.clientX, event.clientY) }));
-	};
-
-	document.body.onmouseup = function(){
-		self.eventBus.publish(new Event(Event.Note.FINISH_DRAGGING));
-	};
 };
 
 
@@ -54,8 +45,6 @@ NoteDragger.prototype.finishDragging = function() {
 	} else {
 		this.appendToOriginalParent();
 	}
-	document.body.onmousemove = null;
-	document.body.onmouseup = null;
 };
 
 NoteDragger.prototype.isDroppedInDroppable = function() {

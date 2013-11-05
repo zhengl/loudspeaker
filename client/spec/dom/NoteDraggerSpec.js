@@ -32,25 +32,6 @@ describe('NoteDragger', function(){
 		expect(noteElement.style.left).toEqual("200px");
 	});
 
-	it("bind body to onmousemove and onmouseup", function(){
-		expect(document.body.onmousemove).toBeNull();
-		expect(document.body.onmouseup).toBeNull();
-
-		dragger.startDragging(note, new Point(10, 10));
-
-		expect(document.body.onmousemove).not.toBeNull();
-		expect(document.body.onmouseup).not.toBeNull();
-	});
-
-	it("unbind body from onmousemove and onmouseup", function(){
-		dragger.startDragging(note, new Point(10, 10));
-		dragger.dragTo(new Point(20, 20));
-		dragger.finishDragging();
-
-		expect(document.body.onmousemove).toBeNull();
-		expect(document.body.onmouseup).toBeNull();		
-	});	
-
 	it("drags a note to absolute position", function(){
 		dragger.startDragging(note, new Point(10, 10));
 		dragger.dragTo(new Point(30, 30));

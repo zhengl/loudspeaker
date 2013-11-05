@@ -3,13 +3,10 @@ require(['config'], function(){
 
 require(['app', 'Debugger'], function(app, Debugger){
     componants = app.start();
-    var boardDebugger = new Debugger();
-    var board = componants.board;
-    boardDebugger.adhereTo(board);
-
-    var noteDebugger = new Debugger();
-    var note = componants.note;
-    noteDebugger.adhereTo(note);
+    var eventDebugger = new Debugger();
+    eventDebugger.adhereTo(componants.board);
+    eventDebugger.adhereTo(componants.note);
+    componants.globalEventBus.addListener(eventDebugger);
 });
 
 

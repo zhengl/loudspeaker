@@ -126,7 +126,8 @@ define('app', ['BoardFactory', 'NoteFactory', 'MouseEventPreprocessor', 'DOMPale
             
             return {
                 board: board,
-                note: note
+                note: note,
+                globalEventBus: globalEventBus
             };
         },
     };
