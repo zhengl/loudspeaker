@@ -7,6 +7,14 @@ describe('Page', function(){
 	var boardElement;
 	var noteElement;
 
+	var BOARD_WIDTH = 100;
+	var BOARD_HEIGHT = 100;
+	var BOARD_RATIO = 16 / 9;
+
+	var NOTE_WIDTH = 50;
+	var NOTE_HEIGHT = 50;
+	var NOTE_RATIO = 1;
+
 	beforeEach(function(){
 		boardElement = document.createElement('div');
 		boardElement.id = 'board';
@@ -24,18 +32,18 @@ describe('Page', function(){
 		var preprocessor = new MouseEventPreprocessor();
 		var options = {
 			element: boardElement,
-			width: 100,
-			height: 100,
-			ratio: 16 / 9,
+			width: BOARD_WIDTH,
+			height: BOARD_HEIGHT,
+			ratio: BOARD_RATIO,
 			palette: palette,
 			eventPreprocessor: preprocessor,
 		};
 
 		var noteOptions = {
 			element: noteElement,
-			width: 50,
-			height: 50,
-			ratio: 1,
+			width: NOTE_WIDTH,
+			height: NOTE_HEIGHT,
+			ratio: NOTE_RATIO,
 			palette: palette,
 			eventPreprocessor: preprocessor,
 		};
@@ -83,7 +91,14 @@ describe('Page', function(){
 		expect(board.getElement().lastChild).toBe(note.getElement());
 	});
 
-	it("should not relocate after window resize as a note", function(){
+	it("should reset zoom percentage after window resize", function(){
+		noteElement.style.width = "100px";
+		fireResizeEvent();
+
+		expect(note.getZoomPercentage()).toEqual(NOTE_WIDTH / 100);
+	});
+
+	it("should not relocate after window resize as a note not being appended to a board", function(){
 		board.addItem(note);
 		note.moveTo(new Point(10, 20));
 

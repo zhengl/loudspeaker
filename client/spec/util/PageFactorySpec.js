@@ -5,6 +5,7 @@ describe('PageFactory', function(){
 	var page;
 	var pageElement;
 	var factory;
+	var options;
 
 	beforeEach(function(){
 		pageElement = document.createElement('div');
@@ -13,7 +14,7 @@ describe('PageFactory', function(){
 		
 		factory = new PageFactory();
 
-		var options = {
+		options = {
 			element: pageElement,
 			height: 50,
 			width: 50,
@@ -68,6 +69,34 @@ describe('PageFactory', function(){
 		expect(page.getMover().getRubbishBin() instanceof DOMRubbishBin).toBeTruthy();
 		expect(pageElement.lastChild).toBe(rubbishBinElement);
 	});
+
+	it('creates a page with relative height and width', function(){
+		relativeElement = document.createElement('div');
+		relativeElement.id = 'relative';
+		document.body.appendChild(relativeElement);
+
+		pageElement.style.width = '50px';
+
+		var relativeOptions = {
+			element: relativeElement,
+			width: {
+				ratio: 1 / 2,
+				relativeElement: pageElement,
+				relativeWidth: 50
+			},
+			ratio: 1 / 2
+		};
+
+		var relativeFactory = new PageFactory();
+		relativeFactory.setOptions(relativeOptions);
+		var relativePage = relativeFactory.create();
+		fireResizeEvent();
+
+		expect(relativePage.getElement().offsetWidth).toEqual(25);
+		expect(relativePage.getElement().offsetHeight).toEqual(50);
+
+		document.body.removeChild(relativeElement);
+	});	
 
 	afterEach(function(){
 		document.body.removeChild(pageElement);

@@ -24,8 +24,8 @@ NoteFactory.prototype.takeAddtionalAction = function(note) {
 NoteFactory.prototype.adjustPosition = function(note) {
 	var self = this;
 	window.addEventListener('resize', function() {
-		if(undefined != note.getParent()){
-			note.setZoomPercentage(self.options.width / self.options.element.offsetWidth);
+		note.setZoomPercentage(self.options.width / note.getElement().offsetWidth);
+		if(undefined !== note.getParent()){
 			note.moveTo(note.getPosition());
 		}
 	});

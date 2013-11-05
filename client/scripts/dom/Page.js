@@ -11,6 +11,10 @@ Page.prototype.setZoomPercentage = function(percentage) {
 	this.zoomPercentage = percentage;
 };
 
+Page.prototype.getZoomPercentage = function() {
+	return this.zoomPercentage;
+};
+
 Page.prototype.setElement = function(element) {
 	this.element = element;
 };

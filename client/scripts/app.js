@@ -10,13 +10,10 @@ define('app', ['BoardFactory', 'NoteFactory', 'MouseEventPreprocessor', 'DOMPale
     var rubbishbinElement;
     var noteRubbishbinElement;
 
-    var boardAndNoteSizeRatio = 6;
+    var noteAndBoardWidthRatio = 1/ 6;
 
     var boardActualWidth = 1280;
     var boardActualHeight = 720;
-
-    var noteActualWidth = boardActualWidth / boardAndNoteSizeRatio;
-    var noteActualHeight = noteActualWidth;
 
     var boardStyleWidth;
     var boardStyleHeight;
@@ -29,13 +26,19 @@ define('app', ['BoardFactory', 'NoteFactory', 'MouseEventPreprocessor', 'DOMPale
 
     var noteRubbishBinId = 'note-rubbishbin';
     var noteRubbishBinWidth = 20;
-    var noteRubbishBinHeight = noteActualHeight;
+    var noteRubbishBinHeight = 100;
 
     var globalEventBus;
     var boardEventPreprocessor;
     var noteEventPreprocessor;
     var dragger;
     var trigger;
+
+    function fireWindowResize(){
+        var evt = document.createEvent('UIEvents');
+        evt.initUIEvent('resize', true, false,window,0);
+        window.dispatchEvent(evt);       
+    }
 
     return {
         start: function(){
@@ -80,8 +83,11 @@ define('app', ['BoardFactory', 'NoteFactory', 'MouseEventPreprocessor', 'DOMPale
             var noteOptions = 
             {
                 element: noteElement,
-                width: noteActualWidth,
-                height: noteActualHeight,
+                width: {
+                    ratio: 1 / 6,
+                    relativeElement: boardElement,
+                    relativeWidth: boardActualWidth,
+                },
                 ratio: 1,
                 palette: palette,
                 rubbishbin: {
@@ -115,6 +121,8 @@ define('app', ['BoardFactory', 'NoteFactory', 'MouseEventPreprocessor', 'DOMPale
             supplier.enableEventHandling(globalEventBus);
 
             document.body.style.visibility = 'visible';
+
+            fireWindowResize();
             
             return {
                 board: board,

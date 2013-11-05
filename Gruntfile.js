@@ -53,24 +53,7 @@ module.exports = function(grunt){
 					mainConfigFile: '<%= client.config %>',
 					name: '../main',
 					preserveLicenseComments: false,
-					paths: {
-							"Kinetic": '../../lib/kinetic/kinetic-v4.6.0',
-							"uuid": '../../lib/uuid/uuid',
-					},
 					out: 'client/main.min.js'
-				}
-			},
-			debug: {
-				options: {
-					baseUrl: '<%= client.scripts.folder %>',
-					mainConfigFile: '<%= client.config %>',
-					name: '../debug',
-					optimize: 'none',
-					paths: {
-							"Kinetic": '../../lib/kinetic/kinetic-v4.6.0',
-							"uuid": '../../lib/uuid/uuid',
-					},
-					out: 'client/debug.min.js'
 				}
 			}
 		},
@@ -115,17 +98,13 @@ module.exports = function(grunt){
 		},
 
 		watch: {
-			scripts: {
-				files: ['<%= client.scripts.all %>'],
-				tasks: ['compile']				
-			},
 			styles: {
 				files: ['<%= client.assets.less.all %>'],
 				tasks: ['less']
 			},
 			tests: {
 				files: ['<%= client.spec.all %>', '<%= client.scripts.all %>'],
-				tasks: ['unit-test']
+				tasks: ['unit-test', 'jshint']
 			},
 			template: {
 				files: ['<%= client.templates.all %>'],
@@ -163,11 +142,11 @@ module.exports = function(grunt){
 	grunt.loadNpmTasks('grunt-contrib-watch');
 	grunt.loadNpmTasks('grunt-contrib-jshint');
 
-	grunt.registerTask('compile', ['template', 'less', 'requirejs:main']);
+	grunt.registerTask('compile', ['template', 'less', 'requirejs']);
 	grunt.registerTask('unit-test', ['jasmine']);
-	grunt.registerTask('functional-test', ['compile', 'server:start', 'jasmine_node', 'server:stop']);
+	//grunt.registerTask('functional-test', ['compile', 'server:start', 'jasmine_node', 'server:stop']);
 	grunt.registerTask('test', ['unit-test']);
-	grunt.registerTask('default', ['jshint', 'test']);
+	grunt.registerTask('default', ['jshint', 'compile', 'test']);
 	grunt.registerMultiTask('template', 'Generate files from templates', function(){
 		var files = this.data.files;
 		for(var i = 0; i < files.length; i++) {

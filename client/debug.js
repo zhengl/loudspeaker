@@ -1,3 +1,6 @@
+require(['config'], function(){
+
+
 require(['app', 'Debugger'], function(app, Debugger){
     componants = app.start();
     var boardDebugger = new Debugger();
@@ -7,4 +10,7 @@ require(['app', 'Debugger'], function(app, Debugger){
     var noteDebugger = new Debugger();
     var note = componants.note;
     noteDebugger.adhereTo(note);
+});
+
+
 });
