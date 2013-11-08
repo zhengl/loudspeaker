@@ -17,6 +17,8 @@ function KineticContext(container, width, height){
 	this.stage.add(this.draftLayer);
 	this.stage.add(this.layer);
 	this.layer.moveToTop();
+
+	this.stage.getContent().style.position = 'absolute';
 }
 
 KineticContext.prototype = new Context();

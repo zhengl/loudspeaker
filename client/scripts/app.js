@@ -12,17 +12,15 @@ define('app', ['BoardFactory', 'NoteFactory', 'MouseEventPreprocessor', 'DOMPale
 
     var noteAndBoardWidthRatio = 1/ 6;
 
-    var boardActualWidth = 1280;
-    var boardActualHeight = 720;
+    var boardWidth = 1280;
+    var boardHeight = 720;
 
-    var boardStyleWidth;
-    var boardStyleHeight;
-
-    var noteStyleWidth;
+    var noteWidth = boardWidth * noteAndBoardWidthRatio;
+    var noteHeight = noteWidth;    
 
     var rubbishBinId = 'rubbishbin';
     var rubbishBinWidth = 100;
-    var rubbishBinHeight = boardActualHeight;
+    var rubbishBinHeight = boardHeight;
 
     var noteRubbishBinId = 'note-rubbishbin';
     var noteRubbishBinWidth = 20;
@@ -64,9 +62,8 @@ define('app', ['BoardFactory', 'NoteFactory', 'MouseEventPreprocessor', 'DOMPale
             var boardOptions = 
             {
                 element: boardElement,
-                width: boardActualWidth,
-                height: boardActualHeight,
-                ratio: ratio,
+                width: boardWidth,
+                height: boardHeight,
                 palette: palette,
                 rubbishbin: {
                     element: rubbishbinElement,
@@ -83,15 +80,11 @@ define('app', ['BoardFactory', 'NoteFactory', 'MouseEventPreprocessor', 'DOMPale
             var noteOptions = 
             {
                 element: noteElement,
-                width: {
-                    ratio: 1 / 6,
-                    relativeElement: boardElement,
-                    relativeWidth: boardActualWidth,
-                },
-                ratio: 1,
+                width: noteWidth,
+                height: noteHeight,
                 palette: palette,
                 rubbishbin: {
-                    element: rubbishbinElement,
+                    element: noteRubbishbinElement,
                     width: noteRubbishBinWidth,
                     height: noteRubbishBinHeight,
                 },

@@ -4,25 +4,29 @@
 	}
 
 	@media (min-width: @screen-sm) {
-		width: 0;
+		width: @board-min-width * @panel-board-width-ratio;
+		margin-right: -(@board-min-width * @panel-board-width-ratio);
 		.fixed-right;
 		&.expand {
-			width: @board-min-width * @panel-board-width-ratio;
+			margin-right: 0;
 		}
 		.panel-handle-fixed-right;
 	}
 
 	@media (min-width: @screen-sm) and (max-width: @screen-md) {
+		width: @board-normal-width * @panel-board-width-ratio;
+		margin-right: -(@board-normal-width * @panel-board-width-ratio);
 		&.expand {
-			width: @board-normal-width * @panel-board-width-ratio;
+			margin-right: 0;
 		}
 	}
 
 	@media (max-width: @screen-sm) {
-		height: 0;
+		height: @board-max-width * @panel-board-width-ratio;
+		margin-bottom: -(@board-max-width * @panel-board-width-ratio);
 		.fixed-bottom;
 		&.expand {
-			height: @board-max-width * @panel-board-width-ratio;
+			margin-bottom: 0;
 		}
 		.panel-handle-fixed-bottom;
 	}
@@ -40,7 +44,7 @@
 		margin-left: -(@panel-handle-width);
 		> a {
 			.panel-palette(100%, 20%);
-			.panel-trigger('right');
+			.panel-trigger('right', 30px);
 		}
 	}	
 }
@@ -55,7 +59,7 @@
 		margin-top: -(@panel-handle-height * @panel-board-width-ratio);
 		> a {
 			.panel-palette(20%, 100%);
-			.panel-trigger('down');
+			.panel-trigger('down', 18px);
 		}
 	}
 }
@@ -64,7 +68,6 @@
 	float: left;
 	height: @height;
 	width: @width;
-	font-size: 30px;
 	background-color: white;
 	&.arrow {
 		display: table;
@@ -72,20 +75,22 @@
 	&:hover {
 		background-color: darken(#fff, 10%);
 	}
-	.icon {
-		.glyphicon;
-		.centering;
-	}	
 }
 
-.panel-trigger (@direction) when (@direction = 'right') {
+.panel-trigger (@direction, @size) when (@direction = 'right') {
+	font-size: @size;
 	.icon {
+		.glyphicon;
 		.glyphicon-chevron-right;
+		.centering;
 	}
 }
 
-.panel-trigger (@direction) when (@direction = 'down') {
+.panel-trigger (@direction, @size) when (@direction = 'down') {
+	font-size: @size;
 	.icon {
+		.glyphicon;
 		.glyphicon-chevron-down;
+		.centering;
 	}
 }

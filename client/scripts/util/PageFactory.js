@@ -11,12 +11,6 @@ PageFactory.prototype.create = function(){
 
 	page.setPosition(new Point(0, 0));
 
-	if(typeof this.options.width === 'object'){
-		this.adjustWidthOnResize(this.options.element, this.options.width.relativeElement, this.options.width.ratio);
-		this.resetDimension(this.options);
-	}
-	this.adjustHeightOnResize(this.options.element, this.options.ratio);
-
 	var eventBus = this.createEventBus();
 	page.setEventBus(eventBus);
 
@@ -53,30 +47,10 @@ PageFactory.prototype.adjustZoomPercentage = function(eventPreprocessor, element
 	});
 };
 
-PageFactory.prototype.adjustWidthOnResize = function(element, relativeElement, ratio) {
-	window.addEventListener('resize', function(){
-		element.style.width = relativeElement.offsetWidth * ratio + 'px';
-	});
-};
-
-PageFactory.prototype.adjustHeightOnResize = function(element, ratio) {
-	window.addEventListener('resize', function(){
-		var styleWidth = element.offsetWidth;
-		var styleHeight = styleWidth / ratio;
-		element.style.height = styleHeight + 'px';
-	});
-};
-
-PageFactory.prototype.resetDimension = function(options) {
-	options.width = options.width.relativeWidth * options.width.ratio;
-	options.height = options.width * options.ratio;
-};
-
 PageFactory.prototype.adjustContextScale = function(context, element, actualWidth) {
 	window.addEventListener('resize', function(){
 		context.setScale(element.offsetWidth / actualWidth);
 	});	
-
 };
 
 PageFactory.prototype.setOptions = function(options) {
