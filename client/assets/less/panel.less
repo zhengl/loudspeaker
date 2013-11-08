@@ -1,0 +1,91 @@
+.panel {
+	 .note {
+		.centering;
+	}
+
+	@media (min-width: @screen-sm) {
+		width: 0;
+		.fixed-right;
+		&.expand {
+			width: @board-min-width * @panel-board-width-ratio;
+		}
+		.panel-handle-fixed-right;
+	}
+
+	@media (min-width: @screen-sm) and (max-width: @screen-md) {
+		&.expand {
+			width: @board-normal-width * @panel-board-width-ratio;
+		}
+	}
+
+	@media (max-width: @screen-sm) {
+		height: 0;
+		.fixed-bottom;
+		&.expand {
+			height: @board-max-width * @panel-board-width-ratio;
+		}
+		.panel-handle-fixed-bottom;
+	}
+
+	background-color: gray;
+}
+
+.panel-handle-fixed-right {
+	.panel-handle {
+		position: absolute;
+		top: 0;
+		left: 0;				
+		height: 100%;
+		width: @panel-handle-width;
+		margin-left: -(@panel-handle-width);
+		> a {
+			.panel-palette(100%, 20%);
+			.panel-trigger('right');
+		}
+	}	
+}
+
+.panel-handle-fixed-bottom {
+	.panel-handle {
+		position: absolute;
+		top: 0;
+		left: 0;				
+		width: 100%;
+		height: @panel-handle-height;
+		margin-top: -(@panel-handle-height * @panel-board-width-ratio);
+		> a {
+			.panel-palette(20%, 100%);
+			.panel-trigger('down');
+		}
+	}
+}
+
+.panel-palette (@width, @height) {
+	float: left;
+	height: @height;
+	width: @width;
+	font-size: 30px;
+	background-color: white;
+	&.arrow {
+		display: table;
+	}
+	&:hover {
+		background-color: darken(#fff, 10%);
+	}
+	.icon {
+		.glyphicon;
+		.centering;
+	}	
+}
+
+.panel-trigger (@direction) when (@direction = 'right') {
+	.icon {
+		.glyphicon-chevron-right;
+	}
+}
+
+.panel-trigger (@direction) when (@direction = 'down') {
+	.icon {
+		.glyphicon-chevron-down;
+	}
+}

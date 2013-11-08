@@ -1,28 +1,28 @@
 @screen-md: 992px;
-@board-max-width: 80%;
-@board-min-width: (@screen-md * 0.8);
+@screen-sm: 768px;
 
-@panel-handle-max-width: (@board-min-width * 0.1);
-@panel-handle-min-height: (@board-min-width * 0.1);
+@board-min-width: unit(@screen-sm/@screen-md*100, vw);
+@board-normal-width: @screen-sm;
+@board-max-width: 100vw;
 
-@panel-board-size-ratio: (1 / 3);
-@panel-right-expand-width: (@board-max-width * @panel-board-size-ratio);
-@panel-bottom-expand-height: (@board-min-width * @panel-board-size-ratio);
+@panel-board-width-ratio: (1 / 4);
 
-@board-note-width-ratio: 6;
-@note-max-width: @board-max-width / @board-note-width-ratio;
-@note-min-width: @board-min-width / @board-note-width-ratio;
+@panel-handle-width: 20%;
+@panel-handle-height: 20%;
+
+@note-board-width-ratio: (1 / 6);
 
 @zindex-navbar: 1000;
 @navbar-height: 50px;
 @navbar-default-bg: #f8f8f8;
 @navbar-default-border: darken(@navbar-default-bg, 6.5%);
 
-@icon-font-path:          "../fonts/";
-@icon-font-name:          "glyphicons-halflings-regular";
+@icon-font-path: "../fonts/";
+@icon-font-name: "glyphicons-halflings-regular";
 
 @red: #E74C3C;
 @blue: #3498DB;
 @black: #34495E;
 @green: #2ECC71;
+@yellow: #FFFFAA;
 

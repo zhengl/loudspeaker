@@ -1,109 +1,17 @@
-.nav {
-	.fixed-top;
-	z-index: @zindex-navbar;
-	min-height: @navbar-height;
-	border: 1px solid transparent;
-
-	background-color: @navbar-default-bg;
-  	border-color: @navbar-default-border;
-
-	// Prevent floats from breaking the navbar
-	.clearfix();
-}
-
-.panel-a (@width, @height) {
-	float: left;
-	height: @height;
-	width: @width;
-	font-size: 30px;
-	background-color: white;
-	&.arrow {
-		display: table;
-	}
-	&:hover {
-		background-color: darken(#fff, 10%);
-	}
-	.icon {
-		.glyphicon;
-		.absolute-center;
-	}	
-}
-
-.panel-a (@direction) when (@direction = 'right') {
-	.icon {
-		.glyphicon-chevron-right;
-	}
-}
-
-.panel-a (@direction) when (@direction = 'down') {
-	.icon {
-		.glyphicon-chevron-down;
-	}
-}
-
-.panel {
-	@media (min-width: @screen-md) {
-		width: 0;
-		.fixed-right;
-		&.expand {		
-			width: auto;
-			padding: 100px 30px 0px 30px;
-		}
-		.panel-handle {
-			position: absolute;
-			top: 0;
-			left: 0;				
-			height: 100%;
-			width: @panel-handle-max-width;
-			margin-left: -(@panel-handle-max-width);
-			> a {
-				.panel-a(100%, 20%);
-				.panel-a('right');
-			}
-		}
-	}
-
-	@media (max-width: @screen-md) {
-		height: 0;
-		.fixed-bottom;
-		&.expand {
-			width: 100%;
-			height: auto;
-			padding: 10px;
-		}
-		.panel-handle {
-			position: absolute;
-			top: 0;
-			left: 0;				
-			width: 100%;
-			height: @panel-handle-min-height;
-			margin-top: -(@panel-handle-min-height);
-			> a {
-				.panel-a(20%, 100%);
-				.panel-a('down');
-			}			
-		}
-	}
-
-	background-color: gray;
-}
-
 .board {
 	@media (min-width: @screen-md) {
-		width: @board-max-width;
-	}
-	
-	@media (min-width: @board-min-width) and (max-width: @screen-md) {
 		width: @board-min-width;
 	}
+	
+	@media (min-width: @screen-sm) and (max-width: @screen-md) {
+		width: @board-normal-width;
+	}
 
-	position: relative;
-	width: 100%;
-	margin: 0 auto;
+	@media (max-width: @screen-sm) {
+		width: @board-max-width;
+	}
+
+	.centering;
+	.ratio(16, 9);
 	border: 1px solid;
-	overflow: hidden;
-}
-
-body {
-	visibility: hidden;
 }

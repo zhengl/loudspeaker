@@ -1,11 +1,20 @@
-#note-stack { 
-	position: relative;
-	padding: 0;
-	margin: 0 auto;
+#note-stack {
 }
 
-.note {
+.note {	
+	@media (min-width: @screen-md) {
+		width: @board-min-width * @note-board-width-ratio;
+	}
+	
+	@media (min-width: @screen-sm) and (max-width: @screen-md) {
+		width: @board-normal-width * @note-board-width-ratio;
+	}
+
+	@media (max-width: @screen-sm) {
+		width: @board-max-width * @note-board-width-ratio;
+	}
+
+	.ratio(1, 1);
 	display: inline-block;
-	background-color:#FFA;
-	overflow: hidden;
+	background-color: @yellow;
 }

@@ -122,7 +122,7 @@ define('app', ['BoardFactory', 'NoteFactory', 'MouseEventPreprocessor', 'DOMPale
 
             document.body.style.visibility = 'visible';
 
-            fireWindowResize();
+            // fireWindowResize();
             
             return {
                 board: board,
