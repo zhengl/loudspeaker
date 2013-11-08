@@ -44,8 +44,8 @@ describe('Mover', function(){
 		mover.startMoving(line);
 		mover.moveTo(new Point(45, 10));
 		mover.finishMoving();
-		expectNoItem(mover);
-		expectNoDraftItem(mover);
+		expect(mover).toHaveNoItem();
+		expect(mover).toHaveNoDraftItem();
 	});
 
 	describe('with event handling', function(){
@@ -61,16 +61,16 @@ describe('Mover', function(){
 			context.addItem(line);
 
 			triggerStartMovingEvent(eventBus, line, 5, 5);
-			expectNoItem(mover);
-			expectOneDraftItem(mover);			
+			expect(mover).toHaveNoItem();
+			expect(mover).toHaveOneDraftItem();			
 			
 			triggerMoveToEvent(eventBus, line, 20, 20);
-			expectNoItem(mover);
-			expectOneDraftItem(mover);
+			expect(mover).toHaveNoItem();
+			expect(mover).toHaveOneDraftItem();
 			
 			triggerFinishMovingEvent(eventBus, line);
-			expectOneItem(mover);
-			expectNoDraftItem(mover);
+			expect(mover).toHaveOneItem();
+			expect(mover).toHaveNoDraftItem();
 
 			line = mover.getContext().getItems()[0];
 			expect(line.getPosition()).toEqual({x: 15, y: 15});

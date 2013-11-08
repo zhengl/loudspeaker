@@ -19,38 +19,37 @@ describe("KineticPainter", function(){
 		painter = new KineticPainter(KineticLine, new KineticContext('board', 50, 50), new DOMPalette('palette'));
 	});
 
-	it("should return a Line after drawing a line", function() {
+	it("should draw a line", function() {
 		var line = createLine(0, 0, 10, 10);
 		painter.draw(line);
 		var item = painter.getContext().getItems()[0];
-		expect(item instanceof KineticLine).toBeTruthy();
+		expect(item).toBeInstanceOf(KineticLine);
 	});
 
 	it("should have no item after drafting a line", function(){
 		var line = createLine(0, 0, 10, 10);
 		painter.draft(line);
 		var item = painter.getContext().getDraftItems()[0];
-		expect(item instanceof KineticLine).toBeTruthy();
+		expect(item).toBeInstanceOf(KineticLine);
 	});
 
 	it("should DRAW a line with steps", function(){
 		painter.getPalette().setColor('red');
 		painter.startDraft(new Point(10, 10));
-		expectNoItem(painter);
-		expectOneDraftItem(painter);
+		expect(painter).toHaveNoItem();
+		expect(painter).toHaveOneDraftItem();
 		
 		painter.draftTo(new Point(10, 20));
-		expectNoItem(painter);
-		expectOneDraftItem(painter);
+		expect(painter).toHaveNoItem();
+		expect(painter).toHaveOneDraftItem();
 		
-		painter.draftTo(new Point(20, 20));
 		painter.draftTo(new Point(20, 30));
 		painter.endDraft(new Point(30, 30));
 		
 		var line = painter.context.getItems()[0];
-		expectOneItem(painter);
-		expectNoDraftItem(painter);
-		expectOneItem(painter);	
+		expect(painter).toHaveOneItem();
+		expect(painter).toHaveNoDraftItem();
+		expect(painter).toHaveOneItem();
 		expect(line.getColor()).toEqual('red');
 	});
 
@@ -60,7 +59,7 @@ describe("KineticPainter", function(){
 			painter.startDraft(new Point(0 + offset, 0));
 			painter.draftTo(new Point(0 + offset, 10));
 			painter.endDraft(new Point(0 + offset, 30));
-			expect(painter.getContext().getItems().length).toEqual(i);		
+			expect(painter).toHaveNumberOfItemsEqual(i);		
 		}
 	});
 

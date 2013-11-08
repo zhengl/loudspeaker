@@ -21,10 +21,10 @@ describe("KineticTextInput", function(){
 		text.setPosition(new Point(10, 20));
 		textInput.write(text);
 		var item = textInput.getContext().getDraftItems()[0];
-		expect(item instanceof KineticText).toBeTruthy();
+		expect(item).toBeInstanceOf(KineticText);
 		textInput.flush();
 		item = textInput.getContext().getItems()[0];
-		expect(item instanceof KineticText).toBeTruthy();
+		expect(item).toBeInstanceOf(KineticText);
 		expect(item.getValue()).toBe("Hello World!");
 	});
 

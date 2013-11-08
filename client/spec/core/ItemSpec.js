@@ -1,4 +1,4 @@
-require(['Item', 'Point', 'EventBus', 'Event', 'Context'], function(Item, Point, EventBus, Event, Context){
+require(['Item', 'Point', 'Context'], function(Item, Point, Context){
 
 
 describe('Item', function(){
@@ -18,9 +18,10 @@ describe('Item', function(){
 	it('should be removable', function(){
 		var context = new Context();
 		context.addItem(item);
-		context.removeItem(item);
+		expect(context).toHaveOneItem();
 
-		expect(context.getItems().length).toEqual(0);
+		context.removeItem(item);
+		expect(context).toHaveNoItem();
 	});
 });
 

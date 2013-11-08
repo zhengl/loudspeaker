@@ -20,11 +20,11 @@ describe("KineticTexter", function(){
 		texter.palette.setColor('red');
 	});
 
-	it("should return a KineticText after write words", function() {
+	it("should write words", function() {
 		var text = createText();
 		texter.write(text);
 		var item = texter.getContext().getItems()[0];
-		expect(item instanceof KineticText).toBeTruthy();
+		expect(item).toBeInstanceOf(KineticText);
 		expect(item.getColor()).toEqual('red');
 	});
 
@@ -32,8 +32,8 @@ describe("KineticTexter", function(){
 		var text = createText();
 		texter.draft(text);
 		var item = texter.getContext().getDraftItems()[0];
-		expect(item instanceof KineticText).toBeTruthy();
-		expect(texter.getContext().getItems().length).toEqual(0);
+		expect(item).toBeInstanceOf(KineticText);
+		expect(texter).toHaveNoItem();
 	});
 
 	afterEach(function(){

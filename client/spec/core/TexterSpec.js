@@ -19,17 +19,17 @@ describe("Texter", function(){
 			var text = createText();
 			texter.write(text);
 			var item = texter.getContext().getItems()[0];
-			expect(item instanceof Text).toBeTruthy();
-			expectOneItem(texter);
+			expect(item).toBeInstanceOf(Text);
+			expect(texter).toHaveOneItem();
 		});
 
 		it("should have no item after writing words", function(){
 			var text = createText();
 			texter.draft(text);
 			var item = texter.getContext().getDraftItems()[0];
-			expect(item instanceof Text).toBeTruthy();
-			expectOneDraftItem(texter);
-			expectNoItem(texter);
+			expect(item).toBeInstanceOf(Text);
+			expect(texter).toHaveOneDraftItem();
+			expect(texter).toHaveNoItem();
 		});
 
 		it("should create a input widget with event START_TEXTING", function(){
@@ -47,7 +47,6 @@ describe("Texter", function(){
 		text.setPosition(new Point(10, 20));
 		return text;
 	}
-
 });
 
 });

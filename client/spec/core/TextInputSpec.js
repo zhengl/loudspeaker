@@ -9,19 +9,23 @@ describe("TextInput", function(){
 	});
 
 	it("writes and records text", function(){
-		var text = new Text("Hello World!");
-		text.setPosition(new Point(10, 20));
+		var text = createText();
 		textInput.write(text);
 		expect(textInput.getText().getValue()).toBe("Hello World!");
 	});
 
 	it("flushes and empty its value", function(){
-		var text = new Text("Hello World!");
-		text.setPosition(new Point(10, 20));
+		var text = createText();
 		textInput.write(text);
 		textInput.flush();
 		expect(textInput.getText().getValue()).toBe("");
 	});
+
+	function createText(){
+		var text = new Text("Hello World!");
+		text.setPosition(new Point(10, 20));
+		return text;
+	}	
 });
 
 });

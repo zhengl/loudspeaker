@@ -59,25 +59,25 @@ describe('Page', function(){
 	it("appends another page", function(){
 		drawALineOn(note, 0, 0, 20, 0);
 
-		expectOneItem(note);
-		expectNoDraftItem(note);
-		expectNoItem(board);
-		expectNoDraftItem(board);
+		expect(note).toHaveOneItem();
+		expect(note).toHaveNoDraftItem();
+		expect(board).toHaveNoItem();
+		expect(board).toHaveNoDraftItem();
 
 		board.addItem(note);
 		expect(board.getElement().lastChild).toBe(note.getElement());
 		drawALineOn(note, 10, 0, 10, 10);
 
 		expect(note.getContext().getItems().length).toEqual(2);
-		expectNoDraftItem(note);
-		expectOneItem(board);
-		expectNoDraftItem(board);
+		expect(note).toHaveNoDraftItem();
+		expect(board).toHaveOneItem();
+		expect(board).toHaveNoDraftItem();
 
 		drawALineOn(board, 20, 20, 30, 30);
 		expect(note.getContext().getItems().length).toEqual(2);
-		expectNoDraftItem(note);
+		expect(note).toHaveNoDraftItem();
 		expect(board.getContext().getItems().length).toEqual(2);
-		expectNoDraftItem(board);
+		expect(board).toHaveNoDraftItem();
 	});
 
 	it("should be movable after being appended as a note", function(){
@@ -120,7 +120,7 @@ describe('Page', function(){
 		board.addItem(note);
 		board.getContext().removeItem(note);
 
-		expectNoItem(board);
+		expect(board).toHaveNoItem();
 	});
 
 	it("should not be movable as a board", function(){

@@ -25,26 +25,55 @@ Event.Note = {
 	FINISH_DRAGGING: "NOTE.FINISH_DRAGGING",
 };
 
-function createText(){
-	var text = new Text("Hello World!");
-	text.setPosition({x: 10, y: 20});
-	return text;
+beforeEach(function(){
+	this.addMatchers({
+		toHaveOneItem: toHaveOneItem,
+		toHaveNoItem: toHaveNoItem,
+		toHaveOneDraftItem: toHaveOneDraftItem,
+		toHaveNoDraftItem: toHaveNoDraftItem,
+		toBeInstanceOf: toBeInstanceOf,
+		toHaveNumberOfItemsEqual: toHaveNumberOfItemsEqual,
+	});
+});
+
+function toHaveOneItem(){
+	return toHaveNumberOfItemsEqual.call(this, 1);
 }
 
-function expectOneItem(target){
-	expect(target.getContext().getItems().length).toEqual(1);
+function toHaveNoItem(){
+	return toHaveNumberOfItemsEqual.call(this, 0);
 }
 
-function expectOneDraftItem(target){
-	expect(target.getContext().getDraftItems().length).toEqual(1);
+function toHaveOneDraftItem(){
+	return toHaveNumberOfDraftItemsEqual.call(this, 1);
 }
 
-function expectNoItem(target){
-	expect(target.getContext().getItems().length).toEqual(0);
+function toHaveNoDraftItem(){
+	return toHaveNumberOfDraftItemsEqual.call(this, 0);
 }
 
-function expectNoDraftItem(target){
-	expect(target.getContext().getDraftItems().length).toEqual(0);
+function getItems(actual) {
+	return actual.getContext ? 
+		actual.getContext().getItems() : 
+		actual.getItems();
+}
+
+function getDraftItems(actual) {
+	return actual.getContext ? 
+		actual.getContext().getDraftItems() : 
+		actual.getDraftItems();
+}
+
+function toHaveNumberOfItemsEqual(expected) {
+	return getItems(this.actual).length === expected;
+}
+
+function toHaveNumberOfDraftItemsEqual(expected) {
+	return getDraftItems(this.actual).length === expected;
+}
+
+function toBeInstanceOf(cls){
+	return this.actual instanceof cls;
 }
 
 function triggerStartMovingEvent(eventBus, item, x, y){
