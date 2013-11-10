@@ -29,6 +29,15 @@ describe("NoteSupplier", function(){
 		expect(noteStack.children.length).toEqual(1);
 	});
 
+	it('add notes with different id', function(){
+		var id1 = supplier.addNote().getElement().id;
+
+		supplier.noteStack.innerHTML = '';
+
+		var id2 = supplier.addNote().getElement().id;
+		expect(id1).not.toEqual(id2);
+	});
+
 	it("add note when receiving FINISH_DRAGGING", function(){
 		triggerFinishDraggingEvent(eventBus, 0, 0);
 

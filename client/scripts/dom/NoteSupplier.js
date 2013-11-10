@@ -1,4 +1,4 @@
-define('NoteSupplier', ['EventHandleable', 'NoteSupplierEventHandler'], function(EventHandleable, NoteSupplierEventHandler){
+define('NoteSupplier', ['EventHandleable', 'NoteSupplierEventHandler', 'UUID'], function(EventHandleable, NoteSupplierEventHandler, UUID){
 	
 function NoteSupplier(element, factory){
 	this.noteStack = element;
@@ -11,12 +11,12 @@ NoteSupplier.prototype.constructor = NoteSupplier;
 NoteSupplier.prototype.addNote = function() {
 	if(this.noteStack.children.length === 0) {
 		var noteElement = document.createElement('div');
-		noteElement.id = 'note-uuid';
+		noteElement.id = UUID.generate();
 		noteElement.className = 'note';
 		this.noteStack.appendChild(noteElement);
 
 		this.factory.setElement(noteElement);
-		this.factory.create();
+		return this.factory.create();
 	}
 };
 

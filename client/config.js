@@ -124,13 +124,9 @@ require.config({
 		
 			Unserializer: "util/Unserializer",
 		
+			UUID: "util/UUID",
+		
 		Kinetic: '../../lib/kinetic/kinetic-v4.6.0',
-		uuid: '../../lib/uuid/uuid',
 	},
 	urlArgs: "bust=" + (new Date()).getTime(),
-	shim: {
-			'uuid': {
-				exports: 'UUID',
-			},
-	}
 });

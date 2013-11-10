@@ -70,14 +70,7 @@ module.exports = function(grunt){
 				keepRunner: true,
 				template: require('grunt-template-jasmine-requirejs'),
 				templateOptions: {
-				requireConfig: {
-						baseUrl: '<% client.scripts.folder %>',
-						urlArgs: 'bust=' + Math.random(),
-						paths: {
-							"Kinetic": 'lib/kinetic/kinetic-v4.6.0',
-							"uuid": 'lib/uuid/uuid',
-						},
-					}
+					requireConfigFile: ['<%= client.config %>', 'client/test.config.js']
 				}
 			}
 		},

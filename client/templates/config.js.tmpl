@@ -5,12 +5,6 @@ require.config({
 			<%= path %>
 		<% }); %>
 		Kinetic: '../../lib/kinetic/kinetic-v4.6.0',
-		uuid: '../../lib/uuid/uuid',
 	},
 	urlArgs: "bust=" + (new Date()).getTime(),
-	shim: {
-			'uuid': {
-				exports: 'UUID',
-			},
-	}
 });

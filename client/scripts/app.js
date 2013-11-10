@@ -1,12 +1,10 @@
-define('app', ['BoardFactory', 'NoteFactory', 'MouseEventPreprocessor', 'DOMPalette', 'Note', 'NoteDragger', 'NoteSupplier', 'PanelTrigger', 'EventBus', 'uuid'], function(BoardFactory, NoteFactory, MouseEventPreprocessor, DOMPalette, Note, NoteDragger, NoteSupplier, PanelTrigger, EventBus, UUID){
+define('app', ['BoardFactory', 'NoteFactory', 'MouseEventPreprocessor', 'DOMPalette', 'Note', 'NoteDragger', 'NoteSupplier', 'PanelTrigger', 'EventBus', 'UUID'], function(BoardFactory, NoteFactory, MouseEventPreprocessor, DOMPalette, Note, NoteDragger, NoteSupplier, PanelTrigger, EventBus, UUID){
     var board;
     var note;
 
     var ratio = 16 / 9;
     var boardId = 'board';
-    var noteId = 'note';
     var boardElement = document.getElementById(boardId);
-    var noteElement = document.getElementById(noteId);
     var rubbishbinElement;
     var noteRubbishbinElement;
 
@@ -79,7 +77,6 @@ define('app', ['BoardFactory', 'NoteFactory', 'MouseEventPreprocessor', 'DOMPale
             var noteFactory = new NoteFactory();
             var noteOptions = 
             {
-                element: noteElement,
                 width: noteWidth,
                 height: noteHeight,
                 palette: palette,
@@ -92,10 +89,8 @@ define('app', ['BoardFactory', 'NoteFactory', 'MouseEventPreprocessor', 'DOMPale
                 globalEventBus: globalEventBus
             };
             noteFactory.setOptions(noteOptions);
-            note = noteFactory.create();
 
             boardElement.appendChild(rubbishbinElement);
-            noteElement.appendChild(noteRubbishbinElement);
 
             dragger = new NoteDragger();
             dragger.enableEventHandling(globalEventBus);
@@ -112,6 +107,8 @@ define('app', ['BoardFactory', 'NoteFactory', 'MouseEventPreprocessor', 'DOMPale
             var noteStack = document.getElementById('note-stack');
             var supplier = new NoteSupplier(noteStack, noteFactory);
             supplier.enableEventHandling(globalEventBus);
+
+            var note = supplier.addNote();
 
             document.body.style.visibility = 'visible';
 
