@@ -109,7 +109,9 @@ PageFactory.prototype.createTexter = function(context, palette, eventBus) {
 	return texter;
 };
 
-PageFactory.prototype.createRubbishBin = function(element, leftTop, rightBottom, eventBus) { 
+PageFactory.prototype.createRubbishBin = function(leftTop, rightBottom, eventBus) { 
+	var element = document.createElement('div');
+	element.className = 'rubbishbin';
 	var rubbishbin = new DOMRubbishBin(leftTop, rightBottom, element);
 	rubbishbin.enableEventHandling(eventBus);
 
@@ -122,9 +124,9 @@ PageFactory.prototype.createMover = function(context, eventBus, rubbishbinOption
 	mover.setMovables(this.getMovables());
 
 	if(rubbishbinOptions) {
-		var rubbishbin = this.createRubbishBin(rubbishbinOptions.element, new Point(width - rubbishbinOptions.width, 0), new Point(width, rubbishbinOptions.height), eventBus);
+		var rubbishbin = this.createRubbishBin(new Point(width - rubbishbinOptions.width, 0), new Point(width, rubbishbinOptions.height), eventBus);
 		mover.setRubbishBin(rubbishbin);
-		element.appendChild(rubbishbin.element);
+		element.appendChild(rubbishbin.getElement());
 	}	
 
 	return mover;

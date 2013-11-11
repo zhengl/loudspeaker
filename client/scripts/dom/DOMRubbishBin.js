@@ -20,6 +20,10 @@ DOMRubbishBin.prototype.open = function() {
 	this.isOpen = true;
 };
 
+DOMRubbishBin.prototype.getElement = function() {
+	return this.element;
+};
+
 return DOMRubbishBin;
 
 

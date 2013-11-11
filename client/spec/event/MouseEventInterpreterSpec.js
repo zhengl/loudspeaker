@@ -36,7 +36,7 @@ describe('MouseEventInterpreter', function(){
 
 	it("triggers START_DRAGGING after long press", function(){
 		var note = new Note();
-		interpreter.interpret(createEvent(Event.Mouse.MOUSE_DOWN, 10, 10, note));
+		interpreter.interpret(createEvent(Event.Mouse.MOUSE_DOWN, null, null, note, 10, 10));
 		jasmine.Clock.tick(501);
 
 		expect(eventBus.publish).toHaveBeenCalledWith(new Event(Event.Note.START_DRAGGING, { item: note, position: {x: 10, y: 10} }));

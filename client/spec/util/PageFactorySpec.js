@@ -49,7 +49,6 @@ describe('PageFactory', function(){
 			height: 50,
 			width: 50,
 			rubbishbin: {
-				element: rubbishBinElement,
 				width: 10,
 				height: 50,
 			}
@@ -59,7 +58,7 @@ describe('PageFactory', function(){
 		var page = factory.create();
 
 		expect(page.getMover().getRubbishBin() instanceof DOMRubbishBin).toBeTruthy();
-		expect(pageElement.lastChild).toBe(rubbishBinElement);
+		expect(pageElement.lastChild.className).toMatch('rubbishbin');
 	});
 
 	afterEach(function(){

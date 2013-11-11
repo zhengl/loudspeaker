@@ -22,7 +22,7 @@ describe("NoteDraggingGestureDetector", function(){
 	});
 
 	it("triggers START_DRAGGING after long press at a note", function(){
-		detector.detect(createEvent(Event.Mouse.MOUSE_DOWN, 10, 10, note));
+		detector.detect(createEvent(Event.Mouse.MOUSE_DOWN, null, null, note, 10, 10));
 		jasmine.Clock.tick(501);
 
 		expect(eventBus.publish).toHaveBeenCalledWith(new Event(Event.Note.START_DRAGGING, { item: note, position: {x: 10, y: 10} }));

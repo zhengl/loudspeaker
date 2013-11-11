@@ -8,7 +8,8 @@ define('app', ['BoardFactory', 'NoteFactory', 'MouseEventPreprocessor', 'DOMPale
     var rubbishbinElement;
     var noteRubbishbinElement;
 
-    var noteAndBoardWidthRatio = 1/ 6;
+    var noteAndBoardWidthRatio = 1 / 6;
+    var rubbishBinAndPageWidthRatio = 1 / 10;
 
     var boardWidth = 1280;
     var boardHeight = 720;
@@ -17,12 +18,12 @@ define('app', ['BoardFactory', 'NoteFactory', 'MouseEventPreprocessor', 'DOMPale
     var noteHeight = noteWidth;    
 
     var rubbishBinId = 'rubbishbin';
-    var rubbishBinWidth = 100;
+    var rubbishBinWidth = boardWidth * rubbishBinAndPageWidthRatio;
     var rubbishBinHeight = boardHeight;
 
     var noteRubbishBinId = 'note-rubbishbin';
-    var noteRubbishBinWidth = 20;
-    var noteRubbishBinHeight = 100;
+    var noteRubbishBinWidth = noteHeight * rubbishBinAndPageWidthRatio;
+    var noteRubbishBinHeight = noteHeight;
 
     var globalEventBus;
     var boardEventPreprocessor;
@@ -41,16 +42,6 @@ define('app', ['BoardFactory', 'NoteFactory', 'MouseEventPreprocessor', 'DOMPale
             boardEventPreprocessor = new MouseEventPreprocessor();
             noteEventPreprocessor = new MouseEventPreprocessor();
 
-            rubbishbinElement = document.createElement('div');
-            rubbishbinElement.id = rubbishBinId;
-            rubbishbinElement.className = 'rubbishbin';
-            document.body.appendChild(rubbishbinElement);
-
-            noteRubbishbinElement = document.createElement('div');
-            noteRubbishbinElement.id = noteRubbishBinId;
-            noteRubbishbinElement.className = 'rubbishbin';
-            document.body.appendChild(noteRubbishbinElement);
-
             var paletteElement = document.querySelector('.palette');
             var palette = new DOMPalette(paletteElement, 'palette-color');
             
@@ -64,7 +55,6 @@ define('app', ['BoardFactory', 'NoteFactory', 'MouseEventPreprocessor', 'DOMPale
                 height: boardHeight,
                 palette: palette,
                 rubbishbin: {
-                    element: rubbishbinElement,
                     width: rubbishBinWidth,
                     height: rubbishBinHeight,
                 },
@@ -81,7 +71,6 @@ define('app', ['BoardFactory', 'NoteFactory', 'MouseEventPreprocessor', 'DOMPale
                 height: noteHeight,
                 palette: palette,
                 rubbishbin: {
-                    element: noteRubbishbinElement,
                     width: noteRubbishBinWidth,
                     height: noteRubbishBinHeight,
                 },
@@ -89,8 +78,6 @@ define('app', ['BoardFactory', 'NoteFactory', 'MouseEventPreprocessor', 'DOMPale
                 globalEventBus: globalEventBus
             };
             noteFactory.setOptions(noteOptions);
-
-            boardElement.appendChild(rubbishbinElement);
 
             dragger = new NoteDragger();
             dragger.enableEventHandling(globalEventBus);
@@ -110,10 +97,10 @@ define('app', ['BoardFactory', 'NoteFactory', 'MouseEventPreprocessor', 'DOMPale
 
             var note = supplier.addNote();
 
+            fireWindowResize();
+            
             document.body.style.visibility = 'visible';
 
-            // fireWindowResize();
-            
             return {
                 board: board,
                 note: note,

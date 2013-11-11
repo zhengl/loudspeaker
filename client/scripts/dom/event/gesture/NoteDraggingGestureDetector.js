@@ -24,7 +24,7 @@ NoteDraggingGestureDetector.prototype.startDragging = function(event) {
 	if (event.targetItem instanceof Note) {
 		var self = this;
 		this.draggingTimerId = window.setTimeout(function(){
-			self.eventBus.publish(new Event(Event.Note.START_DRAGGING, {item: event.targetItem, position: new Point(event.canvasX, event.canvasY) }));
+			self.eventBus.publish(new Event(Event.Note.START_DRAGGING, {item: event.targetItem, position: new Point(event.offsetX, event.offsetY) }));
 			self.isMoving = true;
 			self.inform(self);
 			document.body.onmousemove = function(event){
