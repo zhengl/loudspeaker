@@ -63,14 +63,37 @@ module.exports = function(grunt){
 		},
 
 		jasmine: {
-			src: '<%= client.scripts.all %>',
-			options: {
-				specs: '<%= client.spec.allSpec %>',
-				helpers: '<%= client.spec.helper %>',
-				keepRunner: true,
-				template: require('grunt-template-jasmine-requirejs'),
-				templateOptions: {
-					requireConfigFile: ['<%= client.config %>', 'client/test.config.js']
+			test: {
+				src: '<%= client.scripts.all %>',
+				options: {
+					specs: '<%= client.spec.allSpec %>',
+					helpers: '<%= client.spec.helper %>',
+					keepRunner: true,
+					template: require('grunt-template-jasmine-requirejs'),
+					templateOptions: {
+						requireConfigFile: ['<%= client.config %>', 'client/test.config.js']
+					}
+				}
+			},
+			coverage: {
+				src: '<%= client.scripts.all %>',
+				options: {
+					specs: '<%= client.spec.allSpec %>',
+					helpers: '<%= client.spec.helper %>',
+					keepRunner: true,
+					template: require('grunt-template-jasmine-istanbul'),
+					templateOptions: {
+						coverage: 'coverage/coverage.json',
+						report: 'coverage',
+						template: require('grunt-template-jasmine-requirejs'),
+						templateOptions: {
+							requireConfig: {
+								paths: {
+									Kinetic: 'lib/kinetic/kinetic-v4.6.0',
+								},
+							}
+						}
+					}
 				}
 			}
 		},
@@ -136,9 +159,9 @@ module.exports = function(grunt){
 	grunt.loadNpmTasks('grunt-contrib-jshint');
 
 	grunt.registerTask('compile', ['template', 'less', 'requirejs']);
-	grunt.registerTask('unit-test', ['jasmine']);
+	grunt.registerTask('unit-test', ['jasmine:test']);
 	//grunt.registerTask('functional-test', ['compile', 'server:start', 'jasmine_node', 'server:stop']);
-	grunt.registerTask('test', ['unit-test']);
+	grunt.registerTask('test', ['jasmine:coverage']);
 	grunt.registerTask('default', ['jshint', 'compile', 'test']);
 	grunt.registerMultiTask('template', 'Generate files from templates', function(){
 		var files = this.data.files;

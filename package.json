@@ -29,6 +29,7 @@
     "grunt-contrib-jasmine": "~0.5.2",
     "grunt-contrib-watch": "~0.5.3",
     "grunt-contrib-jshint": "~0.6.4",
-    "selenium-webdriver": "~2.37.0"
+    "selenium-webdriver": "~2.37.0",
+    "grunt-template-jasmine-istanbul": "https://github.com/zhengl/grunt-template-jasmine-istanbul/tarball/4421aad461ca4db1490ee9a414a60d0a7fc24d2f"
   }
 }
