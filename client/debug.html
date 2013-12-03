@@ -11,13 +11,18 @@
 <body>
   <div id="board" class="board"></div>
   <div class="panel">
-    <div class="panel-handle palette">
-      <a class="palette-color palette-black"></a>
-      <a class="palette-color palette-blue"></a>
-      <a class="arrow"><span class="icon"></span></a>
-      <a class="palette-color palette-red"></a>
-      <a class="palette-color palette-green"></a>
-    </div>
+      <div class="palette">
+        <a class="palette-item palette-black"></a>
+        <a class="palette-item palette-blue"></a>
+        <a class="palette-item palette-stroke">
+          <span class="icon icon-pencil"></span>
+        </a>
+        <a class="palette-item palette-red"></a>
+        <a class="palette-item palette-green"></a>
+      </div>
+      <div class="panel-handle">
+        <a class="arrow"><span class="icon"></span></a>
+      </div>
     <div id="note-stack"></div>
   </div>
 </body>

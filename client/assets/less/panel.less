@@ -10,6 +10,7 @@
 		&.expand {
 			margin-right: 0;
 		}
+		.palette-fixed-right;
 		.panel-handle-fixed-right;
 	}
 
@@ -28,69 +29,81 @@
 		&.expand {
 			margin-bottom: 0;
 		}
+		.palette-fixed-bottom;
 		.panel-handle-fixed-bottom;
 	}
 
 	background-color: gray;
 }
 
+.palette-fixed-right {
+	.palette {
+		position: absolute;			
+		height: 100%;
+		width: @panel-width;
+		margin-left: -(@panel-width + @panel-handle-width);
+		.palette-item {
+			.palette-item(100%, 20%);
+		}
+	}
+}
+
+.palette-fixed-bottom {
+	.palette {
+		position: absolute;	
+		width: 100%;
+		height: @panel-height;
+		margin-top: -((@panel-height + @panel-handle-height) * @panel-board-width-ratio);
+		.palette-item {
+			.palette-item(20%, 100%);
+		}
+	}
+}
+
 .panel-handle-fixed-right {
 	.panel-handle {
 		position: absolute;
-		top: 0;
-		left: 0;				
 		height: 100%;
 		width: @panel-handle-width;
 		margin-left: -(@panel-handle-width);
-		> a {
-			.panel-palette(100%, 20%);
-			.panel-trigger('right', 30px);
-		}
-	}	
+		.panel-trigger('right', 24px);
+	}
 }
 
 .panel-handle-fixed-bottom {
 	.panel-handle {
 		position: absolute;
-		top: 0;
-		left: 0;				
-		width: 100%;
 		height: @panel-handle-height;
-		margin-top: -(@panel-handle-height * @panel-board-width-ratio);
-		> a {
-			.panel-palette(20%, 100%);
-			.panel-trigger('down', 18px);
-		}
+		width: 100%;
+		margin-top: -(@panel-handle-width * @panel-board-width-ratio);
+		.panel-trigger('down', 24px);
 	}
 }
 
-.panel-palette (@width, @height) {
+.palette-item (@width, @height) {
 	float: left;
 	height: @height;
 	width: @width;
-	background-color: white;
-	&.arrow {
-		display: table;
-	}
-	&:hover {
-		background-color: darken(#fff, 10%);
-	}
 }
 
 .panel-trigger (@direction, @size) when (@direction = 'right') {
 	font-size: @size;
 	.icon {
-		.glyphicon;
-		.glyphicon-chevron-right;
-		.centering;
+		.icon-angle-right;
+	}
+	background-color: #E6E6E6;
+	&:hover {
+		background-color: darken(#E6E6E6, 10%);
 	}
 }
 
 .panel-trigger (@direction, @size) when (@direction = 'down') {
 	font-size: @size;
 	.icon {
-		.glyphicon;
-		.glyphicon-chevron-down;
-		.centering;
+		.icon-angle-down;
+	}
+	background-color: #E6E6E6;
+	&:hover {
+		background-color: darken(#E6E6E6, 10%);
 	}
 }
