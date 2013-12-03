@@ -125,6 +125,14 @@ module.exports = function(grunt){
 			template: {
 				files: ['<%= client.templates.all %>'],
 				tasks: ['template']
+			},
+			livereload: {
+				options: { livereload: true },
+				files: [
+					'<%= client.assets.less.all %>',
+					'<%= client.spec.all %>',
+					'<%= client.scripts.all %>'
+				]
 			}
 		},
 
