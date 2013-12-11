@@ -10,20 +10,29 @@
 </head>
 <body>
   <div id="board" class="board"></div>
-  <div class="panel">
+  <div class="panel expand">
       <div class="palette">
         <a class="palette-item palette-black"></a>
         <a class="palette-item palette-blue"></a>
-        <a class="palette-item palette-stroke">
-          <span class="icon icon-pencil"></span>
+        <a class="panel-handle">
+          <span class="icon icon-angle-right"></span>
         </a>
         <a class="palette-item palette-red"></a>
         <a class="palette-item palette-green"></a>
       </div>
-      <div class="panel-handle">
-        <a class="arrow"><span class="icon"></span></a>
+      <div class="widget-group">
+        <div id="note-stack" class="widget"></div>
+        <div id="line-width-adjuster" class="widget adjuster">
+          <canvas class="widget-sample"></canvas>
+          <button class="fixed-left">-</button>
+          <button class="fixed-right">+</button>
+        </div>
+        <div id="font-size-adjuster" class="widget adjuster">
+          <canvas class="widget-sample"></canvas>
+          <button class="fixed-left">-</button>
+          <button class="fixed-right">+</button>
+        </div>
       </div>
-    <div id="note-stack"></div>
   </div>
 </body>
 </html>

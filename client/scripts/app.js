@@ -87,7 +87,7 @@ define('app', ['BoardFactory', 'NoteFactory', 'MouseEventPreprocessor', 'DOMPale
             trigger = new PanelTrigger(panel);
             trigger.enableEventHandling(globalEventBus);
 
-            document.querySelector('.panel-handle .arrow').onclick = function(){
+            document.querySelector('.panel-handle').onclick = function(){
                 trigger.togglePanel();
             };
 
@@ -97,8 +97,6 @@ define('app', ['BoardFactory', 'NoteFactory', 'MouseEventPreprocessor', 'DOMPale
 
             var note = supplier.addNote();
 
-            fireWindowResize();
-            
             document.body.style.visibility = 'visible';
 
             return {

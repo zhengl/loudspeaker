@@ -1,4 +1,15 @@
 #note-stack {
+	
+	@media (min-width: @screen-sm) {
+		width: percentage(@note-board-width-ratio / @panel-board-width-ratio);
+		margin: 24px auto;
+	}
+
+	@media (max-width: @screen-sm) {
+		width: @board-max-width * @note-board-width-ratio;
+		display: inline-block;
+		margin: 0 24px;
+	}
 }
 
 .note {	
@@ -15,7 +26,7 @@
 	}
 
 	.ratio(1, 1);
-	display: inline-block;
+	position: relative;
 	overflow: hidden;
 	background-color: @yellow;
 }

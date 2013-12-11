@@ -25,7 +25,6 @@ NoteFactory.prototype.adjustPosition = function(note) {
 	var self = this;
 	window.addEventListener('resize', function() {
 		note.setZoomPercentage(self.options.width / note.getElement().offsetWidth);
-		console.log(self.options.width / note.getElement().offsetWidth)
 		if(undefined !== note.getParent()){
 			note.moveTo(note.getPosition());
 		}

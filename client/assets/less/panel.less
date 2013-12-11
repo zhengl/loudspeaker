@@ -1,8 +1,4 @@
 .panel {
-	 .note {
-		.centering;
-	}
-
 	@media (min-width: @screen-sm) {
 		width: @board-min-width * @panel-board-width-ratio;
 		margin-right: -(@board-min-width * @panel-board-width-ratio);
@@ -41,7 +37,7 @@
 		position: absolute;			
 		height: 100%;
 		width: @panel-width;
-		margin-left: -(@panel-width + @panel-handle-width);
+		margin-left: -(@panel-width);
 		.palette-item {
 			.palette-item(100%, 20%);
 		}
@@ -53,7 +49,7 @@
 		position: absolute;	
 		width: 100%;
 		height: @panel-height;
-		margin-top: -((@panel-height + @panel-handle-height) * @panel-board-width-ratio);
+		margin-top: -((@panel-height) * @panel-board-width-ratio);
 		.palette-item {
 			.palette-item(20%, 100%);
 		}
@@ -62,21 +58,15 @@
 
 .panel-handle-fixed-right {
 	.panel-handle {
-		position: absolute;
-		height: 100%;
-		width: @panel-handle-width;
-		margin-left: -(@panel-handle-width);
 		.panel-trigger('right', 24px);
+		.palette-item(100%, 20%);
 	}
 }
 
 .panel-handle-fixed-bottom {
 	.panel-handle {
-		position: absolute;
-		height: @panel-handle-height;
-		width: 100%;
-		margin-top: -(@panel-handle-width * @panel-board-width-ratio);
 		.panel-trigger('down', 24px);
+		.palette-item(20%, 100%);
 	}
 }
 
@@ -91,9 +81,9 @@
 	.icon {
 		.icon-angle-right;
 	}
-	background-color: #E6E6E6;
+	background-color: #FFFFFF;
 	&:hover {
-		background-color: darken(#E6E6E6, 10%);
+		background-color: darken(#FFFFFF, 10%);
 	}
 }
 
@@ -102,8 +92,71 @@
 	.icon {
 		.icon-angle-down;
 	}
-	background-color: #E6E6E6;
+	background-color: @white;
 	&:hover {
-		background-color: darken(#E6E6E6, 10%);
+		background-color: darken(@white, 10%);
 	}
+}
+
+.widget-group {
+	
+	.centering;
+
+	@media (min-width: @screen-sm) {
+		width: 100%;
+		height: 100%;
+	}
+
+	@media (max-width: @screen-sm) {
+		width: 100%;
+	}
+}
+
+.widget {
+	position: relative;
+
+	button {
+		position: absolute;
+
+		background: @white;
+		border: 1px solid @gray;
+		padding: 6px 12px;
+		cursor: pointer;
+		font-size: 14px;
+		&:hover {
+	  		background-color: darken(@white, 10%);
+	  	}
+	  	&.fixed-left {
+			left: 0;
+			top: 0;
+			bottom: 0;
+	  	}
+	  	&.fixed-right {
+			right: 0;
+			top: 0;
+			bottom: 0;
+			margin-right: -2px;
+	  	}
+	}
+}
+
+.adjuster {
+	max-width: 150px;
+
+	@media (min-width: @screen-sm) {
+		width: 80%;
+		margin: 24px auto;
+	}
+
+	@media (max-width: @screen-sm) {
+		display: inline-block;
+		margin: 0 24px;
+	}
+}
+
+canvas.widget-sample {
+	display: block;
+	background-color: @white;
+	width: 100%;
+	height: 50px;
 }
