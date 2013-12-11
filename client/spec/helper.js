@@ -9,8 +9,6 @@ Event.Page = {
 	FINISH_DRAWING: "PAGE.FINISH_DRAWING",
 	DRAW_TO: "PAGE.DRAW_TO",
 
-	START_SELECTING_COLOR: "PAGE.START_SELECTING_COLOR",
-
 	START_MOVING: "PAGE.START_MOVING",
 	MOVE_TO: "PAGE.MOVE_TO",
 	FINISH_MOVING: "PAGE.FINISH_MOVING",
@@ -23,6 +21,10 @@ Event.Note = {
 	START_DRAGGING: "NOTE.START_DRAGGING",
 	MOVE_TO: "NOTE.MOVE_TO",
 	FINISH_DRAGGING: "NOTE.FINISH_DRAGGING",
+};
+
+Event.Palette = {
+	SELECT_COLOR: "PALETTE.SELECT_COLOR"
 };
 
 beforeEach(function(){
@@ -114,6 +116,10 @@ function triggerStartDraggingEvent(eventBus, x, y){
 
 function triggerFinishDraggingEvent(eventBus, x, y){
 	eventBus.publish(new Event(Event.Note.FINISH_DRAGGING, { position: {x: x, y: y} }));
+}
+
+function triggerSelectColorEvent(eventBus, color){
+	eventBus.publish(new Event(Event.Palette.SELECT_COLOR, { color: color }));
 }
 
 function createEvent(type, canvasX, canvasY, target, offsetX, offsetY){

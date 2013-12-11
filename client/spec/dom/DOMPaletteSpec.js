@@ -1,17 +1,21 @@
-require(['DOMPalette'], function(DOMPalette){
+require(['DOMPalette', 'EventBus'], function(DOMPalette, EventBus){
 
 
 describe('DOMPalette', function(){
 	var palette;
 	var paletteElement;
+	var eventBus;
 
 	beforeEach(function(){
 		paletteElement = createPaletteElement();
 		document.body.appendChild(paletteElement);
+		palette = new DOMPalette(paletteElement, 'palette-color');
+
+		eventBus = new EventBus();
+		palette.enableEventHandling(eventBus);
 	});
 
 	it("clicks a to select color", function(){
-		palette = new DOMPalette(palette, 'palette-color');
 		var event = createEvent('click');
 		var paletteRed = paletteElement.children[0];
 		fireEvent(paletteRed, 'click', event);

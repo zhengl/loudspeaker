@@ -29,7 +29,7 @@ TextInput.prototype.append = function(text) {
 TextInput.prototype.flush = function() {
 	this.context.clearDraftItems();
 	this.context.addItem(this.getText());
-	this.getText().setValue('');
+	delete this.text;
 };
 
 TextInput.prototype.getText = function() {

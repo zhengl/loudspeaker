@@ -1,5 +1,8 @@
-define('DOMPalette', ['Palette'], function(Palette){
+define('DOMPalette', ['Palette', 'Event'], function(Palette, Event){
 
+
+DOMPalette.prototype = new Palette();
+DOMPalette.prototype.constructor = DOMPalette;
 
 function DOMPalette(element, cls) {
 	this.element = element;
@@ -9,16 +12,14 @@ function DOMPalette(element, cls) {
 	var self = this;
 	var setBackgroundColorAsColor = function(){
 		var style = window.getComputedStyle(this);
-		self.setColor(style.backgroundColor);
+		self.getEventBus().publish(new Event(Event.Palette.SELECT_COLOR, { color: style.backgroundColor }));
+
 	};
 
 	for(var i = 0; i < colors.length; i++) {
 		colors[i].onclick = setBackgroundColorAsColor;
 	}
 }
-
-DOMPalette.prototype = new Palette();
-DOMPalette.prototype.constructor = DOMPalette;
 
 return DOMPalette;
 

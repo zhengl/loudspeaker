@@ -18,7 +18,7 @@ describe("TextInput", function(){
 		var text = createText();
 		textInput.write(text);
 		textInput.flush();
-		expect(textInput.getText().getValue()).toBe("");
+		expect(textInput.getText()).toBeUndefined();
 	});
 
 	function createText(){
