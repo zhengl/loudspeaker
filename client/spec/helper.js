@@ -144,3 +144,17 @@ function createEvent(type, canvasX, canvasY, target, offsetX, offsetY){
 	event.targetItem = target;
 	return event;
 }
+
+function fireEvent( target, type, event ) {
+	if ( target.dispatchEvent ) {
+		target.dispatchEvent( event );
+	} else if ( target.fireEvent ) {
+		target.fireEvent( "on" + type, event );
+	}
+}
+
+function fireResizeEvent() {
+	var evt = document.createEvent('UIEvents');
+	evt.initUIEvent('resize', true, false,window,0);
+	fireEvent(window, null, evt);	
+}
